@@ -151,7 +151,7 @@
 				<span class="mui-icon "><img src="../css/images/bottom/sao_icon.png"/></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
-			<a class="mui-tab-item" href="#tabbar-with-contact">
+			<a class="mui-tab-item" href="../circle/circle.html">
 				<span class="mui-icon "><img src="../css/images/bottom/qz_icon.png"/><span class="mui-badge">9</span></span>
 				<span class="mui-tab-label">圈子</span>
 			</a>
@@ -168,7 +168,7 @@
 			</div>
 			<div id="r-result">
 				<!--<div class="mui-input-row mui-search">-->
-					<a >宝安区<div id="selectArea"></div></a>
+					<a href="../static/destination.html">宝安区<div id="selectArea"></div></a>
 					
 					<p >
 				    <input type="search"   id="suggestId" placeholder="搜索景点" ></p>
@@ -184,7 +184,8 @@
             -->
 			<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>
 			<script>
-				var allmap = document.getElementById("allmap");
+				
+						var allmap = document.getElementById("allmap");
 				allmap.style.height = window.innerHeight+"px";
 				//LInit(1000/60, "legend", 750,1334, main);
 				var layer,map;
@@ -235,6 +236,9 @@
 			function initMap(){
 				mui.init({
 					swipeBack:true //启用右滑关闭功能
+				});
+				mui('body').on('tap','a',function(){
+				    window.top.location.href=this.href;
 				});
 				map = new Bookingmap();
 	        		map.initBaiduMap('allmap');
