@@ -178,7 +178,7 @@ Bookingmap.prototype.getRoute=function(onPlace,offPlace,c,v){
 	var _this = this;
 	var map = _this.map;
 	//加载层
-	var loadRouteIndex = layer.load(1, {shade: 0.5}); //0代表加载的风格，支持0-2
+	//var loadRouteIndex = layer.load(1, {shade: 0.5}); //0代表加载的风格，支持0-2
 	var control_t = -1,isOver = false;
 	
 	_this.output = "从"+onPlace+"到"+offPlace+"需要";//console.log('------',onPlace,offPlace)
@@ -204,7 +204,7 @@ Bookingmap.prototype.getRoute=function(onPlace,offPlace,c,v){
 			onPolylinesSet: function(){        
 				setTimeout(function(){
 					//console.log(distance,"----------------------",_this.output,'==========',onPlace,offPlace,'============');
-					layer.close(loadRouteIndex);
+					//layer.close(loadRouteIndex);
 					_this.routeHandler(_this.output,distance.substring(0,distance.indexOf("公里")))},1000);
 		}});
 	}else{
@@ -220,7 +220,7 @@ Bookingmap.prototype.getRoute=function(onPlace,offPlace,c,v){
 			//console.log("未查到距离重新查看",onPlace, offPlace);//console.log(transit);
 			//if(transit)
 			//transit.search(onPlace, offPlace);
-			layer.close(loadRouteIndex);
+			//layer.close(loadRouteIndex);
 			if(typeof _this.errorHandler === 'function' ){
 				_this.errorHandler();
 			}
@@ -392,9 +392,9 @@ Bookingmap.prototype.trajectory = function(){
             }
         }
     });
-	drv.search('深圳市宝安区金海路', '深圳北站');
+	drv.search('深圳市南山区世界之窗', '深圳市宝安区深圳北站');
+//	drv.serch(new BMap.Point(114.036759, 22.617103),new BMap.Point(113.907978, 22.486263));
 	
-
 }
 
 // 复杂的自定义覆盖物
