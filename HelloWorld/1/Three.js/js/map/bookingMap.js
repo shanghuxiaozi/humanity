@@ -393,7 +393,7 @@ Bookingmap.prototype.trajectory = function(){
         }
     });
 	drv.search('深圳市南山区世界之窗', '深圳市宝安区深圳北站');
-//	drv.serch(new BMap.Point(114.036759, 22.617103),new BMap.Point(113.907978, 22.486263));
+	//drv.serch(new BMap.Point(114.036759, 22.617103),new BMap.Point(113.907978, 22.486263));
 	
 }
 
