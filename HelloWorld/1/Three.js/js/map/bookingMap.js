@@ -20,7 +20,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		var map = new BMap.Map(id);
 		_this.map = map;
 		//map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
-		var point = new BMap.Point(102.73333,   25.05000);
+		var point = new BMap.Point(114.1,   22.58);
 		map.centerAndZoom(point,12);
 		//map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
 		/*var geolocation = new BMap.Geolocation();
