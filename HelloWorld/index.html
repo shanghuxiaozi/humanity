@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<title>Barcode Example</title>
+	<script type="text/javascript" >
+// 扩展API加载完毕后调用onPlusReady回调函数 
+document.addEventListener( "plusready", onPlusReady, false );
+// 扩展API加载完毕，现在可以正常调用扩展API
+function onPlusReady() {
+  var e = document.getElementById("scan");
+  e.removeAttribute( "disabled" );
+  //var cmr = plus.camera.getCamera();
+}
+// 拍照
+function captureImage(){
+	var cmr = plus.camera.getCamera();
+	var res = cmr.supportedImageResolutions[0];
+	var fmt = cmr.supportedImageFormats[0];
+	console.log("Resolution: "+res+", Format: "+fmt);
+	cmr.captureImage( function( path ){
+			alert( "Capture image success: " + path );  
+			scanImg(path);
+		},
+		function( error ) {
+			alert( "Capture image failed: " + error.message );
+		},
+		{resolution:res,format:fmt}
+	);
+}
+
+// 从图片中扫描 
+function scanImg(path) {
+	plus.barcode.scan( path, function (type,result) {
+			alert( "Scan success:("+type+")"+result );
+		}, function (error) {
+			alert( error.message );
+		} );
+}
+
+function opneClick(){
+	window.open('1/Three.js/Earth-Elevations.html')
+}
+	</script>
+	<style type="text/css">
+*{
+	-webkit-user-select: none;
+}
+html,body{
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+	</style>
+	</head>
+	<body >
+		<input id="scan" type='button' disabled="disabled" onclick='scanImg()' value='扫描图片'></input>
+		<button onclick="captureImage()">拍照</button>
+		<button onclick="opneClick()">打开另一个</button>
+	</body>
+</html>

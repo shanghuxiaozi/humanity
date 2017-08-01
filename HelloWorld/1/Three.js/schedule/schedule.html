@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+	name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="email=no" name="format-detection" />
+<meta charset="UTF-8" />
+		<title>WINDOW_RESIZE</title>
+		<style>
+			#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";position: absolute; left:0px; top:0px;}
+			#legend{position: absolute; left:0px; top:0px;pointer-events:none;display: none;}
+			.mui-icon img{  width: 24px; height: 24px;}
+			/*#r-result{position:absolute;top: 20px;width: 100%;text-align: center;background: url("../images/schedule/dizuo.png") no-repeat center center ;background-size:100% 100%;}*/
+			#r-result{
+				position:absolute;top: 20px;width: 90%;height: 50px;
+			  left: 5%;
+			  /*text-align: center;*/
+			  background-color: rgb(244, 241, 236);
+				border-radius: 5px;
+				-moz-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				
+				-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+				-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+				text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+				border-bottom: 1px solid rgba(0,0,0,0.25);
+			}
+			#suggestId{background: none;height: 35px;
+  font-size: large;text-align: left;
+			
+			}
+			#r-result p{
+				  height: 60%;
+				  border-left: 1px solid #C2ADAD;
+				  margin-left: 23%;
+				  margin-top: 8px;
+			}
+			#r-result img{
+				  position: absolute;
+				  right: 10px;
+				  top: 10px;
+				  width: 25px;
+			}
+			#selectArea{
+				border-style: solid;
+            border-width: 8px 5px 8px 5px;
+            border-color: rgb(71, 69, 69)  transparent transparent transparent;
+            width: 0px;
+            height: 0px;
+              position: absolute;
+			   right: -12px;
+  			 top: 5px;
+			}
+			#r-result a{
+				  color: rgb(71, 68, 68);
+			  position: absolute;
+			  top: 15px;
+			  left: 5px;
+			  font-size: large;
+			}
+			#notice{
+				position: absolute;
+				  top: 90px;
+				  width: 90%;
+				  height: 30px;
+				  left: 5%;
+				  /* text-align: center; */
+				  background-color: rgba(99, 171, 249, 0.9);
+				  border-radius: 5px;
+				  -moz-border-radius: 5px;
+				  -webkit-border-radius: 5px;
+				  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+				  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+				  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+				 /* border-bottom: 1px solid rgba(0,0,0,0.25);*/
+				  text-align: center;
+				  padding-top: 5px;
+				  color: white;
+				  font-family: fantasy;
+  				font-size: 0.75em;
+			}
+			#takeAtaxi{
+				position: absolute;
+				bottom: 70px;
+  				right: 10px;
+				  
+			}
+			#takeAtaxi img{
+				width: 50px;
+			}
+		</style>
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui/mui.min.css">
+		<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
+		<!-------------------------------------------------------------百度地图相关js-------------------------------------------------------------->	
+		<script src="../js/map/baidu.js" charset="utf-8" type="text/javascript"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+
+		<script src="../js/mui/mui.js"></script>
+		<!--加载鼠标绘制工具-->
+		<script src="../js/map/DrawingManager_min.js" charset="utf-8" type="text/javascript"></script>
+		<!--加载检索信息窗口-->
+		<script src="../js/map/SearchInfoWindow_min.js" charset="utf-8" type="text/javascript"></script>
+		<script src="../js/map/bookingMap.js" charset="utf-8" type="text/javascript"></script>
+	</head>
+	<body style="margin: 0;padding: 0;overflow-x:hidden;overflow-y:hidden;">
+		<!--<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">底部选项卡-div模式</h1>
+		</header>-->
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" href="#tabbar">
+				<span class="mui-icon "><img src="../css/images/bottom/homel_icon.png"/></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-chat">
+				<span class="mui-icon "><img src="../css/images/bottom/sao_icon.png"/></span>
+				<span class="mui-tab-label">扫一扫</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-contact">
+				<span class="mui-icon "><img src="../css/images/bottom/qz_icon.png"/><span class="mui-badge">9</span></span>
+				<span class="mui-tab-label">圈子</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-map">
+				<span class="mui-icon "><img src="../css/images/bottom/me_icon.png"/></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<div class="mui-content">
+		<div id="allmap" ></div>
+		<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;z-index:99999999;position: absolute;left: 10px;top: 20px;"></div>
+		</div>
+		<div id="legend">
+			</div>
+			<div id="r-result">
+				<!--<div class="mui-input-row mui-search">-->
+					<a >宝安区<div id="selectArea"></div></a>
+					
+					<p >
+				    <input type="search"   id="suggestId" placeholder="搜索景点" ></p>
+				    <img src="../images/schedule/ser.png" />
+				<!--</div>-->
+			</div>
+			<div id="notice">参与游戏赢取丰富礼品!</div>
+			<!--
+            	作者：921233883@qq.com
+            	时间：2017-08-01
+            	描述：叫车
+            -->
+			<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>
+			<script>
+				var allmap = document.getElementById("allmap");
+				allmap.style.height = window.innerHeight+"px";
+				//LInit(1000/60, "legend", 750,1334, main);
+				var layer,map;
+				function main () {
+					layer = new LSprite();
+					addChild(layer);
+					update();
+					initCanvas();
+					LGlobal.stage.addEventListener(LEvent.WINDOW_RESIZE,update);
+				}
+				
+				
+				
+				
+				function initCanvas(){
+					LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
+					layer.graphics.clear();
+					layer.graphics.drawRect(1, "#ff0000", [0, 0, 50, 50], true, "#880088");
+					layer.graphics.drawRect(1, "#ff0000", [700, 0, 50, 50], true, "#880088");
+					var com = new LComboBox();
+					com.x = 50;
+					com.y = 50;
+					com.setChild({label:"测试一",value:"data1"});
+					com.setChild({label:"测试二",value:"data2"});
+					com.setChild({label:"测试三",value:"data3"});
+					com.setChild({label:"测试四",value:"data4"});
+					com.setChild({label:"测试五",value:"data5"});
+					com.setChild({label:"测试六",value:"data6"});
+					com.setChild({label:"测试七",value:"data7"});
+					com.setChild({label:"测试八",value:"data8"});
+					com.setChild({label:"测试九",value:"data9"});
+					com.setChild({label:"测试十",value:"data10"});
+					com.setChild({label:"测试十一",value:"data11"});
+					com.setChild({label:"测试十二",value:"data12"});
+					com.setChild({label:"测试十三",value:"data13"});
+					addChild(com);
+					
+				}
+			
+			
+			function update(){
+				LGlobal.resize(window.innerWidth,window.innerHeight);
+				allmap.style.height = window.innerHeight+"px";
+//				layer.graphics.drawRect(1, "#ff0000", [0, LGlobal.height - 50, 50, 50], true, "#880088");
+//				layer.graphics.drawRect(1, "#ff0000", [LGlobal.width - 50, LGlobal.height - 50, 50, 50], true, "#880088");
+			}
+			initMap();
+			function initMap(){
+				mui.init({
+					swipeBack:true //启用右滑关闭功能
+				});
+				map = new Bookingmap();
+	        		map.initBaiduMap('allmap');
+	        		//获取终点的地名
+	        		map.addEventListenDownList(function(value,obj){
+	        			
+	        		});
+	        		//获取地点经纬度
+	        		map.addEventListenPoint(function(obj){
+	        			
+	        		});
+	        		
+	        		//获取起点和终点的位置信息计算驾车时间与距离
+	        		map.addEventListenGetRoute(function(value,distance){
+	        			
+	        		});
+	        	map.trajectory();	
+			}
+			</script>
+	</body>
+</html>
