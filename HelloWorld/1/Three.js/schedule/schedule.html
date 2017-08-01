@@ -122,6 +122,7 @@
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
+		<link rel="stylesheet" href="../mobile/need/layer.css">
 		<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
 		<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
 		<!-------------------------------------------------------------百度地图相关js-------------------------------------------------------------->	
@@ -133,6 +134,7 @@
 		<script src="../js/map/DrawingManager_min.js" charset="utf-8" type="text/javascript"></script>
 		<!--加载检索信息窗口-->
 		<script src="../js/map/SearchInfoWindow_min.js" charset="utf-8" type="text/javascript"></script>
+		<script src="../mobile/layer.js"></script>
 		<script src="../js/map/bookingMap.js" charset="utf-8" type="text/javascript"></script>
 	</head>
 	<body style="margin: 0;padding: 0;overflow-x:hidden;overflow-y:hidden;">
@@ -242,7 +244,7 @@
 	        		});
 	        		//获取地点经纬度
 	        		map.addEventListenPoint(function(obj){
-	        			
+	        			console.log(obj);
 	        		});
 	        		
 	        		//获取起点和终点的位置信息计算驾车时间与距离
@@ -250,6 +252,7 @@
 	        			
 	        		});
 	        	map.trajectory();	
+	        	//map.getRoute(null,null,{lng: 114.036184, lat: 22.6139},{lng: 113.906253, lat: 22.485729});
 			}
 			</script>
 	</body>
