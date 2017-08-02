@@ -14,6 +14,11 @@
 		<style>
 			#legend{position: absolute; left:0px; top:0px;}
 			.mui-icon img{  width: 24px; height: 24px;}
+			#legendImg{
+				  position: absolute;
+  left: 0px;
+  top: 0px;
+			}
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -42,10 +47,12 @@
 			</a>
 		</nav>
 		<!--<div class="mui-content">-->
+			<img id="legendImg" src="quanzi.png" />
 			<div id="legend">
 			</div>
 		<!--</div>-->
 		<script>
+			var legendImg = document.getElementById("legendImg");
 			mui.init({
 					swipeBack:true //启用右滑关闭功能
 				});
@@ -55,8 +62,8 @@
 			LInit(1000/60, "legend", 750,1334, main);
 				var layer;
 				function main () {
-//					layer = new LSprite();
-//					addChild(layer);
+					layer = new LSprite();
+					addChild(layer);
 					update();
 					initCanvas();
 					LGlobal.stage.addEventListener(LEvent.WINDOW_RESIZE,update);
@@ -67,12 +74,14 @@
 				
 				function initCanvas(){
 					LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
-//					layer.graphics.clear();
-//					layer.graphics.drawRect(1, "#ff0000", [0, 0, 50, 50], true, "#880088");
-//					layer.graphics.drawRect(1, "#ff0000", [700, 0, 50, 50], true, "#880088");
+					layer.graphics.clear();
+					layer.graphics.drawRect(1, "#ff0000", [0, 0, window.innerWidth, 50], true, "#880088");
+					layer.graphics.drawRect(1, "#ff0000", [window.innerWidth, 0, window.innerWidth, 50], true, "#880088");
 					var com = new LComboBox();
-					com.x = 50;
-					com.y = 50;
+					com.x = 0;
+					com.y = 0;
+					com.width = window.innerWidth;
+					com.height = 100;
 					com.setChild({label:"测试一",value:"data1"});
 					com.setChild({label:"测试二",value:"data2"});
 					com.setChild({label:"测试三",value:"data3"});
@@ -93,6 +102,8 @@
 			
 			function update(){
 				LGlobal.resize(window.innerWidth,window.innerHeight);
+				legendImg.style.width = window.innerWidth + "px";
+				legendImg.style.height = window.innerHeight+100 + "px";
 //				layer.graphics.drawRect(1, "#ff0000", [0, LGlobal.height - 50, 50, 50], true, "#880088");
 //				layer.graphics.drawRect(1, "#ff0000", [LGlobal.width - 50, LGlobal.height - 50, 50, 50], true, "#880088");
 			}

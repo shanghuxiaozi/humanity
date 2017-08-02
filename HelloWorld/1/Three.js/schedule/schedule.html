@@ -147,7 +147,7 @@
 				<span class="mui-icon "><img src="../css/images/bottom/homel_icon.png"/></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item" href="#tabbar-with-chat" onclick="captureImage()">
+			<a class="mui-tab-item" href="javascript:void(0)" onclick="captureImage()">
 				<span class="mui-icon "><img src="../css/images/bottom/sao_icon.png"/></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
@@ -178,11 +178,13 @@
 			<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
 			<div id="notice">参与游戏赢取丰富礼品!</div>
 			<!--
-            	作者：921233883@qq.com
+            	作者：921233883@qq.com nohup node mycraft.js > sw.log 2>&1 &
+
             	时间：2017-08-01
             	描述：叫车
             -->
 			<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>
+			<button onclick="captureImage()">拍照</button>
 			<script>
 				
 						var allmap = document.getElementById("allmap");
@@ -264,13 +266,15 @@
 				document.addEventListener( "plusready", onPlusReady, false );
 				// 扩展API加载完毕，现在可以正常调用扩展API
 				function onPlusReady() {
-				  var e = document.getElementById("scan");
-				  e.removeAttribute( "disabled" );
-				  //var cmr = plus.camera.getCamera();
+				  //var e = document.getElementById("scan");
+				 // e.removeAttribute( "disabled" );
+				 var cmr = plus.camera.getCamera();
+				 alert('扩展API加载完毕'+(cmr==null));
+				  //
 				}
 				// 拍照
-				function captureImage(){
-					var cmr = plus.camera.getCamera();
+				function captureImage(){alert('打开摄像头');
+					var cmr = plus.camera.getCamera(); alert('打开摄像头'+cmr);
 					var res = cmr.supportedImageResolutions[0];
 					var fmt = cmr.supportedImageFormats[0];
 					console.log("Resolution: "+res+", Format: "+fmt);
