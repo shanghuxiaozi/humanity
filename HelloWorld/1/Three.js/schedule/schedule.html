@@ -119,6 +119,11 @@
 				    line-height: 13px;
 				      color: rgb(73, 65, 65);
 			}
+			#bcid {
+	background:#0F0;
+	height:480px;
+	width:360px;
+}
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -265,42 +270,83 @@
 			}
 			</script>
 			<script>
-				// 扩展API加载完毕后调用onPlusReady回调函数 
-				document.addEventListener( "plusready", onPlusReady, false );
-				// 扩展API加载完毕，现在可以正常调用扩展API
-				function onPlusReady() {
-				  //var e = document.getElementById("scan");
-				 // e.removeAttribute( "disabled" );
-				 var cmr = plus.camera.getCamera();
-				 alert('扩展API加载完毕'+(cmr==null));
-				  //
-				}
-				// 拍照
-				function captureImage(){
-					var cmr = plus.camera.getCamera(); //alert('打开摄像头'+cmr);
-					var res = cmr.supportedImageResolutions[0];
-					var fmt = cmr.supportedImageFormats[0];
-					console.log("Resolution: "+res+", Format: "+fmt);
-					cmr.captureImage( function( path ){
-							alert( "Capture image success: " + path );  
-							scanImg(path);
-						},
-						function( error ) {
-							alert( "Capture image failed: " + error.message );
-						},
-						{resolution:res,format:fmt,index:1,popover:{top:"10px",left:"10px",width:"20px",height:"20px"}}
-					);
-				}
-				
-				// 从图片中扫描 
-				function scanImg(path) {
-					plus.barcode.scan( path, function (type,result) {
-							alert( "Scan success:("+type+")"+result );
-						}, function (error) {
-							alert( error.message );
-						} );
-				}
+//				// 扩展API加载完毕后调用onPlusReady回调函数 
+//				document.addEventListener( "plusready", onPlusReady, false );
+//				// 扩展API加载完毕，现在可以正常调用扩展API
+//				function onPlusReady() {
+//				  //var e = document.getElementById("scan");
+//				 // e.removeAttribute( "disabled" );
+//				 var cmr = plus.camera.getCamera();
+//				 alert('扩展API加载完毕'+(cmr==null));
+//				  //
+//				}
+//				// 拍照
+//				function captureImage(){
+//					var cmr = plus.camera.getCamera(); //alert('打开摄像头'+cmr);
+//					var res = cmr.supportedImageResolutions[0];
+//					var fmt = cmr.supportedImageFormats[0];
+//					console.log("Resolution: "+res+", Format: "+fmt);
+//					cmr.captureImage( function( path ){
+//							alert( "Capture image success: " + path );  
+//							scanImg(path);
+//						},
+//						function( error ) {
+//							alert( "Capture image failed: " + error.message );
+//						},
+//						{resolution:res,format:fmt,index:1,popover:{top:"10px",left:"10px",width:"20px",height:"20px"}}
+//					);
+//				}
+//				
+//				// 从图片中扫描 
+//				function scanImg(path) {
+//					plus.barcode.scan( path, function (type,result) {
+//							alert( "Scan success:("+type+")"+result );
+//						}, function (error) {
+//							alert( error.message );
+//						} );
+//				}
+// 扩展API加载完毕后调用onPlusReady回调函数 
+var scan = null;
+document.addEventListener( "plusready", onPlusReady, false );
+// 扩展API加载完毕，现在可以正常调用扩展API
+function onPlusReady() {alert(scan==null);
+	
+}
 
+function onmarked( type, result ) {
+	var text = '未知: ';
+	switch(type){
+		case plus.barcode.QR:
+		text = 'QR: ';
+		break;
+		case plus.barcode.EAN13:
+		text = 'EAN13: ';
+		break;
+		case plus.barcode.EAN8:
+		text = 'EAN8: ';
+		break;
+	}
+	alert( text+result );
+}
+function startRecognize() {
+	
+}
+function captureImage(){
+	scan = new plus.barcode.Barcode('bcid');
+	scan.onmarked = onmarked; 
+	scan.start();
+}
+function startScan() {
+	scan.start();
+}
+function cancelScan() {
+	scan.cancel();
+}
+function setFlash() {
+	scan.setFlash();
+}
+	
 			</script>
+			<div id= "bcid"></div>
 	</body>
 </html>
