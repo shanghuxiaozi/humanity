@@ -290,7 +290,7 @@ var Laya=window.Laya=(function(window,document){
 	//class LayaUISample
 	var LayaUISample=(function(){
 		function LayaUISample(){
-			Laya.init(375,667);
+			Laya.init(750,1334);
 			Laya.stage.bgColor=null;
 			Laya.stage.scaleMode="exactfit";
 			Laya.stage.mouseThrough=true;
@@ -31440,7 +31440,7 @@ var Laya=window.Laya=(function(window,document){
 			this.createView(CircleUI.uiView);
 		}
 
-		CircleUI.uiView={"type":"View","props":{"width":375,"height":667},"child":[{"type":"Image","props":{"y":0,"x":1,"width":377,"skin":"comp/bg.png","sizeGrid":"28,5,5,4","height":666}},{"type":"Image","props":{"y":0,"x":-4,"width":385,"skin":"schedule/dizuo.png","sizeGrid":"10,13,15,16","height":134}},{"type":"TextInput","props":{"y":4,"x":129,"width":124,"text":"圈子","height":32,"fontSize":25,"font":"Microsoft YaHei","bold":true,"align":"center"}},{"type":"TextInput","props":{"y":9,"x":324,"width":45,"text":"发布","height":22,"fontSize":18,"font":"Microsoft YaHei","color":"#3d599f","bold":true,"align":"center"}},{"type":"TextInput","props":{"y":51,"x":26,"width":128,"text":"结伴","height":31,"fontSize":20,"font":"Microsoft YaHei","align":"center"}},{"type":"TextInput","props":{"y":51,"x":210,"width":128,"text":"记录","height":31,"fontSize":20,"font":"Microsoft YaHei","align":"center"}},{"type":"TextInput","props":{"y":95,"x":17,"width":68,"text":"出发时间","promptColor":"#36569a","height":22,"fontSize":15,"font":"Microsoft YaHei","color":"#3a9da6"}},{"type":"List","props":{"y":134,"x":5,"width":366,"var":"m_list","vScrollBarSkin":"comp/vscroll.png","repeatY":7,"repeatX":1,"height":529},"child":[{"type":"Box","props":{"y":0,"x":0,"width":364,"name":"render","height":215,"alpha":1},"child":[{"type":"TextInput","props":{"x":73,"text":"幸福人生","fontSize":18,"font":"Microsoft YaHei"}},{"type":"TextInput","props":{"y":28,"x":79,"width":69,"text":"2017.1.14","height":22,"color":"#605d5d"}},{"type":"TextInput","props":{"y":27,"x":164,"width":55,"text":"深圳出发","height":22,"color":"#4ba473","bgColor":"#c7d4c2","alpha":0.7,"align":"center"}},{"type":"Image","props":{"y":7,"x":16,"width":56,"skin":"schedule/car.png","height":56}},{"type":"TextInput","props":{"y":-1,"x":271,"width":58,"text":"1小时前","height":22,"color":"#716262"}},{"type":"TextInput","props":{"y":69,"x":15,"width":351,"text":"6月7号深圳出发上海有结伴一起出发的","height":22,"fontSize":18,"font":"Microsoft YaHei"}},{"type":"Image","props":{"y":180,"x":27,"width":20,"skin":"circle/biaozhu.png","height":22}},{"type":"TextInput","props":{"y":179,"x":51,"width":66,"text":"深圳","height":22}},{"type":"Image","props":{"y":102,"x":19,"width":105,"skin":"comp/image.png","height":66}},{"type":"TextInput","props":{"y":179,"x":106,"width":36,"text":"删除","height":22,"color":"#4a7f74"}},{"type":"Label","props":{"y":186,"x":288,"text":"1","name":"thumbs_up"}},{"type":"Label","props":{"y":186,"x":333,"text":"1"}},{"type":"Image","props":{"y":180,"x":261,"width":20,"skin":"circle/zanl_icon.png","height":20}},{"type":"Image","props":{"y":180,"x":303,"width":20,"skin":"circle/talk.png","height":20}}]}]}]};
+		CircleUI.uiView={"type":"View","props":{"width":750,"height":1334},"child":[{"type":"Box","props":{"y":0,"x":0,"width":750,"height":1334},"child":[{"type":"Image","props":{"x":0,"width":750,"skin":"comp/bg.png","sizeGrid":"28,5,5,4","height":1334}},{"type":"Image","props":{"y":0,"x":0,"width":753,"skin":"schedule/dizuo.png","sizeGrid":"10,13,15,16","height":282}},{"type":"TextInput","props":{"y":8,"x":290,"width":166,"text":"圈子","height":64,"fontSize":50,"font":"Microsoft YaHei","bold":true,"align":"center"}},{"type":"TextInput","props":{"y":1,"x":652,"width":88,"text":"发布","height":62,"fontSize":36,"font":"Microsoft YaHei","color":"#3d599f","bold":true,"align":"center"}},{"type":"TextInput","props":{"y":96,"x":93,"width":138,"text":"结伴","height":55,"fontSize":40,"font":"Microsoft YaHei","align":"center"}},{"type":"TextInput","props":{"y":96,"x":522,"width":130,"text":"记录","height":67,"fontSize":40,"font":"Microsoft YaHei","align":"center"}},{"type":"TextInput","props":{"y":195,"x":37,"width":163,"text":"出发时间","promptColor":"#36569a","height":65,"fontSize":30,"font":"Microsoft YaHei","color":"#3a9da6"}},{"type":"List","props":{"y":282,"x":-2,"width":748,"var":"m_list","vScrollBarSkin":"comp/vscroll.png","repeatY":7,"repeatX":1,"height":990},"child":[{"type":"Box","props":{"y":0,"x":0,"width":750,"name":"render","height":476,"alpha":1},"child":[{"type":"TextInput","props":{"y":3,"x":168,"width":182,"text":"幸福人生","height":48,"fontSize":36,"font":"Microsoft YaHei","editable":false}},{"type":"TextInput","props":{"y":71,"x":169,"width":125,"text":"2017.1.14","height":22,"fontSize":20,"color":"#605d5d"}},{"type":"TextInput","props":{"y":68,"x":327,"width":104,"text":"深圳出发","height":28,"fontSize":20,"color":"#4ba473","bgColor":"#c7d4c2","alpha":0.7,"align":"center"}},{"type":"Image","props":{"y":14,"x":41,"width":112,"skin":"schedule/car.png","height":112}},{"type":"TextInput","props":{"y":18,"x":656,"width":82,"text":"1小时前","height":22,"fontSize":20,"disabled":true,"color":"#716262"}},{"type":"TextInput","props":{"y":142,"x":58,"width":661,"text":"6月7号深圳出发上海有结伴一起出发的","height":55,"fontSize":36,"font":"Microsoft YaHei","disabled":true}},{"type":"Image","props":{"y":422,"x":75,"width":40,"skin":"circle/biaozhu.png","height":44}},{"type":"TextInput","props":{"y":433,"x":129,"width":66,"text":"深圳","height":22,"fontSize":20,"disabled":true}},{"type":"Image","props":{"y":206,"x":67,"width":248,"skin":"comp/image.png","height":203}},{"type":"TextInput","props":{"y":433,"x":199,"width":65,"text":"删除","height":22,"fontSize":20,"disabled":true,"color":"#4a7f74"}},{"type":"Label","props":{"y":433,"x":643,"text":"1","name":"thumbs_up","fontSize":20,"disabled":true}},{"type":"Label","props":{"y":433,"x":723,"text":"1","fontSize":20,"disabled":true}},{"type":"Image","props":{"y":422,"x":586,"width":40,"skin":"circle/zanl_icon.png","height":40}},{"type":"Image","props":{"y":422,"x":669,"width":40,"skin":"circle/talk.png","height":40}}]}]}]}]};
 		return CircleUI;
 	})(View)
 
@@ -32736,22 +32736,6 @@ var Laya=window.Laya=(function(window,document){
 	})(NodeToolUI)
 
 
-	//class laya.debug.view.nodeInfo.nodetree.NodeTreeSetting extends laya.debug.ui.debugui.NodeTreeSettingUI
-	var NodeTreeSetting=(function(_super){
-		function NodeTreeSetting(){
-			NodeTreeSetting.__super.call(this);
-			Base64AtlasManager.replaceRes(NodeTreeSettingUI.uiView);
-			this.createView(NodeTreeSettingUI.uiView);
-		}
-
-		__class(NodeTreeSetting,'laya.debug.view.nodeInfo.nodetree.NodeTreeSetting',_super);
-		var __proto=NodeTreeSetting.prototype;
-		//inits();
-		__proto.createChildren=function(){}
-		return NodeTreeSetting;
-	})(NodeTreeSettingUI)
-
-
 	//class laya.debug.view.nodeInfo.nodetree.NodeTree extends laya.debug.ui.debugui.NodeTreeUI
 	var NodeTree=(function(_super){
 		function NodeTree(){
@@ -32989,6 +32973,22 @@ var Laya=window.Laya=(function(window,document){
 		]);
 		return NodeTree;
 	})(NodeTreeUI)
+
+
+	//class laya.debug.view.nodeInfo.nodetree.NodeTreeSetting extends laya.debug.ui.debugui.NodeTreeSettingUI
+	var NodeTreeSetting=(function(_super){
+		function NodeTreeSetting(){
+			NodeTreeSetting.__super.call(this);
+			Base64AtlasManager.replaceRes(NodeTreeSettingUI.uiView);
+			this.createView(NodeTreeSettingUI.uiView);
+		}
+
+		__class(NodeTreeSetting,'laya.debug.view.nodeInfo.nodetree.NodeTreeSetting',_super);
+		var __proto=NodeTreeSetting.prototype;
+		//inits();
+		__proto.createChildren=function(){}
+		return NodeTreeSetting;
+	})(NodeTreeSettingUI)
 
 
 	//class laya.debug.view.nodeInfo.nodetree.ObjectCreate extends laya.debug.ui.debugui.ObjectCreateUI

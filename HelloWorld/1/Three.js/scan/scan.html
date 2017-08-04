@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+	name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="email=no" name="format-detection" />
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.mui-icon img{  width: 24px; height: 24px;}
+			#bcid {
+				background:#0F0;
+				height:480px;
+				width:360px;
+			}
+		</style>
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui/mui.min.css">
+		<link rel="stylesheet" href="../mobile/need/layer.css">
+		<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
+		<!-------------------------------------------------------------百度地图相关js-------------------------------------------------------------->	
+		<script src="../js/map/baidu.js" charset="utf-8" type="text/javascript"></script>
+
+		<script src="../js/mui/mui.js"></script>
+		<script src="../js/scan/scan.js"></script>
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">扫一扫/h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item mui-active" href="../schedule/schedule.html">
+				<span class="mui-icon "><img src="../css/images/bottom/homel_icon.png"/></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item" href="javascript:void(0)" name="scan">
+				<span class="mui-icon "><img src="../css/images/bottom/sao_icon.png"/></span>
+				<span class="mui-tab-label">扫一扫</span>
+			</a>
+			<a class="mui-tab-item" href="../circle/index.html">
+				<span class="mui-icon "><img src="../css/images/bottom/qz_icon.png"/><span class="mui-badge">9</span></span>
+				<span class="mui-tab-label">圈子</span>
+			</a>
+			<a class="mui-tab-item" href="#tabbar-with-map">
+				<span class="mui-icon "><img src="../css/images/bottom/me_icon.png"/></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<button type="button" class="mui-btn mui-btn-danger">关闭</button>
+		<script>
+			mui.init({
+					swipeBack:true //启用右滑关闭功能
+				});
+				mui('body').on('tap','a',function(){
+				    window.top.location.href=this.href;console.log(this)
+				    if(this.name == "scan"){
+				    	//alert('打开摄像头');
+				    	captureImage();
+				    }
+				});
+				
+//				// 扩展API加载完毕后调用onPlusReady回调函数 
+//				document.addEventListener( "plusready", onPlusReady, false );
+//				// 扩展API加载完毕，现在可以正常调用扩展API
+//				function onPlusReady() {
+//				  //var e = document.getElementById("scan");
+//				 // e.removeAttribute( "disabled" );
+//				 var cmr = plus.camera.getCamera();
+//				 alert('扩展API加载完毕'+(cmr==null));
+//				  //
+//				}
+//				// 拍照
+//				function captureImage(){
+//					var cmr = plus.camera.getCamera(); //alert('打开摄像头'+cmr);
+//					var res = cmr.supportedImageResolutions[0];
+//					var fmt = cmr.supportedImageFormats[0];
+//					console.log("Resolution: "+res+", Format: "+fmt);
+//					cmr.captureImage( function( path ){
+//							alert( "Capture image success: " + path );  
+//							scanImg(path);
+//						},
+//						function( error ) {
+//							alert( "Capture image failed: " + error.message );
+//						},
+//						{resolution:res,format:fmt,index:1,popover:{top:"10px",left:"10px",width:"20px",height:"20px"}}
+//					);
+//				}
+//				
+//				// 从图片中扫描 
+//				function scanImg(path) {
+//					plus.barcode.scan( path, function (type,result) {
+//							alert( "Scan success:("+type+")"+result );
+//						}, function (error) {
+//							alert( error.message );
+//						} );
+//				}
+				// 扩展API加载完毕后调用onPlusReady回调函数 
+				var scan = null;
+				document.addEventListener( "plusready", onPlusReady, false );
+				// 扩展API加载完毕，现在可以正常调用扩展API
+				function onPlusReady() {
+					scan = new Scan();
+				}
+				
+				
+				function captureImage(){
+					scan.startScan();
+				}
+				mui(document.body).on('tap', '.mui-btn', function(e) {
+				    scan.cancelScan();
+				});
+				captureImage();
+			</script>
+			<div id= "bcid"></div>
+	</body>
+</html>
