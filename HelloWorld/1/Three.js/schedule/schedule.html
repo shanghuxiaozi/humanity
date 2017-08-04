@@ -141,6 +141,7 @@
 		<script src="../js/map/SearchInfoWindow_min.js" charset="utf-8" type="text/javascript"></script>
 		<script src="../mobile/layer.js"></script>
 		<script src="../js/map/bookingMap.js" charset="utf-8" type="text/javascript"></script>
+		<script src="../js/scan/scan.js"></script>
 	</head>
 	<body style="margin: 0;padding: 0;overflow-x:hidden;overflow-y:hidden;">
 		<!--<header class="mui-bar mui-bar-nav">
@@ -156,7 +157,7 @@
 				<span class="mui-icon "><img src="../css/images/bottom/sao_icon.png"/></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
-			<a class="mui-tab-item" href="../circle/circle.html">
+			<a class="mui-tab-item" href="../circle/index.html">
 				<span class="mui-icon "><img src="../css/images/bottom/qz_icon.png"/><span class="mui-badge">9</span></span>
 				<span class="mui-tab-label">圈子</span>
 			</a>
@@ -246,7 +247,7 @@
 				mui('body').on('tap','a',function(){
 				    window.top.location.href=this.href;console.log(this)
 				    if(this.name == "scan"){
-				    	alert('打开摄像头');
+				    	//alert('打开摄像头');
 				    	captureImage();
 				    }
 				});
@@ -309,8 +310,8 @@
 var scan = null;
 document.addEventListener( "plusready", onPlusReady, false );
 // 扩展API加载完毕，现在可以正常调用扩展API
-function onPlusReady() {alert(scan==null);
-	
+function onPlusReady() {
+	scan = new Scan();
 }
 
 function onmarked( type, result ) {
@@ -332,19 +333,9 @@ function startRecognize() {
 	
 }
 function captureImage(){
-	scan = new plus.barcode.Barcode('bcid');
-	scan.onmarked = onmarked; 
-	scan.start();
+	scan.startScan();
 }
-function startScan() {
-	scan.start();
-}
-function cancelScan() {
-	scan.cancel();
-}
-function setFlash() {
-	scan.setFlash();
-}
+
 	
 			</script>
 			<div id= "bcid"></div>
