@@ -14,7 +14,7 @@
 		<style>
 			.mui-icon img{  width: 24px; height: 24px;}
 			#bcid {
-				background:#0F0;
+				background:#F1FAF1;
 				height:480px;
 				width:360px;
 			}
@@ -33,7 +33,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">扫一扫/h1>
+			<h1 class="mui-title">扫一扫</h1>
 		</header>
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item mui-active" href="../schedule/schedule.html">
@@ -53,7 +53,10 @@
 				<span class="mui-tab-label">我的</span>
 			</a>
 		</nav>
-		<button type="button" class="mui-btn mui-btn-danger">关闭</button>
+		<div class="mui-content">
+			<button type="button" class="mui-btn mui-btn-danger">关闭</button>
+		</div>
+		
 		<script>
 			mui.init({
 					swipeBack:true //启用右滑关闭功能
@@ -107,6 +110,7 @@
 				// 扩展API加载完毕，现在可以正常调用扩展API
 				function onPlusReady() {
 					scan = new Scan();
+					captureImage();
 				}
 				
 				
@@ -114,9 +118,9 @@
 					scan.startScan();
 				}
 				mui(document.body).on('tap', '.mui-btn', function(e) {
-				    scan.cancelScan();
+				    scan.closeScan();
 				});
-				captureImage();
+				
 			</script>
 			<div id= "bcid"></div>
 	</body>

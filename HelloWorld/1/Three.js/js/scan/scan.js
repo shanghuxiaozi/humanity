@@ -37,3 +37,7 @@ Scan.prototype.setFlash = function() {
 	var that = this;
 	that.scan.setFlash();
 }
+Scan.prototype.closeScan = function() {
+	var that = this;
+	that.scan.close();
+}
