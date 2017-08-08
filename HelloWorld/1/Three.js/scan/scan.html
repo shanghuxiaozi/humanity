@@ -17,6 +17,15 @@
 				background:#F1FAF1;
 				height:480px;
 				width:360px;
+				  position: absolute;
+			    left: 50px;
+			  top: 100px;
+			}
+			.btn-ar{
+				position: absolute !important;
+				  left: 40%;
+				  top: 40%;
+  				z-index: 99999999999;
 			}
 		</style>
 		<!--标准mui.css-->
@@ -54,9 +63,11 @@
 			</a>
 		</nav>
 		<div class="mui-content">
-			<button type="button" class="mui-btn mui-btn-danger">关闭</button>
+			<button type="button" class="mui-btn mui-btn-danger btn-close">关闭</button>
 		</div>
-		
+		<div class="mui-content">
+			<button type="button" class="mui-btn mui-btn-danger btn-ar">AR</button>
+		</div>
 		<script>
 			mui.init({
 					swipeBack:true //启用右滑关闭功能
@@ -117,7 +128,7 @@
 				function captureImage(){
 					scan.startScan();
 				}
-				mui(document.body).on('tap', '.mui-btn', function(e) {
+				mui(document.body).on('tap', '.btn-close', function(e) {
 				    scan.closeScan();
 				});
 				
