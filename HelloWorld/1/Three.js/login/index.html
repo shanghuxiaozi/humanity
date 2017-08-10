@@ -129,19 +129,11 @@
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
 		<link rel="stylesheet" href="../mobile/need/layer.css">
-		<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
-		<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
-		<!-------------------------------------------------------------百度地图相关js-------------------------------------------------------------->	
-		<script src="../js/map/baidu.js" charset="utf-8" type="text/javascript"></script>
-		<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+		
 
 		<script src="../js/mui/mui.js"></script>
-		<!--加载鼠标绘制工具-->
-		<script src="../js/map/DrawingManager_min.js" charset="utf-8" type="text/javascript"></script>
-		<!--加载检索信息窗口-->
-		<script src="../js/map/SearchInfoWindow_min.js" charset="utf-8" type="text/javascript"></script>
-		<script src="../mobile/layer.js"></script>
-		<script src="../js/map/bookingMap.js" charset="utf-8" type="text/javascript"></script>
+		
+		
 	</head>
 	<body style="margin: 0;padding: 0;overflow-x:hidden;overflow-y:hidden;">
 		<!--<header class="mui-bar mui-bar-nav">
@@ -174,82 +166,23 @@
 			</a>
 		</nav>
 		<div class="mui-content">
-		<div id="allmap" ></div>
-		<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;z-index:99999999;position: absolute;left: 10px;top: 20px;"></div>
+		
 		</div>
-		<div id="legend">
-			</div>
-			<div id="r-result">
-				<!--<div class="mui-input-row mui-search">-->
-					<a href="../static/destination.html">宝安区<div id="selectArea"></div></a>
-					
-					<p >
-				    <input type="search"   id="suggestId" placeholder="搜索景点" ></p>
-				    <img src="../images/schedule/ser.png" />
-				<!--</div>-->
-			</div>
-			<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
-			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>
-			<!--
-            	作者：921233883@qq.com nohup node mycraft.js > sw.log 2>&1 &
-
-            	时间：2017-08-01
-            	描述：叫车
-            -->
-			<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>
+		
 			<script>
 				
-						var allmap = document.getElementById("allmap");
-				allmap.style.height = window.innerHeight+"px";
-				//LInit(1000/60, "legend", 750,1334, main);
-				var layer,map;
-				function main () {
-					layer = new LSprite();
-					addChild(layer);
-					update();
-					initCanvas();
-					LGlobal.stage.addEventListener(LEvent.WINDOW_RESIZE,update);
-				}
 				
-				
-				
-				
-				function initCanvas(){
-					LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
-					layer.graphics.clear();
-					layer.graphics.drawRect(1, "#ff0000", [0, 0, 50, 50], true, "#880088");
-					layer.graphics.drawRect(1, "#ff0000", [700, 0, 50, 50], true, "#880088");
-					var com = new LComboBox();
-					com.x = 50;
-					com.y = 50;
-					com.setChild({label:"测试一",value:"data1"});
-					com.setChild({label:"测试二",value:"data2"});
-					com.setChild({label:"测试三",value:"data3"});
-					com.setChild({label:"测试四",value:"data4"});
-					com.setChild({label:"测试五",value:"data5"});
-					com.setChild({label:"测试六",value:"data6"});
-					com.setChild({label:"测试七",value:"data7"});
-					com.setChild({label:"测试八",value:"data8"});
-					com.setChild({label:"测试九",value:"data9"});
-					com.setChild({label:"测试十",value:"data10"});
-					com.setChild({label:"测试十一",value:"data11"});
-					com.setChild({label:"测试十二",value:"data12"});
-					com.setChild({label:"测试十三",value:"data13"});
-					addChild(com);
-					
-				}
-			
-			
-			function update(){
-				LGlobal.resize(window.innerWidth,window.innerHeight);
-				allmap.style.height = window.innerHeight+"px";
-//				layer.graphics.drawRect(1, "#ff0000", [0, LGlobal.height - 50, 50, 50], true, "#880088");
-//				layer.graphics.drawRect(1, "#ff0000", [LGlobal.width - 50, LGlobal.height - 50, 50, 50], true, "#880088");
-			}
-			initMap();
-			function initMap(){
 				mui.init({
-					swipeBack:true //启用右滑关闭功能
+					swipeBack:true ,//启用右滑关闭功能
+					 subpages:[{
+			      url:'http://120.25.221.94/human/1/Three.js/schedule/schedule.html',
+			      id:'schedule.html',
+			      id:'list.html',
+			      styles:{
+			        top:'45px',//mui标题栏默认高度为45px；
+			        bottom:'0px'//默认为0px，可不定义；
+			      }
+			    }]
 				});
 				mui('body').on('tap','a',function(){
 				    //window.top.location.href=this.href;console.log(this)
@@ -259,24 +192,6 @@
 //				    	captureImage();
 //				    }
 				});
-				map = new Bookingmap();
-	        		map.initBaiduMap('allmap');
-	        		//获取终点的地名
-	        		map.addEventListenDownList(function(value,obj){
-	        			
-	        		});
-	        		//获取地点经纬度
-	        		map.addEventListenPoint(function(obj){
-	        			console.log(obj);
-	        		});
-	        		
-	        		//获取起点和终点的位置信息计算驾车时间与距离
-	        		map.addEventListenGetRoute(function(value,distance){
-	        			
-	        		});
-	        	map.trajectory();	
-	        	//map.getRoute(null,null,{lng: 114.036184, lat: 22.6139},{lng: 113.906253, lat: 22.485729});
-			}
 			</script>
 			
 	</body>
