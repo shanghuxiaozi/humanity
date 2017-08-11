@@ -153,7 +153,7 @@
 				<span class="mui-icon "><img src="../css/images/bottom/homel_icon.png"/></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item" href="../scan/scan.html" name="scan">
+			<a class="mui-tab-item" href="../scan/imageRecognition.html" name="scan">
 				<span class="mui-icon "><img src="../css/images/bottom/sao_icon.png"/></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
@@ -162,13 +162,15 @@
 				<span class="mui-tab-label">圈子</span>
 			</a>
 			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&Interaction&Rotate&core,webgl">-->
-				<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&Physics&Slingshot&core,webgl,matter.js,LayaRender.js">-->
-					<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&Particle&T2&core,webgl,particle">-->
-						<!--<a class="mui-tab-item" href="http://120.25.221.94/vrdemoOne.html">-->
-							<!--<a class="mui-tab-item" href="http://120.25.221.94/refraction.html">-->
-						<!--<a class="mui-tab-item" href="http://120.25.221.94/threejs/three.js-master/examples/refraction.html">-->
-							<a class="mui-tab-item" href="../WebVR_Demo-master/index.html">
-								<!--<a class="mui-tab-item" href="https://ritterliu.github.io/WebVR_Demo/">-->
+			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&Physics&Slingshot&core,webgl,matter.js,LayaRender.js">-->
+			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&Particle&T2&core,webgl,particle">-->
+			<!--<a class="mui-tab-item" href="http://120.25.221.94/vrdemoOne.html">-->
+			<!--<a class="mui-tab-item" href="http://120.25.221.94/refraction.html">-->
+			<!--<a class="mui-tab-item" href="http://120.25.221.94/threejs/three.js-master/examples/refraction.html">-->
+			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?3d&particle&Particle_Scene&core,webgl,ani,d3,CameraMoveScript.js">-->
+			<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?3d&particle&Particle_BurningGround&core,webgl,ani,d3">
+			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/test/ZhanPaiKeJi/index.html">-->
+			<!--<a class="mui-tab-item" href="https://ritterliu.github.io/WebVR_Demo/">-->
 				<span class="mui-icon "><img src="../css/images/bottom/me_icon.png"/></span>
 				<span class="mui-tab-label">我的</span>
 			</a>
@@ -249,17 +251,48 @@
 			initMap();
 			function initMap(){
 				mui.init({
-					swipeBack:true //启用右滑关闭功能
+					swipeBack:true ,//启用右滑关闭功能
+					 preloadPages:[
+				    {
+				      url:"../circle/index.html",
+				      id:"circle",
+				      styles:{},//窗口参数
+				      extras:{},//自定义扩展参数
+				      subpages:[{},{}]//预加载页面的子页面
+				    }
+				  ],
+				   preloadLimit:5//预加载窗口数量限制(一旦超出,先进先出)默认不限制
 				});
+				var circle;
+				
+				document.addEventListener( "plusready", onPlusReady, false );
+				// 扩展API加载完毕，现在可以正常调用扩展API
+				function onPlusReady() {
+					circle = plus.webview.getWebviewByid('circle');
+					setTimeout(function(){
+						var array = plus.webview.all();
+						if(array){
+							for(var i=0,len=array.length;i<len;i++){
+							    	alert(array[i].getURL());
+						        }
+						}
+					},10000)
+				};
+				
+				
+				
 				mui('body').on('tap','a',function(){
 				    //window.top.location.href=this.href;console.log(this)
-				    mui.openWindow(this.href);
+				    if(this.href == "../circle/index.html"){
+				    	if(circle)circle.show();
+				    }else
+				    	mui.openWindow(this.href);
 //				    if(this.name == "scan"){
 //				    	//alert('打开摄像头');
 //				    	captureImage();
 //				    }
 				});
-				map = new Bookingmap();
+					map = new Bookingmap();
 	        		map.initBaiduMap('allmap');
 	        		//获取终点的地名
 	        		map.addEventListenDownList(function(value,obj){
@@ -274,7 +307,7 @@
 	        		map.addEventListenGetRoute(function(value,distance){
 	        			
 	        		});
-	        	map.trajectory();	
+	        		map.trajectory();	
 	        	//map.getRoute(null,null,{lng: 114.036184, lat: 22.6139},{lng: 113.906253, lat: 22.485729});
 			}
 			</script>

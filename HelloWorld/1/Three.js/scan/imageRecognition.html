@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+	name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="email=no" name="format-detection" />
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../css/mui/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<script src="../js/mui/mui.js"></script>
+		<script src="../hello-mui/js/jquery-2.1.0.js"></script>
+		<script src="../js/base64.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+		<script type="text/javascript">
+// 扩展API加载完毕后调用onPlusReady回调函数 
+document.addEventListener( "plusready", onPlusReady, false );
+// 扩展API加载完毕，现在可以正常调用扩展API 
+function onPlusReady() {
+	console.log("plusready");
+}
+// 拍照
+function captureImage(){
+	var cmr = plus.camera.getCamera();
+	var res = cmr.supportedImageResolutions[0];
+	var fmt = cmr.supportedImageFormats[0];
+	console.log("Resolution: "+res+", Format: "+fmt);
+	cmr.captureImage( function( path ){
+			alert( "Capture image success: " + path );  
+			 var img = document.createElement('img'); 
+            img.src = path//; "http://pic3.nipic.com/20090508/2444145_180525092_2.jpg"
+            img.onload =function() { 
+            	alert("-"); 
+            	document.body.appendChild(img); 
+                var data = getBase64Image(img); 
+                
+                $.ajax({
+			    type: "POST",
+			    url: "http://txcjsb.market.alicloudapi.com/image/scene",
+			    data:{  
+				   "type":1, //# 0: 通过url识别，参数image_url不为空；1: 通过图片content识别，参数content不为空
+				   "image_url":"http://a.com/a.jgp",  //#输入图像URL
+				   "content":data //#图像内容，base64编码
+				},
+			    success: function(data){
+			        alert(data);
+			        
+			    },
+			    error:function(v){
+			    	alert(v);
+			    },
+			    beforeSend: function(xhr){
+	//		       token = window.localStorage.getItem('token');
+			            xhr.setRequestHeader("Authorization", "APPCODE d3d17cb32ed343d4a8d540dc2eec0087");
+			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			    }});
+            } 
+            
+			
+			
+
+			
+		},
+		function( error ) {
+			alert( "Capture image failed: " + error.message );
+		},
+		{resolution:res,format:fmt}
+	);
+}
+
+function getBase64Image(img) {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var dataURL = canvas.toDataURL("image/png");
+            return dataURL // return dataURL.replace("data:image/png;base64,", ""); 
+        } 
+
+//test();
+function test(){
+	var img = document.createElement('img'); 
+            img.src = '../images/nebula-yneg.png'; 
+            img.onload =function() { 
+                var data = getBase64Image(img); 
+                console.log(data); 
+                $.ajax({
+			    type: "POST",
+			    url: "http://txcjsb.market.alicloudapi.com/image/scene",
+			    data:{  
+				   "type":1, //# 0: 通过url识别，参数image_url不为空；1: 通过图片content识别，参数content不为空
+				   "image_url":"",  //#输入图像URL
+				   "content":data //#图像内容，base64编码
+				},
+			    success: function(data){
+			        console.log(data);
+			    },
+			    beforeSend: function(xhr){
+	//		       token = window.localStorage.getItem('token');
+			            xhr.setRequestHeader("Authorization", "APPCODE d3d17cb32ed343d4a8d540dc2eec0087");
+			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			    }});
+            } 
+            document.body.appendChild(img); 
+
+			
+			
+}
+	</script>
+		<button onclick="captureImage()">拍照</button>
+	</body>
+
+</html>
