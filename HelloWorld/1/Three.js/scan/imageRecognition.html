@@ -17,6 +17,14 @@
 	</head>
 
 	<body>
+				<p>
+  <label>请选择一个图像文件：</label>
+  <input type="file" id="demo_input" />
+</p> 
+<div id="demo_result">
+	<img id="headimg" />
+   <!-- 这里用来显示读取结果 -->
+</div>
 		<script src="../js/mui/mui.js"></script>
 		<script src="../hello-mui/js/jquery-2.1.0.js"></script>
 		<script src="../js/base64.js"></script>
@@ -30,15 +38,27 @@ document.addEventListener( "plusready", onPlusReady, false );
 function onPlusReady() {
 	console.log("plusready");
 }
+
+var result = document.getElementById('demo_result');
+var input = document.getElementById('demo_input');
 // 拍照
 function captureImage(){
 	var cmr = plus.camera.getCamera();
 	var res = cmr.supportedImageResolutions[0];
 	var fmt = cmr.supportedImageFormats[0];
 	console.log("Resolution: "+res+", Format: "+fmt);
-	cmr.captureImage( function( path ){
-			alert( "Capture image success: " + path );  
-			 var img = document.createElement('img'); 
+	cmr.captureImage( function( e ){
+			//alert( "Capture image success: " + path );  
+			//var file = new File(path,"image/png");
+			//file.path = path;
+			 plus.io.resolveLocalFileSystemURL(e, function(entry) { 
+                var path = entry.toLocalURL(); 
+                document.getElementById("headimg").src = path; 
+                //就是这里www.bcty365.com 
+            }, function(e) { 
+                mui.toast("读取拍照文件错误：" + e.message); 
+            }); 
+			/* var img = document.createElement('img'); 
             img.src = path//; "http://pic3.nipic.com/20090508/2444145_180525092_2.jpg"
             img.onload =function() { 
             	alert("-"); 
@@ -66,7 +86,7 @@ function captureImage(){
 			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			    }});
             } 
-            
+            */
 			
 			
 
@@ -118,8 +138,44 @@ function test(){
 			
 			
 }
+
+
+
+
+console.log(document,result,input)
+if ( typeof FileReader === 'undefined' ){
+        result.innerHTML = "<p class='warn'>抱歉，你的浏览器不支持 FileReader</p>";
+        input.setAttribute( 'disabled','disabled' );} else {
+        input.addEventListener( 'change',readFileHandler,false );}
+        
+function readFileHandler(){
+	//var file = new File('D:\原型\原型\OA原型导出\images\oa系统\u14.png',);
+ 	//file.path = 'D:\原型\原型\OA原型导出\images\oa系统\u14.png';
+	readFile();
+}
+//读取图片，并且显示
+function readFile(file){
+	//var f = new File("D:/原型/原型/OA原型导出/images/oa系统/u14.png","image/png");
+	//console.log(f);
+        //var file = this.files[0];
+        //console.log(file);
+        alert(file.toString());
+        if(!/image\/\w+/.test(file.type)){
+                alert("请确保文件为图像类型");
+                return false;
+        }
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+                result.innerHTML = '<img src="'+this.result+'" alt=""/>'
+        }
+ }
+
+
+
 	</script>
 		<button onclick="captureImage()">拍照</button>
+
 	</body>
 
 </html>
