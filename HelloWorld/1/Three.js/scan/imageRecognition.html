@@ -41,6 +41,12 @@ function onPlusReady() {
 
 var result = document.getElementById('demo_result');
 var input = document.getElementById('demo_input');
+var img_div = document.getElementById("headimg");
+/*img_div.src = "D:/原型/原型/OA原型导出/images/oa系统/u14.png"; 
+                img_div.onload =function() { 
+                	
+                	mui.toast(img_div.width);
+                }*/
 // 拍照
 function captureImage(){
 	var cmr = plus.camera.getCamera();
@@ -49,15 +55,53 @@ function captureImage(){
 	console.log("Resolution: "+res+", Format: "+fmt);
 	cmr.captureImage( function( e ){
 			//alert( "Capture image success: " + path );  
+			///storage/emulated/0/Android/data/io.dcloud.H58A84A3C/apps/H58A84A3C/doc/1503395201551.jpg
 			//var file = new File(path,"image/png");
 			//file.path = path;
 			 plus.io.resolveLocalFileSystemURL(e, function(entry) { 
                 var path = entry.toLocalURL(); 
-                document.getElementById("headimg").src = path; 
+                mui.toast("读取拍照文件：" + path); 
+                
+                //readFile(new File(path,"image/png"));
+                // 可通过entry对象操作test.html文件 
+				entry.file( function(file){
+					var fileReader = new plus.io.FileReader();
+					alert("getFile:" + JSON.stringify(file));
+					fileReader.readAsDataURL(file)//readAsText(file, 'utf-8');
+					fileReader.onloadend = function(evt) {
+						alert("11" + evt);
+						//alert("this.result" + this.result);
+						//alert(evt.target.result);
+						 result.innerHTML = '<img src="'+evt.target.result+'" alt=""/>'
+					}
+					alert(file.size + '--' + file.name);
+				} );
+                /*img_div.src = path; 
+                img_div.onload =function() { 
+                	
+                	mui.toast(img_div.width);
+                }*/
+                
                 //就是这里www.bcty365.com 
             }, function(e) { 
                 mui.toast("读取拍照文件错误：" + e.message); 
             }); 
+           
+			// Read data from file
+			/*var reader = null;
+			plus.io.resolveLocalFileSystemURL(e, function(entry) { 
+				entry.file( function ( file ) {
+					reader = new plus.io.FileReader();
+					reader.onloadend = function ( e ) {
+						plus.console.log( "Read success" );
+						// Get data
+						plus.console.log( e.target.result );
+					};
+					reader.readAsText( file );
+					}, function ( e ) {
+						alert( e.message );
+				} );
+			}); */
 			/* var img = document.createElement('img'); 
             img.src = path//; "http://pic3.nipic.com/20090508/2444145_180525092_2.jpg"
             img.onload =function() { 
