@@ -55,6 +55,29 @@ animate();
 // FUNCTIONS 		
 function init() 
 {
+	
+	mui.init({
+					swipeBack:true ,//启用右滑关闭功能
+					 preloadPages:[
+				    {
+				      url:"../schedule/schedule.html",//"http://120.25.221.94/human/1/Three.js/circle/index.html",
+				      id:"schedule",
+				      styles:{},//窗口参数
+				      extras:{},//自定义扩展参数
+				      subpages:[{},{}]//预加载页面的子页面
+				    },
+				    {
+				      url:"../circle/index.html",//"http://120.25.221.94/human/1/Three.js/circle/index.html",
+				      id:"circle",
+				      styles:{},//窗口参数
+				      extras:{},//自定义扩展参数
+				      subpages:[{},{}]//预加载页面的子页面
+				    }
+				  ],
+				   preloadLimit:5//预加载窗口数量限制(一旦超出,先进先出)默认不限制
+				});
+	
+	
 	// SCENE
 	scene = new THREE.Scene();
 	// CAMERA
@@ -218,9 +241,22 @@ function init()
 				
 				//window.location.href = "schedule/schedule.html";
 //			}
-			setTimeout(function(){
-				window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html";
-			},1000);
+			var time = setTimeout(function(){
+				//window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html";
+				openSchedule()
+			},300);
+			
+			
+			function openSchedule(){
+				var schedule = plus.webview.getWebviewById("schedule");
+				clearTimeout(time);
+				if(schedule)
+					schedule.show();
+				else
+					time = setTimeout(function(){
+						openSchedule();
+					},1000);
+			}
 			
 		});
 		tween2.easing(TWEEN.Easing.Sinusoidal.InOut)
