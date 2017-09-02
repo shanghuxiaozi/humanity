@@ -36,6 +36,20 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			}        
 		},{enableHighAccuracy: true})*/
 		 map.enableScrollWheelZoom();  
+		 
+		 
+		 
+		 //-----------------
+		 var myStyleJson=[  
+{  
+    "featureType": "road",  
+    "elementType": "geometry.stroke",  
+    "stylers": {  
+        "color": "#ff0000"  
+    }  
+}];
+map.setMapStyle({styleJson: mapDefine });
+		 
 		var geoc = new BMap.Geocoder(); 
 		//单击获取点击的经纬度
 		map.addEventListener("click",function(e){
@@ -489,3 +503,75 @@ function extendTheIEArray(){
 	}; 
 }
 
+
+
+var  mapDefine = [
+		
+		//背景
+          {
+                    "featureType": "background",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#f3f1e3"//,
+                             // "lightness": 5,
+                              //"saturation": 3
+                    }
+          },
+
+//陆地
+          {
+                    "featureType": "land",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#f1efde"//,
+                              //"lightness": 5,
+                              //"saturation": 3
+                    }
+          },
+
+//水系
+          {
+                    "featureType": "water",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#69c0e0"//,
+                              //"lightness": 5,
+                              //"saturation": 3
+                    }
+          },
+
+//绿地 
+          {
+                    "featureType": "green",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#c9e9bf"//,
+                              //"lightness": 5,
+                              //"saturation": 3
+                    }
+          },
+
+//人造区域
+          {
+                    "featureType": "manmade",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#f7f3d5"//,
+                              //"lightness": 5,
+                              //"saturation": 3
+                    }
+          },
+//建筑物
+          {
+                    "featureType": "building",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#8f7751"//,
+                              //"lightness": 5,
+                              //"saturation": 3
+                    }
+          }
+
+
+
+]

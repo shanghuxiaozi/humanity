@@ -17,8 +17,8 @@
 			.mui-icon img{  width: 24px; height: 24px;}
 			/*#r-result{position:absolute;top: 20px;width: 100%;text-align: center;background: url("../images/schedule/dizuo.png") no-repeat center center ;background-size:100% 100%;}*/
 			#r-result{
-				position:absolute;top: 20px;width: 90%;height: 50px;
-			  left: 5%;
+				position:absolute;top: 0px;width: 100%;height: 50px;
+			  /*left: 5%;*/
 			  /*text-align: center;*/
 			  background-color: rgb(244, 241, 236);
 				border-radius: 5px;
@@ -30,21 +30,21 @@
 				text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
 				border-bottom: 1px solid rgba(0,0,0,0.25);
 			}
-			#suggestId{background: none;height: 35px;
+			/*#suggestId{background: none;height: 35px;
   font-size: large;text-align: left;
 			
-			}
+			}*/
 			#r-result p{
 				  height: 60%;
-				  border-left: 1px solid #C2ADAD;
+				  /*border-left: 1px solid #C2ADAD;*/
 				  margin-left: 23%;
 				  margin-top: 8px;
 			}
 			#r-result img{
-				  position: absolute;
-				  right: 10px;
-				  top: 10px;
-				  width: 25px;
+				  position: relative;
+				  left: -315px;
+				  top: 2px;
+				  width: 20px;
 			}
 			#selectArea{
 				border-style: solid;
@@ -57,11 +57,11 @@
   			 top: 5px;
 			}
 			#r-result a{
-				  color: rgb(71, 68, 68);
-			  position: absolute;
-			  top: 15px;
-			  left: 5px;
-			  font-size: large;
+				   color: rgb(94, 92, 92);
+				  position: absolute;
+				  top: 15px;
+				  left: 45px;
+				  font-size: large;
 			}
 			#notice{
 				position: absolute;
@@ -124,7 +124,15 @@
 				    line-height: 13px;
 				      color: rgb(73, 65, 65);
 			}
-			
+			.mui-bar-tab .mui-tab-item.mui-active {
+			  color: #151617 !important;
+			}
+			#arrowdown{
+				  font-size: 12px;
+			}
+			#suggestId{
+				  width: 90%;
+			}
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -183,22 +191,28 @@
 			</div>
 			<div id="r-result">
 				<!--<div class="mui-input-row mui-search">-->
-					<a href="../static/destination.html">宝安区<div id="selectArea"></div></a>
+					<a href="../static/destination.html">深圳
+						<span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>
+						<!--<div id="selectArea"></div>-->
+					</a>
 					
 					<p >
-				    <input type="search"   id="suggestId" placeholder="搜索景点" ></p>
-				    <img src="../images/schedule/ser.png" />
+					
+				    <input type="search" class="mui-input-clear"  id="suggestId" placeholder="搜索人文景点" >
+					<img src="../images/schedule/ser.png" />
+					</p>
+				    
 				<!--</div>-->
 			</div>
-			<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
-			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>
+			<!--<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
+			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>-->
 			<!--
             	作者：921233883@qq.com nohup node mycraft.js > sw.log 2>&1 &
 
             	时间：2017-08-01
             	描述：叫车
             -->
-			<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>
+			<!--<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>-->
 			<script>
 				
 				var allmap = document.getElementById("allmap");
@@ -312,7 +326,7 @@
 	        		map.addEventListenGetRoute(function(value,distance){
 	        			
 	        		});
-	        		map.trajectory();	
+	        		//map.trajectory();	显示赛程的
 	        	//map.getRoute(null,null,{lng: 114.036184, lat: 22.6139},{lng: 113.906253, lat: 22.485729});
 			}
 			</script>
