@@ -150,16 +150,16 @@
 		</header>-->
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item mui-active" href="javascript:void(0)">
-				<span class="mui-icon "><img src="../css/images/bottom/homel_icon.png"/></span>
+				<span class="mui-icon "><img src="../icon/tab_homeh_icon.png"/></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
 			<a class="mui-tab-item" href="../scan/imageRecognition.html" name="scan">
-				<span class="mui-icon "><img src="../css/images/bottom/sao_icon.png"/></span>
+				<span class="mui-icon "><img src="../icon/tab_saoyisao_icon.png"/></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
-			<a class="mui-tab-item" href="../circle/index.html">
-				<span class="mui-icon "><img src="../css/images/bottom/qz_icon.png"/><span class="mui-badge">9</span></span>
-				<span class="mui-tab-label">圈子</span>
+			<a class="mui-tab-item" href="javascript:void(0)" dataindex="2">
+				<span class="mui-icon "><img src="../icon/tab_fenxiang_icon.png"/><span class="mui-badge">9</span></span>
+				<span class="mui-tab-label">分享</span>
 			</a>
 			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&Interaction&Rotate&core,webgl">-->
 			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&Physics&Slingshot&core,webgl,matter.js,LayaRender.js">-->
@@ -171,8 +171,8 @@
 			<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?3d&particle&Particle_BurningGround&core,webgl,ani,d3">
 			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/test/ZhanPaiKeJi/index.html">-->
 			<!--<a class="mui-tab-item" href="https://ritterliu.github.io/WebVR_Demo/">-->
-				<span class="mui-icon "><img src="../css/images/bottom/me_icon.png"/></span>
-				<span class="mui-tab-label">我的</span>
+				<span class="mui-icon "><img src="../icon/tab_me_icon.png"/></span>
+				<span class="mui-tab-label">我</span>
 			</a>
 		</nav>
 		<div class="mui-content">
@@ -201,7 +201,7 @@
 			<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>
 			<script>
 				
-						var allmap = document.getElementById("allmap");
+				var allmap = document.getElementById("allmap");
 				allmap.style.height = window.innerHeight+"px";
 				//LInit(1000/60, "legend", 750,1334, main);
 				var layer,map;
@@ -254,7 +254,7 @@
 					swipeBack:true ,//启用右滑关闭功能
 					 preloadPages:[
 				    {
-				      url:"../circle/index.html",
+				      url:"../circle/index.html",//"http://120.25.221.94/human/1/Three.js/circle/index.html",
 				      id:"circle",
 				      styles:{},//窗口参数
 				      extras:{},//自定义扩展参数
@@ -268,23 +268,28 @@
 				document.addEventListener( "plusready", onPlusReady, false );
 				// 扩展API加载完毕，现在可以正常调用扩展API
 				function onPlusReady() {
-					circle = plus.webview.getWebviewByid('circle');
-					setTimeout(function(){
+					circle = plus.webview.getWebviewById('circle');
+					/*setTimeout(function(){
 						var array = plus.webview.all();
 						if(array){
 							for(var i=0,len=array.length;i<len;i++){
 							    	alert(array[i].getURL());
 						        }
 						}
-					},10000)
+					},10000)*/
 				};
 				
 				
 				
 				mui('body').on('tap','a',function(){
 				    //window.top.location.href=this.href;console.log(this)
-				    if(this.href == "../circle/index.html"){
+				    console.log(this.getAttribute("dataindex"))
+				    if(this.getAttribute("dataindex")=="2"/*this.href == "../circle/index.html"*/){
+				    	circle = plus.webview.getWebviewById('circle');
+				    	alert(circle==null);
 				    	if(circle)circle.show();
+				    	
+				    	//.openWindow("../circle/index.html");
 				    }else
 				    	mui.openWindow(this.href);
 //				    if(this.name == "scan"){
