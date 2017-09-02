@@ -20,8 +20,9 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		var map = new BMap.Map(id);
 		_this.map = map;
 		//map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
-		var point = new BMap.Point(114.1,   22.58);
-		map.centerAndZoom(point,12);
+		var point = new BMap.Point(116.403562,39.924805);
+		map.centerAndZoom(point,15);
+//map.centerAndZoom("北京",15); 
 		//map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
 		/*var geolocation = new BMap.Geolocation();
 		geolocation.getCurrentPosition(function(r){
@@ -562,16 +563,61 @@ var  mapDefine = [
                     }
           },
 //建筑物
-          {
-                    "featureType": "building",
+//        {
+//                  "featureType": "building",
+//                  "elementType": "all",
+//                  "stylers": {
+//                            "color": "#8f7751"
+//                  }
+//        },
+     // 高速及国道
+           {
+                    "featureType": "highway",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#8f7751"//,
-                              //"lightness": 5,
-                              //"saturation": 3
+                              "color": "#f2dea3"
+                             // "lightness": 5
+                    }
+          },
+          //城市主路
+          {
+                    "featureType": "arterial",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#f2dea3"
+                    }
+          },
+          //地铁
+ 		{
+                    "featureType": "subway",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#f2dea3",
+                              "lightness": 5,
+                              "visibility": "off"
+                    }
+         },
+         //铁路
+         {
+                    "featureType": "railway",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#f2dea3",
+                              "lightness": 5,
+                              "visibility": "off"
+                    }
+         },
+         //兴趣点
+         {
+                    "featureType": "poi",
+                    "elementType": "labels",
+                    "stylers": {
+                              "color": "#cccccc",
+                              "weight": "0.1",
+                              "lightness": -18,
+                              "visibility": "off"
                     }
           }
-
 
 
 ]
