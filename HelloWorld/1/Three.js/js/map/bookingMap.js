@@ -37,32 +37,62 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			}        
 		},{enableHighAccuracy: true})*/
 		 map.enableScrollWheelZoom();  
-		 var myKeys = ["酒店", "加油站"];
+		 /*var myKeys = ["酒店", "加油站"];
 		var local = new BMap.LocalSearch(map, {
 			renderOptions:{map: map},
 			pageCapacity:5
 		});
-		local.searchInBounds(myKeys, map.getBounds());
-		 
-		 
+		local.searchInBounds(myKeys, map.getBounds());*/
+		
+//		var local = new BMap.LocalSearch(map, {
+//		renderOptions:{map: map}
+//		,onSearchComplete: myFunHandler
+//	});
+	
+//	//回调
+//	function myFunHandler(){
+//		map.clearOverlays();    //清除地图上所有覆盖物
+//		console.log(local.getResults());
+//	}
+//	
+//	
+//	var pStart = new BMap.Point(116.393562,39.914805);
+//	var pEnd = new BMap.Point(116.413562,39.934805);
+//	var bs = new BMap.Bounds(pStart,pEnd);   //自己规定范围
+//	local.searchInBounds(["景点","山","水"], bs);
+//
+//	var polygon = new BMap.Polygon([
+//		new BMap.Point(pStart.lng,pStart.lat),
+//		new BMap.Point(pEnd.lng,pStart.lat),
+//		new BMap.Point(pEnd.lng,pEnd.lat),
+//		new BMap.Point(pStart.lng,pEnd.lat)
+//		], {strokeColor:"blue", strokeWeight:1, strokeOpacity:0.1});
+//	map.addOverlay(polygon);
+		var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(300,157));
+		 _this.createMark("景点",point,myIcon);
+		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(300,157));
+		 _this.createMark("山",point,myIcon1);
 		 //-----------------
 		 var myStyleJson=[  
-{  
-    "featureType": "road",  
-    "elementType": "geometry.stroke",  
-    "stylers": {  
-        "color": "#ff0000"  
-    }  
-}];
-map.setMapStyle({styleJson: mapDefine });
+		{  
+		    "featureType": "road",  
+		    "elementType": "geometry.stroke",  
+		    "stylers": {  
+		        "color": "#ff0000"  
+		    }  
+		}];
+	map.setMapStyle({styleJson: mapDefine });
 		 
 		var geoc = new BMap.Geocoder(); 
 		//单击获取点击的经纬度
 		map.addEventListener("click",function(e){
 			//alert(e.point.lng + "," + e.point.lat);
 			//console.log(e.point);
-			//console.log('覆盖物',map.getOverlays());
+			console.log('覆盖物',map.getOverlays());return;
 			var os = map.getOverlays();
+			
+			
+			
 //			for(var i = 0; i < os.length ; i++){
 //			             //不同覆盖物调用不同的计算方法
 //			             switch (os[i].toString()) {
@@ -163,7 +193,7 @@ map.setMapStyle({styleJson: mapDefine });
 					if( typeof _this.pointHandler === 'function' ){
 						_this.pointHandler(pp);
 					}
-					map.centerAndZoom(pp, 18);
+					map.centerAndZoom(pp, 15);
 					map.addOverlay(new BMap.Marker(pp));    //添加标注
 				}
 				var local = new BMap.LocalSearch(map, { //智能搜索
@@ -488,7 +518,38 @@ this._div.style.left = pixel.x -15 + "px";
     }
 
 
+Bookingmap.prototype.createMark = function(nme,p,myIcon){
+	var map = this.map;
+	console.log(p)
+	var local = new BMap.LocalSearch(map, {
+		//renderOptions:{map: map},
+		onSearchComplete: myFunHandler
+	});
+	function myFunHandler(){
+		//map.clearOverlays();
+		console.log(local.getResults()[0].getPoi(0),local.getResults()[0].vr);
+		
+			for(var i = 0,m = local.getResults()[0].vr.length;i<m;i++){
+				var pt = local.getResults()[0].vr[i].point;
+				var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+				map.addOverlay(marker); 
+			}
+		}
+	
+	
+	var pStart = new BMap.Point(p.lng-0.1,p.lat-0.1);
+	var pEnd = new BMap.Point(p.lng+0.1,p.lat+0.1);
+	var bs = new BMap.Bounds(pStart,pEnd);   //自己规定范围
+	local.searchInBounds([nme], bs);
 
+//	var polygon = new BMap.Polygon([
+//		new BMap.Point(pStart.lng,pStart.lat),
+//		new BMap.Point(pEnd.lng,pStart.lat),
+//		new BMap.Point(pEnd.lng,pEnd.lat),
+//		new BMap.Point(pStart.lng,pEnd.lat)
+//		], {strokeColor:"blue", strokeWeight:1, strokeOpacity:0.1});
+//	map.addOverlay(polygon);
+}
 
 
 
