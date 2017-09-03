@@ -37,7 +37,12 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			}        
 		},{enableHighAccuracy: true})*/
 		 map.enableScrollWheelZoom();  
-		 
+		 var myKeys = ["酒店", "加油站"];
+		var local = new BMap.LocalSearch(map, {
+			renderOptions:{map: map},
+			pageCapacity:5
+		});
+		local.searchInBounds(myKeys, map.getBounds());
 		 
 		 
 		 //-----------------
