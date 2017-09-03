@@ -72,6 +72,10 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 _this.createMark("景点",point,myIcon);
 		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(300,157));
 		 _this.createMark("山",point,myIcon1);
+		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(300,157));
+		 _this.createMark("山脉",point,myIcon2);
+		 var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(300,157));
+		 _this.createMark("洞",point,myIcon3);
 		 //-----------------
 		 var myStyleJson=[  
 		{  
