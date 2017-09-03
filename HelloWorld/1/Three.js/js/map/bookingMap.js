@@ -537,6 +537,17 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 				var pt = local.getResults()[0].vr[i].point;
 				var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
 				map.addOverlay(marker); 
+				var label = new BMap.Label(local.getResults()[0].vr[i].title,{offset:new BMap.Size(10,-10)});
+				label.setStyle({
+					border:false,
+					backgroundColor:false,
+				// color : "red",
+				 fontSize : "12px",
+				 height : "20px",
+				// lineHeight : "20px",
+				 fontFamily:"微软雅黑"
+			 });
+				marker.setLabel(label);
 			}
 		}
 	
