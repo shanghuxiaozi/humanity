@@ -49,6 +49,7 @@ var RADIUS = 90;
 var globe;
 var projector, mouse = { x: 0, y: 0 };
 var targetList = [];
+var schedule;
 init();
 animate();
 
@@ -76,7 +77,14 @@ function init()
 				  ],
 				   preloadLimit:5//预加载窗口数量限制(一旦超出,先进先出)默认不限制
 				});
-	
+//	document.addEventListener( "plusready", onPlusReady, false );
+//				// 扩展API加载完毕，现在可以正常调用扩展API
+//				function onPlusReady() {
+//					schedule = plus.webview.getWebviewById("schedule");
+//					if(schedule)
+//					schedule.show();
+//					
+//				};
 	
 	// SCENE
 	scene = new THREE.Scene();
@@ -248,14 +256,17 @@ function init()
 			
 			
 			function openSchedule(){
-				var schedule = plus.webview.getWebviewById("schedule");
+				schedule = plus.webview.getWebviewById("schedule");
+				
 				clearTimeout(time);
-				if(schedule)
+				if(schedule){
 					schedule.show();
-				else
+				}else{
 					time = setTimeout(function(){
 						openSchedule();
 					},1000);
+				}
+					
 			}
 			
 		});

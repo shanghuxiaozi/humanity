@@ -68,13 +68,13 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		new BMap.Point(pStart.lng,pEnd.lat)
 //		], {strokeColor:"blue", strokeWeight:1, strokeOpacity:0.1});
 //	map.addOverlay(polygon);
-		var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(300,157));
+		var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(24*2,32*2),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17)});
 		 _this.createMark("景点",point,myIcon);
-		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(300,157));
+		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(26*2,36*2),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17)});
 		 _this.createMark("山",point,myIcon1);
-		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(300,157));
+		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(52*4,62*4),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17)});
 		 _this.createMark("山脉",point,myIcon2);
-		 var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(300,157));
+		 var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(28*2,36*2),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17)});
 		 _this.createMark("洞",point,myIcon3);
 		 //-----------------
 		 var myStyleJson=[  
@@ -92,6 +92,8 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		map.addEventListener("click",function(e){
 			//alert(e.point.lng + "," + e.point.lat);
 			//console.log(e.point);
+			var input = document.getElementById("suggestId");
+			input.blur();
 			console.log('覆盖物',map.getOverlays());return;
 			var os = map.getOverlays();
 			
@@ -175,6 +177,8 @@ Bookingmap.prototype.initBaiduMap=function(id){
 
 			var myValue;
 			ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+				var input = document.getElementById("suggestId");
+			input.blur();
 			var _value = e.item.value;
 				myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
 				G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
