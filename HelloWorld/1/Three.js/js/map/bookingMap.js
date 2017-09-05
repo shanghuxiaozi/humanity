@@ -17,10 +17,10 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		function G(id) {
 			return document.getElementById(id);
 		}
-		var map = new BMap.Map(id);
+		var map = new BMap.Map(id, {enableMapClick:false});
 		_this.map = map;
 		//map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
-		var point = new BMap.Point(116.403562,39.924805);
+		var point = new BMap.Point(114.06444, 22.548488);
 		map.centerAndZoom(point,15);
 //map.centerAndZoom("北京",15); 
 		//map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
@@ -197,8 +197,14 @@ Bookingmap.prototype.initBaiduMap=function(id){
 					if( typeof _this.pointHandler === 'function' ){
 						_this.pointHandler(pp);
 					}
-					map.centerAndZoom(pp, 15);
+					map.centerAndZoom(pp, 14);
 					map.addOverlay(new BMap.Marker(pp));    //添加标注
+					 _this.createMark("景点",pp,myIcon);
+					 _this.createMark("山",pp,myIcon1);
+		 
+		 _this.createMark("山脉",pp,myIcon2);
+		
+		 _this.createMark("洞",pp,myIcon3);
 				}
 				var local = new BMap.LocalSearch(map, { //智能搜索
 				  onSearchComplete: myFun

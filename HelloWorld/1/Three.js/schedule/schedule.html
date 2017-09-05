@@ -37,14 +37,15 @@
 			#r-result p{
 				  height: 60%;
 				  /*border-left: 1px solid #C2ADAD;*/
-				  margin-left: 23%;
+				  margin-left: 48px;
 				  margin-top: 8px;
 			}
 			#r-result img{
-				  position: relative;
-				  left: -315px;
-				  top: 2px;
+				   position: relative;
+				  top: 8px;
+				  left: 20px;
 				  width: 20px;
+				  float: left;
 			}
 			#selectArea{
 				border-style: solid;
@@ -60,7 +61,7 @@
 				   color: rgb(94, 92, 92);
 				  position: absolute;
 				  top: 15px;
-				  left: 45px;
+				  left: 15px;
 				  font-size: large;
 			}
 			#notice{
@@ -133,9 +134,6 @@
 			#suggestId{
 				  width: 90%;
 			}
-			.anchorBL{
-				display: none;
-			}
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -194,16 +192,18 @@
 			</div>
 			<div id="r-result">
 				<!--<div class="mui-input-row mui-search">-->
-					<a href="../static/destination.html">北京
+					<a href="../static/destination.html">深圳
 						<span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>
 						<!--<div id="selectArea"></div>-->
 					</a>
 					
 					<p >
-					
-				    <input type="search" class="mui-input-clear"  id="suggestId" placeholder="搜索人文景点" >
+                  
+                    
+				    <input type="search" class="mui-input-clear "  id="suggestId" placeholder="搜索人文景点" >
 					<img src="../images/schedule/ser.png" />
 					</p>
+                    
 				    
 				<!--</div>-->
 			</div>
