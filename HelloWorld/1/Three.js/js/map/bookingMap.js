@@ -13,6 +13,11 @@ Bookingmap.prototype.initBaiduMap=function(id){
 	
 	var control_t = -1,isOver = false;
 	var _this = this;
+	var icons = [];//图标
+	_this.sizeList = [];
+	var searchLsit = [];
+	_this.markList = [];
+
 		// 百度地图API功能
 		function G(id) {
 			return document.getElementById(id);
@@ -39,9 +44,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		},{enableHighAccuracy: true})*/
 		 map.enableScrollWheelZoom();  
 		 
-		 map.addEventListener("zoomend",function(e){
-		 	console.log(map.getZoom());
-		 });
+		
 		 /*var myKeys = ["酒店", "加油站"];
 		var local = new BMap.LocalSearch(map, {
 			renderOptions:{map: map},
@@ -76,15 +79,48 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		//var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(26*2,32*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-5, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
 		 _this.createMark("景点",point,myIcon);
+		 icons.push(myIcon);
+		// sizeList.push(new BMap.Size(33, 35.5));
 		 //var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(26*2,36*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(78,62),{imageSize:new BMap.Size(39, 31)});
 		 _this.createMark("山",point,myIcon1);
+		 icons.push(myIcon1);
+		 // sizeList.push(new BMap.Size(39, 31));
 		 //var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(52*4,62*4),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(239,110),{imageSize:new BMap.Size(169.5, 55)});
 		 _this.createMark("山脉",point,myIcon2);
+		 icons.push(myIcon2);
+		// sizeList.push(new BMap.Size(169.5, 55));
 		 //var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(28*2,40*2),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 0),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(74,53),{imageSize:new BMap.Size(37, 26.5)});
 		 _this.createMark("洞",point,myIcon3);
+		 icons.push(myIcon3);
+		  //sizeList.push(new BMap.Size(37, 26.5));
+		 
+		 map.addEventListener("zoomend",function(e){
+		 	console.log(map.getZoom());
+//		 	for( var i= 0,m=icons.length;i<m;i++ ){
+//		 		var icon = icons[i];
+//		 		var size = sizeList[i];
+//		 		size.width *= map.getZoom()/15;
+//		 		size.height *= map.getZoom()/15;
+//		 		icon.setImageSize(size);
+//		 	}
+			for( var i= 0,m=_this.markList.length;i<m;i++ ){
+				var mark = _this.markList[i];
+				var icon = mark.getIcon();
+				//icon.size.width *= map.getZoom()/15;
+				//icon.size.height *= map.getZoom()/15;
+				//icon.imageUrl
+				var size = _this.sizeList[i];
+				if(i==0)console.log(icon.imageSize);
+				var zoom = map.getZoom()/15;
+				zoom = (zoom==1?zoom:zoom<1?zoom/2:zoom*2)
+				icon.setImageSize(new BMap.Size(size.width*zoom, size.height*zoom));
+				mark.setIcon(icon);
+			}
+		 });
+		 
 		 //-----------------
 		 var myStyleJson=[  
 		{  
@@ -187,11 +223,10 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			var myValue;
 			ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
 				var input = document.getElementById("suggestId");
-			input.blur();
-			var _value = e.item.value;
+				input.blur();
+				var _value = e.item.value;
 				myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
 				G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
-				
 				
 				if( typeof _this.handler === 'function' ){//console.log("点击下来选项");
 					_this.handler(myValue,null);
@@ -202,6 +237,8 @@ Bookingmap.prototype.initBaiduMap=function(id){
 
 			function setPlace(){
 				map.clearOverlays();    //清除地图上所有覆盖物
+				_this.markList = [];
+				_this.sizeList = [];
 				function myFun(){
 					var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
 					//console.log("位置经纬度=",pp);
@@ -215,9 +252,9 @@ Bookingmap.prototype.initBaiduMap=function(id){
 					 _this.createMark("景点",pp,myIcon);
 					 _this.createMark("山",pp,myIcon1);
 		 
-		 _this.createMark("山脉",pp,myIcon2);
-		
-		 _this.createMark("洞",pp,myIcon3);
+					 _this.createMark("山脉",pp,myIcon2);
+					
+					 _this.createMark("洞",pp,myIcon3);
 				}
 				var local = new BMap.LocalSearch(map, { //智能搜索
 				  onSearchComplete: myFun
@@ -543,7 +580,8 @@ this._div.style.left = pixel.x -15 + "px";
 
 Bookingmap.prototype.createMark = function(nme,p,myIcon){
 	var map = this.map;
-	console.log(p)
+	var _this = this;
+	//console.log(p)
 	var local = new BMap.LocalSearch(map, {
 		//renderOptions:{map: map},
 		onSearchComplete: myFunHandler
@@ -567,6 +605,8 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 				 fontFamily:"微软雅黑"
 			 });
 				marker.setLabel(label);
+				_this.markList.push(marker);
+				_this.sizeList.push(new BMap.Size(marker.getIcon().imageSize.width,marker.getIcon().imageSize.height) );
 			}
 		}
 	
