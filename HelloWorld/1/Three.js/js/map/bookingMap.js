@@ -100,6 +100,9 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 
 		 map.addEventListener("zoomend",function(e){
 		 	console.log(map.getZoom());
+		 	if(map.getZoom()>=16){
+		 		map.setZoom(16);
+		 	}
 //		 	for( var i= 0,m=icons.length;i<m;i++ ){
 //		 		var icon = icons[i];
 //		 		var size = sizeList[i];
