@@ -670,7 +670,7 @@ var  mapDefine = [
                     "featureType": "land",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#f1efde"//,
+                              "color": "#EBE7D1"//,f1efde
                               //"lightness": 5,
                               //"saturation": 3
                     }
@@ -681,7 +681,7 @@ var  mapDefine = [
                     "featureType": "water",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#69c0e0"//,
+                              "color": "#B6D9DF"//,#69c0e0
                               //"lightness": 5,
                               //"saturation": 3
                     }
@@ -692,7 +692,7 @@ var  mapDefine = [
                     "featureType": "green",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#c9e9bf"//,
+                              "color": "#B8CFA9"//,#c9e9bf
                               //"lightness": 5,
                               //"saturation": 3
                     }
@@ -703,34 +703,37 @@ var  mapDefine = [
                     "featureType": "manmade",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#f7f3d5"//,
+                              "color": "#EBE7D1"//,f7f3d5
                               //"lightness": 5,
                               //"saturation": 3
                     }
           },
 //建筑物
-//        {
-//                  "featureType": "building",
-//                  "elementType": "all",
-//                  "stylers": {
-//                            "color": "#8f7751"
-//                  }
-//        },
+          {
+                    "featureType": "building",
+                    "elementType": "all",
+                    "stylers": {
+                              "color": "#EBE7D1"
+                    }
+          },
      // 高速及国道
            {
                     "featureType": "highway",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#f2dea3"//#f7e5B1
+                              "color": "#FAE5B4"//#f7e5B1
                              // "lightness": 5
                     }
           },
           //城市主路
           {
                     "featureType": "arterial",
-                    "elementType": "all",
+                    "elementType": "labels.text.stroke",
                     "stylers": {
-                              "color": "#f7e5B1"
+                              "color": "#FCFAF7",//#f7e5B1
+                              "weight": "0.1",
+                              "lightness": -18
+                              
                     }
           },
           //地铁
