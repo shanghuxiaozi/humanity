@@ -17,6 +17,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 	_this.sizeList = [];
 	var searchLsit = [];
 	_this.markList = [];
+	_this.originSize = [];
 
 		// 百度地图API功能
 		function G(id) {
@@ -248,12 +249,14 @@ Bookingmap.prototype.initBaiduMap=function(id){
 						_this.pointHandler(pp);
 					}
 					map.centerAndZoom(pp, 14);
-					map.addOverlay(new BMap.Marker(pp));    //添加标注
+					map.addOverlay(new BMap.Marker(pp));//添加标注
+					myIcon.setImageSize(new BMap.Size(33, 35.5));
 					 _this.createMark("景点",pp,myIcon);
+					 myIcon1.setImageSize(new BMap.Size(39, 31));
 					 _this.createMark("山",pp,myIcon1);
-		 
+		 			myIcon2.setImageSize(new BMap.Size(169.5, 55));
 					 _this.createMark("山脉",pp,myIcon2);
-					
+					myIcon3.setImageSize(new BMap.Size(37, 26.5));
 					 _this.createMark("洞",pp,myIcon3);
 				}
 				var local = new BMap.LocalSearch(map, { //智能搜索
