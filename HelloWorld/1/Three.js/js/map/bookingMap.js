@@ -18,6 +18,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			return document.getElementById(id);
 		}
 		var map = new BMap.Map(id, {enableMapClick:false});
+		map.setMapStyle({styleJson: mapDefine });
 		_this.map = map;
 		//map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
 		var point = new BMap.Point(114.06444, 22.548488);
@@ -37,6 +38,10 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			}        
 		},{enableHighAccuracy: true})*/
 		 map.enableScrollWheelZoom();  
+		 
+		 map.addEventListener("zoomend",function(e){
+		 	console.log(map.getZoom());
+		 });
 		 /*var myKeys = ["酒店", "加油站"];
 		var local = new BMap.LocalSearch(map, {
 			renderOptions:{map: map},
@@ -68,13 +73,17 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		new BMap.Point(pStart.lng,pEnd.lat)
 //		], {strokeColor:"blue", strokeWeight:1, strokeOpacity:0.1});
 //	map.addOverlay(polygon);
-		var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(26*2,32*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-5, 0 - 17)});
+		//var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(26*2,32*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-5, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
+		 var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
 		 _this.createMark("景点",point,myIcon);
-		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(26*2,36*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17)});
+		 //var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(26*2,36*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
+		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(78,62),{imageSize:new BMap.Size(39, 31)});
 		 _this.createMark("山",point,myIcon1);
-		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(52*4,62*4),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17)});
+		 //var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(52*4,62*4),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
+		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(239,110),{imageSize:new BMap.Size(169.5, 55)});
 		 _this.createMark("山脉",point,myIcon2);
-		 var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(28*2,36*2),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17)});
+		 //var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(28*2,40*2),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 0),imageSize:new BMap.Size(0.5, 0.5)});
+		 var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(74,53),{imageSize:new BMap.Size(37, 26.5)});
 		 _this.createMark("洞",point,myIcon3);
 		 //-----------------
 		 var myStyleJson=[  
@@ -85,7 +94,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		        "color": "#ff0000"  
 		    }  
 		}];
-	map.setMapStyle({styleJson: mapDefine });
+	//map.setMapStyle({styleJson: mapDefine });
 		 
 		var geoc = new BMap.Geocoder(); 
 		//单击获取点击的经纬度
@@ -666,7 +675,7 @@ var  mapDefine = [
                     "featureType": "highway",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#f2dea3"
+                              "color": "#f2dea3"//#f7e5B1
                              // "lightness": 5
                     }
           },
@@ -675,7 +684,7 @@ var  mapDefine = [
                     "featureType": "arterial",
                     "elementType": "all",
                     "stylers": {
-                              "color": "#f2dea3"
+                              "color": "#f7e5B1"
                     }
           },
           //地铁
