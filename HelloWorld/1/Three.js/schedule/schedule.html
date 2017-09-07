@@ -134,6 +134,7 @@
 			#suggestId{
 				  width: 90%;
 				  background-color: rgba(0, 0, 0, 0.07) !important;
+				  border-radius: 15px !important;
 			}
 		</style>
 		<!--标准mui.css-->
@@ -205,8 +206,8 @@
             	描述：叫车
             -->
 			<!--<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>-->
-			<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
-		<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
+			<!--<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>-->
 		<!-------------------------------------------------------------百度地图相关js-------------------------------------------------------------->	
 		<script src="../js/map/baidu.js" charset="utf-8" type="text/javascript"></script>
 		<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
@@ -269,19 +270,20 @@
 			}
 			initMap();
 			function initMap(){
-				mui.init({
-					swipeBack:true ,//启用右滑关闭功能
-					 preloadPages:[
-				    {
-				      url:"../circle/index.html",//"http://120.25.221.94/human/1/Three.js/circle/index.html",
-				      id:"circle",
-				      styles:{},//窗口参数
-				      extras:{},//自定义扩展参数
-				      subpages:[{},{}]//预加载页面的子页面
-				    }
-				  ],
-				   preloadLimit:5//预加载窗口数量限制(一旦超出,先进先出)默认不限制
-				});
+//				mui.init({
+//					swipeBack:true ,//启用右滑关闭功能
+//					 preloadPages:[
+//				    {
+//				      url:"../circle/index.html",//"http://120.25.221.94/human/1/Three.js/circle/index.html",
+//				      id:"circle",
+//				      styles:{},//窗口参数
+//				      extras:{},//自定义扩展参数
+//				      subpages:[{},{}]//预加载页面的子页面
+//				    }
+//				  ],
+//				   preloadLimit:5//预加载窗口数量限制(一旦超出,先进先出)默认不限制
+//				});
+				mui.init();
 				var circle;
 				
 				document.addEventListener( "plusready", onPlusReady, false );

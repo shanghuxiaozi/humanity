@@ -81,21 +81,25 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
 		 _this.createMark("景点",point,myIcon);
 		 icons.push(myIcon);
+		 _this.myIcon = myIcon;
 		// sizeList.push(new BMap.Size(33, 35.5));
 		 //var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(26*2,36*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(78,62),{imageSize:new BMap.Size(39, 31)});
 		 _this.createMark("山",point,myIcon1);
 		 icons.push(myIcon1);
+		 _this.myIcon1 = myIcon1;
 		 // sizeList.push(new BMap.Size(39, 31));
 		 //var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(52*4,62*4),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(239,110),{imageSize:new BMap.Size(169.5, 55)});
 		 _this.createMark("山脉",point,myIcon2);
 		 icons.push(myIcon2);
+		 _this.myIcon2 = myIcon2;
 		// sizeList.push(new BMap.Size(169.5, 55));
 		 //var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(28*2,40*2),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 0),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(74,53),{imageSize:new BMap.Size(37, 26.5)});
 		 _this.createMark("洞",point,myIcon3);
 		 icons.push(myIcon3);
+		 _this.myIcon3 = myIcon3;
 		  //sizeList.push(new BMap.Size(37, 26.5));
 		 //岛
 		 _this.myIconIsland = new BMap.Icon("../icon/mark/island.png", new BMap.Size(80,51),{imageSize:new BMap.Size(40, 25.5)});
@@ -600,11 +604,11 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 	});
 	function myFunHandler(){
 		//map.clearOverlays();
-		console.log(local.getResults()[0].getPoi(0),local.getResults()[0].vr);
+		//console.log(local.getResults()[0].getPoi(0),local.getResults()[0].vr);
 		
 			for(var i = 0,m = local.getResults()[0].vr.length;i<m;i++){
 				
-				var result  = local.getResults()[0].vr[i];console.log(result);
+				var result  = local.getResults()[0].vr[i];//console.log(result);
 				if(nme=="山"||nme=="山脉")
 				{
 					var isHill = false;
@@ -630,6 +634,12 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 						}
 					}
 					if(!isHole)continue;
+				}else if(nme=="景点"){console.log(result.title,result.title.indexOf("山"));
+					if(result.title.indexOf("山")!=-1){
+						myIcon = _this.myIcon1;
+					}else{
+						myIcon = _this.myIcon;
+					}
 				}
 				var pt = local.getResults()[0].vr[i].point;
 				var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
