@@ -153,8 +153,9 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			//console.log(e.point);
 			var input = document.getElementById("suggestId");
 			input.blur();
+			_this.clickhandler();
 			console.log('覆盖物',map.getOverlays());return;
-			var os = map.getOverlays();
+			//var os = map.getOverlays();
 			
 			
 			
@@ -589,14 +590,27 @@ Bookingmap.prototype.trajectory = function(){
       var map = this._map;
       var pixel = map.pointToOverlayPixel(this._point);
 //    this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
-this._div.style.left = pixel.x -15 + "px";
+	  this._div.style.left = pixel.x -15 + "px";
       this._div.style.top  = pixel.y -30+ "px";
     }
+
+/*点击图标后*/
+Bookingmap.prototype.clickMark = function(handler){
+	var _this = this;
+	_this.clickMarkHandler = handler;
+}
+
+/*点击地图*/
+Bookingmap.prototype.clickhandler = function(handler){
+	var _this = this;
+	_this.clickhandler = handler;
+}
 
 
 Bookingmap.prototype.createMark = function(nme,p,myIcon){
 	var map = this.map;
 	var _this = this;
+	
 	//console.log(p)
 	var local = new BMap.LocalSearch(map, {
 		//renderOptions:{map: map},
@@ -634,7 +648,7 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 						}
 					}
 					if(!isHole)continue;
-				}else if(nme=="景点"){console.log(result.title,result.title.indexOf("山"));
+				}else if(nme=="景点"){
 					if(result.title.indexOf("山")!=-1){
 						myIcon = _this.myIcon1;
 					}else{
@@ -656,9 +670,13 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 			 });
 				marker.setLabel(label);
 				marker.addEventListener("click",attribute);
-				function attribute(){
+				function attribute(e){
+					console.log(e);
+					//e.stopPropagation();
+					 e.domEvent.stopPropagation();
 					var p = marker.getPosition();  //获取marker的位置
-					alert("marker的位置是" + p.lng + "," + p.lat);    
+					//alert("marker的位置是" + p.lng + "," + p.lat);  
+					_this.clickMarkHandler(result);
 				}
 				_this.markList.push(marker);
 				_this.sizeList.push(new BMap.Size(marker.getIcon().imageSize.width,marker.getIcon().imageSize.height) );

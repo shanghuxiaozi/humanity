@@ -44,13 +44,13 @@
 				   position: relative;
 				  top: 8px;
 				  left: 20px;
-				  width: 20px;
+				  width: 15px;
 				  float: left;
 			}
 			#selectArea{
 				border-style: solid;
             border-width: 8px 5px 8px 5px;
-            border-color: rgb(71, 69, 69)  transparent transparent transparent;
+            border-color: rgb(71, 69, 69)  transparent;
             width: 0px;
             height: 0px;
               position: absolute;
@@ -130,11 +130,20 @@
 			}
 			#arrowdown{
 				  font-size: 12px;
+				   margin-left: -4px;
 			}
 			#suggestId{
 				  width: 90%;
 				  background-color: rgba(0, 0, 0, 0.07) !important;
 				  border-radius: 15px !important;
+			}
+			#info{
+				width: 100%;
+			  height: 160px;
+			  position: fixed;
+			  bottom: -50px;
+			  display: none;
+			  background-color: rgb(250, 249, 249);
 			}
 		</style>
 		<!--标准mui.css-->
@@ -197,6 +206,7 @@
 				    
 				<!--</div>-->
 			</div>
+			<div id="info"></div>
 			<!--<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
 			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>-->
 			<!--
@@ -223,6 +233,7 @@
 				
 				var allmap = document.getElementById("allmap");
 				allmap.style.height = window.innerHeight+"px";
+				var info = document.getElementById("info");
 				//LInit(1000/60, "legend", 750,1334, main);
 				var layer,map;
 				function main () {
@@ -331,6 +342,28 @@
 	        		
 	        		//获取起点和终点的位置信息计算驾车时间与距离
 	        		map.addEventListenGetRoute(function(value,distance){
+	        			
+	        		});
+	        		
+	        		map.clickhandler(function(){
+	        			info.style.display = "none";
+	        			info.style.bottom = '-50px';
+	        		})
+	        		
+	        		
+	        		map.clickMark(function(o){
+	        			info.style.display = "block";
+	        			
+	        			var i = -50;
+	        			var time = setInterval(function(){
+	        				i+=2;
+	        				if(i>50){
+	        					clearInterval(time);
+	        				}
+	        				info.style.bottom = i+'px';
+	        			},10);
+	        			
+	        			
 	        			
 	        		});
 	        		//map.trajectory();	显示赛程的
