@@ -97,6 +97,12 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 _this.createMark("洞",point,myIcon3);
 		 icons.push(myIcon3);
 		  //sizeList.push(new BMap.Size(37, 26.5));
+		 //岛
+		 _this.myIconIsland = new BMap.Icon("../icon/mark/island.png", new BMap.Size(80,51),{imageSize:new BMap.Size(40, 25.5)});
+		 //ruins遗址
+		 _this.myIconRuins = new BMap.Icon("../icon/mark/ruins.png", new BMap.Size(59,53),{imageSize:new BMap.Size(29.5, 26.5)});
+		 //小镇
+		 _this.myTown = new BMap.Icon("../icon/mark/town.png", new BMap.Size(68,60),{imageSize:new BMap.Size(34, 30)});
 		 
 		 map.addEventListener("zoomend",function(e){
 		 	console.log(map.getZoom());
@@ -597,10 +603,38 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 		console.log(local.getResults()[0].getPoi(0),local.getResults()[0].vr);
 		
 			for(var i = 0,m = local.getResults()[0].vr.length;i<m;i++){
+				
+				var result  = local.getResults()[0].vr[i];console.log(result);
+				if(nme=="山"||nme=="山脉")
+				{
+					var isHill = false;
+					var a_len = result.tags.length;
+					if(a_len>0){
+						for(var a=0;a<a_len;a++){
+							if(result.tags[0].indexOf("山")!=-1){
+								isHill = true;
+								break;
+							}
+						}
+					}
+					if(!isHill)continue;
+				}else if(nme=="洞"){
+					var isHole = false;
+					var a_len = result.tags.length;
+					if(a_len>0){
+						for(var a=0;a<a_len;a++){
+							if(result.tags[0].indexOf("风景")!=-1){
+								isHole = true;
+								break;
+							}
+						}
+					}
+					if(!isHole)continue;
+				}
 				var pt = local.getResults()[0].vr[i].point;
 				var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
 				map.addOverlay(marker); 
-				var label = new BMap.Label(local.getResults()[0].vr[i].title,{offset:new BMap.Size(10,-10)});
+				var label = new BMap.Label(result.title,{offset:new BMap.Size(10,-10)});
 				label.setStyle({
 					border:false,
 					backgroundColor:false,
@@ -611,6 +645,11 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 				 fontFamily:"微软雅黑"
 			 });
 				marker.setLabel(label);
+				marker.addEventListener("click",attribute);
+				function attribute(){
+					var p = marker.getPosition();  //获取marker的位置
+					alert("marker的位置是" + p.lng + "," + p.lat);    
+				}
 				_this.markList.push(marker);
 				_this.sizeList.push(new BMap.Size(marker.getIcon().imageSize.width,marker.getIcon().imageSize.height) );
 			}
