@@ -145,6 +145,24 @@
 			  display: none;
 			  background-color: rgb(250, 249, 249);
 			}
+			#vrBtn{
+				background-image: url(../images/schedule/vr.png) ;
+				background-size: 100px,60px;
+				background-repeat:no-repeat;
+				width: 102px;
+				height: 36px;
+			}
+			#videoBtn{
+				background-image: url(../images/schedule/video.png) ;
+				background-size: 100px,60px;
+				background-repeat:no-repeat;
+				width: 102px;
+				height: 36px;
+			}
+			#imgInfo{
+				max-width: 92px;
+  				height: 82px;
+			}
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -206,7 +224,23 @@
 				    
 				<!--</div>-->
 			</div>
-			<div id="info"></div>
+			<div id="info">
+				<ul class="mui-table-view">
+			    <li class="mui-table-view-cell mui-media">
+			        <a href="javascript:void(0);" id="infoA" dataindex="infoA">
+			            <img class="mui-media-object mui-pull-left" src="../images/nebula-xneg.png" id="imgInfo">
+			            <div class="mui-media-body" id="infoContent">
+			                深圳
+			                <p class='mui-ellipsis'>来了就是惠州人!</p>
+			            </div>
+			        </a>
+			    </li>
+			    </ul>
+				 <div class="mui-button-row">
+				<button id="vrBtn" type="button" class="mui-btn"></button>
+				<button id="videoBtn" type="button" class="mui-btn"></button>
+				</div>
+			</div>
 			<!--<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
 			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>-->
 			<!--
@@ -229,11 +263,13 @@
 		<script src="../js/map/SearchInfoWindow_min.js" charset="utf-8" type="text/javascript"></script>
 		<script src="../mobile/layer.js"></script>
 		<script src="../js/map/bookingMap.js" charset="utf-8" type="text/javascript"></script>
+		<script src="../js/tween/TweenLite.js"></script>
 			<script>
 				
 				var allmap = document.getElementById("allmap");
 				allmap.style.height = window.innerHeight+"px";
 				var info = document.getElementById("info");
+				var infoContent = document.getElementById("infoContent");
 				//LInit(1000/60, "legend", 750,1334, main);
 				var layer,map;
 				function main () {
@@ -322,6 +358,8 @@
 				    	if(circle)circle.show();
 				    	
 				    	//.openWindow("../circle/index.html");
+				    }else if( this.getAttribute("dataindex") == "infoA" ){
+				    	  mui.openWindow("../detail/detail.html")
 				    }else
 				    	mui.openWindow(this.href);
 //				    if(this.name == "scan"){
@@ -352,16 +390,20 @@
 	        		
 	        		
 	        		map.clickMark(function(o){
-	        			info.style.display = "block";
+	        			console.log(o);
 	        			
-	        			var i = -50;
-	        			var time = setInterval(function(){
-	        				i+=2;
-	        				if(i>50){
-	        					clearInterval(time);
-	        				}
-	        				info.style.bottom = i+'px';
-	        			},1);
+	        			infoContent.innerHTML = o.title+"<p class='mui-ellipsis'>来了就是惠州人!</p>";
+	        			info.style.display = "block";
+	        			//info.style.bottom = '50px';
+	        			TweenLite.to(info.style,0.5,{bottom:'50px'});
+//	        			var i = -50;
+//	        			var time = setInterval(function(){
+//	        				i+=2;
+//	        				if(i>50){
+//	        					clearInterval(time);
+//	        				}
+//	        				info.style.bottom = i+'px';
+//	        			},1);
 	        			
 	        			
 	        			

@@ -23,7 +23,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		function G(id) {
 			return document.getElementById(id);
 		}
-		var map = new BMap.Map(id, {enableMapClick:false});
+		var map = new BMap.Map(id, {enableMapClick:false});//
 		map.setMapStyle({styleJson: mapDefine });
 		_this.map = map;
 		//map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
@@ -147,10 +147,18 @@ Bookingmap.prototype.initBaiduMap=function(id){
 	//map.setMapStyle({styleJson: mapDefine });
 		 
 		var geoc = new BMap.Geocoder(); 
+		map.addEventListener("touchstart",function(e){
+			//alert("触摸");
+			console.log(e);
+			var input = document.getElementById("suggestId");
+			input.blur();
+			_this.clickhandler();
+		});
 		//单击获取点击的经纬度
 		map.addEventListener("click",function(e){
 			//alert(e.point.lng + "," + e.point.lat);
 			//console.log(e.point);
+			//alert(9);
 			var input = document.getElementById("suggestId");
 			input.blur();
 			_this.clickhandler();
@@ -669,6 +677,7 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 				 fontFamily:"微软雅黑"
 			 });
 				marker.setLabel(label);
+				marker.addEventListener("touchstart",attribute);
 				marker.addEventListener("click",attribute);
 				function attribute(e){
 					console.log(e);
