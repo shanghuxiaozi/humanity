@@ -186,6 +186,7 @@
 				<span class="mui-icon "><img src="../icon/tab_homeh_icon.png"/></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
+			<!--../hello-mui/index.html-->
 			<a class="mui-tab-item" href="../scan/imageRecognition.html" name="scan">
 				<span class="mui-icon "><img src="../icon/tab_saoyisao_icon.png"/></span>
 				<span class="mui-tab-label">扫一扫</span>
@@ -358,9 +359,11 @@
 				
 				
 				
-				mui('body').on('tap','a',function(){
+				mui('body').on('tap','a',function(e){
 				    //window.top.location.href=this.href;console.log(this)
-				    console.log(this.getAttribute("dataindex"))
+				    e.stopPropagation();
+				    //alert('oh..');
+				    //console.log(this.getAttribute("dataindex"))
 				    if(this.getAttribute("dataindex")=="2"/*this.href == "../circle/index.html"*/){
 				    	circle = plus.webview.getWebviewById('circle');
 				    	alert(circle==null);

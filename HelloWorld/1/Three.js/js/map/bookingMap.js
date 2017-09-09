@@ -676,16 +676,19 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 				// lineHeight : "20px",
 				 fontFamily:"微软雅黑"
 			 });
+			 
 				marker.setLabel(label);
+				marker.result = result;
 				marker.addEventListener("touchstart",attribute);
 				marker.addEventListener("click",attribute);
+				
 				function attribute(e){
-					console.log(e);
+					console.log(e.target);
 					//e.stopPropagation();
 					 e.domEvent.stopPropagation();
 					var p = marker.getPosition();  //获取marker的位置
 					//alert("marker的位置是" + p.lng + "," + p.lat);  
-					_this.clickMarkHandler(result);
+					_this.clickMarkHandler(e.target.result);
 				}
 				_this.markList.push(marker);
 				_this.sizeList.push(new BMap.Size(marker.getIcon().imageSize.width,marker.getIcon().imageSize.height) );

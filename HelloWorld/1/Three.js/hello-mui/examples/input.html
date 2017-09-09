@@ -28,7 +28,7 @@
 			<div class="mui-content-padded" style="margin: 5px;">
 				<h5>默认搜索框：</h5>
 				<div class="mui-input-row mui-search">
-					<input type="search" class="mui-input-clear" placeholder="">
+					<input type="search" class="mui-input-clear" placeholder="" >
 				</div>
 				<h5 class="mui-plus-visible">语音输入搜索框：</h5>
 				<div class="mui-input-row mui-search mui-plus-visible">
@@ -36,7 +36,7 @@
 				</div>
 				<h5>密码框：</h5>
 				<div class="mui-input-row mui-password">
-					<input type="password" class="mui-input-password">
+					<input type="password" class="mui-input-password" id="fieldtest">
 				</div>
 				<form class="mui-input-group">
 					<div class="mui-input-row">
@@ -92,7 +92,7 @@
 					});
 				}
 				setTimeout(function() {
-					var inputElem = document.querySelector('input');
+					var inputElem = document.querySelector('#fieldtest');
 					inputElem.focus();
 					inputElem.parentNode.classList.add('mui-active'); //第一个是search，加上激活样式
 				}, 200);

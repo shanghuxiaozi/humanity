@@ -51,7 +51,7 @@ body,p{margin: 0;padding: 0;}
 .mui-comment .mui-comment-time{font-size: 10px;color: #999999;font-weight: normal;}
 
 /*悬浮*/
-.mui-fixed-comment{position: fixed;right: 15px;bottom: 30px;}
+.mui-fixed-comment{position: fixed;right: 15px;bottom: 30px;z-index: 1000;}
 
 /*扫一扫*/
 html,body{width: 100%;height: 100%;}
