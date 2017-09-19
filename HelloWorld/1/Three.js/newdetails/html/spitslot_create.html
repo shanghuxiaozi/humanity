@@ -5,19 +5,17 @@
 		<title>我要吐槽</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<script src="../js/mui.min.js"></script>
+		
 		<link href="../css/mui.min.css" rel="stylesheet"/>
 		<link href="../css/common.css" rel="stylesheet" />
 
-	   <script type="text/javascript" charset="utf-8">
-		  	mui.init();
-		</script>
+	   
 	</head>
 	<body>
 	<header class="mui-bar mui-bar-nav mui-search-box">
 		<a href="javascript:void(0);" class="mui-back mui-action-back"></a>
 		<h4 class="mui-title">我要吐槽</h4>
-		<a class="mui-link">吐槽记录</a>
+		<a class="mui-link" id="tucaoRecords">吐槽记录</a>
 	</header>
 	
 	<div class="mui-iframe-wrapper" style="top: 44px;">
@@ -43,5 +41,16 @@
 			<a href="javascript:void(0);" class="mui-btn mui-btn-danger mui-spitslot-btn">提交</a>
 		</div>
 	</div>
+	<script src="../js/mui.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		  	mui.init();
+		  	mui.ready(function(){
+		  		//吐槽记录
+		  		var tucaoRecords = document.getElementById("tucaoRecords");
+		  		tucaoRecords.addEventListener('tap',function(e){
+		  			mui.openWindow('spitslot_list.html');
+		  		});
+		  	});
+	</script>
 	</body>
 </html>

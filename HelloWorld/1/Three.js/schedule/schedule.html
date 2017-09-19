@@ -575,7 +575,10 @@
 							type:'get',//HTTP请求类型
 							success:function(data){
 								//获得服务器响应
-								layer.close(layerIndex);
+								
+								if(data.length>50){
+									data = data.slice(0,50);
+								}
 								//console.log(data);
 								if(data&& data.length>0){
 									map.markList = [];
@@ -586,6 +589,7 @@
 											map.createMarkFromData(item);
 									}
 								}
+								layer.close(layerIndex);
 							},error:function(e,t,errorThrown){
 								layer.close(layerIndex);
 							}

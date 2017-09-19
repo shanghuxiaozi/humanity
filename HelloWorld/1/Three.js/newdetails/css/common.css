@@ -11,7 +11,7 @@ body{background-color: #f7f5f5;font-size: 62.5%;}
 }
 .mb10{margin-bottom: 10px;}
 body,p{margin: 0;padding: 0;}
-.mui-slider-indicator{text-align: right;padding-right: 10px;}
+.mui-slider-indicator{text-align: right;/*padding-right: 10px;*/}
 .mui-slider-indicator .mui-indicator{margin: 1px 2px;}
 .plr0{padding-left:0!important ;padding-right: 0 !important;}
 /*重写.mui-table-view-cell*/
