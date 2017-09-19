@@ -8,6 +8,14 @@
 		
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/common.css" rel="stylesheet" />
+		<style>
+					.mui-bar{
+						-webkit-animation: fadeInUpBig .5s .2s ease both;
+					}
+					.mui-row-item{
+						-webkit-animation: fadeInUpBig .5s .1s ease both;
+					}
+		</style>
 	</head>
 	<body>
 		
@@ -21,7 +29,8 @@
 		<a href="javascript:void(0);" class="mui-more"></a>
 	</header>
 	
-	<div class="mui-iframe-wrapper" style="top: 44px;">
+	<div class="mui-iframe-wrapper mui-scroll-wrapper" style="top: 44px;">
+		<div id="scroll1" class="mui-scroll-wrapper"><div class="mui-scroll">
 		<div class="mui-row-item mui-row-bottom">
 			<img src="../images/img1.png" class="mui-img-response" id="currentScenicImg"/>
 			<p class="mui-tou-title" id="currentScenic">凤凰山</p>
@@ -228,11 +237,16 @@
 		
 			</div>
 		</div>
-	</div>
+	</div></div></div>
 	<script src="../js/mui.min.js"></script>
+	<script src="../../js/tween/TweenLite.js"></script>
 	<script>
 		mui.init();
 		mui.ready(function(){
+			var scroll = mui('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				console.log(scroll);
 			var currentInfo = localStorage.getItem("currentInfo");
 			console.log(currentInfo);
 			var currentScenic = document.getElementById("currentScenic");
@@ -245,7 +259,33 @@
 				currentInfo.imgbox = JSON.parse(currentInfo.imgbox);
 				if(currentInfo.imgbox.length>0)
 				currentScenicImg.src = currentInfo.imgbox[0];
+				
+				var  h = currentScenicContent.offsetHeight;
+				currentScenicContent.style.height = '10px';
+				TweenLite.to(currentScenicContent.style,2,{height:h+'px',onComplete:function(){
+							console.log('往');
+							//currentScenicContent.style.height = '100%';
+						}});
+				currentScenicImg.onload = function() {
+			            var d = currentScenicImg.offsetHeight;console.log(d);
+						currentScenicImg.style.height = '10px';
+						TweenLite.to(currentScenicImg.style,1,{height:d+'px',onComplete:function(){
+								}});
+			        }
+				var mui_iframe_wrapper = document.querySelector('.mui-iframe-wrapper');
+				mui_iframe_wrapper.offsetHeight = document.body.offsetHeight
+				
+				document.addEventListener('scroll', function (e ) { 
+					console.log(e.detail.y);
+					//if(e.detail.y )
+					
+				
+				});
+				
 			}
+			
+			
+			
 		})
 	</script>
 	</body>
