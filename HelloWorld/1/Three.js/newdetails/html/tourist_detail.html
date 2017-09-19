@@ -4,17 +4,13 @@
 	<title>凤凰山詳情</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <script src="../js/mui.min.js"></script>
     <link href="../css/mui.min.css" rel="stylesheet"/>
     <link href="../css/common.css" rel="stylesheet" />
-   <script type="text/javascript" charset="utf-8">
-      	mui.init();
-    </script>
 </head>
 <body>
 
 	<header class="mui-bar mui-bar-nav mui-search-box mui-bar-fff" style="background: transparent;">
-		<a href="javascript:void(0);" class="mui-back"></a>
+		<a href="javascript:void(0);" class="mui-back mui-action-back""></a>
 		<a href="javascript:void(0);" class="mui-more"></a>
 	</header>
 <!-- banner -->
@@ -156,8 +152,24 @@
 </div>
 
 
-<script type="text/javascript">
-
-</script>
+<script src="../js/mui.min.js"></script>
+	<script>
+		mui.init();
+		mui.ready(function(){
+			var currentInfo = localStorage.getItem("currentInfo");
+			console.log(currentInfo);
+			var currentScenic = document.getElementById("currentScenic");
+			var currentScenicContent = document.getElementById("currentScenicContent");
+			var currentScenicImg = document.getElementById("currentScenicImg");
+			if(currentInfo){
+				currentInfo = JSON.parse(currentInfo);
+				currentScenic.innerHTML = currentInfo.title;
+				currentScenicContent.innerHTML = currentInfo.summary;
+				currentInfo.imgbox = JSON.parse(currentInfo.imgbox);
+				if(currentInfo.imgbox.length>0)
+				currentScenicImg.src = currentInfo.imgbox[0];
+			}
+		})
+	</script>
 </body>
 </html>
