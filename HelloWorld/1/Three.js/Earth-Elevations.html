@@ -41,7 +41,7 @@
 // MAIN
 
 // standard global variables
-var container, scene, camera, renderer, controls, stats;
+var plus,container, scene, camera, renderer, controls, stats;
 var keyboard = new THREEx.KeyboardState();
 var clock = new THREE.Clock();
 var RADIUS = 90;
@@ -85,6 +85,10 @@ function init()
 //					schedule.show();
 //					
 //				};
+	
+	
+	
+	
 	
 	// SCENE
 	scene = new THREE.Scene();
@@ -213,6 +217,10 @@ function init()
 		var spritey = makeTextSprite( obj.address.city, 
 		{ fontsize: 12, borderColor: {r:255, g:0, b:0, a:1.0}, backgroundColor: {r:255, g:100, b:100, a:0.8} } );
 		spritey.position.set(x,y+10,z-10);
+		
+		localStorage.setItem('currentCity',obj.address.city);
+		localStorage.setItem('longitude',longitude);
+		localStorage.setItem('latitude',parseFloat(obj.latitude));
 //		meshs.position = spritey.position;
 		globe.add( spritey );
 		targetList.push(spritey);
@@ -256,16 +264,21 @@ function init()
 			
 			
 			function openSchedule(){
-				schedule = plus.webview.getWebviewById("schedule");
+				if(plus){
+					schedule = plus.webview.getWebviewById("schedule");
 				
-				clearTimeout(time);
-				if(schedule){
-					schedule.show();
+					clearTimeout(time);
+					if(schedule){
+						schedule.show();
+					}else{
+						time = setTimeout(function(){
+							openSchedule();
+						},1000);
+					}
 				}else{
-					time = setTimeout(function(){
-						openSchedule();
-					},1000);
+					window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html"
 				}
+				
 					
 			}
 			

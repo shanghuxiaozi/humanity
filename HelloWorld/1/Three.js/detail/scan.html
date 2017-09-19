@@ -25,7 +25,7 @@
 		</div>
 
 		<!-- 这里显示拍照的图片 -->
-		<div class="scan-pic-div"></div>
+		<div class="scan-pic-div" id="demo_result"></div>
 	</div>
 </main>
 
@@ -34,7 +34,7 @@
 	<div class="mui-clearfix">
 		<div class="mui-col-xs-4 mui-pull-left"></div>
 		<div class="mui-col-xs-4 mui-pull-left mui-text-center">
-			<a href="javascript:void(0);" class="scan-take-a"><img src="images/takepic.png" class="scan-take" /></a>
+			<a href="javascript:void(0);" class="scan-take-a"  onclick="captureImage()"><img src="images/takepic.png" class="scan-take" /></a>
 		</div>
 		<div class="mui-col-xs-4 mui-pull-left mui-text-center scan-photos-d">
 			<a href="javascript:void(0);">
@@ -44,6 +44,121 @@
 		</div>
 	</div>
 </footer>
+<script src="../js/mui/mui.js"></script>
+<script>
+	mui.init();
+	var result = document.getElementById('demo_result');
+	// 扩展API加载完毕后调用onPlusReady回调函数 
+	document.addEventListener( "plusready", onPlusReady, false );
+	// 扩展API加载完毕，现在可以正常调用扩展API 
+	function onPlusReady() {
+		console.log("plusready");
+	}
+	// 拍照
+function captureImage(){
+	var cmr = plus.camera.getCamera();
+	var res = cmr.supportedImageResolutions[0];
+	var fmt = cmr.supportedImageFormats[0];
+	console.log("Resolution: "+res+", Format: "+fmt);
+	cmr.captureImage( function( e ){
+			//alert( "Capture image success: " + path );  
+			///storage/emulated/0/Android/data/io.dcloud.H58A84A3C/apps/H58A84A3C/doc/1503395201551.jpg
+			//var file = new File(path,"image/png");
+			//file.path = path;
+			 plus.io.resolveLocalFileSystemURL(e, function(entry) { 
+                var path = entry.toLocalURL(); 
+                mui.toast("读取拍照文件：" + path); 
+                
+                //readFile(new File(path,"image/png"));
+                // 可通过entry对象操作test.html文件 
+				entry.file( function(file){
+					var fileReader = new plus.io.FileReader();
+					alert("getFile:" + JSON.stringify(file));
+					fileReader.readAsDataURL(file)//readAsText(file, 'utf-8');
+					fileReader.onloadend = function(evt) {
+						alert("11" + evt);
+						//alert("this.result" + this.result);
+						//alert(evt.target.result);
+						 result.innerHTML = '<img src="'+evt.target.result+'" alt="" style="width:100%;height:100%"/>'
+					}
+					alert(file.size + '--' + file.name);
+				} );
+                /*img_div.src = path; 
+                img_div.onload =function() { 
+                	
+                	mui.toast(img_div.width);
+                }*/
+                
+                //就是这里www.bcty365.com 
+            }, function(e) { 
+                mui.toast("读取拍照文件错误：" + e.message); 
+            }); 
+           
+			// Read data from file
+			/*var reader = null;
+			plus.io.resolveLocalFileSystemURL(e, function(entry) { 
+				entry.file( function ( file ) {
+					reader = new plus.io.FileReader();
+					reader.onloadend = function ( e ) {
+						plus.console.log( "Read success" );
+						// Get data
+						plus.console.log( e.target.result );
+					};
+					reader.readAsText( file );
+					}, function ( e ) {
+						alert( e.message );
+				} );
+			}); */
+			/* var img = document.createElement('img'); 
+            img.src = path//; "http://pic3.nipic.com/20090508/2444145_180525092_2.jpg"
+            img.onload =function() { 
+            	alert("-"); 
+            	document.body.appendChild(img); 
+                var data = getBase64Image(img); 
+                
+                $.ajax({
+			    type: "POST",
+			    url: "http://txcjsb.market.alicloudapi.com/image/scene",
+			    data:{  
+				   "type":1, //# 0: 通过url识别，参数image_url不为空；1: 通过图片content识别，参数content不为空
+				   "image_url":"http://a.com/a.jgp",  //#输入图像URL
+				   "content":data //#图像内容，base64编码
+				},
+			    success: function(data){
+			        alert(data);
+			        javascript:void(0);
+			    },
+			    error:function(v){
+			    	alert(v);
+			    },
+			    beforeSend: function(xhr){
+	//		       token = window.localStorage.getItem('token');
+			            xhr.setRequestHeader("Authorization", "APPCODE d3d17cb32ed343d4a8d540dc2eec0087");
+			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			    }});
+            } 
+            */
+			
+			
 
+			
+		},
+		function( error ) {
+			alert( "Capture image failed: " + error.message );
+		},
+		{resolution:res,format:fmt}
+	);
+}
+
+function getBase64Image(img) {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var dataURL = canvas.toDataURL("image/png");
+            return dataURL // return dataURL.replace("data:image/png;base64,", ""); 
+        } 
+</script>
 </body>
 </html>

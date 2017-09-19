@@ -135,7 +135,7 @@
 			}
 			#arrowdown{
 				  font-size: 12px;
-				   margin-left: -4px;
+				   /*margin-left: -4px;*/
 			}
 			#suggestId{
 				  width: 90%;
@@ -169,7 +169,7 @@
 				max-width: 92px;
   				height: 82px;
 			}
-			}
+			
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -186,8 +186,8 @@
 				<span class="mui-icon "><img src="../icon/tab_homeh_icon.png"/></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<!--../hello-mui/index.html-->
-			<a class="mui-tab-item" href="../scan/imageRecognition.html" name="scan">
+			<!--../hello-mui/index.html  ../scan/imageRecognition.html-->
+			<a class="mui-tab-item" href="../detail/scan.html" name="scan">
 				<span class="mui-icon "><img src="../icon/tab_saoyisao_icon.png"/></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
@@ -217,7 +217,8 @@
 			</div>
 			<div id="r-result">
 				<!--<div class="mui-input-row mui-search">-->
-					<a href="../static/destination.html">深圳
+					<!--../static/destination.html-->
+					<a href="../detail/indexed-list.html" id="currentCityContent">深圳
 						<span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>
 						<!--<div id="selectArea"></div>-->
 					</a>
@@ -236,10 +237,10 @@
 				<ul class="mui-table-view">
 			    <li class="mui-table-view-cell mui-media">
 			        <a href="javascript:void(0);" id="infoA" dataindex="infoA">
-			            <img class="mui-media-object mui-pull-left" src="../images/nebula-xneg.png" id="imgInfo">
+			            <img class="mui-media-object mui-pull-left"  onerror="this.src='../images/nebula-xneg.png'" id="imgInfo">
 			            <div class="mui-media-body" id="infoContent">
 			                深圳
-			                <p class='mui-ellipsis'>来了就是惠州人!</p>
+			                <p class='mui-ellipsis-2'>来了就是惠州人!</p>
 			            </div>
 			        </a>
 			    </li>
@@ -260,18 +261,27 @@
 			<!--<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>-->
 			<!--<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
 		<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>-->
+		<script src="../mobile/layer.js"></script>
+		<script>
+			var layerIndex = layer.open({
+						    type: 2
+						    ,content: '搜索中'
+						  });
+		</script>
 		<!-------------------------------------------------------------百度地图相关js-------------------------------------------------------------->	
 		<script src="../js/map/baidu.js" charset="utf-8" type="text/javascript"></script>
-		<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+		<!--<script type="text/javascript" src="http://api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>-->
 
 		<script src="../js/mui/mui.js"></script>
 		<!--加载鼠标绘制工具-->
 		<script src="../js/map/DrawingManager_min.js" charset="utf-8" type="text/javascript"></script>
 		<!--加载检索信息窗口-->
 		<script src="../js/map/SearchInfoWindow_min.js" charset="utf-8" type="text/javascript"></script>
-		<script src="../mobile/layer.js"></script>
+		
 		<script src="../js/map/bookingMap.js" charset="utf-8" type="text/javascript"></script>
 		<script src="../js/tween/TweenLite.js"></script>
+		<!--<script src="../hello-mui/js/jquery-2.1.0.js"></script>-->
+		<!--<script src="../js/mui/mui.jsonp.js"></script>-->
 			<script>
 				
 				var allmap = document.getElementById("allmap");
@@ -280,8 +290,10 @@
 				allmap.style.backgroundPositionY = window.innerHeight/2-21+"px";
 				var info = document.getElementById("info");
 				var infoContent = document.getElementById("infoContent");
+				var imgInfo = document.getElementById("imgInfo");
 				//LInit(1000/60, "legend", 750,1334, main);
 				var layer,map;
+				var currentInfo;//当前点击的景点
 				function main () {
 					layer = new LSprite();
 					addChild(layer);
@@ -358,7 +370,6 @@
 				};
 				
 				
-				
 				mui('body').on('tap','a',function(e){
 				    //window.top.location.href=this.href;console.log(this)
 				    e.stopPropagation();
@@ -371,7 +382,10 @@
 				    	
 				    	//.openWindow("../circle/index.html");
 				    }else if( this.getAttribute("dataindex") == "infoA" ){
-				    	  mui.openWindow("../detail/detail.html")
+				    	//console.log(currentInfo);
+				    	  //mui.openWindow("../detail/detail.html")
+				    	  localStorage.setItem("currentInfo",JSON.stringify(currentInfo));
+				    	  mui.openWindow("../newdetails/html/tourist.html");
 				    }else
 				    	mui.openWindow(this.href);
 //				    if(this.name == "scan"){
@@ -381,13 +395,94 @@
 				});
 					map = new Bookingmap();
 	        		map.initBaiduMap('allmap');
-	        		//获取终点的地名
+	        		
+	        		//浏览器定位
+//					map.addEventListenBrowserLocation(function(r,obj){
+//						console.log(obj);
+//					});
+	        		var cityId;
+	        		//获取下拉框点击后的地名
 	        		map.addEventListenDownList(function(value,obj){
+	        			console.log(value,obj);
+	        			
+	        			queryCityId(obj);
 	        			
 	        		});
+	        		//setTimeout(function(){queryCityId('深圳市');},300);
+	        		var currentCityContent = document.getElementById("currentCityContent");
+				
+					var currentCity = localStorage.getItem("currentCity");
+					if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
+						currentCity = currentCity.replace('市','');
+					}
+				
+				currentCityContent.innerHTML = (currentCity||'深圳')+'<span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
+	        		queryCityId(currentCityContent.innerText);
+	        		function queryCityId(obj){
+	        			var cityIndex  = obj.indexOf('市');
+	        			if(layerIndex==-1)
+	        			layerIndex = layer.open({
+						    type: 2
+						    ,content: '搜索中'
+						  });
+	        			mui.ajax('http://120.25.221.94:8080/list/getIdbyCityName?cityName='+((cityIndex==-1)?obj:obj.substring(0,cityIndex)),{
+							data:{
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								//获得服务器响应
+								console.log(data);
+								layer.close(layerIndex);
+								if(data&& data.length>0){
+									//获取城市id
+									cityId = data[0].id;
+									//queryScenicSpotbyCity(data[0].id);
+									queryScenicSpotbyPOS(map.map.getCenter(),map.map.getZoom())
+								}
+							},error:function(e,t,errorThrown){
+								//alert(t)
+								layer.close(layerIndex);
+								queryCityId('深圳市');
+								//console.log(e,t,errorThrown);
+							}
+						});
+						/*$.ajax({
+							type:"get",
+							dataType:"jsonp",
+							url:'http://120.25.221.94:8080/list/getIdbyCityName?cityName='+((cityIndex==-1)?obj:obj.substring(0,cityIndex)),
+							async:true,
+							success:function(data){
+								//获得服务器响应
+								console.log(data);
+								layer.close(layerIndex);
+								if(data&& data.length>0){
+									//获取城市id
+									cityId = data[0].id;
+									queryScenicSpotbyCity(data[0].id);
+									
+								}
+							}
+							,
+							error:function(e){
+								//alert(t)
+								layer.close(layerIndex);
+								//queryCityId('深圳市');
+								console.log(e);
+								//console.log(e,t,errorThrown);
+							}
+						});*/
+//					mui.getJSONP('http://120.25.221.94:8080/list/getIdbyCityName?cityName='+((cityIndex==-1)?obj:obj.substring(0,cityIndex)), {}, function(data) {
+//					    console.log(data);
+//					});
+			     }
+	        		
+	        		
 	        		//获取地点经纬度
 	        		map.addEventListenPoint(function(obj){
 	        			console.log(obj);
+	        			queryScenicSpotbyPOS(obj,10)
 	        		});
 	        		
 	        		//获取起点和终点的位置信息计算驾车时间与距离
@@ -403,9 +498,10 @@
 	        		
 	        		map.clickMark(function(o){
 	        			console.log(o);
-	        			
-	        			infoContent.innerHTML = o.title+"<p class='mui-ellipsis'>来了就是惠州人!</p>";
+	        			currentInfo = o;
+	        			infoContent.innerHTML = o.title+"<p class='mui-ellipsis-2'>"+o.summary+"</p>";
 	        			info.style.display = "block";
+	        			imgInfo.src = JSON.parse(o.imgbox)[0];
 	        			//info.style.bottom = '50px';
 	        			TweenLite.to(info.style,0.5,{bottom:'50px'});
 //	        			var i = -50;
@@ -420,8 +516,98 @@
 	        			
 	        			
 	        		});
+	        		
+	        		//c地图当前中心点，v地图当前层级
+	        		map.drageHandler(function(c,v){
+	        			console.log(c,v);
+	        			// 获取经纬度范围参数
+					    var bs = map.map.getBounds();   //获取可视区域
+					    var bssw = bs.getSouthWest();   //可视区域左下角
+					    var bsne = bs.getNorthEast();   //可视区域右上角
+					     
+					    var topLat = bsne.lat;
+					    var bottomLat = bssw.lat;
+					    var leftLng = bssw.lng;
+					    var rightLng = bsne.lng;
+					    //console.log(bssw,bsne);
+	        			queryScenicSpotbyPOS(c,v)
+	        		});
+	        		
+	        		
 	        		//map.trajectory();	显示赛程的
 	        	//map.getRoute(null,null,{lng: 114.036184, lat: 22.6139},{lng: 113.906253, lat: 22.485729});
+	        	
+	        	/*通过城市id获取景点*/
+	        	function queryScenicSpotbyCity(id){
+	        		mui.ajax('http://120.25.221.94:8080/list/scenicSpotbyCity?id='+id,{
+							data:{
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								//获得服务器响应
+								console.log(data);
+								if(data&& data.length>0){
+									map.markList = [];
+									map.sizeList = [];
+									for(var i=0,m=data.length;i<m;i++){
+										var item = data[i];
+											map.createMarkFromData(item);
+									}
+								}
+							}
+						});
+	        	}
+	        	//queryScenicSpotbyPOS(new BMap.Point(114.06444, 22.548488),15)
+	        	/*通过城市经纬度获取景点,p中心点，zoom地图层级*/
+	        	function queryScenicSpotbyPOS(p,zoom){
+	        		if(layerIndex==-1)
+	        			layerIndex = layer.open({
+						    type: 2
+						    ,content: '搜索中'
+						  });
+	        		mui.ajax('http://120.25.221.94:8080/list/scenicSpotbyPOS?lng='+p.lng+'&lat='+p.lat+'&zoom='+zoom,{
+							data:{
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								//获得服务器响应
+								layer.close(layerIndex);
+								//console.log(data);
+								if(data&& data.length>0){
+									map.markList = [];
+									map.sizeList = [];
+									map.map.clearOverlays();
+									for(var i=0,m=data.length;i<m;i++){
+										var item = data[i];
+											map.createMarkFromData(item);
+									}
+								}
+							},error:function(e,t,errorThrown){
+								layer.close(layerIndex);
+							}
+						});
+	        	}
+	        	
+	        	//http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=512&height=256&location=116.313393,40.04778&fov=180
+	        	var vrBtn = document.getElementById("vrBtn");
+				//监听点击事件
+				vrBtn.addEventListener("tap",function () {
+				  console.log("tap event trigger");
+				  if(currentInfo){
+				  	//window.open('http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=512&height=256&location='+currentInfo.longitude+','+currentInfo.latitude+'&fov=360');
+				  	mui.openWindow('../WebVR_Demo-master/panorama.html?location='+currentInfo.longitude+','+currentInfo.latitude);
+				  }
+				});
+//				vrBtn.addEventListener("click",function () {
+//				  console.log("tap event trigger");
+//				  if(currentInfo){
+//				  	
+//				  }
+//				});
 			}
 			</script>
 			

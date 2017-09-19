@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+	name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="email=no" name="format-detection" />
+<meta charset="UTF-8" />
+  <title>WebVR Demo</title>
+  <style>
+  body {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+  }
+  </style>
+</head>
+<body>
+	<script src="../mobile/layer.js"></script>
+	<script>
+		var layerIndex = layer.open({
+						    type: 2
+						    ,content: '加载中请耐心等待...'
+						  });
+		
+	</script>
+  <script src="./js/three.min.js"></script>
+  <script src="./js/StereoEffect.js"></script>
+  <script src="./js/OrbitControls.js"></script>
+  <script src="./js/DeviceOrientationControls.js"></script>
+  <script src="./js/helvetiker_regular.typeface.js"></script>
+  <script src="../js/mui/mui.js"></script>
+  
+<!--<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>-->
+		<!--<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>-->
+		<!--<script src="../hello-mui/js/jquery-2.1.0.js"></script>-->
+  <script>
+  	
+  var scene, camera, renderer, effect, element, controls, word = "Ritter's VR World", cube;
+  init();
+ //获取 QueryString
+	function getQueryString(url) {
+		
+		url = url || location.search;
+		var splitIndex = url.indexOf('?');
+		var queryString = url.substr(splitIndex + 1);
+		var paramArray = queryString.split('&');
+		var result = {};
+		console.log(paramArray);
+		for (var i in paramArray) {
+			if(typeof paramArray[i] != 'string')continue;
+			//console.log(paramArray[i]);
+			var params = paramArray[i].split('=');
+			result[params[0]] = params[1];
+		}
+		return result;
+	}
+  function init() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.001, 700);
+    camera.position.set(0, 15, 0);
+    scene.add(camera);
+
+    renderer = new THREE.WebGLRenderer();
+    element = renderer.domElement;
+    document.body.appendChild(renderer.domElement);
+
+    effect = new THREE.StereoEffect(renderer);
+
+    //Handle mouse control
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.target.set(
+      camera.position.x + 0.01,
+      camera.position.y,
+      camera.position.z
+    );
+    window.addEventListener('deviceorientation', setDeviceOrientationControls, true);
+
+    //Create light
+    var light = new THREE.PointLight( 0xffffff, 1.2, 0 );
+    light.position.set(0, 50, 0);
+    scene.add(light);
+
+    // Create floor
+//  var floorTexture = THREE.ImageUtils.loadTexture('img/grass.jpg');
+//  floorTexture.wrapS = THREE.RepeatWrapping;
+//  floorTexture.wrapT = THREE.RepeatWrapping;
+//  floorTexture.repeat = new THREE.Vector2(50, 50);
+//  var floorMaterial = new THREE.MeshPhongMaterial({
+//    map: floorTexture
+//  });
+//  var floorGeometry = new THREE.PlaneBufferGeometry(1000, 1000);
+//  var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+//  floor.rotation.x = -Math.PI / 2;
+//  scene.add(floor);
+
+    // Create box
+//  var geometry = new THREE.BoxGeometry(6, 6, 6);
+//  var material = new THREE.MeshNormalMaterial();
+//  cube = new THREE.Mesh(geometry, material);
+//  cube.position.set(-15, 30, 10);
+//  scene.add(cube);
+var path_result = getQueryString(window.location.href);
+//var worTexture = THREE.ImageUtils.loadTexture('http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=1024&height=512&location='+path_result.location+'&fov=360');
+	var texture =  new THREE.Texture();
+	var _worship = new THREE.Mesh( new THREE.SphereGeometry( 500, 60, 40 ), new THREE.MeshBasicMaterial( { map: texture ,overdraw: true} ) );
+	_worship.scale.x = -1;
+	scene.add( _worship );
+	var img = new Image();
+	var url= 'http://120.25.221.94:8080/list/imageFromNet?location='+path_result.location;//'http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=1024&height=512&location='+path_result.location+'&fov=360';
+//	 img.crossOrigin = "";
+//	img.src = 'http://120.25.221.94:8080/list/imageFromNet?location='+path_result.location;
+//	//img.crossOrigin="Anonymous";
+	img.onload =  function(){
+		console.log('图片加载完成');
+		
+		_worship.material.map.image = img;
+		_worship.material.map.needsUpdate = true;
+	}
+	img.onerror = function(){
+		 layer.open({
+	    content: '抱歉此处没有VR图'
+	    ,skin: 'msg'
+	    ,time: 2 //2秒后自动关闭
+	  });
+	  setTimeout(function(){
+	  	plus.screen.unlockOrientation();
+			plus.screen.lockOrientation( "portrait-primary")
+	  	mui.back();
+	  },2000);
+		
+	}
+	imageFromNetH();
+	
+	document.addEventListener( "plusready", onPlusReady, false );
+				// 扩展API加载完毕，现在可以正常调用扩展API
+				function onPlusReady() {
+					plus.screen.lockOrientation( "landscape-primary");
+					plus.key.addEventListener('backbutton',function(){
+						plus.screen.unlockOrientation();
+						plus.screen.lockOrientation( "portrait-primary")
+					});
+				};
+	
+	
+	function imageFromNetH(){
+		if(layerIndex==-1)
+		layerIndex = layer.open({
+						    type: 2
+						    ,content: '加载中请耐心等待...'
+						  });
+		mui.ajax(url,{
+							data:{
+							},
+							crossDomain :true,
+							dataType:'html',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								layer.close(layerIndex);
+								//alert(9);
+								//获得服务器响应
+								img.src = 'data:image/png;base64,'+data;
+								console.log(img)
+							},
+							error:function(xhr,type,errorThrown){
+								layer.close(layerIndex);
+									//异常处理；
+									//alert(type);
+									//console.log(type);
+									imageFromNetH();
+								}
+						});
+	}
+		
+//$.ajax({
+//	type:"get",
+//	dataType:"jsonp",
+//	url:url,
+//	async:true,
+//	success:function(data){
+//		alert(9);
+////								//获得服务器响应
+//								img.src = 'data:image/png;base64,'+data;
+//	},
+//	error:function(e){
+//		
+//	}
+//});
+//		var loaderS = new LLoader();
+//		loaderS.addEventListener(LEvent.COMPLETE, loadBitmapdataSig); 
+//		loaderS.load(url, "bitmapData");
+//		function loadBitmapdataSig (event) {
+////				
+//					console.log(event.target);
+//					_worship.material.map.image = event.target;
+//					_worship.material.map.needsUpdate = true;
+//			}
+//		
+		
+
+
+
+    //Create text
+    var textGeometry = new THREE.TextGeometry(word, { 
+      size: 5,
+      height: 1
+    });
+    var text = new THREE.Mesh(textGeometry, new THREE.MeshBasicMaterial({
+      color: 0xffffff
+    }));
+    text.position.set(15, 15, -25);
+    text.rotation.set(0, 30, 0);
+    scene.add(text);
+
+    animate();
+  }
+
+  // Our preferred controls via DeviceOrientation
+  function setDeviceOrientationControls(e) {
+    controls = new THREE.DeviceOrientationControls(camera, true);
+    controls.connect();
+    controls.update();
+    window.removeEventListener('deviceorientation', setDeviceOrientationControls, true);
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(width, height);
+    effect.setSize(width, height);
+
+    //cube.rotation.x += 0.01;
+    //cube.rotation.y += 0.01;
+
+    controls.update();
+    effect.render(scene, camera);
+  }
+  
+  
+ 
+  </script>
+</body>
+</html>

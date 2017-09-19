@@ -27,7 +27,10 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		map.setMapStyle({styleJson: mapDefine });
 		_this.map = map;
 		//map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
-		var point = new BMap.Point(114.06444, 22.548488);
+		var longitude =  localStorage.getItem('longitude');
+		var latitude =  localStorage.getItem('latitude');
+		console.log(longitude,latitude);
+		var point = new BMap.Point(longitude||114.06444, latitude||22.548488);
 		map.centerAndZoom(point,15);
 //map.centerAndZoom("北京",15); 
 		//map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
@@ -122,6 +125,16 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		 	}
 			for( var i= 0,m=_this.markList.length;i<m;i++ ){
 				var mark = _this.markList[i];
+				if(map.getZoom()<14 &&( i%30!=0)){
+					
+					mark.hide();
+					continue;
+				}else if(map.getZoom()>=14 && map.getZoom()<15 &&( i%10!=0)){
+					
+					mark.hide();
+					continue;
+				}
+				if(!mark.isVisible())mark.show();
 				var icon = mark.getIcon();
 				//icon.size.width *= map.getZoom()/15;
 				//icon.size.height *= map.getZoom()/15;
@@ -131,9 +144,15 @@ Bookingmap.prototype.initBaiduMap=function(id){
 				var zoom = map.getZoom()/15;
 				zoom = (zoom==1?zoom:zoom<1?zoom/2:zoom*2)
 				icon.setImageSize(new BMap.Size(size.width*zoom, size.height*zoom));
+				
 				mark.setIcon(icon);
 			}
 		 });
+		 
+		 //拖拽地图dragend
+		  map.addEventListener("dragend",function(e){
+		  		_this.drageHandler(map.getCenter(),map.getZoom());
+		  });
 		 
 		 //-----------------
 		 var myStyleJson=[  
@@ -157,12 +176,13 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		//单击获取点击的经纬度
 		map.addEventListener("click",function(e){
 			//alert(e.point.lng + "," + e.point.lat);
-			//console.log(e.point);
+			console.log(e.point);
 			//alert(9);
 			var input = document.getElementById("suggestId");
 			input.blur();
 			_this.clickhandler();
-			console.log('覆盖物',map.getOverlays());return;
+			//console.log('覆盖物',map.getOverlays());
+			return;
 			//var os = map.getOverlays();
 			
 			
@@ -252,7 +272,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 				G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
 				
 				if( typeof _this.handler === 'function' ){//console.log("点击下来选项");
-					_this.handler(myValue,null);
+					_this.handler(myValue,_value.city );
 			    }
 				setPlace();
 				control_t = setTimeout(clock(),5000);
@@ -614,8 +634,61 @@ Bookingmap.prototype.clickhandler = function(handler){
 	_this.clickhandler = handler;
 }
 
+/*点击地图*/
+Bookingmap.prototype.drageHandler = function(handler){
+	var _this = this;
+	_this.drageHandler = handler;
+}
+
+/*从后台数据查询过来的mark*/
+Bookingmap.prototype.createMarkFromData = function(obj){
+	var map = this.map;
+	var _this = this;
+	var pt = new BMap.Point(parseFloat(obj.longitude),parseFloat(obj.latitude));
+	var myIcon;
+	if(obj.type_id == 1){//山地自然景观
+		myIcon = _this.myIcon1;
+	}else if(obj.type_id == 3){//地标建筑
+		myIcon = _this.myIcon;
+	}else if(obj.type_id == 5){//森林公园动植物景观
+		myIcon = _this.myIcon2;
+	}else if(obj.type_id == 9){//宗教景观
+		myIcon = _this.myTown;
+	}else{
+		myIcon = _this.myIcon;
+	}
+	var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+	map.addOverlay(marker); 
+	var label = new BMap.Label(obj.title,{offset:new BMap.Size(10,-10)});
+				label.setStyle({
+					border:false,
+					backgroundColor:false,
+				// color : "red",
+				 fontSize : "12px",
+				 height : "20px",
+				// lineHeight : "20px",
+				 fontFamily:"微软雅黑"
+			 });
+			 
+				marker.setLabel(label);
+				marker.result = obj;
+				marker.addEventListener("touchstart",attribute);
+				marker.addEventListener("click",attribute);
+				
+				function attribute(e){
+					console.log(e.target);
+					//e.stopPropagation();
+					 e.domEvent.stopPropagation();
+					var p = marker.getPosition();  //获取marker的位置
+					//alert("marker的位置是" + p.lng + "," + p.lat);  
+					_this.clickMarkHandler(e.target.result);
+				}
+				_this.markList.push(marker);
+				_this.sizeList.push(new BMap.Size(marker.getIcon().imageSize.width,marker.getIcon().imageSize.height) );
+}
 
 Bookingmap.prototype.createMark = function(nme,p,myIcon){
+	return;
 	var map = this.map;
 	var _this = this;
 	

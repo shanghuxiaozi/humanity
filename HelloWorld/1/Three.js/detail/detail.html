@@ -6,6 +6,28 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="style/mui.min.css">
 	<link rel="stylesheet" type="text/css" href="style/common.css">
+	<style>
+		.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
+		  background-color: #cd3829;
+		}
+		.mui-slider-progress-bar {
+		  height: 3px;
+		  width:10%;
+  			margin-left: 23%;
+ 		 }
+ 		 .mui-detail-btn .mui-detail-btn {
+		  width: 70% !important;
+		}
+		.mui-comment .icon-zan {
+		  width: 16px !important;
+		}
+		.mui-segmented-control .mui-control-item {
+		  display: initial;
+		  }
+		  .tab .tab-cell.active a {
+			  border-bottom: 3px solid #F9F7F7;
+			}
+	</style>
 </head>
 <body>
 
@@ -28,87 +50,202 @@
 </div>
 
 <!-- 详情 游记 以文会友 -->
-<div class="mui-content">
-	<div class="mui-row mui-tab">
-		<div class="mui-col-xs-8">
-			<ul class="tab mui-table-view mui-clearfix">
-				<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center active"><a href="javascript:void(0);">详情</a></li>
-				<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center"><a href="javascript:void(0);">游记</a></li>
-				<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center"><a href="javascript:void(0);">以文会友</a></li>
-
+<div class="mui-content" >
+	<div id="slider" class="mui-slider">
+		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		<div class="mui-row mui-tab">
+			<div class="mui-col-xs-8">
+				<ul class="tab mui-table-view mui-clearfix">
+					<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center active">
+						<a  class="mui-control-item" href="#item1mobile">详情</a>
+					</li>
+					<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center">
+						<a class="mui-control-item" href="#item2mobile">游记</a>
+					</li>
+					<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center">
+						<a class="mui-control-item" href="#item3mobile">以文会友</a>
+					</li>
+	
+				</ul>
+			</div>
+	
+		</div>
+	</div>
+	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+	<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+		<div class="mui-row mui-detail mb10">
+			<div class="mui-col-xs-12">
+				<p class="mui-detail-title"><b>景点介绍</b></p>
+				<p class="mui-detail-content">
+					深圳市凤凰山森林公园位于深圳市宝安区西南部的福永镇凤凰村 ，跨福永、西乡、沙井、公明、石岩五个街道办事处，是深圳市规划重点建设的八大森林公园之一，目标是建成深圳最具吸引力的郊野森林公园。景区已建成福永凤凰主入口及沙井观音庙(洪田火山郊野公园)、西乡黄麻布、福永虎背山三个次入口。
+				</p>
+				<div class="mui-detail-btn mui-clearfix">
+					<div class="mui-col-xs-6 mui-pull-left mui-text-center">
+						<img src="images/watch.png" class="mui-detail-btn">
+					</div>
+					<div class="mui-col-xs-6 mui-pull-left mui-text-center">
+						<img src="images/feel.png" class="mui-detail-btn">
+					</div>
+					
+					
+				</div>
+			</div>
+		</div>
+	
+		<!-- 吐槽 -->
+		<div class="mui-row mui-complain">
+			<div class="mui-col-xs-12 ">
+				<p class="mui-detail-title"><b>大家都在吐槽</b></p>
+				<div class="mui-clearfix mui-com-tickets">
+					<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>沙井生蚝</b></div>
+					<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>风土人情</b></div>
+					<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>特色美食</b></div>
+					<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>环境差</b></div>
+					<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>其它</b></div>
+				</div>
+			</div>
+		</div>
+	
+		<!-- 评论 -->
+		<ul class="mui-table-view mui-comment">
+		    <li class="mui-table-view-cell mui-media">
+		        <div class="mui-comment-item">
+		        	<a href="javascript:void(0);" class="mui-comment-zan">
+						<img src="images/zan_icon.png" class="icon-zan">
+						<b class="zan-num">4</b>
+		        	</a>
+		        	<a href="javascript:void(0);">
+			            <img class="mui-media-object mui-pull-left mui-comment-logo" src="images/img1.png">
+			            <div class="mui-media-body">
+			                <p class='mui-ellipsis mui-comment-name'>爱旅游的小姐</p>
+			                <b class="mui-comment-time">2017-08-03</b>
+			            </div>
+		            </a>
+		        </div>
+		    </li>
+		    <li class="mui-table-view-cell mui-media">
+		        <div class="mui-comment-item">
+		        	<a href="javascript:void(0);" class="mui-comment-zan">
+						<img src="images/zan_icon.png" class="icon-zan">
+						<b class="zan-num">4</b>
+		        	</a>
+		        	<a href="javascript:void(0);">
+			            <img class="mui-media-object mui-pull-left mui-comment-logo" src="images/img1.png">
+			            <div class="mui-media-body">
+			                <p class='mui-ellipsis mui-comment-name'>爱旅游的小姐</p>
+			                <b class="mui-comment-time">2017-08-03</b>
+			            </div>
+		            </a>
+		        </div>
+		    </li>
+		 
+		</ul>
+	
+	</div>
+	<!--</div>-->
+	
+	<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<!--<div id="scroll2" class="mui-scroll-wrapper">-->
+							<!--<div class="mui-scroll">-->
+								<!--<div class="mui-loading">-->
+									<!--<div class="mui-spinner">-->
+										
+										<!-- 评论------------------------------------------------------------------ -->
+			<ul class="mui-table-view mui-comment mui-travel-comments">
+			    <li class="mui-table-view-cell mui-media">
+			        <div class="mui-comment-item">
+			        	<div>
+				            <img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">
+				            <div class="mui-media-body">
+				            	<a href="javascript:void(0);">
+									<p class='mui-ellipsis mui-comment-name'>爱旅游的小姐</p>
+									<b class="mui-comment-time">2017-08-03</b>
+									<p class="mui-travel-text">沙井生蚝好吃好久没吃,小伙伴快来吃啊！</p>
+									<img src="../images/img1.png" class="mui-img-response" />
+				            	</a>
+		
+		    		            <div class="mui-travel-revert">
+		    		            	<!--三角形-->
+		    		            	<i class="mui-triangle"></i>
+		    		            	<!--点赞-->
+		    		            	<div class="mui-zan">
+		    		            		<i class="mui-icon-zan"></i>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐</span>
+		    		            	</div>
+		    		            	<!--评论-->
+		    		            	<div class="mui-travel-comment">
+		    		            		<p><b class="zan-name">爱旅游的小姐：</b><b class="zan-text">啥时候过来啊！我在这边等你！啥时候过来啊</b></p>
+		    		            	</div>
+		    		            </div>
+				            </div>
+		
+			            </div>
+			        </div>
+			    </li>
+			    
+			    <li class="mui-table-view-cell mui-media">
+			        <div class="mui-comment-item">
+			        	<div>
+				            <img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">
+				            <div class="mui-media-body">
+				            	<a href="javascript:void(0);">
+									<p class='mui-ellipsis mui-comment-name'>爱旅游的小姐</p>
+									<b class="mui-comment-time">2017-08-03</b>
+									<p class="mui-travel-text">沙井生蚝好吃好久没吃,小伙伴快来吃啊！</p>
+									<img src="../images/img1.png" class="mui-img-response" />
+				            	</a>
+		
+		    		            <div class="mui-travel-revert">
+		    		            	<!--三角形-->
+		    		            	<i class="mui-triangle"></i>
+		    		            	<!--点赞-->
+		    		            	<div class="mui-zan">
+		    		            		<i class="mui-icon-zan"></i>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐</span>
+		    		            	</div>
+		    		            	<!--评论-->
+		    		            	<div class="mui-travel-comment">
+		    		            		<p><b class="zan-name">爱旅游的小姐：</b><b class="zan-text">啥时候过来啊！我在这边等你！啥时候过来啊</b></p>
+		    		            	</div>
+		    		            </div>
+				            </div>
+		
+			            </div>
+			        </div>
+			    </li>
+			 
 			</ul>
-		</div>
+		
+		<!--</div>-->
+										
+					<!-- 评论------------------------------------------------------------------ -->					
+									<!--</div>-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</div>-->
 
-	</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="mui-loading">
+									<div class="mui-spinner">
+									</div>
+								</div>
+							</div>
+						</div>
 
-	<div class="mui-row mui-detail mb10">
-		<div class="mui-col-xs-12">
-			<p class="mui-detail-title"><b>景点介绍</b></p>
-			<p class="mui-detail-content">
-				深圳市凤凰山森林公园位于深圳市宝安区西南部的福永镇凤凰村 ，跨福永、西乡、沙井、公明、石岩五个街道办事处，是深圳市规划重点建设的八大森林公园之一，目标是建成深圳最具吸引力的郊野森林公园。景区已建成福永凤凰主入口及沙井观音庙(洪田火山郊野公园)、西乡黄麻布、福永虎背山三个次入口。
-			</p>
-			<div class="mui-detail-btn mui-clearfix">
-				<div class="mui-col-xs-6 mui-pull-left mui-text-center">
-					<img src="images/watch.png" class="mui-detail-btn">
-				</div>
-				<div class="mui-col-xs-6 mui-pull-left mui-text-center">
-					<img src="images/feel.png" class="mui-detail-btn">
-				</div>
-				
-				
-			</div>
-		</div>
-	</div>
-
-	<!-- 吐槽 -->
-	<div class="mui-row mui-complain">
-		<div class="mui-col-xs-12 ">
-			<p class="mui-detail-title"><b>大家都在吐槽</b></p>
-			<div class="mui-clearfix mui-com-tickets">
-				<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>沙井生蚝</b></div>
-				<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>风土人情</b></div>
-				<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>特色美食</b></div>
-				<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>环境差</b></div>
-				<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>其它</b></div>
-			</div>
-		</div>
-	</div>
-
-	<!-- 评论 -->
-	<ul class="mui-table-view mui-comment">
-	    <li class="mui-table-view-cell mui-media">
-	        <div class="mui-comment-item">
-	        	<a href="javascript:void(0);" class="mui-comment-zan">
-					<img src="images/zan_icon.png" class="icon-zan">
-					<b class="zan-num">4</b>
-	        	</a>
-	        	<a href="javascript:void(0);">
-		            <img class="mui-media-object mui-pull-left mui-comment-logo" src="images/img1.png">
-		            <div class="mui-media-body">
-		                <p class='mui-ellipsis mui-comment-name'>爱旅游的小姐</p>
-		                <b class="mui-comment-time">2017-08-03</b>
-		            </div>
-	            </a>
-	        </div>
-	    </li>
-	    <li class="mui-table-view-cell mui-media">
-	        <div class="mui-comment-item">
-	        	<a href="javascript:void(0);" class="mui-comment-zan">
-					<img src="images/zan_icon.png" class="icon-zan">
-					<b class="zan-num">4</b>
-	        	</a>
-	        	<a href="javascript:void(0);">
-		            <img class="mui-media-object mui-pull-left mui-comment-logo" src="images/img1.png">
-		            <div class="mui-media-body">
-		                <p class='mui-ellipsis mui-comment-name'>爱旅游的小姐</p>
-		                <b class="mui-comment-time">2017-08-03</b>
-		            </div>
-	            </a>
-	        </div>
-	    </li>
-	 
-	</ul>
-
+					</div>
+	
+	
+ </div></div>
 </div>
 
 <div class="mui-fixed-comment">
@@ -122,7 +259,25 @@
 <script type="text/javascript" src="js/mui.min.js"></script>
 
 <script type="text/javascript">
-
+		mui.init({
+			swipeBack: false
+		});
+		(function($) {
+			$('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+			document.getElementById('slider').addEventListener('slide', function(e) {
+				console.log(e.detail.slideNumber );
+			});
+			var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+				$('.mui-input-group').on('change', 'input', function() {
+					if (this.checked) {
+						sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+						//force repaint
+						sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+					}
+				});
+		})(mui);
 </script>
 </body>
 </html>

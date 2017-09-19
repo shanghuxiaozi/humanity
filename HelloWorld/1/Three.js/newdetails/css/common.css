@@ -1,0 +1,262 @@
+@charset "utf-8";
+/************************************************************************************
+RESET
+*************************************************************************************/
+body{background-color: #f7f5f5;font-size: 62.5%;}
+.mb10{margin-bottom: 10px;}
+body,p{margin: 0;padding: 0;}
+.mui-slider-indicator{text-align: right;padding-right: 10px;}
+.mui-slider-indicator .mui-indicator{margin: 1px 2px;}
+.plr0{padding-left:0!important ;padding-right: 0 !important;}
+/*重写.mui-table-view-cell*/
+.mui-table-view-cell{padding: 11px 10px;}
+/*详情 游记 以文会友*/
+.mui-content.mui-tourist-detail{padding-top: 0;}
+.tab .tab-cell:not(:last-child){border-right: 1px solid #e3e2e1;}
+.tab .tab-cell a{font-size: 14px;color: #262626;padding-bottom: 11px;}
+.tab .tab-cell.active a:after{display: inline-block;content: '';height: 3px;width: 27px;background-color: #cd3829;position: absolute;bottom: -11px;left: 0;right: 0;margin: 0 auto;z-index: 3;}
+.mui-tab{border-bottom: 1px solid #e3e2e1;background-color: #fff;padding: 10px 0;}
+.mui-tab .mui-col-xs-8{margin: 0 auto;float: inherit;}
+.mui-table-view:before,.mui-table-view-cell:after,.mui-table-view:after{background-color: #fff;}
+
+.mui-detail{background-color: #fff;}
+.mui-detail-title{position: relative;font-size: 15px;color: #262626;font-weight: 600;padding: 10px;}
+.mui-detail-title b{border-left: 3px solid #cd3829;padding-left: 9px;}
+.mui-detail-content{padding: 0 15px 10px 15px;font-size: 13px;color: #4c4c4c;line-height: 24px; }
+
+.mui-detail-btn{margin-bottom: 7px;}
+.mui-detail-btn .mui-detail-btn{max-width: 100%;width: 70%;}
+
+/*吐槽*/
+.mui-complain{background-color: #fff;}
+.mui-complain .mui-com-tickets{padding: 0 5px 10px;}
+.mui-complain .mui-com-tickets .mui-com-ticket{text-align: center;font-size: 12px;color: #808080;padding: 5px;}
+.mui-com-tickets .mui-com-ticket b{font-weight: normal;border: 1px solid #e3e2e1;border-radius: 4px;display: block;padding: 3px;}
+
+/*评论*/
+.mui-comment .mui-table-view-cell{border-top: 1px solid #e3e2e1;}
+.mui-comment .mui-comment-item{position: relative;}
+.mui-comment .mui-comment-zan{position: absolute;right: 0;z-index: 10;}
+.mui-comment .icon-zan{width: 16px;height: 16px;vertical-align: top;}
+.mui-comment .zan-num{font-weight: normal;font-size: 15px;color: #4c4c4c;}
+.mui-comment .mui-comment-logo{border-radius: 100%;}
+.mui-comment .mui-comment-name{font-size: 15px;color: #333;}
+.mui-comment .mui-comment-time{font-size: 10px;color: #999999;font-weight: normal;}
+
+/*悬浮*/
+.mui-fixed-comment{position: fixed;right: 15px;bottom: 30px;}
+
+/*扫一扫*/
+html,body{width: 100%;height: 100%;}
+.scan-content{height: 100%;width: 100%;padding-bottom: 123px;}
+.scan-pic-div{width: 100%;height: 100%;}
+.scan-content .scan-row{position: relative;border: 1px solid transparent;width: 100%;height: 100%;}
+.scan-content .takepic{width: 37px;}
+.scan-content .scan-takepic{font-size: 0;margin: 20px 15px;position: absolute;
+    right: 0;}
+.scan-content .scan-takepic a:not(:last-child){margin-right: 25px;}
+
+.scan-foot{margin-top: -123px;height: 123px;width: 100%;border: 1px solid transparent;background-color: #fff;}
+.scan-foot .scan-take-txt{font-size: 15px;color: #cd3829;margin: 8px 0;position: relative;}
+.scan-foot .scan-take-txt2{position: absolute;color: #262626;margin-left: 28px;}
+.scan-foot .scan-take-a{display: inline-block;}
+.scan-foot .scan-take{width: 74px;height: 74px;}
+.scan-photos-d{margin-top: 14px;}
+.scan-foot .scan-photos{width: 26px;height: 22px;}
+.scan-photos-txt{font-weight: normal;font-size: 12px;color: #666666;}
+
+/*景点*/
+.mui-search-box{background-color: #fff;border-bottom: 1px solid #e3ded8;box-shadow: none;}
+.mui-search-box.mui-bar-fff{background-color: #fff;border-bottom: none;box-shadow: none;}
+.mui-search{position: relative;height: 34px;width: 87%;border: 1px solid #e3e2e1;border-radius: 50px;margin: 5px auto;padding: 0 14px;}
+.mui-bar-fff .mui-back{background: url(../images/icon_back_white.png)no-repeat left center;background-size: 9px 17px;}
+.mui-bar-fff .mui-more{background: url(../images/yuandian_white.png)no-repeat right center;background-size: 3px 18px;}
+.mui-back{position: absolute;width: 35px;height: 44px;background: url(../images/icon_back.png)no-repeat left center;background-size: 9px 17px;}
+.mui-more{position: absolute;top: 0;right: 10px;width: 35px;height: 44px;background: url(../images/yuandian.png)no-repeat right center;background-size: 3px 18px;}
+.mui-search .mui-input{position: relative;top: -3px;/*width: 79%;*/height: 90%;margin-top: 2px;border: none;padding: 14px 0px;margin-bottom: 0;font-size: 14px;color: #999999;}
+.mui-icon-voice{display: inline-block;height: 16px;width: 28px;background: url(../images/icon_voice.png)no-repeat center center;background-size: 9px 14px;border-right: 1px solid #e3e2e1;margin-top: 8px;}
+.mui-icon-searchs{display: inline-block;height: 16px;width: 23px;background: url(../images/icon_search.png)no-repeat center center;background-size: 15px 15px;}
+.mui-tou-content{position: relative;overflow: inherit;}
+.mui-row-item{padding: 10px;background-color: #fff;}
+.mui-row-bottom{border-bottom: 1px solid #e3e2e1;}
+.mui-img-response{max-width: 100%;} 
+.mui-tou-title{font-size: 16px;color: #0d0d0d;font-weight: bold;line-height: 30px;}
+.mui-tou-text{font-size: 14px;color: #4c4c4c;line-height: 26px;}
+.mui-look-more{font-size: 12px;color: #cd3829;border: 1px solid #cd3829;border-radius: 50px;padding: 5px 20px;margin-top: 7px;display: inline-block;}
+.mui-scoll-x .mui-scroll{padding: 3px 3px 10px 3px;}
+.mui-scoll-x .mui-scroll-wrapper .mui-control-item{height: 100%;width: 130px;padding: 0;box-shadow: 1px 1px 6px 2px #efefef;margin-right: 4px;}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: none;}
+.mui-scoll-x .mui-segmented-control.mui-scroll-wrapper{height: 170px;padding-left: 8px;}
+.mui-scoll-x .mui-scroll-wrapper .mui-scoll-imgs{line-height: 0;height: 90px;width: 100%;display: flex;justify-content: center;align-items: center;}
+.mui-scoll-x .mui-scroll-wrapper .mui-scoll-img{max-width: 100%;height: 100%;}
+.mui-scoll-x .mui-scroll-wrapper .mui-scoll-title{font-size: 14px;color: #262626;line-height: 23px;}
+.mui-scoll-x .mui-scroll-wrapper .mui-scoll-txt{padding: 0 6px;}
+.mui-scoll-x .mui-scroll-wrapper .mui-scoll-con{font-size: 11px;color: #666666;line-height: 15px;white-space: normal;}
+.mui-scoll-x .mui-segmented-control.mui-scroll-wrapper .mui-scroll{height: 170px;}
+.mui-scoll-x .mui-scroll-wrapper .mui-control-travelers{text-align: center;padding:10px;line-height: inherit;}
+.mui-scoll-x .mui-control-travelers .mui-control-item{padding: 10px 0;}
+.mui-scoll-x .mui-control-travelers .mui-scoll-img{width: 55px;height: 55px;border-radius: 100%;}
+.mui-scoll-x .mui-control-travelers .mui-scoll-btn{font-size: 11px;color: #fff;display: inline-block;width: 70px;height: 22px;line-height: 22px;text-align: center;background-color: #cd3829;margin-top: 7px;}
+.mui-scoll-travelers .mui-segmented-control.mui-scroll-wrapper,.mui-scoll-travelers .mui-segmented-control.mui-scroll-wrapper .mui-scroll{height: 170px;}
+.mui-detail-title .mui-all{position: absolute;right: 0;font-size: 11px;color: #999999;}
+.mui-detail-title .mui-icon{font-size: 11px;}
+.mui-scoll-travelers .mui-segmented-control .mui-control-item{line-height: 0;}
+.mui-scoll-travelers .mui-scoll-x .mui-scroll-wrapper .mui-scoll-title{line-height: 24px;}
+/*攻略朋友群*/
+.mui-control-strategy{position: relative;width: 32%;}
+.mui-control-strategy .mui-strategy-img{display: block;width: 100%;height: 80px;}
+.mui-control-strategy .mui-strategy-img .mui-img-response{width: 100%;height: 100%;}
+.mui-control-strategy .mui-strategy-collect{z-index: 4;position: absolute;height: 18px;width:100%;background: rgba(0,0,0,0.3);bottom: 0;color: #fff;    line-height: 18px;padding: 0 5px}
+.mui-control-strategy .mui-icon-collected{background: url(../images/xined.png)no-repeat;background-size: 10px 9px;}
+.mui-icon-collect{display: inline-block;width: 10px;height:9px;background: url(../images/xin.png)no-repeat;background-size: 10px 9px;}
+.mui-strategy-collect b{font-size: 10px;font-weight: normal;}
+.mui-control-strategy:not(:last-child){margin-right: 2%;}
+/*猜你想去*/
+.mui-want-table .mui-table-view-cell{padding: 11px 15px;}
+.mui-want-table .mui-table-view-cell>a:not(.mui-btn){padding: initial;white-space: inherit;}
+.mui-want-table .mui-table-view-cell >a{display: flex;}
+.mui-want-table .mui-want-img{position: relative;width: 32%;height: 80px; margin-right: 2%;}
+.mui-want-table.mui-table-view .mui-media-object{width: 100%;height: 100%;max-width: none;}
+.mui-want-table .mui-want-people{z-index: 4;position: absolute;height: 18px;width: 100%;background: rgba(0,0,0,0.3);bottom: 0;color: #fff;line-height: 18px;padding: 0 8px;font-size: 11px;}
+.mui-want-table .mui-media-body{flex: 1;height: 80px;display: flex;justify-content: center;align-items: center;}
+.mui-want-table .mui-media-body .mui-want-title{font-size: 15px;color: #262626;}
+.mui-want-table .mui-media-body>span{display: grid;}
+.mui-want-table .mui-media-body .mui-want-content{font-size: 12px;color: #666666;}
+.mui-want-table .mui-table-view-cell{margin-bottom: 10px;}
+/*分享詳情*/
+.mui-share-table .mui-comment-item{position: relative;}
+.mui-share-table .mui-comment-item .mui-share-btn{position: absolute;right: 0;top: 50%;font-size: 12px;color: #fffefe;background-color: #cd3829;width: 62px;height: 24px;border-radius: 6px;text-align: center;line-height: 24px;margin-top: -12px;}
+.mui-share-content{background-color: #fff;padding: 10px;}
+.mui-share-content img{max-width: 100%;}
+/*游记*/
+.mui-travel-comments .mui-travel-text{font-size: 15px;color: #666666;margin: 14px 0 12px 0;}
+.mui-travel-comments .mui-travel-revert{position: relative;background-color: #ededed;border-radius: 4px;padding: 14px 10px;margin-top: 20px;}
+.mui-travel-comments .mui-travel-revert .mui-triangle{position: absolute;top: -10px;left: 43px;width: 0;height: 0;border-left: 10px solid transparent;border-right: 10px solid transparent;border-bottom: 14px solid #ededed;}
+.mui-travel-comments .mui-travel-revert .mui-zan{}
+.mui-travel-comments .mui-travel-revert .mui-icon-zan{display: inline-block;width: 10px;height: 9px;background: url(../images/xined.png)no-repeat;background-size: 100% 100%;}
+.mui-travel-comments .mui-travel-revert .zan-name{font-size: 12px;color: #cd3829;font-weight: normal;}
+.mui-travel-comments .mui-travel-revert .zan-text{font-size: 12px;color: #666;font-weight: normal;}
+/*攻略群详情*/
+.mui-travel-groud{}
+.mui-travel-groud .mui-media-object{width: 65px;height: 65px;border-radius: 4px;max-width: 65px;}
+.mui-travel-groud .mui-groud-title{font-size: 15px;color: #333333;}
+.mui-travel-groud  .mui-groud-txt{font-size: 12px;color: #999;}
+
+.mui-groud-profile{padding: 10px 15px;background-color: #fff;}
+.mui-groud-profile .mui-profile-title{font-size: 15px;color: #262626;}
+.mui-groud-profile .mui-profile-text{font-size: 13px;color: #666666;margin-bottom:17px;}
+.mui-groud-profile .mui-profile-btn{padding: 12px 120px;}
+.mui-groud-more .mui-media{position: relative;}
+.mui-groud-more .mui-table-view-cell{padding: 11px 0px;}
+.mui-groud-more .mui-table-view-cell>a:not(.mui-btn){margin: -11px 0px;}
+.mui-groud-more .mui-table-view-cell>.mui-btn{right: 0;}
+/*我的吐槽列表*/
+.mui-spitslot-lists{}
+.mui-spitslot-lists .mui-media{border-top: none;border-bottom: 1px solid #e3e2e1;}
+.mui-spitslot-lists .mui-spitslot-con{margin-top: 13px;}
+.mui-spitslot-lists .mui-spitslot-name{font-size: 15px;color: #333333;font-weight: normal;margin-right: 5px;}
+.mui-spitslot-lists .mui-spitslot-ticket{font-size: 10px;color: #cd3829;border: 1px solid #cd3829;border-radius: 20px;padding: 4px 7px;}
+.mui-spitslot-lists .mui-spitslot-con p{font-size: 15px;color: #282828;}
+/*我要吐槽*/
+.mui-link{position: absolute;right: 10px;top: 50%;transform: translateY(-50%);font-size: 15px;color: #666666;}
+.mui-spitslot-content{}
+.mui-spitslot-content .mui-detail-title b{border-left: none;padding-left: 0;font-size: 14px;color: #999999;font-weight: normal;}
+.mui-spitslot-content.mui-complain .mui-com-tickets .mui-com-ticket{color: #333333;}
+.mui-spitslot-content .mui-com-tickets .mui-com-ticket.active b{color: #fff;background-color: #cd3829;border: none;}
+.mui-spitslot-textarea{padding: 15px 10px;position: relative;}
+.mui-spitslot-textarea .upload_img{position: absolute;left: 0;top: 3px;opacity: 0;}
+.mui-spitslot-textarea .mui-textarea{border: 1px solid #e3e2e1;font-size: 12px;color: #999999;margin-bottom: 0;}
+.mui-spitslot-textarea .mui-spitslot-vedio{position: absolute;right: 23px;bottom:24px;background: url(../images/tab_vedio_icon.png)no-repeat center 2px;background-size: 22px 19px;padding-top: 23px;font-size: 11px;color: #b3b3b3;}
+.mui-spitslot-btn{padding: 12px 120px;margin-top: 30px;}
+/*朋友圈*/
+.mui-oper-div{position: absolute;right: 40px;}
+.mui-operate{display: inline-block;width:26px;height: 16px;background: url(../images/icon_oper.png)no-repeat;background-size:26px 16px;}
+.mui-oper-span{display: inline-block;width: 45px;height: 30px;background-color: #ededed;border-radius: 4px;}
+.mui-oper-zan,.mui-oper-comment{display: inline-block;width: 100%;height: 100%;}
+.mui-oper-zan{background: url(../images/good.png)no-repeat center center;background-size: 17px 17px;}
+.mui-oper-comment{background: url(../images/comment.png)no-repeat center center;background-size: 18px 15px;}
+.mui-search-box .mui-other-menu{position: absolute;color: #fff;right: 10px;}
+/*朋友圈分享弹窗*/
+.mui-share-mask{position: fixed;left: 0;top: 0;z-index: 46;background-color: #fff;width: 100%;height: 132px;padding-top: 33px;}
+.mui-share-mask .mui-img-shuo{width: 40px;height: 38px;}
+.mui-share-mask .mui-img-jie{width: 40px;38px}
+.mui-share-mask .mui-img-guan{width: 39px;height: 38px;}
+.mui-share-mask .mui-name{font-size: 15px;color: #262626;}
+.mui-share-mask .mui-mask-close{position: absolute;right: 10px;color: #000000;top: 0px;z-index: 5;}
+/*灌水吧*/
+.mui-share-irrigation{padding:10px 5px;background-color: #fff;}
+.mui-share-irrigation{}
+.mui-share-irrigation .mui-com-ticket {text-align: center;font-size: 12px;color: #cd3829;padding: 5px;}
+.mui-share-irrigation .mui-com-ticket.active b{background-color: #cd3829;color: #fff;}
+.mui-share-irrigation .mui-com-ticket b {font-weight: normal;border: 1px solid #cd3829;border-radius: 50px;display: block;padding: 4px;}
+.mui-irrigation-lists{}
+.mui-irrigation-lists .mui-irrigation-oper{margin-top: 18px;}
+.mui-irrigation-lists .mui-irrigation-oper .mui-icon-comment{background: url(../images/comment_gray.png)no-repeat;background-size: 18px 15px;padding-left: 23px;font-size: 15px;color: #4c4c4c;margin-right: 17px;}
+.mui-irrigation-lists .mui-irrigation-oper .mui-icon-zan{background: url(../images/zan_icon.png)no-repeat;background-size: 16px 16px;padding-left: 20px;font-size: 15px;color: #4c4c4c;}
+.mui-irrigation-lists .mui-irrigation-oper .mui-icon-zan.active{background: url(../images/zanh_icon.png)no-repeat;background-size: 16px 16px;}
+/*结伴吧*/
+.mui-companion-lists .mui-btn-danger{position: absolute;right: 0;top: 4px;padding: 5px 15px;background-color: #cd3829;border-radius: 0;}
+.mui-companion-lists .mui-companion-groud{margin-top: 8px;}
+.mui-companion-lists .mui-companion-groud,.mui-companion-lists .mui-companion-groud p{font-size: 13px;color: #666666;}
+.mui-companion-lists .mui-companion-groud b{font-weight: normal;}
+.mui-companion-lists .mui-companion-imgs .mui-companion-img{width: 32%;margin-right: 2%;}
+.mui-companion-lists .mui-companion-imgs .mui-companion-img:nth-child(3n){margin-right: 0;}
+.mui-companion-lists .mui-companion-img .mui-img{height: 80px;width: 100%;}
+.mui-companion-opers .mui-position{min-width: 11px;min-height: 13px;background: url(../images/icon_position.png)no-repeat left center;background-size: 11px 12px;font-size: 13px;color: #808080;padding-left: 15px;}
+.mui-companion-opers .mui-group-chat{background: url(../images/icon_group_chat.png)no-repeat right center;background-size: 18px 16px;padding-right:20px;font-size: 13px;color:#808080;margin-right: 10px;}
+.mui-companion-opers .mui-private-chat{background: url(../images/icon_private_chat.png)no-repeat right center;background-size: 18px 13px;padding-right:20px;font-size: 13px;color:#808080;margin-right: 10px;}
+.mui-companion-opers .mui-comment-chat{background: url(../images/comment_gray.png)no-repeat right center;background-size: 18px 15px;padding-right:20px;font-size: 13px;color:#808080;}
+/*结伴详情*/
+.mui-companion-footer{}
+.mui-companion-footer .mui-bar-tab .mui-icon-home,.mui-companion-footer .mui-bar-tab .mui-active .mui-icon-home{background: url(../images/icon_groupbig_chat.png)no-repeat center;background-size: 23px 19px;}
+.mui-companion-footer .mui-bar-tab .mui-icon-phone,.mui-companion-footer .mui-bar-tab .mui-active .mui-icon-phone{background: url(../images/icon_privatebig_chat.png)no-repeat center;background-size: 23px 18px;}
+.mui-companion-footer .mui-bar-tab .mui-icon-email,.mui-companion-footer .mui-bar-tab .mui-active .mui-icon-email{background: url(../images/icon_commentbig_chat.png)no-repeat center;background-size: 23px 20px;}
+.mui-companion-footer .mui-bar-tab .mui-icon-gear,.mui-companion-footer .mui-bar-tab .mui-active .mui-icon-gear{background: url(../images/icon_sharebig_chat.png)no-repeat center;background-size: 19px 18px;}
+.mui-companion-footer .mui-bar-tab .mui-tab-item .mui-icon{top: 5px;}
+/*群聊*/
+.mui-groudchat-box .mui-title b{font-weight: 500;}
+.mui-groudchat-box .mui-groud{position: absolute;right: 10px;height: 44px;width: 50px;background: url(../images/icon_groupbig_chat.png)no-repeat right center;background-size: 23px 19px;}
+.mui-groudchat-footer .mui-bar-tab{padding: 0 10px;display: flex;}
+.mui-groudchat-footer .mui-groud-add{display: inline-block;width: 30px;height: 52px;background: url(../images/icon_add.png)no-repeat center center;background-size: 23px;}
+.mui-groudchat-footer .mui-groud-smile{display: inline-block;width: 43px;height: 52px;background: url(../images/icon_smile.png)no-repeat center center;background-size: 23px;}
+.mui-groudchat-footer .mui-groud-input{flex: 1;margin: 5px 0 0 0;}
+.mui-groudchat-footer .mui-groud-send{display: inline-block;width: 42px;line-height: 52px;text-align: right;font-size: 16px;color: #cd3829;}
+.mui-iframe-groudchat{}
+.mui-iframe-groudchat .mui-content{background-color: transparent;padding: 10px;}
+.mui-iframe-groudchat .mui-chat-time{font-size: 11px;color: #999;margin-bottom: 25px;}
+.mui-iframe-groudchat .mui-chat-receive{display: flex;margin-bottom: 28px;}
+.mui-iframe-groudchat .mui-chat-receive .mui-chat-logo{width: 60px;height: 60px;}
+.mui-chat-receive .mui-chat-logo .mui-img-response{width: 100%;height: 100%;border-radius: 100%;}
+.mui-iframe-groudchat .mui-chat-receive .mui-chat-content{flex: 1;padding-left: 10px;}
+.mui-iframe-groudchat .mui-chat-receive .mui-chat-name{font-size: 12px;color: #666666;margin-bottom: 8px;}
+.mui-iframe-groudchat .mui-chat-receive .mui-chat-text{position: relative;display: inline-block;background-color:#fff;padding: 12px;border: 1px solid #efefef;border-radius: 6px;}
+.mui-chat-receive .mui-chat-text p{font-size: 15px;color: #333333;}
+.mui-chat-receive .mui-chat-text .mui-traggle{position: absolute;}
+.mui-iframe-groudchat .mui-chat-send .mui-chat-content{text-align: right;padding-right: 10px;}
+.mui-chat-receive .mui-chat-text:before{box-sizing: content-box;width: 0px;height: 0px;position: absolute;top: 0px;;left: -5px;padding:0;border-bottom:8px solid transparent;border-top:8px solid #FFFFFF;border-left:8px solid transparent;border-right:8px solid transparent;display: block;content:'';z-index: 12;}
+.mui-chat-receive .mui-chat-text:after{box-sizing: content-box;width: 0px;height: 0px;position: absolute;top: -2px;;left: -6px;padding:0;border-bottom:9px solid transparent;border-top:9px solid #efefef;border-left:9px solid transparent;border-right:9px solid transparent;display: block;content:'';z-index:10}
+.mui-iframe-groudchat .mui-chat-send .mui-chat-text:before{top: 0px;;right: -5px;left: inherit;padding:0;border-bottom:8px solid transparent;border-top:8px solid #FFFFFF;border-left:8px solid transparent;border-right:8px solid transparent;}
+.mui-iframe-groudchat .mui-chat-send .mui-chat-text:after{top: -2px;;right: -6px;left: inherit;border-bottom:9px solid transparent;border-top:9px solid #efefef;border-left:9px solid transparent;border-right:9px solid transparent;}
+/*群成员*/
+.mui-iframe-members .mui-members-clearfix{background-color: #fff;padding: 18px 0 30px 0;}
+.mui-iframe-members .mui-members-logo{width: 52px;height: 52px;border-radius: 100%;}
+.mui-iframe-members .mui-members-name{font-size: 12px;color: #333333;line-height: 16px;margin-bottom: 7px;padding: 0 10px;}
+.mui-iframe-members .mui-members-btn{padding: 5px 16px;border: 1px solid #cd3829;border-radius: 2px;}
+.mui-members-exit{padding: 25px 10px;}
+.mui-members-exit .mui-btn-danger{width: 100%;background-color: #cd3829;padding: 10px 0;}
+
+
+
+/*底部菜单*/
+footer .mui-bar-tab{background-color: #fff;}
+.mui-height-50{height: 50px;}
+.mui-bar-tab .mui-icon-home{width: 100%;background: url(../images/tab_home_icon.png)no-repeat center;background-size: 30px 23px;}
+.mui-bar-tab .mui-icon-home:before,.mui-bar-tab .mui-icon-phone:before,.mui-bar-tab .mui-icon-email:before,.mui-bar-tab .mui-icon-gear:before{content: '';}
+.mui-bar-tab .mui-active .mui-icon-home{background: url(../images/tab_homeh_icon.png)no-repeat center;background-size: 30px 23px;}
+.mui-bar-tab .mui-icon-phone{width: 100%;background: url(../images/tab_saoyisao_icon.png)no-repeat center;background-size: 22px 21px;}
+.mui-bar-tab .mui-active .mui-icon-phone{width: 100%;background: url(../images/tab_saoyisaoh_icon.png)no-repeat center;background-size: 22px 21px;}
+.mui-bar-tab .mui-icon-email{width: 100%;background: url(../images/tab_fenxiang_icon.png)no-repeat center;background-size: 21px 21px;}
+.mui-bar-tab .mui-active .mui-icon-email{width: 100%;background: url(../images/tab_fenxiangh_icon.png)no-repeat center;background-size: 21px 21px;}
+.mui-bar-tab .mui-icon-gear{width: 100%;background: url(../images/tab_me_icon.png)no-repeat center;background-size: 18px 23px;}
+.mui-bar-tab .mui-active .mui-icon-gear{width: 100%;background: url(../images/tab_meh_icon.png)no-repeat center;background-size: 18px 23px;}
+.mui-tab-label{color: #4C4C4C;}
