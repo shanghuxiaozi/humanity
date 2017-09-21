@@ -100,7 +100,9 @@ html,body{width: 100%;height: 100%;}
 .mui-img-response{max-width: 100%;} 
 .mui-tou-title{font-size: 16px;color: #0d0d0d;font-weight: bold;line-height: 30px;}
 .mui-tou-text{font-size: 14px;color: #4c4c4c;line-height: 26px;}
-.mui-look-more{font-size: 12px;color: #cd3829;border: 1px solid #cd3829;border-radius: 50px;padding: 5px 20px;margin-top: 7px;display: inline-block;}
+.mui-look-more{font-size: 12px;color: #cd3829;border: 1px solid #cd3829;border-radius: 50px;padding: 5px 20px;margin-top: 7px;display: inline-block;
+	  background-color: rgb(245, 250, 255);
+}
 .mui-scoll-x .mui-scroll{padding: 3px 3px 10px 3px;}
 .mui-scoll-x .mui-scroll-wrapper .mui-control-item{height: 100%;width: 130px;padding: 0;box-shadow: 1px 1px 6px 2px #efefef;margin-right: 4px;}
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{border-bottom: none;}

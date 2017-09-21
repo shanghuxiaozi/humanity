@@ -367,6 +367,11 @@
 						        }
 						}
 					},10000)*/
+//					for(var i=0;i<plus.webview.all().length;i++){
+//						alert(plus.webview.all()[i].id);
+//					}
+					(plus.webview.getWebviewById("H58A84A3C")).back()
+//					alert('=='+plus.webview.currentWebview().parent().id);
 				};
 				
 				
@@ -439,7 +444,17 @@
 									//获取城市id
 									cityId = data[0].id;
 									//queryScenicSpotbyCity(data[0].id);
-									queryScenicSpotbyPOS(map.map.getCenter(),map.map.getZoom())
+									// 获取经纬度范围参数
+								    var bs = map.map.getBounds();   //获取可视区域
+								    var bssw = bs.getSouthWest();   //可视区域左下角
+								    var bsne = bs.getNorthEast();   //可视区域右上角
+								     
+								    var topLat = bsne.lat;
+								    var bottomLat = bssw.lat;
+								    var leftLng = bssw.lng;
+								    var rightLng = bsne.lng;
+								    //console.log(bssw,bsne);
+									queryScenicSpotbyPOS(map.map.getCenter(),map.map.getZoom(),topLat,bottomLat,leftLng,rightLng)
 								}
 							},error:function(e,t,errorThrown){
 								//alert(t)
@@ -530,7 +545,7 @@
 					    var leftLng = bssw.lng;
 					    var rightLng = bsne.lng;
 					    //console.log(bssw,bsne);
-	        			queryScenicSpotbyPOS(c,v)
+	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng)
 	        		});
 	        		
 	        		
@@ -561,13 +576,13 @@
 	        	}
 	        	//queryScenicSpotbyPOS(new BMap.Point(114.06444, 22.548488),15)
 	        	/*通过城市经纬度获取景点,p中心点，zoom地图层级*/
-	        	function queryScenicSpotbyPOS(p,zoom){
+	        	function queryScenicSpotbyPOS(p,zoom,topLat,bottomLat,leftLng,rightLng){
 	        		if(layerIndex==-1)
 	        			layerIndex = layer.open({
 						    type: 2
 						    ,content: '搜索中'
 						  });
-	        		mui.ajax('http://120.25.221.94:8080/list/scenicSpotbyPOS?lng='+p.lng+'&lat='+p.lat+'&zoom='+zoom,{
+	        		mui.ajax('http://120.25.221.94:8080/list/scenicSpotbyPOS?lng='+p.lng+'&lat='+p.lat+'&zoom='+zoom+'&topLat='+topLat+'&bottomLat='+bottomLat+'&leftLng='+leftLng+'&rightLng='+rightLng,{
 							data:{
 							},
 							crossDomain :true,
@@ -579,7 +594,7 @@
 								if(data.length>50){
 									data = data.slice(0,50);
 								}
-								//console.log(data);
+								console.log(data);
 								if(data&& data.length>0){
 									map.markList = [];
 									map.sizeList = [];

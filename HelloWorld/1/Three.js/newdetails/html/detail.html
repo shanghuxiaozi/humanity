@@ -33,14 +33,19 @@
 				/*background-color: white;*/
 				min-height: 215px;
 			}
-			
+			.mui-tab {
+			  padding: 0px 0;
+			}
 		  /*.tab .tab-cell.active a {
 			  border-bottom: 3px solid #F9F7F7;
 			}*/
 	</style>
 </head>
 <body>
-
+<header class="mui-bar mui-bar-nav mui-search-box mui-bar-fff" style="background: transparent;">
+		<a href="javascript:void(0);" class="mui-back mui-action-back"></a>
+		<a href="javascript:void(0);" class="mui-more"></a>
+	</header>
 <!-- banner -->
 <div class="mui-slider" id='firstContent'>
   	<div class="mui-slider-group" >
@@ -60,7 +65,7 @@
 </div>
 
 <!-- 详情 游记 以文会友 -->
-<div class="mui-content" >
+<div class="mui-content mui-tourist-detail" >
 	<div id="slider" class="mui-slider">
 		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 		<div class="mui-row mui-tab">
