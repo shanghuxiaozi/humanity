@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>我的</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+	<body>
+	<div class="mui-content">
+		<div class="mui-user-top mui-row-bottom">
+			<!--未登录-->
+			<div class="mui-text-center mui-user-no" style="display: none;">
+				<p>
+					<img src="../images/logo_no.png" class="mui-user-logo" />
+				</p>
+				<span class="mui-login-n mui-clearfix">
+					<a href="javascript:void(0);" class="mui-login-btn mui-pull-left">登录</a>
+					<a href="javascript:void(0);" class="mui-login-btn mui-pull-left">注册</a>
+				</span>
+			</div>
+			<!--已登录-->
+			<div class="mui-user-yes" style="">
+				<div class="mui-text-right">
+					<!--消息中心-->
+					<a href="./user_msg.html" class="mui-icon-msg">
+						<img src="../images/icon_groupwhite_chat.png" class="mui-img-msg" />
+						<em class="mui-num-msg">3</em>
+					</a>
+				</div>
+				<div class="mui-login-y mui-clearfix">
+					<img src="../images/img1.png" class="mui-user-logo mui-pull-left" />
+					<span class="mui-pull-left">
+						<p class="mui-user-name">伊娃</p>
+						<p class="mui-user-grade">等级：<b>12</b></p>
+					</span>
+				</div>
+			</div>
+			
+			<!--积分 关注 粉丝  未登录 文字颜色不一样  -->
+			<div class="mui-nums mui-clearfix" style="display: none;">
+				<div class="mui-col-xs-4 mui-pull-left">
+					积分：<b>0</b>
+				</div>
+				<div class="mui-col-xs-4 mui-pull-left mui-text-center">
+					关注：<b>0</b>人
+				</div>
+				<div class="mui-col-xs-4 mui-pull-left mui-text-right">
+					粉丝：<b>0</b>人
+				</div>
+			</div>
+			<!--积分 关注 粉丝  已登录 -->
+			<div class="mui-nums mui-clearfix">
+				<div class="mui-col-xs-4 mui-pull-left">
+					积分：<b class="mui-user-red">0</b>
+				</div>
+				<div class="mui-col-xs-4 mui-pull-left mui-text-center">
+					关注：<b class="mui-user-red">0</b>人
+				</div>
+				<div class="mui-col-xs-4 mui-pull-left mui-text-right">
+					粉丝：<b class="mui-user-red">0</b>人
+				</div>
+			</div>
+		</div>
+		
+		<div class="mui-user-menus">
+			<ul class="mui-table-view mui-table-vedio">
+				<!--我的足迹-->
+				<li class="mui-table-view-cell mui-row-bottom">
+					<a href="./user_foot.html" class="mui-clearfix">
+						<div class="mui-pull-left mui-left-text"><i class="mui-icon mui-icon-foot"></i>我的足迹</div>
+						<div class="mui-pull-right mui-right-traggle">
+							<i class="mui-icon-traggle"></i>
+						</div>
+					</a>
+				</li>
+				<!--我的活动-->
+				<li class="mui-table-view-cell mui-row-bottom">
+					<a href="./user_activity.html" class="mui-clearfix">
+						<div class="mui-pull-left mui-left-text"><i class="mui-icon mui-icon-activity"></i>我的活动</div>
+						<div class="mui-pull-right mui-right-traggle">
+							<i class="mui-icon-traggle"></i>
+						</div>
+					</a>
+				</li>
+				<!--我的发布-->
+				<li class="mui-table-view-cell mui-row-bottom">
+					<a href="./user_release_friends.html" class="mui-clearfix">
+						<div class="mui-pull-left mui-left-text"><i class="mui-icon mui-icon-release"></i>我的发布</div>
+						<div class="mui-pull-right mui-right-traggle">
+							<i class="mui-icon-traggle"></i>
+						</div>
+					</a>
+				</li>
+				<!--我的收藏-->
+				<li class="mui-table-view-cell mui-row-bottom">
+					<a href="./user_collect.html" class="mui-clearfix">
+						<div class="mui-pull-left mui-left-text"><i class="mui-icon mui-icon-collect"></i>我的收藏</div>
+						<div class="mui-pull-right mui-right-traggle">
+							<i class="mui-icon-traggle"></i>
+						</div>
+					</a>
+				</li>
+				<!--我的设置-->
+				<li class="mui-table-view-cell mui-row-bottom">
+					<a href="./user_setup.html" class="mui-clearfix">
+						<div class="mui-pull-left mui-left-text"><i class="mui-icon mui-icon-setup"></i>我的设置</div>
+						<div class="mui-pull-right mui-right-traggle">
+							<i class="mui-icon-traggle"></i>
+						</div>
+					</a>
+				</li>
+				<!--关于我们-->
+				<li class="mui-table-view-cell mui-row-bottom">
+					<a href="javascript:void(0);" class="mui-clearfix">
+						<div class="mui-pull-left mui-left-text"><i class="mui-icon mui-icon-we"></i>关于我们</div>
+						<div class="mui-pull-right mui-right-traggle">
+							<i class="mui-icon-traggle"></i>
+						</div>
+					</a>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+		
+	<div class="mui-height-50"></div>
+	<footer>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item">
+				<span class="mui-icon mui-icon-home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a class="mui-tab-item">
+				<span class="mui-icon mui-icon-phone"></span>
+				<span class="mui-tab-label">扫一扫</span>
+			</a>
+			<a class="mui-tab-item">
+				<span class="mui-icon mui-icon-email"></span>
+				<span class="mui-tab-label">分享</span>
+			</a>
+			<a class="mui-tab-item mui-active">
+				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-tab-label">我</span>
+			</a>
+		</nav>
+	</footer>
+	</body>
+</html>

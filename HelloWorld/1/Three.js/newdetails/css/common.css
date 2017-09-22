@@ -265,6 +265,201 @@ html,body{width: 100%;height: 100%;}
 .mui-members-exit{padding: 25px 10px;}
 .mui-members-exit .mui-btn-danger{width: 100%;background-color: #cd3829;padding: 10px 0;}
 
+/*发布朋友圈，说说*/
+.mui-link-back{position: absolute;left: 10px;top: 50%;transform: translateY(-50%);font-size: 15px;color: #666666;}
+.mui-publish-friends{padding-bottom: 0;}
+.mui-publish-friends .mui-form-control{border: none;font-size: 14px;color: #262626;padding: 0;height: 105px;}
+.mui-phone-preview{width: 76px;height: 76px;margin-right: 10px;position: relative;}
+.mui-phone-preview img{height: 100%;}
+.mui-phone-preview .mui-icon-remove{position: absolute;right: 0;width: 30px;height: 30px;background: url(../images/icon_remove.png)no-repeat right top;background-size: 10px 10px;}
+.mui-publish-vedio{position: relative;background-color: #f7f7f7;display: inline-block;width: 76px;height: 76px;padding-top: 14px;}
+.mui-publish-vedio .mui-vedio-phone{width: 22px;height: 19px;margin-bottom: 16px;}
+.mui-publish-vedio .mui-vedio-text{font-size: 12px;color: #7f7f7f;line-height: 0;}
+.mui-publish-vedio .mui-file{position: absolute;left: 0;top: 0;width: 100%;height: 100%;opacity: 0;}
+.mui-icon-address{display: inline-block;width: 11px;height: 12px;background: url(../images/icon_position.png)no-repeat;background-size: 11px 12px;vertical-align: text-top;margin-right: 11px;margin-left: 5px}
+.mui-left-text{font-size: 12px;color: #666666;}
+.mui-table-vedio .mui-table-view-cell{padding: 12px 10px;}
+.mui-right-traggle{line-height: 0;}
+.mui-right-traggle .mui-icon-traggle{display: inline-block;width: 9px;height: 17px;background: url(../images/icon_back_right.png)no-repeat right center;background-size: 100% 100%;}
+/*发表-灌水吧*/
+.mui-publish-title{font-size: 14px;color: #262626;padding: 2px 5px;}
+.mui-item-line{padding: 0 10px;}
+/*发表-结伴吧*/
+.mui-table-companion{padding: 0 10px;}
+.mui-table-companion .mui-table-view-cell{padding: 0;}
+.mui-table-companion .mui-form-control{width: auto;margin-bottom: 0;border: none;}
+.mui-table-companion .mui-form-lable{font-size: 14px;color: #262626;line-height: 34px;}
+.mui-groud-check{position: relative;}
+.mui-groud-check .mui-checked-input{position: absolute;top: 4px;opacity: 0;}
+.mui-groud-check .mui-checked-input:checked+.mui-checked-label{background: url(../images/icon_checkbox_y.png)no-repeat left center;background-size: 12px 12px;}
+.mui-groud-check .mui-checked-label{background: url(../images/icon_checkbox_n.png)no-repeat left center;background-size: 12px 12px;font-size: 12px;color: #666666;padding-left: 22px;}
+
+/*我的*/
+.mui-user-top{position: relative;height: 200px;width: 100%;background: url(../images/user_bg.png)no-repeat;background-size: 100% 100%;}
+.mui-user-no{padding-top: 20px;}
+.mui-user-top .mui-user-logo{width: 74px;height: 74px;border-radius: 100%;}
+.mui-user-top .mui-login-n{display: inline-block;background: rgba(255,255,255,0.83);width: 100px;height: 30px;border-radius: 4px;}
+.mui-user-top .mui-login-n .mui-login-btn{display: inline-block;width: 50px;height: 30px;line-height: 30px;font-size: 17px;color: #d42543;}
+.mui-user-top .mui-login-n .mui-login-btn:first-child{border-right: 1px solid #d42543;}
+/*已登录*/
+.mui-user-yes{}
+.mui-user-yes .mui-user-logo{margin-right: 13px;}
+.mui-user-yes .mui-icon-msg{position: relative;display: inline-block;}
+.mui-user-yes .mui-img-msg{width: 23px;height: 19px;margin: 10px 10px 0 0;}
+.mui-user-yes .mui-num-msg{position: absolute;right: 8px;top:8px;font-size: 10px;background-color: #cd3829;color: #fff;border-radius: 100%;min-width: 12px;min-height: 12px;text-align: center;line-height: 12px;font-style: normal;}
+.mui-user-yes .mui-login-y{padding: 10px;margin-top: 4px;}
+.mui-user-yes .mui-user-name{font-size: 15px;color: #4a4a4a;margin-top: 13px;}
+.mui-user-yes .mui-user-grade{font-size: 14px;color: #4a4a4a;}
+.mui-user-yes .mui-user-grade b{font-weight: normal;}
+.mui-user-red{color: #cd3829;}
+.mui-user-top .mui-nums{position: absolute;bottom: 0;width: 100%;height: 35px;line-height: 35px;background: rgba(255,255,255,0.8);padding: 0 10px;font-size: 15px;color: #7a7a7a;}
+.mui-user-top .mui-nums b{font-weight: normal;}
+/*菜单列表*/
+.mui-user-menus{padding: 0 10px;background-color: #fff;}
+.mui-user-menus .mui-icon{display: inline-block;width: 25px;height: 20px;vertical-align: top;}
+.mui-user-menus .mui-icon-foot{background: url(../images/user_footprint.png)no-repeat center center;background-size: 12px 18px;}
+.mui-user-menus .mui-left-text{font-size: 15px;color: #4a4a4a;}
+.mui-user-menus .mui-icon-activity{background: url(../images/user_activity.png)no-repeat center center;background-size: 15px 15px;}
+.mui-user-menus .mui-icon-release{background: url(../images/user_Release.png)no-repeat center center;background-size: 16px 18px;}
+.mui-user-menus .mui-icon-collect{background: url(../images/user_Collection.png)no-repeat center center;background-size: 15px 14px;}
+.mui-user-menus .mui-icon-setup{background: url(../images/user_Set-up.png)no-repeat center center;background-size: 17px 17px;}
+.mui-user-menus .mui-icon-we{background: url(../images/user_we.png)no-repeat center center;background-size: 18px 18px;}
+/*我的足迹*/
+.mui-foot{position: absolute;top: 0;right: 10px;width: 35px;height: 44px;background: url(../images/foot_tic.png)no-repeat right center;background-size: 23px 23px;}
+.mui-foot-row{padding: 0 10px;}
+.mui-foot-row .mui-table-view{background: transparent;padding-left: 13px;}
+.mui-foot-row .mui-table-view .mui-table-view-cell{position: relative;border-left: 1px solid #cd3829;overflow: inherit;padding: 11px 0px 10px 15px;}
+.mui-foot-row .mui-table-view .mui-foot-circle{position: absolute;top: 24px;width: 15px;height: 15px;background: url(../images/foot_circle.png)no-repeat;background-size: 15px 15px;left: -8px;}
+.mui-foot-row .mui-foot-contents{background-color: #fff;padding: 4px 0;border-radius: 4px;}
+.mui-foot-row .mui-foot-contents .mui-foot-time{font-size: 16px;color: #262626;padding: 0 4px;}
+.mui-foot-row .mui-foot-contents .mui-foot-addr{font-size: 15px;color: #666666;border-bottom: 1px solid #e3e2e1;padding: 0 4px;}
+.mui-foot-imgb{padding: 4px 4px 0 4px;line-height: 0;}
+.mui-foot-imgb .mui-foot-img{height: 154px;}
+.mui-foot-img{border-radius: 4px;}
+.mui-foot-imgl{padding: 4px 2px;}
+.mui-foot-imgl .mui-foot-img{height: 75px;}
+.mui-foot-imgl .mui-col-xs-12{line-height: 0;}
+.mui-foot-imgl .mui-col-xs-12:first-child{margin-bottom: 4px;}
+.mui-foot-imgl2{padding: 4px;}
+.mui-table-view:before, .mui-table-view-cell:after, .mui-table-view:after{background-color: transparent;}
+/*足迹图*/
+.mui-footmap-wrapper{height: 100%;}
+.mui-foot-map{position: absolute;width: 100%;height: 100%;padding-top: 44px;overflow: hidden;}
+.mui-foot-map-con{position: absolute;width: 100%;height: 100%;}
+.mui-footmap-wrapper .mui-footmap-indication{padding: 0 10px;margin-top: 10px;}
+.mui-footmap-wrapper .mui-footmap-indication .mui-col-xs-3{background-color: #fff;}
+.mui-footmap-indication .mui-col-xs-3 p{font-size: 15px;color: #666666;}
+.mui-footmap-indication .mui-col-xs-3:not(:last-child){border-right: 1px solid #dddddd;}
+.mui-footmap-indication .mui-col-xs-3 b{font-weight: normal;}
+/*我的活动*/
+.mui-user-activity{}
+.mui-user-activity .mui-table-view{background: transparent;}
+.mui-user-activity .mui-activity-box{border-radius: 4px;background-color: #fff;}
+.mui-user-activity .mui-activity-box .mui-img-response{border-radius: 4px 4px 0 0;}
+.mui-user-activity .mui-activity-content{padding: 0px 10px 10px 10px;}
+.mui-user-activity .mui-activity-content b{font-weight: normal;}
+.mui-user-activity .mui-activity-content .title{font-size: 17px;color: #262626;}
+.mui-user-activity .mui-activity-content .text{font-size: 15px;color: #4a4a4a;margin-top: 4px;}
+/*我的发布-朋友圈，说说*/
+.mui-release-friends{background: transparent;}
+.mui-release-friends .mui-table-view-cell{background-color: #fff;margin-bottom: 5px;}
+.mui-release-friends .mui-travel-revert{margin-top: 5px;}
+/*我的发布-结伴*/
+.mui-companion-lists .user_release_name{color: #cd3829;}
+.mui-line-5{height: 5px;background-color: #F7F5F5;margin: 0 -10px;}
+.mui-line-10{height: 10px;background-color: #F7F5F5;margin: 0 -10px;}
+.mui-companion-wrapper{}
+.mui-companion-wrapper .mui-companion-lists .mui-table-view-cell:last-child{border: none;}
+.mui-companion-wrapper .mui-companion-text{font-size: 14px;color: #666666;margin-top: 8px;}
+/*我的发布--灌水*/
+.mui-release-irrigation.mui-spitslot-lists .mui-media{border: none;}
+.mui-release-zan{padding: 10px 0;}
+.mui-release-zan .mui-icon-zan{display: inline-block;width: 16px;height: 16px;background: url(../images/zanm_icon.png)no-repeat;background-size: 16px 16px;vertical-align: top;margin-right: 5px;}
+.mui-release-zan .mui-zan-name{font-size: 12px;color: #4a4a4a;}
+.mui-release-zan .mui-icon-comment{display: inline-block;width: 18px;height: 15px;background: url(../images/comment_red.png)no-repeat;background-size: 18px 15px;vertical-align: middle;margin-right: 5px;}
+.mui-release-comments{}
+.mui-release-comments .mui-table-view-cell{padding: 10px 0;}
+.mui-release-comflex{margin-bottom: 4px;}
+.mui-release-comflex .mui-spitslot-name{display: inline-block;}
+.mui-release-comflex .mui-spitslot-name b{font-weight: normal;}
+.mui-release-comflex .mui-release-flex-1{font-size: 14px;}
+.mui-release-comflex .mui-release-flex-1 p{color: #666666;}
+.mui-release-comments .mui-need-reply{font-size: 10px;color: #cd3829;margin-left: 38px;}
+.mui-release-comments .mui-table-view-cell .mui-comment-item{border-bottom: 1px dashed #dddddd;}
+.mui-release-comments .mui-comments-pictures{margin-bottom: 4px;}
+.mui-release-comments .mui-comments-pictures .mui-comments-pic{width: 32%;height: 82px;}
+.mui-release-comments .mui-comments-pictures .mui-comments-pic:not(:last-child){margin-right: 2%;}
+.mui-comments-pictures .mui-comments-pic .mui-img-response{height: 100%;}
+
+/*我的收藏*/
+.mui-collect-lists{padding: 10px 5px;columns: 2;column-gap: 2px;column-fill: balance;}
+.mui-collect-lists .mui-collect-list{padding: 0 5px;margin-bottom: 10px;height: 100%;overflow: auto;}
+.mui-collect-lists .mui-collect-list .mui-collect-item{background-color: #fff;border-radius: 8px;}
+.mui-collect-list .mui-collect-item .mui-img-response{border-radius: 8px 8px 0 0;}
+.mui-collect-lists .mui-collect-contents{padding: 5px;}
+.mui-collect-lists .mui-collect-contents .title{font-size: 14px;color: #cd3829;}
+.mui-collect-lists .mui-collect-contents .content{font-size: 11px;color: #666666;}
+.mui-collect-lists .mui-collect-contents .time{font-size: 9px;color: #666666;}
+/*我的设置*/
+.mui-user-setup{}
+.mui-user-setup .mui-table-view-cell:before{}
+.mui-user-setup .mui-setup-text{font-size: 17px;color: #999;font-weight: normal;margin-right: 4px;}
+.mui-user-setup .mui-icon-traggle{vertical-align: sub;}
+/*我的设置-账号安全*/
+.mui-user-setup .mui-security-now{font-size: 15px;color: #666666;}
+.mui-user-setup .mui-security-phone{font-size: 15px;color: #333333;}
+/*我的设置-账号安全-修改登录密码*/
+.mui-update-pass{}
+.mui-update-pass .mui-input-group{margin-top: 10px;}
+.mui-update-pass .mui-input-user{font-size: 15px;color: #999;width: 95%;}
+.mui-update-pass .mui-input-group .mui-input-row{padding: 0 10px;}
+.mui-update-pass .mui-input-row label{padding: 8px 0px;border-left: 2px solid #cd3829;margin-top: 13px;width: inherit;}
+.mui-update-pass .mui-input-row .mui-icon-eye.mui-active{color: #cd3829;}
+.mui-button-forget{padding:10px;}
+.mui-button-forget .mui-forget{font-size: 15px;color: #4a4a4a;margin-right: 6px;}
+.mui-button-forget .mui-forget-code{font-size: 15px;color: #999999;font-weight: normal;}
+.mui-update-btns{padding: 0 10px;margin-top: 40px;}
+.mui-update-btns .mui-btn-danger{display: block;background-color: #cd3829;padding: 12px;}
+/*我的设置-账号安全-忘记登录密码*/
+.mui-update-pass .mui-get-code{position: absolute;right: 10px;top: 6px;font-size: 10px;width: 70px;height: 28px;line-height: 28px;text-align: center;background-color: #dc7369;color: #fff;border-radius: 4px;}
+.mui-update-pass .mui-get-code.active{background-color: #cd3829;}
+.mui-input-getcode .mui-input-user{width: 70%;float: left;margin-left: 15px;}
+.mui-input-getcode.mui-input-row .mui-icon-clear{right: 100px;}
+/*我的设置-消息提醒*/
+.switch-info{font-size: 12px;color: #999999;padding: 0 10px;}
+.mui-switch-blue.mui-active{background-color: #cd3829;border: 2px solid #cd3829;}
+.mui-label-switch{margin-top: 4px;}
+/*我的设置-意见反馈*/
+.mui-opinion-content{background-color: #f7f7f7;}
+.mui-opinion-content .mui-opinion-div{line-height: 0;padding: 10px;position: relative;}
+.mui-opinion-content .mui-opinion-input{margin-bottom: 0;font-size: 17px;color: #999999;border: none;}
+.mui-opinion-content .mui-text-remind{font-size: 15px;color: #999999;padding-right: 10px;    position: absolute;right: 10px;bottom: 22px;}
+.mui-opinion-content .mui-text-remind b{font-weight: normal;}
+/*消息中心*/
+.mui-table-msg-view{background: transparent;}
+.mui-table-msg-view .mui-msg-time{font-size: 11px;color: #333333;margin-bottom: 8px;}
+.mui-table-msg-view .mui-msg-view-content{background-color: #fff;border-radius: 4px;padding: 10px;}
+.mui-table-msg-view .mui-msg-title{font-size: 15px;color: #333333;font-weight: 600;margin-bottom: 4px;}
+.mui-table-msg-view .mui-msg-content{font-size: 15px;color: #666666;line-height: 22px;}
+.mui-table-msg-view .mui-msg-more{padding: 10px 0 0;margin-top: 4px;display: block;border-top: 1px solid #dddddd;}
+.mui-table-msg-view .mui-msg-more p{font-size: 15px;color: #333;}
+/*个人资料*/
+.mui-edit{position: absolute;right: 10px;width: 50px;height: 44px;background: url(../images/icon_edit.png)no-repeat center right;background-size: 22px 22px;}
+.mui-personal-wrapper .mui-table-view-cell{padding: 0 10px;}
+.mui-personal-wrapper .mui-content .mui-table-view{margin-top: 10px;}
+.mui-personal-wrapper .mui-table-view-cell-box{padding: 10px 0;}
+.mui-personal-wrapper .mui-table-view-cell-box .mui-person-logo{width: 59px;height: 59px;border-radius: 4px;}
+.mui-personal-wrapper .mui-person-lable{font-size: 15px;color: #4a4a4a;}
+.mui-table-view-cell-head .mui-person-lable{padding: 19px 0;}
+.mui-line-height-0{line-height: 0;}
+.mui-personal-wrapper .mui-person-input,.mui-personal-wrapper .mui-person-select{margin: 0;height: 17px;text-align: right;border: none;padding-right: 0;font-size: 15px;color: #4a4a4a;padding: 0;}
+.mui-personal-wrapper .mui-table-view-cell .mui-person-readly{height: 17px;font-size: 15px;color: #4a4a4a;}
+.mui-person-save{margin-top: 35px;}
+.mui-person-save .mui-btn{background-color: #cd3829;display: inline-block;width: 90px;height: 40px;line-height: 40px;padding: 0;font-size: 18px;}
+.mui-edit-op,.mui-person-save{display: none;}
+
+
+
 
 
 /*底部菜单*/

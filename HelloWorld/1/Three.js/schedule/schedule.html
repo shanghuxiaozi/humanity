@@ -202,9 +202,10 @@
 			<!--<a class="mui-tab-item" href="http://120.25.221.94/refraction.html">-->
 			<!--<a class="mui-tab-item" href="http://120.25.221.94/threejs/three.js-master/examples/refraction.html">-->
 			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?3d&particle&Particle_Scene&core,webgl,ani,d3,CameraMoveScript.js">-->
-			<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?3d&particle&Particle_BurningGround&core,webgl,ani,d3">
+			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?3d&particle&Particle_BurningGround&core,webgl,ani,d3">-->
 			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/test/ZhanPaiKeJi/index.html">-->
 			<!--<a class="mui-tab-item" href="https://ritterliu.github.io/WebVR_Demo/">-->
+				<a class="mui-tab-item" href="../newdetails/html/user.html"/>
 				<span class="mui-icon "><img src="../icon/tab_me_icon.png"/></span>
 				<span class="mui-tab-label">我</span>
 			</a>
@@ -381,10 +382,13 @@
 				    //alert('oh..');
 				    //console.log(this.getAttribute("dataindex"))
 				    if(this.getAttribute("dataindex")=="2"/*this.href == "../circle/index.html"*/){
-				    	circle = plus.webview.getWebviewById('circle');
-				    	alert(circle==null);
-				    	if(circle)circle.show();
+//				    	circle = plus.webview.getWebviewById('circle');
+//				    	alert(circle==null);
+//				    	if(circle)circle.show();
 				    	
+//				    	mui.openWindow("../cut/index.html");
+						mui.openWindow("../newdetails/html/share_companion.html");
+				    	//mui.openWindow("http://120.77.249.40:8084/buyer/changeImg");
 				    	//.openWindow("../circle/index.html");
 				    }else if( this.getAttribute("dataindex") == "infoA" ){
 				    	//console.log(currentInfo);

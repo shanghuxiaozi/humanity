@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>发布-结伴吧</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+	</head>
+	<body>
+	<header class="mui-bar mui-bar-nav mui-search-box">
+		<a href="javascript:void(0);" class="mui-link-back">取消</a>
+		<h4 class="mui-title">结伴吧</h4>
+		<a class="mui-link">发布</a>
+	</header>
+	
+	<div class="mui-iframe-wrapper" style="top: 44px;">
+
+		<ul class="mui-table-view mui-table-companion">
+			<li class="mui-table-view-cell mui-clearfix mui-row-bottom">
+				<label class="mui-pull-left mui-form-lable">结伴时间：</label>
+				<input type="text" class="mui-pull-left mui-form-control"/>
+			</li>
+			<li class="mui-table-view-cell mui-clearfix mui-row-bottom">
+				<label class="mui-pull-left mui-form-lable">结伴人数：</label>
+				<input type="number" class="mui-pull-left mui-form-control"/>
+			</li>
+			<li class="mui-table-view-cell mui-clearfix mui-row-bottom">
+				<label class="mui-pull-left mui-form-lable">结伴要求：</label>
+				<input type="text" class="mui-pull-left mui-form-control"/>
+			</li>
+			<li class="mui-table-view-cell mui-clearfix mui-row-bottom">
+				<label class="mui-pull-left mui-form-lable">目的地：</label>
+				<input type="text" class="mui-pull-left mui-form-control"/>
+			</li>
+
+		</ul>
+		<div class="mui-row-item mui-publish-friends">
+			<textarea placeholder="把你这一刻记录下来吧！" class="mui-form-control"></textarea>
+			<div class="mui-clearfix mui-row-bottom mui-padbom-10">
+				<!--预览的图片-->
+				<span class="mui-pull-left mui-phone-preview">
+					<a href="javascript:void(0);" class="mui-icon-remove"></a>
+					<img src="../images/img1.png" class="mui-img-response"/>
+				</span>
+				<span class="mui-pull-left mui-phone-preview">
+					<a href="javascript:void(0);" class="mui-icon-remove"></a>
+					<img src="../images/img1.png" class="mui-img-response"/>
+				</span>
+				<!--上传图片-->
+				<span class="mui-publish-vedio mui-text-center mui-pull-left">
+					<input type="file"  class="mui-file"/>
+					<img src="../images/tab_vediodark_icon.png" class="mui-vedio-phone"/>
+					<p class="mui-vedio-text">图片 / 视频</p>
+				</span>
+			</div>
+			<!--所在位置-->
+			<ul class="mui-table-view mui-table-vedio">
+				<li class="mui-table-view-cell mui-row-bottom">
+					<a href="javascript:void(0);" class="mui-clearfix">
+						<div class="mui-pull-left mui-left-text"><i class="mui-icon-address"></i>所在位置</div>
+						<div class="mui-pull-right mui-right-traggle">
+							<i class="mui-icon-traggle"></i>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-row-bottom mui-clearfix">
+					<div class="mui-pull-left mui-left-text mui-groud-check">
+						<input type="checkbox" class="mui-checked-input"/>
+						<label class="mui-checked-label">所在群组</label>
+					</div>
+
+				</li>
+			</ul>
+		</div>
+
+	</div>
+		
+	</body>
+</html>
