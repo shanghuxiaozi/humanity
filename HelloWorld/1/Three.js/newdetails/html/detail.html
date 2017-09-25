@@ -48,11 +48,13 @@
 	</header>
 <!-- banner -->
 <div class="mui-slider" id='firstContent'>
-  	<div class="mui-slider-group" >
+  	<div class="mui-slider-group mui-slider-loop"  id="currentScenicImgGroup">
+		<!--支持循环，需要重复图片节点-->
+		<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="../images/img1.png" /></a></div>
 	    <div class="mui-slider-item"><a href="#"><img src="../images/img1.png" /></a></div>
+	    <!--<div class="mui-slider-item"><a href="#"><img src="../images/img1.png" /></a></div>
 	    <div class="mui-slider-item"><a href="#"><img src="../images/img1.png" /></a></div>
-	    <div class="mui-slider-item"><a href="#"><img src="../images/img1.png" /></a></div>
-	    <div class="mui-slider-item"><a href="#"><img src="../images/img1.png" /></a></div>
+	    <div class="mui-slider-item"><a href="#"><img src="../images/img1.png" /></a></div>-->
   	</div>
 
 	<div class="mui-slider-indicator">
@@ -94,11 +96,11 @@
 		<div class="mui-row mui-detail mb10">
 			<div class="mui-col-xs-12">
 				<p class="mui-detail-title"><b>景点介绍</b></p>
-				<p class="mui-detail-content">
+				<p class="mui-detail-content"  id="currentScenicContent">
 					深圳市凤凰山森林公园位于深圳市宝安区西南部的福永镇凤凰村 ，跨福永、西乡、沙井、公明、石岩五个街道办事处，是深圳市规划重点建设的八大森林公园之一，目标是建成深圳最具吸引力的郊野森林公园。景区已建成福永凤凰主入口及沙井观音庙(洪田火山郊野公园)、西乡黄麻布、福永虎背山三个次入口。
 				</p>
 				<div class="mui-detail-btn mui-clearfix">
-					<div class="mui-col-xs-6 mui-pull-left mui-text-center">
+					<div class="mui-col-xs-6 mui-pull-left mui-text-center" id="vrBtn">
 						<img src="../images/watch.png" class="mui-detail-btn">
 					</div>
 					<div class="mui-col-xs-6 mui-pull-left mui-text-center">
@@ -364,6 +366,49 @@
 				}
 				
 			}
+			
+			var currentInfo = localStorage.getItem("currentInfo");
+			var currentScenicContent = document.getElementById("currentScenicContent");
+			var currentScenicImgGroup = document.getElementById("currentScenicImgGroup");
+			if(currentInfo){
+				currentInfo = JSON.parse(currentInfo);
+				//currentScenic.innerHTML = currentInfo.title;
+				currentScenicContent.innerHTML = currentInfo.summary;
+				currentInfo.imgbox = JSON.parse(currentInfo.imgbox);
+				if(currentInfo.imgbox.length>0){
+					var innerHTML="";
+					//var grounp = currentScenicImgGroup.querySelectorAll(".mui-slider-item")
+					//console.log(grounp[0])
+					for( var i=0,m=(currentInfo.imgbox.length<5?currentInfo.imgbox.length:4);i<m;i++  ){
+						//if(i>3)break;
+						innerHTML+=' <div class="mui-slider-item"><a href="#"><img src="'+currentInfo.imgbox[i]+'" /></a></div>';
+						if(i==m-1){
+							innerHTML = '<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="'+currentInfo.imgbox[i]+'" /></a></div>'+innerHTML
+							+'<div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="'+currentInfo.imgbox[0]+'" /></a></div>';
+						}
+						
+						//grounp[i].getElementsByTagName('img')[0].src = currentInfo.imgbox[i];
+						//console.log(grounp[i].getElementsByTagName('img'),currentInfo.imgbox[i]);
+					}
+					currentScenicImgGroup.innerHTML=innerHTML;
+					//获得slider插件对象
+					var gallery = mui('#firstContent');
+					gallery.slider({
+					  interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
+					});
+				}
+				var vrBtn = document.getElementById("vrBtn");
+				//监听点击事件
+				vrBtn.addEventListener("tap",function () {
+				  console.log("tap event trigger");
+				  
+				  	//window.open('http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=512&height=256&location='+currentInfo.longitude+','+currentInfo.latitude+'&fov=360');
+				  	mui.openWindow('../../WebVR_Demo-master/panorama.html?location='+currentInfo.longitude+','+currentInfo.latitude);
+				  
+				});
+			}
+			
+			
 		})(mui);
 </script>
 </body>
