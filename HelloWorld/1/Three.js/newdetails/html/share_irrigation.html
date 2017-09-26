@@ -148,27 +148,31 @@
 	</div>
 	<footer>
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item">
-				<span class="mui-icon mui-icon-home"></span>
+			<a class="mui-tab-item" href="../../schedule/schedule.html">
+				<span class="mui-icon mui-icon-home" ></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item">
+			<a class="mui-tab-item" href="../detail/scan.html">
 				<span class="mui-icon mui-icon-phone"></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
-			<a class="mui-tab-item mui-active">
+			<a class="mui-tab-item mui-active" >
 				<span class="mui-icon mui-icon-email"></span>
 				<span class="mui-tab-label">分享</span>
 			</a>
-			<a class="mui-tab-item">
+			<a class="mui-tab-item" href="user.html">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">我</span>
 			</a>
 		</nav>
 	</footer>
 	<script src="../js/mui.min.js"></script>
-<script type="text/javascript" charset="utf-8">
-      	mui.init();
-    </script>
+	<script>
+		mui.init();
+		mui('body').on('tap','a',function(e){
+			window.top.location.href=this.href;
+		});
+	</script>
+	
 </body>
 </html>

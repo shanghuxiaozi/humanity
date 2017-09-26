@@ -457,7 +457,73 @@ html,body{width: 100%;height: 100%;}
 .mui-person-save{margin-top: 35px;}
 .mui-person-save .mui-btn{background-color: #cd3829;display: inline-block;width: 90px;height: 40px;line-height: 40px;padding: 0;font-size: 18px;}
 .mui-edit-op,.mui-person-save{display: none;}
-
+/*我的好友*/
+.mui-myfriends .mui-search{margin: 10px auto;}
+.mui-myfriends .mui-indexed-list{border-top: none;background-color: #f5f5f5;}
+.mui-myfriends .mui-indexed-list-search,.mui-myfriends .mui-placeholder,.mui-indexed-list-search input{background-color: #fff;}
+.mui-indexed-list-search input,.mui-placeholder span{font-size: 14px;color: #999;}
+.mui-indexed-groud{background-color: #fff;}
+.mui-indexed-groud:first-child{border-bottom: 1px solid #ddd;}
+.mui-indexed-groud a{font-size: 17px;color: #262626;padding: 10px;display: block;}
+.mui-indexed-groud .icon-indexed{display: inline-block;width: 25px;height: 25px;margin-right: 4px;vertical-align: bottom;}
+.mui-indexed-groud .icon-indexed-fans{background: url(../images/icon_fans.png)no-repeat;background-size: 25px 25px;}
+.mui-indexed-groud .icon-indexed-group{background: url(../images/icon_groud.png)no-repeat;background-size: 25px 25px;}
+.mui-myfriends .mui-friends-logo{width: 50px;height: 50px;vertical-align: middle;margin-right: 10px;}
+.mui-myfriends .mui-indexed-list-item{font-size: 15px;color: #262626;border-bottom: 1px solid #e3e2e1;}
+.mui-myfriends .mui-table-view-cell>a:not(.mui-btn){margin: -11px -10px;}
+.mui-myfriends .mui-indexed-list-bar{background-color: transparent}
+.mui-myfriends .mui-indexed-list-group{background-color: #f5f5f5;}
+.mui-myfriends .mui-table-view-divider:before,.mui-myfriends .mui-table-view-divider:after{background: transparent;}
+.mui-myfriends .mui-indexed-list-bar a{color: #333333;}
+/*我的好友-好友*/
+.mui-nums .mui-col-xs-8{margin: 0 auto;}
+.mui-nums .mui-col-xs-8 .mui-table-view{line-height: 16px;margin-top: 9px;}
+.mui-friends-contents .mui-travel-revert{margin-top: 4px;}
+.mui-user-top .mui-icon-backs{position: absolute;left: 10px;top: 10px;width: 9px;height: 17px;background: url(../images/icon_back_white.png)no-repeat left center;background-size: 9px 17px;}
+/*登录*/
+.mui-bg{z-index: -1;position: absolute;width: 100%;height: 100%;background: url(../images/login_bg.png)no-repeat;background-size: 100% 100%;background-attachment: fixed;}
+.mui-form-contents{width: 80%;margin: 0 auto;}
+.mui-form-back{width: 100%;height: 45px;}
+.mui-form-back .mui-icon-backs{display: block;width: 100%;height: 100%;background: url(../images/icon_back.png)no-repeat left center;background-size: 9px 17px;}
+.mui-form-logo{line-height: 0;}
+.mui-login-input{background: transparent;margin-top: 23px;}
+.mui-login-input .mui-input-trapper{background: rgba(38,38,38,0.33);border-radius: 4px;}
+.mui-login-input.mui-input-group .mui-input-row{height: 50px;}
+.mui-login-input .mui-input-row .mui-input-clear~.mui-icon-clear, .mui-login-input .mui-input-row .mui-input-password~.mui-icon-eye{color: #fff;top: 14px;}
+.mui-login-input .mui-input-row .mui-input-clear~.mui-icon-clear.mui-active, .mui-login-input .mui-input-row .mui-input-password~.mui-icon-eye.mui-active, .mui-input-row .mui-input-speech~.mui-icon-speech.mui-active{color: #cd3829;}
+.mui-login-input .mui-input-row label{width: 12%;height: 100%;}
+.mui-login-input .mui-input-row label~input{width: 88%;height: 100%;font-size: 14px;color: #fffefe;}
+.mui-login-input ::-webkit-input-placeholder { color:#fffefe; }
+.mui-login-input ::-moz-placeholder { color:#fffefe; } /* firefox 19+ */
+.mui-login-input:-ms-input-placeholder { color:#fffefe; } /* ie */
+.mui-login-input input:-moz-placeholder { color:#fffefe; }
+.mui-login-input .mui-label-user{background: url(../images/login_user.png)no-repeat center center;background-size: 15px 20px;}
+.mui-login-input .mui-label-pass{background: url(../images/login_pass.png)no-repeat center center;background-size: 16px 18px;}
+.mui-login-input .mui-input-trapper .mui-input-row:not(:last-child){border-bottom: 1px solid #fff;}
+.mui-login-input.mui-input-group .mui-input-row:after,.mui-login-input.mui-input-group:before,.mui-login-input.mui-input-group:after{height: 0;}
+.mui-btn-row{margin-top: 32px;}
+.mui-btn-row .mui-btn{width: 100%;background-color: #cd3829;display: block;height: 40px;padding: 0;text-align: center;line-height: 40px;font-size: 18px;}
+.mui-login-input.mui-input-group .mui-input-row.mui-forget-row{height: 31px;line-height: 31px;}
+.mui-forget-row .mui-btn-forget{font-size: 12px;color: #333333;border-bottom: 1px solid #cd3829;}
+.mui-login-input.mui-input-group .mui-input-row.mui-register-row{}
+.mui-register-row .mui-btn-register{float: inherit;width: inherit;border: 1px solid #cd3829;color: #cd3829;font-size: 15px;padding: 8px 14px;}
+.mui-third-party{font-size: 15px;color: #333;position: relative;margin-top: 37px;}
+.mui-third-party:before{display: inline-block;width: 70px;height: 1px;background-color: #fff;content: '';position: absolute;left: 0;bottom: 9px;}
+.mui-third-party:after{display: inline-block;width: 70px;height: 1px;background-color: #fff;content: '';position: absolute;right: 0;bottom: 9px;}
+.mui-third-type{margin-top: 27px;}
+/*注册*/
+.mui-login-input .mui-code-row.mui-input-row .mui-icon-clear{right: 102px;}
+.mui-code-row{position: relative;}
+.mui-code-row .mui-btn-code{font-size: 15px;color: #fff;position: absolute;right: 9px;width: 84px;height: 30px;line-height: 30px;background-color: #c05645;text-align: center;border-radius: 4px;top: 10px;}
+.mui-code-row .mui-icon-clear+.mui-btn-code{background-color: #cd3829;}
+.mui-code-row .mui-icon-clear.mui-hidden+.mui-btn-code{background-color: #c05645;}
+.mui-input-trapper .mui-input-row .mui-icon-eye:before{display: inline-block;content: '';width: 18px;height: 6px;background: url(../images/icon_eyes_close.png)no-repeat;background-size: 100% 100%;}
+.mui-input-trapper .mui-input-row .mui-icon-eye.mui-active:before{background: url(../images/icon_eyes_open.png)no-repeat;background-size: 100% 100%;width: 21px;height: 11px;}
+.mui-protocol-row{position: relative;margin-top: 25px;}
+.mui-protocol-row .mui-protocol-input{position: absolute;top: 4px;opacity: 0;}
+.mui-protocol-row .mui-protocol-input:checked+.mui-protocol-label{background: url(../images/icon_checkbox_y.png)no-repeat left center;background-size: 12px 12px;}
+.mui-protocol-row .mui-protocol-label{font-size: 12px;color: #fff;padding-left: 20px;background: url(../images/icon_checkbox_n.png)no-repeat left center;background-size: 12px 12px;}
+.mui-protocol-row .mui-protocol-text{font-size: 12px;color: #cd3829;}
 
 
 

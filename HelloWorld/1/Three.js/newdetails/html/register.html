@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+		<style rel="stylesheet">
+			html,body{width: 100%;min-height: 100%;}
+		</style>
+	</head>
+	<body>
+		<!--背景图片-->
+		<div class="mui-bg"></div>
+		<!--登录内容-->
+		<div class="mui-form-contents">
+			<!--返回箭-->
+			<div class="mui-form-back">
+				<a href="javascript:void(0);" class="mui-icon-backs"></a>
+			</div>
+			<!--logo-->
+			<div class="mui-text-center mui-form-logo">
+				<img src="../images/logo.png" width="82" height="82"/>
+			</div>
+			
+			<!--登录form-->
+			
+			<form class="mui-input-group mui-login-input" target="nm_iframe" id="form1">
+				<div class="mui-input-trapper">
+					<div class="mui-input-row">
+						<label class="mui-label-user"></label>
+						<input type="text" class="mui-input-clear" placeholder="请输入用户名" id="username">
+					</div>
+					<div class="mui-input-row mui-code-row">
+						<label class="mui-label-user"></label>
+						<input type="text" class="mui-input-clear" placeholder="请输入验证码">
+						<!--获取验证码-->
+						<a href="javascript:void(0);" class="mui-btn-code">获取验证码</a>
+					</div>
+					<div class="mui-input-row">
+						<label class="mui-label-pass"></label>
+						<input type="password" class="mui-input-password" placeholder="请输入6-20位新密码" id="password">
+					</div>
+					<div class="mui-input-row">
+						<label class="mui-label-pass"></label>
+						<input type="password" class="mui-input-password" placeholder="请再次输入密码">
+					</div>
+				</div>
+				<div class="mui-btn-row">
+					<a href="javascript:void(0);" class="mui-btn mui-btn-danger" id="registerBtn" >注册并登录</a>
+				</div>
+				
+				<!--协议-->
+				<div class="mui-protocol-row">
+					<input type="checkbox" class="mui-protocol-input" id="protocol"/>
+					<label class="mui-protocol-label" for="protocol">我已阅读同意</label>
+					<a href="javascript:void(0);" class="mui-protocol-text">《人文地图服务条款》</a>
+				</div>
+
+			</form>
+			<!-- 加上标识form表单不会提交 -->
+		<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+		</div>
+		<script src="../js/mui.min.js"></script>
+		<script >
+			var username = document.getElementById("username");
+			var password = document.getElementById("password");
+			var registerBtn = document.getElementById("registerBtn");
+			//阻止表单提交
+			document.querySelector('#form1').addEventListener('submit',function(e){
+			    e.preventDefault();
+			},false);
+			//注册
+			registerBtn.addEventListener('tap',function(e){
+				e.preventDefault();
+				console.log(username.value)
+				mui.ajax('http://120.25.221.94:8080/user/register',{
+							data:{
+								'username':username.value,
+								'password':password.value
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								//获得服务器响应
+								console.log(data);
+								if(data&& data.length>0){
+									map.markList = [];
+									map.sizeList = [];
+									for(var i=0,m=data.length;i<m;i++){
+										var item = data[i];
+											map.createMarkFromData(item);
+									}
+								}
+							}
+						});
+			})
+			
+		</script>
+	</body>
+</html>

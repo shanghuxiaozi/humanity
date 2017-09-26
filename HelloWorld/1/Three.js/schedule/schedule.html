@@ -169,7 +169,18 @@
 				max-width: 92px;
   				height: 82px;
 			}
-			
+			.mui-tab-item{
+				  background-color: antiquewhite;
+			}
+			.mui-bar-tab .mui-icon-home{width: 100%;background: url(../newdetails/images/tab_home_icon.png)no-repeat center;background-size: 30px 23px;}
+			.mui-bar-tab .mui-icon-home:before,.mui-bar-tab .mui-icon-phone:before,.mui-bar-tab .mui-icon-email:before,.mui-bar-tab .mui-icon-gear:before{content: '';}
+			.mui-bar-tab .mui-active .mui-icon-home{background: url(../newdetails/images/tab_homeh_icon.png)no-repeat center;background-size: 30px 23px;}
+			.mui-bar-tab .mui-icon-phone{width: 100%;background: url(../newdetails/images/tab_saoyisao_icon.png)no-repeat center;background-size: 22px 21px;}
+			.mui-bar-tab .mui-active .mui-icon-phone{width: 100%;background: url(../newdetails/images/tab_saoyisaoh_icon.png)no-repeat center;background-size: 22px 21px;}
+			.mui-bar-tab .mui-icon-email{width: 100%;background: url(../newdetails/images/tab_fenxiang_icon.png)no-repeat center;background-size: 21px 21px;}
+			.mui-bar-tab .mui-active .mui-icon-email{width: 100%;background: url(../newdetails/images/tab_fenxiangh_icon.png)no-repeat center;background-size: 21px 21px;}
+			.mui-bar-tab .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_me_icon.png)no-repeat center;background-size: 18px 23px;}
+			.mui-bar-tab .mui-active .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_meh_icon.png)no-repeat center;background-size: 18px 23px;}
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -183,16 +194,24 @@
 		</header>-->
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item mui-active" href="javascript:void(0)">
-				<span class="mui-icon "><img src="../icon/tab_homeh_icon.png"/></span>
+				<span class="mui-icon mui-icon-home">
+					<!--<img src="../icon/tab_homeh_icon.png"/>-->
+				</span>
 				<span class="mui-tab-label">首页</span>
 			</a>
 			<!--../hello-mui/index.html  ../scan/imageRecognition.html-->
 			<a class="mui-tab-item" href="../detail/scan.html" name="scan">
-				<span class="mui-icon "><img src="../icon/tab_saoyisao_icon.png"/></span>
+				<span class="mui-icon  mui-icon-phone">
+					<!--<img src="../icon/tab_saoyisao_icon.png"/>-->
+				</span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
 			<a class="mui-tab-item" href="javascript:void(0)" dataindex="2">
-				<span class="mui-icon "><img src="../icon/tab_fenxiang_icon.png"/><span class="mui-badge">9</span></span>
+				<span class="mui-icon  mui-icon-email">
+					<!--<img src="../icon/tab_fenxiang_icon.png"/>-->
+					<span class="mui-badge">9
+					</span>
+				</span>
 				<span class="mui-tab-label">分享</span>
 			</a>
 			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&Interaction&Rotate&core,webgl">-->
@@ -206,7 +225,9 @@
 			<!--<a class="mui-tab-item" href="https://layaair.ldc.layabox.com/test/ZhanPaiKeJi/index.html">-->
 			<!--<a class="mui-tab-item" href="https://ritterliu.github.io/WebVR_Demo/">-->
 				<a class="mui-tab-item" href="../newdetails/html/user.html"/>
-				<span class="mui-icon "><img src="../icon/tab_me_icon.png"/></span>
+				<span class="mui-icon mui-icon-gear">
+					<!--<img src="../icon/tab_me_icon.png"/>-->
+				</span>
 				<span class="mui-tab-label">我</span>
 			</a>
 		</nav>
@@ -371,15 +392,17 @@
 //					for(var i=0;i<plus.webview.all().length;i++){
 //						alert(plus.webview.all()[i].id);
 //					}
-					(plus.webview.getWebviewById("H58A84A3C")).back()
+					//(plus.webview.getWebviewById("H58A84A3C")).back()
 //					alert('=='+plus.webview.currentWebview().parent().id);
 				};
 				
 				
+				
+				
 				mui('body').on('tap','a',function(e){
 				    //window.top.location.href=this.href;console.log(this)
-				    e.stopPropagation();
-				    alert("进入");
+				   // e.stopPropagation();
+				    //alert("进入");
 				    //alert('oh..');
 				    //console.log(this.getAttribute("dataindex"))
 				    if(this.getAttribute("dataindex")=="2"/*this.href == "../circle/index.html"*/){
@@ -388,7 +411,8 @@
 //				    	if(circle)circle.show();
 				    	
 //				    	mui.openWindow("../cut/index.html");
-						mui.openWindow("../newdetails/html/share_companion.html");
+						//mui.openWindow("../newdetails/html/share_companion.html");
+						mui.openWindow("../hello-mui/examples/tabbar.html")
 				    	//mui.openWindow("http://120.77.249.40:8084/buyer/changeImg");
 				    	//.openWindow("../circle/index.html");
 				    }else if( this.getAttribute("dataindex") == "infoA" ){

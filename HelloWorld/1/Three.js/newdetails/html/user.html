@@ -17,17 +17,17 @@
 	<div class="mui-content">
 		<div class="mui-user-top mui-row-bottom">
 			<!--未登录-->
-			<div class="mui-text-center mui-user-no" style="display: none;">
+			<div class="mui-text-center mui-user-no" style="display: none;" id="noLoginDiv">
 				<p>
 					<img src="../images/logo_no.png" class="mui-user-logo" />
 				</p>
 				<span class="mui-login-n mui-clearfix">
-					<a href="javascript:void(0);" class="mui-login-btn mui-pull-left">登录</a>
-					<a href="javascript:void(0);" class="mui-login-btn mui-pull-left">注册</a>
+					<a href="login.html" class="mui-login-btn mui-pull-left">登录</a>
+					<a href="register.html" class="mui-login-btn mui-pull-left">注册</a>
 				</span>
 			</div>
 			<!--已登录-->
-			<div class="mui-user-yes" style="">
+			<div class="mui-user-yes" style="" id="loginDiv">
 				<div class="mui-text-right">
 					<!--消息中心-->
 					<a href="./user_msg.html" class="mui-icon-msg">
@@ -134,15 +134,15 @@
 	<div class="mui-height-50"></div>
 	<footer>
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item">
-				<span class="mui-icon mui-icon-home"></span>
+			<a class="mui-tab-item" href="../../schedule/schedule.html">
+				<span class="mui-icon mui-icon-home" ></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item">
+			<a class="mui-tab-item" href="../detail/scan.html">
 				<span class="mui-icon mui-icon-phone"></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
-			<a class="mui-tab-item">
+			<a class="mui-tab-item" href="share_irrigation.html">
 				<span class="mui-icon mui-icon-email"></span>
 				<span class="mui-tab-label">分享</span>
 			</a>
@@ -152,5 +152,19 @@
 			</a>
 		</nav>
 	</footer>
+	<script src="../js/mui.min.js"></script>
+	<script>
+		mui.init();
+		mui('body').on('tap','a',function(e){
+			window.top.location.href=this.href;
+		});
+		
+		var loginDiv = document.getElementById("loginDiv");
+		var noLoginDiv = document.getElementById("noLoginDiv");
+		noLoginDiv.style.display = "block";
+		loginDiv.style.display = "none";
+		
+		
+	</script>
 	</body>
 </html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script src="../js/mui.min.js"></script>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link href="../css/common.css" rel="stylesheet" />
+		
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+		<style rel="stylesheet">
+			html,body{width: 100%;min-height: 100%;}
+		</style>
+	</head>
+	<body>
+		<!--背景图片-->
+		<div class="mui-bg"></div>
+		<!--登录内容-->
+		<div class="mui-form-contents">
+			<!--返回箭-->
+			<div class="mui-form-back">
+				<a href="javascript:void(0);" class="mui-icon-backs"></a>
+			</div>
+			<!--logo-->
+			<div class="mui-text-center mui-form-logo">
+				<img src="../images/logo.png" width="82" height="82"/>
+			</div>
+			
+			<!--登录form-->
+			
+			<form class="mui-input-group mui-login-input">
+				<div class="mui-input-trapper">
+					<div class="mui-input-row">
+						<label class="mui-label-user"></label>
+						<input type="text" class="mui-input-clear" placeholder="请输入用户名">
+					</div>
+					<div class="mui-input-row">
+						<label class="mui-label-pass"></label>
+						<input type="password" class="mui-input-password" placeholder="请输入密码">
+					</div>
+				</div>
+				<div class="mui-btn-row">
+					<a href="javascript:void(0);" class="mui-btn mui-btn-danger">登录</a>
+				</div>
+				<!--忘记密码-->
+				<div class="mui-input-row mui-forget-row mui-text-center">
+					<a href="javascript:void(0);" class="mui-btn-forget">忘记密码</a>
+				</div>
+				<!--新用户注册-->
+				<div class="mui-register-row mui-text-center">
+					<a href="javascript:void(0);" class="mui-btn-register mui-btn mui-btn-danger mui-btn-outlined">新用户注册</a>
+				</div>
+				
+				<!--第三方登录文字-->
+				<div class="mui-third-party mui-text-center">
+					第三方登录
+				</div>
+				
+				<!--第三方登录选择-->
+				<div class="mui-third-type mui-clearfix">
+					<a href="javascript:void(0);" class="mui-col-xs-4 mui-pull-left">
+						<img src="../images/dengllv_icon_weibo.png" width="45"/>
+					</a>
+					<a href="javascript:void(0);" class="mui-col-xs-4 mui-pull-left mui-text-center">
+						<img src="../images/dengllv_icon_qq.png" width="45"/>
+					</a>
+					<a href="javascript:void(0);" class="mui-col-xs-4 mui-pull-left mui-text-right">
+						<img src="../images/dengllv_icon_weixin.png" width="45"/>
+					</a>
+				</div>
+
+			</form>
+		</div>
+	</body>
+</html>

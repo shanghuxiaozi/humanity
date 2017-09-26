@@ -62,6 +62,7 @@ function init()
 					 preloadPages:[
 				    {
 				      url:"http://120.25.221.94/human/1/Three.js/schedule/schedule.html",//,"../schedule/schedule.html"
+//				      url:"schedule/schedule.html",
 				      id:"schedule",
 				      styles:{},//窗口参数
 				      extras:{},//自定义扩展参数
@@ -69,6 +70,7 @@ function init()
 				    },
 				    {
 				      url:"http://120.25.221.94/human/1/Three.js/circle/index.html",//,"../circle/index.html"
+//				      url:"circle/index.html",
 				      id:"circle",
 				      styles:{},//窗口参数
 				      extras:{},//自定义扩展参数
@@ -257,27 +259,29 @@ function init()
 				
 				//window.location.href = "schedule/schedule.html";
 //			}
-			var time = setTimeout(function(){
-				//window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html";
-				openSchedule()
-			},300);
+window.location.href = "schedule/schedule.html";
+//			var time = setTimeout(function(){
+//				//window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html";
+//				openSchedule()
+//			},300);
 			
 			
 			function openSchedule(){
-				if(plus){
-					schedule = plus.webview.getWebviewById("schedule");
-				
-					clearTimeout(time);
-					if(schedule){
-						schedule.show();
-					}else{
-						time = setTimeout(function(){
-							openSchedule();
-						},1000);
-					}
-				}else{
-					window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html"
-				}
+////				if(plus){
+////					schedule = plus.webview.getWebviewById("schedule");
+////				
+////					clearTimeout(time);
+////					if(schedule){
+////						schedule.show();
+////					}else{
+////						time = setTimeout(function(){
+////							openSchedule();
+////						},1000);
+////					}
+////				}else{
+////					window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html"
+//					
+////				}
 				
 					
 			}
@@ -373,8 +377,8 @@ function onDocumentMouseDown( event )
 		
 		if(p.x>-84&& p.x<-75&&p.y>15&&p.y<60&&p.z>0&&p.z<30){
 //			console.log("进入");
-//			window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html";
-			window.location.href = "schedule/schedule.html";
+		window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html";
+			//window.location.href = "schedule/schedule.html";
 //window.location.href = "login/index.html";
 //mui.openWindow("http://120.25.221.94/human/1/Three.js/schedule/schedule.html")
 		}
