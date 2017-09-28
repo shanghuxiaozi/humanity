@@ -302,6 +302,7 @@
 		
 		<script src="../js/map/bookingMap.js" charset="utf-8" type="text/javascript"></script>
 		<script src="../js/tween/TweenLite.js"></script>
+		<script src="../js/path.js"></script>
 		<!--<script src="../hello-mui/js/jquery-2.1.0.js"></script>-->
 		<!--<script src="../js/mui/mui.jsonp.js"></script>-->
 			<script>
@@ -459,7 +460,7 @@
 						    type: 2
 						    ,content: '搜索中'
 						  });
-	        			mui.ajax('http://120.25.221.94:8080/list/getIdbyCityName?cityName='+((cityIndex==-1)?obj:obj.substring(0,cityIndex)),{
+	        			mui.ajax(JS_PATH+'/list/getIdbyCityName?cityName='+((cityIndex==-1)?obj:obj.substring(0,cityIndex)),{
 							data:{
 							},
 							crossDomain :true,
@@ -583,7 +584,7 @@
 	        	
 	        	/*通过城市id获取景点*/
 	        	function queryScenicSpotbyCity(id){
-	        		mui.ajax('http://120.25.221.94:8080/list/scenicSpotbyCity?id='+id,{
+	        		mui.ajax(JS_PATH+'/list/scenicSpotbyCity?id='+id,{
 							data:{
 							},
 							crossDomain :true,
@@ -611,7 +612,7 @@
 						    type: 2
 						    ,content: '搜索中'
 						  });
-	        		mui.ajax('http://120.25.221.94:8080/list/scenicSpotbyPOS?lng='+p.lng+'&lat='+p.lat+'&zoom='+zoom+'&topLat='+topLat+'&bottomLat='+bottomLat+'&leftLng='+leftLng+'&rightLng='+rightLng,{
+	        		mui.ajax(JS_PATH+'/list/scenicSpotbyPOS?lng='+p.lng+'&lat='+p.lat+'&zoom='+zoom+'&topLat='+topLat+'&bottomLat='+bottomLat+'&leftLng='+leftLng+'&rightLng='+rightLng,{
 							data:{
 							},
 							crossDomain :true,

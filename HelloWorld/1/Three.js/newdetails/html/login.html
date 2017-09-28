@@ -36,18 +36,18 @@
 				<div class="mui-input-trapper">
 					<div class="mui-input-row">
 						<label class="mui-label-user"></label>
-						<input type="text" class="mui-input-clear" placeholder="请输入用户名">
+						<input type="text" class="mui-input-clear" placeholder="请输入用户名" id="username">
 					</div>
 					<div class="mui-input-row">
 						<label class="mui-label-pass"></label>
-						<input type="password" class="mui-input-password" placeholder="请输入密码">
+						<input type="password" class="mui-input-password" placeholder="请输入密码" id="password">
 					</div>
 				</div>
 				<div class="mui-btn-row">
 					<!--不可点击-->
-					<a href="javascript:void(0);" class="mui-btn">登录</a>
+					<a href="javascript:void(0);" class="mui-btn" style="display: none;">登录</a>
 					<!--可点击-->
-					<a href="javascript:void(0);" class="mui-btn mui-active">登录</a>
+					<a href="javascript:void(0);" class="mui-btn mui-active" id="loginBtn">登录</a>
 				</div>
 				<!--忘记密码-->
 				<div class="mui-input-row mui-forget-row mui-text-center">
@@ -80,5 +80,54 @@
 
 			</form>
 		</div>
+		<script src="../js/mui.min.js"></script>
+		<script src="../../mobile/layer.js"></script>
+		<script src="../../js/path.js"></script>
+		<script>
+			mui.init();
+			var username = document.getElementById("username");
+			var password = document.getElementById("password");
+			var loginBtn = document.getElementById("loginBtn");
+			//判断是否在登录中，防止重复提交
+			var isLogin = false;
+			
+			loginBtn.addEventListener('tap',function(e){
+				if(isLogin)return;
+				isLogin = true;
+				//loading效果
+				var enIndex = layer.open({
+							    type: 2
+							    ,content: '登录中...'
+							  });
+				//登录接口
+				mui.ajax(JS_PATH+'/user/login',{
+							data:{
+								'username':username.value,
+								'password':password.value
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								isLogin = false;
+								//获得服务器响应
+								console.log(data);
+								layer.close(enIndex);
+								if(data&&data&&data.isLogin){
+									mui.toast("登录成功！");
+								}else if(data&&!data.isLogin){
+									mui.toast("登录失败，密码错误！");
+								}else{
+									mui.toast("登录失败，无此用户！");
+								}
+							},error:function(e){
+								isLogin = false;
+								layer.close(enIndex);
+								mui.toast("登录失败，系统报错！");
+							}
+						});
+				
+			});
+		</script>
 	</body>
 </html>

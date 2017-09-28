@@ -52,7 +52,7 @@
 				</div>
 				<div class="mui-btn-row">
 						<!--不可点击-->
-					<a href="javascript:void(0);" class="mui-btn" >注册并登录</a>
+					<a href="javascript:void(0);" class="mui-btn" style="display: none;">注册并登录</a>
 					<!--可点击-->
 					<a href="javascript:void(0);" class="mui-btn mui-active"  id="registerBtn">注册并登录</a>
 				</div>
@@ -69,6 +69,8 @@
 		<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
 		</div>
 		<script src="../js/mui.min.js"></script>
+		<script src="../../mobile/layer.js"></script>
+		<script src="../../js/path.js"></script>
 		<script >
 			mui.init();
 			var username = document.getElementById("username");
@@ -87,7 +89,11 @@
 				isRegistering = true;
 				//e.preventDefault();
 				console.log(username.value)
-				mui.ajax('http://120.25.221.94:8080/user/register',{
+				var enIndex = layer.open({
+							    type: 2
+							    ,content: '注册中...'
+							  });
+				mui.ajax(JS_PATH+'/user/register',{
 							data:{
 								'username':username.value,
 								'password':password.value
@@ -99,16 +105,16 @@
 								isRegistering = false;
 								//获得服务器响应
 								console.log(data);
-								if(data&& data.length>0){
-									map.markList = [];
-									map.sizeList = [];
-									for(var i=0,m=data.length;i<m;i++){
-										var item = data[i];
-											map.createMarkFromData(item);
-									}
+								layer.close(enIndex);
+								if(data&&data.isRegister){
+									mui.toast("注册成功！");
+								}else{
+									mui.toast("注册失败，账号已使用！");
 								}
 							},error:function(e){
 								isRegistering = false;
+								layer.close(enIndex);
+								mui.toast("注册失败，系统报错！");
 							}
 						});
 			})

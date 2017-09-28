@@ -22,7 +22,7 @@
 		<div class="mui-row mui-complain mui-spitslot-content">
 			<div class="mui-col-xs-12 ">
 				<p class="mui-detail-title"><b>选择吐槽的类型</b></p>
-				<div class="mui-clearfix mui-com-tickets">
+				<div class="mui-clearfix mui-com-tickets" id="spitslotType">
 					<div class="mui-col-xs-3 mui-pull-left mui-com-ticket active"><b>沙井生蚝</b></div>
 					<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>风土人情</b></div>
 					<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>特色美食</b></div>
@@ -39,12 +39,14 @@
 		</div>
 		<div class="mui-col-xs-12 mui-text-center mui-spitslot-btns">
 			<!--不可点击-->
-			<a href="javascript:void(0);" class="mui-btn mui-spitslot-btn">提交</a>
+			<a href="javascript:void(0);" class="mui-btn mui-spitslot-btn" style="display: none;">提交</a>
 			<!--可点击-->
 			<a href="javascript:void(0);" class="mui-btn mui-spitslot-btn mui-active">提交</a>
 		</div>
 	</div>
 	<script src="../js/mui.min.js"></script>
+	<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		  	mui.init();
 		  	mui.ready(function(){
@@ -54,6 +56,38 @@
 		  			mui.openWindow('spitslot_list.html');
 		  		});
 		  	});
+		  	var spitslotType = document.getElementById("spitslotType");
+		  	//查询吐槽类型数据
+		  	(function(){
+		  		
+		  		mui.ajax(JS_PATH+'/spitslot/queryType',{
+							data:{
+								
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								
+								//获得服务器响应
+								console.log(data);
+								spitslotType.innerHTML = "";
+								for(var i=0,m=data.length;i<m;i++){
+									var item = data[i];
+									spitslotType.innerHTML+='<div class="mui-col-xs-3 mui-pull-left mui-com-ticket '+(i==0?"active":"")+'"><b>'+item.name+'</b></div>';
+								}
+								
+								
+								
+							},error:function(e){
+								
+							}
+						});
+		  		
+		  		
+		  	})();
+		  	
+		  	
 	</script>
 	</body>
 </html>
