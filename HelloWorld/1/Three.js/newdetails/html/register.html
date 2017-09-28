@@ -79,8 +79,12 @@
 			(document.querySelector('.form1')).addEventListener('submit',function(e){
 			    e.preventDefault();
 			},false);
+			var isRegistering = false;
 			//注册
 			registerBtn.addEventListener('tap',function(e){//alert(9)
+				if(isRegistering)return;
+				
+				isRegistering = true;
 				//e.preventDefault();
 				console.log(username.value)
 				mui.ajax('http://120.25.221.94:8080/user/register',{
@@ -92,6 +96,7 @@
 							dataType:'json',//服务器返回json格式数据
 							type:'post',//HTTP请求类型
 							success:function(data){
+								isRegistering = false;
 								//获得服务器响应
 								console.log(data);
 								if(data&& data.length>0){
@@ -102,6 +107,8 @@
 											map.createMarkFromData(item);
 									}
 								}
+							},error:function(e){
+								isRegistering = false;
 							}
 						});
 			})
