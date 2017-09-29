@@ -109,7 +109,7 @@
 									if(!item.publish_time){
 										item.publish_time='时间未知'
 									}else{
-										item.publish_time.substring(0,10)
+										item.publish_time = item.publish_time.substring(0,10)
 									}
 									
 									listDiv.innerHTML+='<li class="mui-table-view-cell mui-media">'
@@ -133,6 +133,19 @@
 										+'</a>'
 									+'</div>'
 								+'</li>';
+								
+								}
+								
+								
+								//点赞按钮
+								var zanList = document.querySelectorAll('.mui-comment-zan');
+								for(var i=0,m=zanList.length;i<m;i++){
+									var zan = zanList[i];
+									zan.addEventListener('tap',function(){
+										//var plist = this.parentNode.parentNode.parentNode.querySelectorAll('.mui-table-view-cell')
+										//var pItem = this.parentNode.parentNode;
+										//console.log(plist,pItem);
+									});
 								}
 							},error:function(e){
 								

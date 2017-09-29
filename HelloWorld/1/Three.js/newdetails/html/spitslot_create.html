@@ -31,7 +31,7 @@
 				</div>
 				
 				<div class="mui-col-xs-12 mui-spitslot-textarea">
-					<textarea class="mui-textarea" rows="4" placeholder="填写您要吐槽的内容"></textarea>
+					<textarea class="mui-textarea" rows="4" placeholder="填写您要吐槽的内容" id="publish_content"></textarea>
 					<a class="mui-spitslot-vedio" href="javascript:void(0);">照片/视频<input type="file" class="upload_img" /></a>
 				</div>
 			</div>
@@ -56,6 +56,10 @@
 		  			mui.openWindow('spitslot_list.html');
 		  		});
 		  	});
+		  	
+		  	var currentInfo = localStorage.getItem("currentInfo");
+			if(currentInfo){
+				currentInfo = JSON.parse(currentInfo);
 		  	var spitslotType = document.getElementById("spitslotType");
 		  	//查询吐槽类型数据
 		  	(function(){
@@ -91,11 +95,16 @@
 							}
 						});
 		  		
-		  		
+		  		var publish_content = document.getElementById('publish_content');//要提交的内容
 		  		var submitBtn = document.getElementById("submitBtn");
 		  		submitBtn.addEventListener('tap',function(){
-		  			mui.ajax(JS_PATH+'/spitslot/queryType',{
+		  			humanAjax(JS_PATH+'/spitslot/add',{
 							data:{
+								publish_content:publish_content.value,
+								publish_time:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+								scenice_id:currentInfo.id,
+								scenice_name:currentInfo.title,
+								type_id:1
 								
 							},
 							crossDomain :true,
@@ -108,10 +117,10 @@
 								
 							}
 						});
-		  		})
+		  		});
 		  		
 		  	})();
-		  	
+		  	}
 		  	
 	</script>
 	</body>
