@@ -20,7 +20,7 @@
 		<div class="mui-form-contents">
 			<!--返回箭-->
 			<div class="mui-form-back">
-				<a href="javascript:void(0);" class="mui-icon-backs"></a>
+				<a href="javascript:void(0);" class="mui-icon-backs mui-action-back"></a>
 			</div>
 			<!--logo-->
 			<div class="mui-text-center mui-form-logo">
@@ -93,7 +93,7 @@
 							    type: 2
 							    ,content: '注册中...'
 							  });
-				mui.ajax(JS_PATH+'/user/register',{
+				humanAjax(JS_PATH+'/user/register',{
 							data:{
 								'username':username.value,
 								'password':password.value

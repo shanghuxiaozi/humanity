@@ -41,7 +41,7 @@
 			<!--不可点击-->
 			<a href="javascript:void(0);" class="mui-btn mui-spitslot-btn" style="display: none;">提交</a>
 			<!--可点击-->
-			<a href="javascript:void(0);" class="mui-btn mui-spitslot-btn mui-active">提交</a>
+			<a href="javascript:void(0);" class="mui-btn mui-spitslot-btn mui-active" id="submitBtn">提交</a>
 		</div>
 	</div>
 	<script src="../js/mui.min.js"></script>
@@ -70,20 +70,45 @@
 							success:function(data){
 								
 								//获得服务器响应
-								console.log(data);
 								spitslotType.innerHTML = "";
 								for(var i=0,m=data.length;i<m;i++){
 									var item = data[i];
-									spitslotType.innerHTML+='<div class="mui-col-xs-3 mui-pull-left mui-com-ticket '+(i==0?"active":"")+'"><b>'+item.name+'</b></div>';
+									spitslotType.innerHTML+='<div class="spitslotType mui-col-xs-3 mui-pull-left mui-com-ticket '+(i==0?"active":"")+'"><b>'+item.name+'</b></div>';
+									
 								}
-								
-								
+								var spitsList = document.querySelectorAll('.spitslotType');
+								for(var i=0,m=spitsList.length;i<m;i++){
+									var spit = spitsList[i];
+									spit.addEventListener('tap',function(){
+										
+										alert(this.innerText)
+										
+									})
+								}
 								
 							},error:function(e){
 								
 							}
 						});
 		  		
+		  		
+		  		var submitBtn = document.getElementById("submitBtn");
+		  		submitBtn.addEventListener('tap',function(){
+		  			mui.ajax(JS_PATH+'/spitslot/queryType',{
+							data:{
+								
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								
+								
+							},error:function(e){
+								
+							}
+						});
+		  		})
 		  		
 		  	})();
 		  	

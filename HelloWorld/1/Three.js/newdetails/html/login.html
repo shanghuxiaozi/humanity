@@ -23,7 +23,7 @@
 		<div class="mui-form-contents">
 			<!--返回箭-->
 			<div class="mui-form-back">
-				<a href="javascript:void(0);" class="mui-icon-backs"></a>
+				<a href="javascript:void(0);" class="mui-icon-backs mui-action-back"></a>
 			</div>
 			<!--logo-->
 			<div class="mui-text-center mui-form-logo">
@@ -57,7 +57,7 @@
 				</div>
 				<!--新用户注册-->
 				<div class="mui-register-row mui-text-center">
-					<a href="javascript:void(0);" class="mui-btn-register mui-btn mui-btn-danger mui-btn-outlined">新用户注册</a>
+					<a href="register.html" class="mui-btn-register mui-btn mui-btn-danger mui-btn-outlined">新用户注册</a>
 				</div>
 				
 				<!--第三方登录文字-->
@@ -100,7 +100,7 @@
 							    ,content: '登录中...'
 							  });
 				//登录接口
-				mui.ajax(JS_PATH+'/user/login',{
+				humanAjax(JS_PATH+'/user/login',{
 							data:{
 								'username':username.value,
 								'password':password.value
@@ -113,9 +113,9 @@
 								//获得服务器响应
 								console.log(data);
 								layer.close(enIndex);
-								if(data&&data&&data.isLogin){
+								if(data&&data&&data.isLogin == 1){
 									mui.toast("登录成功！");
-								}else if(data&&!data.isLogin){
+								}else if(data&&!data.isLogin == 2){
 									mui.toast("登录失败，密码错误！");
 								}else{
 									mui.toast("登录失败，无此用户！");

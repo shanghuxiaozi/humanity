@@ -28,7 +28,7 @@
 			<!--加入群组-->
 			<div class="mui-row mui-detail mb10">
 	
-			<ul class="mui-table-view mui-comment mui-spitslot-lists">
+			<ul class="mui-table-view mui-comment mui-spitslot-lists" id="listDiv">
 			
 				<li class="mui-table-view-cell mui-media">
 					<div class="mui-comment-item">
@@ -78,5 +78,68 @@
 
 
 		</div>
+		<script src="../js/mui.min.js"></script>
+	<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
+	<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var currentInfo = localStorage.getItem("currentInfo");
+			console.log(currentInfo)
+			if(currentInfo){
+				currentInfo = JSON.parse(currentInfo);
+				
+			//聊天记录div
+			var listDiv = document.getElementById("listDiv");
+				//查询该景点所有详情,通过景点id
+			humanAjax(JS_PATH+'/spitslot/queryAll?id='+currentInfo.id,{
+							data:{
+								
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								listDiv.innerHTML = "";
+								for(var i=0,m=data.length;i<m;i++){
+									var item = data[i];
+									if(!item.nickname||item.nickname==""){
+										item.nickname = '无名氏';
+									}
+									
+									if(!item.publish_time){
+										item.publish_time='时间未知'
+									}else{
+										item.publish_time.substring(0,10)
+									}
+									
+									listDiv.innerHTML+='<li class="mui-table-view-cell mui-media">'
+									+'<div class="mui-comment-item">'
+										+'<a href="javascript:void(0);" class="mui-comment-zan">'
+											+'<!--未点赞-->'
+											+'<img src="../images/zan_icon.png" class="icon-zan">'
+											+'<!--已点赞-->'
+											+'<!--<img src="../images/zanh_icon.png" class="icon-zan">-->'
+											+'<b class="zan-num">'+item.point_number+'</b>'
+										+'</a>'
+										+'<a href="javascript:void(0);">'
+											+'<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">'
+											+'<div class="mui-media-body">'
+												+'<p class="mui-comment-name"><b class="mui-spitslot-name">'+item.nickname+'</b><b class="mui-spitslot-ticket">'+item.name+'</b></p>'
+												+'<b class="mui-comment-time">'+item.publish_time+'</b>'
+											+'</div>'
+											+'<div class="mui-spitslot-con">'
+												+'<p>'+item.publish_content+'</p>'
+											+'</div>'
+										+'</a>'
+									+'</div>'
+								+'</li>';
+								}
+							},error:function(e){
+								
+							}
+						});
+			}
+			
+	</script>
 	</body>
 </html>
