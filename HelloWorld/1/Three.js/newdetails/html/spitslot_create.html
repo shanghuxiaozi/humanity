@@ -47,6 +47,7 @@
 	<script src="../js/mui.min.js"></script>
 	<script src="../../mobile/layer.js"></script>
 	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		  	mui.init();
 		  	mui.ready(function(){
@@ -61,6 +62,8 @@
 			if(currentInfo){
 				currentInfo = JSON.parse(currentInfo);
 		  	var spitslotType = document.getElementById("spitslotType");
+		  	var typeList = [];//保存吐槽数据类型
+		  	var currentIndex = 0;
 		  	//查询吐槽类型数据
 		  	(function(){
 		  		
@@ -72,12 +75,12 @@
 							dataType:'json',//服务器返回json格式数据
 							type:'post',//HTTP请求类型
 							success:function(data){
-								
+								typeList = data||[];
 								//获得服务器响应
 								spitslotType.innerHTML = "";
 								for(var i=0,m=data.length;i<m;i++){
 									var item = data[i];
-									spitslotType.innerHTML+='<div class="spitslotType mui-col-xs-3 mui-pull-left mui-com-ticket '+(i==0?"active":"")+'"><b>'+item.name+'</b></div>';
+									spitslotType.innerHTML+='<div class="spitslotType mui-col-xs-3 mui-pull-left mui-com-ticket '+(i==3?"active":"")+'"><b>'+item.name+'</b></div>';
 									
 								}
 								var spitsList = document.querySelectorAll('.spitslotType');
@@ -85,13 +88,15 @@
 									var spit = spitsList[i];
 									spit.addEventListener('tap',function(){
 										
-										alert(this.innerText)
-										
+										$(this).addClass('active');
+										$(this).siblings().removeClass('active');
+										console.log($(this).index());
+										currentIndex = $(this).index();
 									})
 								}
 								
 							},error:function(e){
-								
+								mui.toast("系统出错");
 							}
 						});
 		  		
@@ -104,17 +109,21 @@
 								publish_time:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
 								scenice_id:currentInfo.id,
 								scenice_name:currentInfo.title,
-								type_id:1
+								type_id:typeList[currentIndex].id
 								
 							},
 							crossDomain :true,
 							dataType:'json',//服务器返回json格式数据
 							type:'post',//HTTP请求类型
 							success:function(data){
-								
+								if(data.code == 200){
+									mui.toast("提交成功");
+								}else{
+									mui.toast("提交失败");
+								}
 								
 							},error:function(e){
-								
+								mui.toast("系统出错");
 							}
 						});
 		  		});

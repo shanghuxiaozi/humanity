@@ -115,6 +115,7 @@
 								layer.close(enIndex);
 								if(data&&data&&data.isLogin == 1){
 									mui.toast("登录成功！");
+									mui.back();
 								}else if(data&&!data.isLogin == 2){
 									mui.toast("登录失败，密码错误！");
 								}else{
