@@ -81,6 +81,7 @@
 		<script src="../js/mui.min.js"></script>
 	<script src="../../mobile/layer.js"></script>
 	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
 	<script type="text/javascript" charset="utf-8">
 			mui.init();
 			var currentInfo = localStorage.getItem("currentInfo");
@@ -144,7 +145,27 @@
 									zan.addEventListener('tap',function(){
 										//var plist = this.parentNode.parentNode.parentNode.querySelectorAll('.mui-table-view-cell')
 										//var pItem = this.parentNode.parentNode;
-										//console.log(plist,pItem);
+										var parent = $(this).parents('.mui-table-view-cell')
+										console.log(parent.index());
+										humanAjax(JS_PATH+'/spitslot/add',{
+											data:{
+												scenice_id:currentInfo.id,
+												
+											},
+											crossDomain :true,
+											dataType:'json',//服务器返回json格式数据
+											type:'post',//HTTP请求类型
+											success:function(data){
+												if(data.code == 200){
+													mui.toast("提交成功");
+												}else{
+													mui.toast("提交失败");
+												}
+												
+											},error:function(e){
+												mui.toast("系统出错");
+											}
+										},true);
 									});
 								}
 							},error:function(e){

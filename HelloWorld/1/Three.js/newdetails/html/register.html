@@ -108,6 +108,7 @@
 								layer.close(enIndex);
 								if(data&&data.isRegister){
 									mui.toast("注册成功！");
+									mui.openWindow('user.html');//注册成功回到个人中心页面
 								}else{
 									mui.toast("注册失败，账号已使用！");
 								}

@@ -1,18 +1,38 @@
 var JS_PATH="http://120.25.221.94:8080";//本项目所有ajax，域名配置
-//调用ajax方法
-var humanAjax = function(url,obj){
+/**
+ * 调用ajax方法
+ * @param {Object} url 请求的路径
+ * @param {Object} obj 请求参数，函数
+ * @param {Object} isLoading 是否启用遮罩动画效果
+ */
+var humanAjax = function(url,obj,isLoading){
+	var enIndex  = -1;
+	if(isLoading){
+		//loading效果
+				enIndex = layer.open({
+							    type: 2
+							    ,content: '登录中...'
+							  });
+	}
+	
 	mui.ajax(url,{
 					data:obj.data,
 					crossDomain :obj.crossDomain,
 					dataType:obj.dataType,//服务器返回json格式数据
 					type:obj.type,//HTTP请求类型
 					success:function(data){
+						if(isLoading){
+							layer.close(enIndex);
+						}
 						if(data.code == 332){
 							mui.openWindow('login.html');
 						}else
 						obj.success(data);
 						
 					},error:function(e){
+						if(isLoading){
+							layer.close(enIndex);
+						}
 						obj.error(e);
 					}
 				});
