@@ -5,13 +5,13 @@ var JS_PATH="http://120.25.221.94:8080";//本项目所有ajax，域名配置
  * @param {Object} obj 请求参数，函数
  * @param {Object} isLoading 是否启用遮罩动画效果
  */
-var humanAjax = function(url,obj,isLoading){
+var humanAjax = function(url,obj,isLoading,content){
 	var enIndex  = -1;
 	if(isLoading){
 		//loading效果
 				enIndex = layer.open({
 							    type: 2
-							    ,content: '登录中...'
+							    ,content: content||'登录中...'
 							  });
 	}
 	

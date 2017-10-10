@@ -115,7 +115,7 @@
 									
 									listDiv.innerHTML+='<li class="mui-table-view-cell mui-media">'
 									+'<div class="mui-comment-item">'
-										+'<a href="javascript:void(0);" class="mui-comment-zan">'
+										+'<a href="javascript:void(0);" class="mui-comment-zan" zan_index="'+item.id+'">'
 											+'<!--未点赞-->'
 											+'<img src="../images/zan_icon.png" class="icon-zan">'
 											+'<!--已点赞-->'
@@ -145,12 +145,15 @@
 									zan.addEventListener('tap',function(){
 										//var plist = this.parentNode.parentNode.parentNode.querySelectorAll('.mui-table-view-cell')
 										//var pItem = this.parentNode.parentNode;
+										var othis = this;
+										var zanNum = parseInt($(othis).find('.zan-num').text());
+										
 										var parent = $(this).parents('.mui-table-view-cell')
-										console.log(parent.index());
-										humanAjax(JS_PATH+'/spitslot/add',{
+										console.log(typeof zanNum == 'number');
+										humanAjax(JS_PATH+'/spitslot/thumbsUp',{
 											data:{
-												scenice_id:currentInfo.id,
-												
+												id:$(othis).attr('zan_index'),
+												point_number:++zanNum
 											},
 											crossDomain :true,
 											dataType:'json',//服务器返回json格式数据
@@ -158,6 +161,7 @@
 											success:function(data){
 												if(data.code == 200){
 													mui.toast("提交成功");
+													$(othis).find('.zan-num').text(zanNum);
 												}else{
 													mui.toast("提交失败");
 												}
@@ -171,7 +175,7 @@
 							},error:function(e){
 								
 							}
-						});
+						},'更新...');
 			}
 			
 	</script>
