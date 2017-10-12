@@ -26,14 +26,16 @@ var humanAjax = function(url,obj,isLoading,content){
 						}
 						if(data.code == 332){
 							mui.openWindow('login.html');
+						}else if(data.code == 400){
+							mui.toast(data.msg);
 						}else
-						obj.success(data);
+							obj.success(data);
 						
 					},error:function(e){
 						if(isLoading){
 							layer.close(enIndex);
 						}
-						obj.error(e);
+							obj.error(e);
 					}
 				});
 }

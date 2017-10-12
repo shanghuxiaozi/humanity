@@ -115,7 +115,7 @@
 									
 									listDiv.innerHTML+='<li class="mui-table-view-cell mui-media">'
 									+'<div class="mui-comment-item">'
-										+'<a href="javascript:void(0);" class="mui-comment-zan" zan_index="'+item.id+'">'
+										+'<a href="javascript:void(0);" class="mui-comment-zan" zan_index="'+item.id+'" isThumbsUp="false">'
 											+'<!--未点赞-->'
 											+'<img src="../images/zan_icon.png" class="icon-zan">'
 											+'<!--已点赞-->'
@@ -147,29 +147,55 @@
 										//var pItem = this.parentNode.parentNode;
 										var othis = this;
 										var zanNum = parseInt($(othis).find('.zan-num').text());
-										
-										var parent = $(this).parents('.mui-table-view-cell')
-										console.log(typeof zanNum == 'number');
-										humanAjax(JS_PATH+'/spitslot/thumbsUp',{
-											data:{
-												id:$(othis).attr('zan_index'),
-												point_number:++zanNum
-											},
-											crossDomain :true,
-											dataType:'json',//服务器返回json格式数据
-											type:'post',//HTTP请求类型
-											success:function(data){
-												if(data.code == 200){
-													mui.toast("提交成功");
-													$(othis).find('.zan-num').text(zanNum);
-												}else{
-													mui.toast("提交失败");
+										var parent = $(this).parents('.mui-table-view-cell');
+										if($(othis).attr('isThumbsUp')=='false'){
+											humanAjax(JS_PATH+'/spitslot/thumbsUp',{
+												data:{
+													id:$(othis).attr('zan_index'),
+													point_number:++zanNum
+												},
+												crossDomain :true,
+												dataType:'json',//服务器返回json格式数据
+												type:'post',//HTTP请求类型
+												success:function(data){
+													if(data.code == 200){
+														mui.toast("提交成功");
+														$(othis).find('.zan-num').text(zanNum);
+														$(othis).find('img').attr('src','../images/zanh_icon.png');
+														$(othis).attr('isThumbsUp','true');
+													}else{
+														mui.toast("提交失败");
+													}
+													
+												},error:function(e){
+													mui.toast("系统出错");
 												}
-												
-											},error:function(e){
-												mui.toast("系统出错");
-											}
-										},true);
+											},true,'点赞...');
+										}else{//取消点赞
+											humanAjax(JS_PATH+'/spitslot/thumbsUp',{
+												data:{
+													id:$(othis).attr('zan_index'),
+													point_number:--zanNum
+												},
+												crossDomain :true,
+												dataType:'json',//服务器返回json格式数据
+												type:'post',//HTTP请求类型
+												success:function(data){
+													if(data.code == 200){
+														mui.toast("取消成功");
+														$(othis).find('.zan-num').text(zanNum);
+														$(othis).find('img').attr('src','../images/zan_icon.png');
+														$(othis).attr('isThumbsUp','false');
+													}else{
+														mui.toast("提交失败");
+													}
+													
+												},error:function(e){
+													mui.toast("系统出错");
+												}
+											},true,'点赞取消...');
+										}
+										
 									});
 								}
 							},error:function(e){
