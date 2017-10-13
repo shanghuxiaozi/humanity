@@ -32,8 +32,18 @@
 				
 				<div class="mui-col-xs-12 mui-spitslot-textarea">
 					<textarea class="mui-textarea" rows="4" placeholder="填写您要吐槽的内容" id="publish_content"></textarea>
-					<a class="mui-spitslot-vedio" href="javascript:void(0);">照片/视频<input type="file" class="upload_img" /></a>
+					<a class="mui-spitslot-vedio" href="javascript:void(0);">照片/视频
+						<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data">
+							<input type="file" name="fulAvatar" class="upload_img" onchange="uploadByForm(this)"/>
+						</form>
+					</a>
+					
 				</div>
+				<div id="preview">
+						<!--<div><img />  <span class="mui-badge">1
+					</span></div>
+						-->
+					</div>
 			</div>
 			
 		</div>
@@ -44,6 +54,12 @@
 			<a href="javascript:void(0);" class="mui-btn mui-spitslot-btn mui-active" id="submitBtn">提交</a>
 		</div>
 	</div>
+	<input type="hidden" name="publish_content" />
+	<input type="hidden" name="publish_time" />
+	<input type="hidden" name="scenice_id" />
+	<input type="hidden" name="scenice_name" />
+	<input type="hidden" name="type_id" />
+	
 	<script src="../js/mui.min.js"></script>
 	<script src="../../mobile/layer.js"></script>
 	<script src="../../js/path.js"></script>
@@ -57,7 +73,7 @@
 		  			mui.openWindow('spitslot_list.html');
 		  		});
 		  	});
-		  	
+		  	var picHtml = "";//上传的图标内容标签
 		  	var currentInfo = localStorage.getItem("currentInfo");
 			if(currentInfo){
 				currentInfo = JSON.parse(currentInfo);
@@ -95,17 +111,33 @@
 									})
 								}
 								
+								//
+								
+								$('input[name=type_id]').val(typeList[currentIndex].id);
+								
+								
 							},error:function(e){
 								mui.toast("系统出错");
 							}
 						});
 		  		
 		  		var publish_content = document.getElementById('publish_content');//要提交的内容
+		  		
+		  		
+		  		
+//		  		var preview = document.getElementById("preview");//预览容器
 		  		var submitBtn = document.getElementById("submitBtn");
 		  		submitBtn.addEventListener('tap',function(){
-		  			humanAjax(JS_PATH+'/spitslot/add',{
+		  			$('input[name=publish_content]').val(publish_content.value);
+					$('input[name=publish_time]').val((new Date()).Format('yyyy-MM-dd HH:mm:ss'));
+					$('input[name=scenice_id]').val(currentInfo.id);
+					$('input[name=scenice_name]').val(currentInfo.title);
+					if(picHtml!=""){
+						picHtml = '<p>'+picHtml+'</p>';
+					}
+					humanAjax(JS_PATH+'/spitslot/add',{
 							data:{
-								publish_content:publish_content.value,
+								publish_content:publish_content.value+picHtml,
 								publish_time:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
 								scenice_id:currentInfo.id,
 								scenice_name:currentInfo.title,
@@ -126,10 +158,113 @@
 								mui.toast("系统出错");
 							}
 						},true);
+		  			
 		  		});
+		  		
+		  		
+		  		
 		  		
 		  	})();
 		  	}
+		  	
+		  	var picNum = 0;//上传图片数量
+		  	
+		  	/**
+		     * ajax 上传。这里主要是上传图片。
+		     */
+			    function uploadByForm(target){
+			    	
+			    	function validate_img(a){
+						 var file = a;
+						 if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(file)){
+						  alert("图片类型必须是.gif,jpeg,jpg,png中的一种");
+						  return false;
+						}else{
+						     var image = new Image();
+						     image.onload = function(){
+						     	var height = image.height;
+							     var width = image.width;
+							     var filesize = image.fileSize;
+							      alert(height+"x.."+filesize);
+							     if(width>780 && height>780 /*&& filesize>102400*/){
+							      alert('请上传780*780像素 或者大小小于100k的图片');
+							      return false;
+							     }else{
+							     	alert("图片通过");
+						 			return true;
+							     }
+						     }
+						     image.src = file;
+						     
+						     
+						 }
+						 
+						}
+			    	// 判断是否为IE浏览器： /msie/i.test(navigator.userAgent) 为一个简单正则
+//      var isIE = /msie/i.test(navigator.userAgent) && !window.opera;
+//      fileChange(target);
+//      function fileChange(target){
+//          var fileSize = 0;
+//          if (isIE && !target.files) {    // IE浏览器
+//              var filePath = target.value; // 获得上传文件的绝对路径
+//              /**
+//               * ActiveXObject 对象为IE和Opera所兼容的JS对象
+//               * 用法：
+//               *         var newObj = new ActiveXObject( servername.typename[, location])
+//               *         其中newObj是必选项。返回 ActiveXObject对象 的变量名。
+//               *        servername是必选项。提供该对象的应用程序的名称。
+//               *        typename是必选项。要创建的对象的类型或类。
+//               *        location是可选项。创建该对象的网络服务器的名称。
+//               *\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//               *     Scripting.FileSystemObject 为 IIS 内置组件，用于操作磁盘、文件夹或文本文件，
+//               *    其中返回的 newObj 方法和属性非常的多
+//               *    如：var file = newObj.CreateTextFile("C:\test.txt", true) 第二个参表示目标文件存在时是否覆盖
+//               *    file.Write("写入内容");    file.Close();
+//               */
+//              var fileSystem = new ActiveXObject("Scripting.FileSystemObject");
+//              // GetFile(path) 方法从磁盘获取一个文件并返回。
+//              var file = fileSystem.GetFile(filePath);
+//              fileSize = file.Size;    // 文件大小，单位：b
+//          }
+//          else {    // 非IE浏览器
+//              fileSize = target.files[0].size;
+//              console.log(target.files[0]);
+//          }
+//          var size = fileSize / 1024 / 1024;
+//          if (size > 1) {
+//              alert("附件不能大于1M");
+//              return;
+//          }
+//      }
+			    	
+			    	
+			    	var formData = new FormData($("#myForm")[0]);//获取表单数据
+			    	$Ajax(JS_PATH+'/upload/uploader',{
+							data:formData,
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									
+//									if(validate_img(data.newPath)){
+										mui.toast("提交成功");
+										$('#preview').append('<div style="float: left;width: 30%;margin-top: 5px;"><img style="width: 28px;height: 28px;" src="'+data.newPath+'"/>  <span class="mui-badge" style="position: relative;top:-35px;">'+(++picNum)+'</span></div>');
+										picHtml += "<img style='width: 100px;height: 100px;' src='"+data.newPath+"'/>";
+
+//			    					}else{
+			    						
+//			    					}
+								}else{
+									mui.toast("提交失败");
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true,"上传中");
+			    }
+		  		
 		  	
 	</script>
 	</body>

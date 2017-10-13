@@ -40,6 +40,59 @@ var humanAjax = function(url,obj,isLoading,content){
 				});
 }
 
+/*调用ajax
+* @param {Object} url 请求的路径
+ * @param {Object} obj 请求参数，函数
+ * @param {Object} isLoading 是否启用遮罩动画效果
+ */
+var $Ajax = function(url,obj,isLoading,content){
+	var enIndex  = -1;
+	if(isLoading){
+		//loading效果
+				enIndex = layer.open({
+							    type: 2
+							    ,content: content||'登录中...'
+							  });
+	}
+	
+	$.ajax({
+					url:url,
+					data:obj.data,
+					crossDomain :obj.crossDomain,
+					dataType:obj.dataType,//服务器返回json格式数据
+					type:obj.type,//HTTP请求类型
+						/**
+	             * 必须false才会避开jQuery对 formdata 的默认处理
+	             * XMLHttpRequest会对 formdata 进行正确的处理
+	             */
+	            processData: false,
+	            /**
+	             *必须false才会自动加上正确的Content-Type
+	             */
+	            contentType: false,
+					success:function(data){
+						if(isLoading){
+							layer.close(enIndex);
+						}
+						if(data.code == 332){
+							mui.openWindow('login.html');
+						}else if(data.code == 400){
+							mui.toast(data.msg);
+						}else
+							obj.success(data);
+						
+					},error:function(e){
+						if(isLoading){
+							layer.close(enIndex);
+						}
+							obj.error(e);
+					}
+				});
+}
+
+
+
+
 
 Date.prototype.Format = function (fmt) { //author: meizz 
     var o = {
