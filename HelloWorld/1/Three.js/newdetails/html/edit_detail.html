@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑详情</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="../css/mui.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/common.css">
+	<style>
+		.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
+		  background-color: #cd3829;
+		}
+		.mui-slider-progress-bar {
+		  height: 3px;
+		  width:10%;
+  			margin-left: 23%;
+ 		 }
+ 		 .mui-detail-btn .mui-detail-btn {
+		  width: 70% !important;
+		}
+		.mui-comment .icon-zan {
+		  width: 16px !important;
+		}
+		.mui-segmented-control .mui-control-item {
+		  display: initial;
+		  }
+		  
+		  .mui-slider-item {
+			   border-top: 0px !important; 
+			  border-bottom: 0px !important;
+			}
+			.mui-control-content {
+				/*background-color: white;*/
+				min-height: 215px;
+			}
+			.mui-tab {
+			  padding: 0px 0;
+			}
+			.mui-detail-title .mui-icon {
+				  font-size: 21px;
+				    float: right;
+				      margin-right: 10px;
+				}
+				#addDiv{
+					  position: fixed;
+				  right: 15px;
+				  bottom: 130px;
+				  z-index: 1000;
+				}
+			.edit{
+				color: brown;
+			}
+			.save{
+				  color: chartreuse;
+			}
+	</style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav mui-search-box">
+			<a href="javascript:void(0);" class="mui-back mui-action-back"></a>
+				<h4 class="mui-title">详情编辑</h4>
+		</header>
+<!-- banner -->
+
+
+<!-- 详情 游记 以文会友 -->
+<div class="mui-content" >
+	<div id="slider" class="mui-slider">
+		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		
+	</div>
+	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+	<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+		<!--编辑的区域-->
+		<div class="mui-row mui-detail mb10" id="editorContainer">
+			<div class="mui-col-xs-12">
+				<p class="mui-detail-title"><b>景点介绍</b> <span class="mui-icon mui-icon-trash delete"></span><span class="mui-icon mui-icon-checkmarkempty save"></span><span class="mui-icon mui-icon-compose edit"></span></p>
+				<p class="mui-detail-content"  id="currentScenicContent">
+					深圳市凤凰山森林公园位于深圳市宝安区西南部的福永镇凤凰村 ，跨福永、西乡、沙井、公明、石岩五个街道办事处，是深圳市规划重点建设的八大森林公园之一，目标是建成深圳最具吸引力的郊野森林公园。景区已建成福永凤凰主入口及沙井观音庙(洪田火山郊野公园)、西乡黄麻布、福永虎背山三个次入口。
+				</p>
+				
+			</div>
+			<!--<div class="mui-col-xs-12">
+				<p class="mui-detail-title"><b>历史人物</b></p>
+				<p class="mui-detail-content"  >
+					深圳市凤凰山森林公园位于深圳市宝安区西南部的福永镇凤凰村 ，<img src="../images/feel.png" >跨福永、西乡、沙井、公明、石岩五个街道办事处，是深圳市规划重点建设的八大森林公园之一，目标是建成深圳最具吸引力的郊野森林公园。景区已建成福永凤凰主入口及沙井观音庙(洪田火山郊野公园)、西乡黄麻布、福永虎背山三个次入口。
+				</p>
+				
+			</div>-->
+		</div>
+	
+		
+	
+	
+		</div>
+	</div>
+	</div>
+	
+	
+					
+	
+	
+ </div></div>
+</div>
+<div id="addDiv" class="mui-btn mui-btn-yellow">
+	<span class="mui-icon mui-icon-plusempty " id="add">添加
+</div>
+<div class="mui-fixed-comment" id="editorDiv" onmouseover="rotateDIV()" >
+	<a href="javascript:void(0);" id="complaints">
+		<img src="../images/icon_edit.png" >
+	</a>
+</div>
+
+
+
+<script type="text/javascript" src="../js/mui.min.js"></script>
+<script src="../../js/tween/TweenLite.js"></script>
+<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
+<script type="text/javascript">
+		mui.init({
+			swipeBack: false
+		});
+		mui.ready(function(){
+		  		
+		  	});
+		(function($S) {
+			var scroll = $S('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				console.log(scroll);
+				var mui_slider_progress_bar  = document.querySelector('.mui-slider-progress-bar');
+			document.getElementById('slider').addEventListener('slide', function(e) {
+				console.log(e.detail.slideNumber );
+				if(e.detail.slideNumber == 0){
+					mui_slider_progress_bar.style.marginLeft = '23%';
+					mui_slider_progress_bar.style.width='10%';
+				}else if(e.detail.slideNumber == 1){
+					mui_slider_progress_bar.style.marginLeft = '35%';
+					mui_slider_progress_bar.style.width='10%';
+				}else if(e.detail.slideNumber == 2){
+					mui_slider_progress_bar.style.marginLeft = '44%';
+					mui_slider_progress_bar.style.width='15%';
+				}
+				initHeight();
+			});
+			
+				
+			//吐槽
+			var complaints = document.getElementById("complaints");
+			complaints.addEventListener('tap',function(e){
+				mui.openWindow("");//spitslot_create.html
+			});
+			
+			var mui_scroll_wrapper = document.querySelectorAll('.mui-scroll-wrapper');
+			var isGo = false;
+			for(var i=0,m=mui_scroll_wrapper.length;i<m;i++){
+				mui_scroll_wrapper[i].addEventListener('scroll', function (e ) { 
+//				     console.log(e.detail.y,document.body.scrollTop); 
+				     if(e.detail.y>0 && !isGo){
+//				     	document.body.scrollTop = 0;
+						isGo = true;
+						TweenLite.to(document.body,1,{scrollTop:0,onComplete:function(){
+//							console.log('往');
+							isGo = false;
+						}});
+				     }else if(e.detail.y<-100 && !isGo){
+				     	isGo = true;
+//				     	document.body.scrollTop = 130;
+						TweenLite.to(document.body,1,{scrollTop:200,onComplete:function(){
+//							console.log('往');
+							isGo = false;
+						}});
+				     }
+				}) 
+			}
+//			document.querySelector('.mui-scroll-wrapper' ).addEventListener('scroll', function (e ) { 
+//		      console.log(scroll); 
+//		    }) 
+			
+			//控制banner img
+//			var bannerImg = document.querySelector('.mui-slider .mui-slider-group .mui-slider-item img');
+			initHeight();
+			function initHeight(){
+				//var firstContent = document.getElementById("firstContent");
+				var sliderSegmentedControl = document.getElementById("sliderSegmentedControl");
+				var mui_control_content  = document.querySelectorAll('.mui-control-content');
+//				console.log(mui_control_content,window.innerHeight,firstContent.offsetHeight,sliderSegmentedControl.offsetHeight);
+				for(var i=0,m=mui_control_content.length;i<m;i++){
+					mui_control_content[i].style.minHeight = window.innerHeight  - sliderSegmentedControl.offsetHeight+ (window.innerHeight<650?200:100 )+'px';
+				}
+				
+			}
+			
+			var currentInfo = localStorage.getItem("currentInfo");
+			var currentScenicContent = document.getElementById("currentScenicContent");
+			if(currentInfo){
+				currentInfo = JSON.parse(currentInfo);
+				//currentScenic.innerHTML = currentInfo.title;
+				currentScenicContent.innerHTML = currentInfo.summary;
+				currentInfo.imgbox = JSON.parse(currentInfo.imgbox);
+				
+				
+				
+			}
+			//编辑的区域容器
+			
+			
+			//添加条目
+			var addBtn = document.getElementById("addDiv");
+			addBtn.addEventListener('tap',function(){
+				$('#editorContainer').append('<div class="mui-col-xs-12">'
+				+'<p class="mui-detail-title"><b>'+1+'</b> <span class="mui-icon mui-icon-trash delete"></span><span class="mui-icon mui-icon-checkmarkempty save"></span><span class="mui-icon mui-icon-compose edit"></span></p>'
+				+'<p class="mui-detail-content currentScenicContent"  >'
+				+	'dgf'
+				+'</p>'
+			+'</div>');
+			
+				$('.edit').each(function(index,item){
+					item.addEventListener('tap',function(){
+					$(this).parents('.mui-col-xs-12').find('b').attr('contenteditable',"true");
+					$(this).parents('.mui-col-xs-12').find('.currentScenicContent').attr('contenteditable',"true");
+					console.log($(this).parents('.mui-col-xs-12'));
+				})
+			})
+			
+			
+			});
+			
+			
+			
+		})(mui);
+		//控制编辑图标旋转
+		var editorDiv = document.getElementById('editorDiv');
+		editorDiv.addEventListener('touchmove',function(){
+			rotateDIV();
+		})
+		var rotate = 0,rtime;
+		rotateDIV();
+		function rotateDIV(){
+			if(!rtime){
+				rtime = setInterval(function(){
+					rotate+=2;
+					if(rotate>360){
+						rotate=0;
+						clearInterval(rtime);
+						rtime = 0;
+					}
+					$('#editorDiv').css('transform', 'rotate('+rotate+'deg)');
+				},1);
+			}
+			
+		}
+		
+		
+		
+</script>
+</body>
+</html>

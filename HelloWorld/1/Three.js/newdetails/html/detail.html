@@ -36,6 +36,10 @@
 			.mui-tab {
 			  padding: 0px 0;
 			}
+			#editorDiv{
+				 transform: rotateX(0deg);
+   				 -webkit-transform: rotateX(0deg); /* Safari 与 Chrome */
+			}
 		  /*.tab .tab-cell.active a {
 			  border-bottom: 3px solid #F9F7F7;
 			}*/
@@ -292,7 +296,7 @@
  </div></div>
 </div>
 
-<div class="mui-fixed-comment">
+<div class="mui-fixed-comment" id="editorDiv" onmouseover="rotateDIV()" >
 	<a href="javascript:void(0);" id="complaints">
 		<img src="../images/mse.png" width="75">
 	</a>
@@ -313,7 +317,7 @@
 		  		//吐槽记录
 		  		var tucaoRecords = document.getElementById("tucaoRecords");
 		  		tucaoRecords.addEventListener('tap',function(e){
-		  			mui.openWindow('spitslot_list.html');
+		  			mui.openWindow('spitslot_create.html');
 		  		});
 		  	});
 		(function($S) {
@@ -341,7 +345,7 @@
 			//吐槽
 			var complaints = document.getElementById("complaints");
 			complaints.addEventListener('tap',function(e){
-				mui.openWindow("spitslot_create.html");
+				mui.openWindow("edit_detail.html");//spitslot_create.html
 			});
 			
 			var mui_scroll_wrapper = document.querySelectorAll('.mui-scroll-wrapper');
@@ -549,6 +553,30 @@
 			
 			
 		})(mui);
+		//控制编辑图标旋转
+		var editorDiv = document.getElementById('editorDiv');
+		editorDiv.addEventListener('touchmove',function(){
+			rotateDIV();
+		})
+		var rotate = 0,rtime;
+		rotateDIV();
+		function rotateDIV(){
+			if(!rtime){
+				rtime = setInterval(function(){
+					rotate+=2;
+					if(rotate>360){
+						rotate=0;
+						clearInterval(rtime);
+						rtime = 0;
+					}
+					$('#editorDiv').css('transform', 'rotate('+rotate+'deg)');
+				},1);
+			}
+			
+		}
+		
+		
+		
 </script>
 </body>
 </html>

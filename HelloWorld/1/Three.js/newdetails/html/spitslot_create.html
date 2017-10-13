@@ -250,7 +250,7 @@
 //									if(validate_img(data.newPath)){
 										mui.toast("提交成功");
 										$('#preview').append('<div style="float: left;width: 30%;margin-top: 5px;"><img style="width: 28px;height: 28px;" src="'+data.newPath+'"/>  <span class="mui-badge" style="position: relative;top:-35px;">'+(++picNum)+'</span></div>');
-										if((data.newPath).indexOf('.mp4')){
+										if((data.newPath).indexOf('.mp4')!=-1){
 											picHtml += "<video controls='controls' style='width: 200px;height: 200px;margin-left: 5px;border-radius: 10%;' preload='auto' src='"+data.newPath+"'/>";
 										}else
 											picHtml += "<img style='width: 100px;height: 100px;margin-left: 5px;border-radius: 10%;' src='"+data.newPath+"'/>";
