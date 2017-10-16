@@ -44,7 +44,7 @@
 				#addDiv{
 					  position: fixed;
 				  right: 15px;
-				  bottom: 130px;
+				    top: 8px;
 				  z-index: 1000;
 				}
 			.edit{
@@ -53,6 +53,16 @@
 			.save{
 				  color: chartreuse;
 			}
+			.titleEditive{
+				  border: 1px solid rgb(208, 136, 136);
+			}
+			.titleNoEditive{
+				
+			}
+			.contentEditive{
+				  border: 1px solid rgb(208, 136, 136);
+			}
+			
 	</style>
 </head>
 <body>
@@ -78,7 +88,7 @@
 		<div class="mui-row mui-detail mb10" id="editorContainer">
 			<div class="mui-col-xs-12">
 				<p class="mui-detail-title"><b>景点介绍</b> <span class="mui-icon mui-icon-trash delete"></span><span class="mui-icon mui-icon-checkmarkempty save"></span><span class="mui-icon mui-icon-compose edit"></span></p>
-				<p class="mui-detail-content"  id="currentScenicContent">
+				<p class="mui-detail-content currentScenicContent "  id="currentScenicContent">
 					深圳市凤凰山森林公园位于深圳市宝安区西南部的福永镇凤凰村 ，跨福永、西乡、沙井、公明、石岩五个街道办事处，是深圳市规划重点建设的八大森林公园之一，目标是建成深圳最具吸引力的郊野森林公园。景区已建成福永凤凰主入口及沙井观音庙(洪田火山郊野公园)、西乡黄麻布、福永虎背山三个次入口。
 				</p>
 				
@@ -105,7 +115,7 @@
 	
  </div></div>
 </div>
-<div id="addDiv" class="mui-btn mui-btn-yellow">
+<div id="addDiv" class="mui-btn ">
 	<span class="mui-icon mui-icon-plusempty " id="add">添加
 </div>
 <div class="mui-fixed-comment" id="editorDiv" onmouseover="rotateDIV()" >
@@ -206,28 +216,57 @@
 			}
 			//编辑的区域容器
 			
-			
+			addEvent($('#editorContainer'));
 			//添加条目
 			var addBtn = document.getElementById("addDiv");
 			addBtn.addEventListener('tap',function(){
 				$('#editorContainer').append('<div class="mui-col-xs-12">'
-				+'<p class="mui-detail-title"><b>'+1+'</b> <span class="mui-icon mui-icon-trash delete"></span><span class="mui-icon mui-icon-checkmarkempty save"></span><span class="mui-icon mui-icon-compose edit"></span></p>'
+				+'<p class="mui-detail-title"><b>标题</b> <span class="mui-icon mui-icon-trash delete"></span><span class="mui-icon mui-icon-checkmarkempty save"></span><span class="mui-icon mui-icon-compose edit"></span></p>'
 				+'<p class="mui-detail-content currentScenicContent"  >'
-				+	'dgf'
+				+	'内容'
 				+'</p>'
 			+'</div>');
+				var len = $('#editorContainer').find(".mui-col-xs-12").length;
+				addEvent($($('#editorContainer').find(".mui-col-xs-12")[len-1]));
 			
-				$('.edit').each(function(index,item){
-					item.addEventListener('tap',function(){
-					$(this).parents('.mui-col-xs-12').find('b').attr('contenteditable',"true");
-					$(this).parents('.mui-col-xs-12').find('.currentScenicContent').attr('contenteditable',"true");
-					console.log($(this).parents('.mui-col-xs-12'));
-				})
-			})
 			
 			
 			});
 			
+			
+			function addEvent(p){console.log(p)
+				p.find('.edit').each(function(index,item){
+						item.addEventListener('tap',function(){
+						$(this).parents('.mui-col-xs-12').find('b').attr('contenteditable',"true");
+						$(this).parents('.mui-col-xs-12').find('b').addClass('titleEditive');
+						$(this).parents('.mui-col-xs-12').find('.currentScenicContent').attr('contenteditable',"true");
+						$(this).parents('.mui-col-xs-12').find('.currentScenicContent').addClass('contentEditive');
+						console.log($(this).parents('.mui-col-xs-12'));
+						})
+				});
+				p.find('.save').each(function(index,item){
+						item.addEventListener('tap',function(){
+							$(this).parents('.mui-col-xs-12').find('b').attr('contenteditable',"false");
+							$(this).parents('.mui-col-xs-12').find('b').removeClass('titleEditive');
+							$(this).parents('.mui-col-xs-12').find('.currentScenicContent').attr('contenteditable',"false");
+							$(this).parents('.mui-col-xs-12').find('.currentScenicContent').removeClass('contentEditive');
+							console.log($(this).parents('.mui-col-xs-12'));
+						})
+					
+				});
+				p.find('.delete').each(function(index,item){
+						item.addEventListener('tap',function(){
+							var othis = this;
+							mui.confirm('确定删除！','温馨提示',['取消','确定'],function(e){
+								if(e.index == 1){//确定
+									$(othis).parents('.mui-col-xs-12').remove();
+								}
+							});
+						})
+					
+				});
+				
+			}
 			
 			
 		})(mui);
