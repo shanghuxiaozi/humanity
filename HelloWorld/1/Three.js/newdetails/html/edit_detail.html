@@ -191,7 +191,7 @@
 				var mui_control_content  = document.querySelectorAll('.mui-control-content');
 //				console.log(mui_control_content,window.innerHeight,firstContent.offsetHeight,sliderSegmentedControl.offsetHeight);
 				for(var i=0,m=mui_control_content.length;i<m;i++){
-					mui_control_content[i].style.minHeight = window.innerHeight  - sliderSegmentedControl.offsetHeight+ (window.innerHeight<650?200:100 )+'px';
+					mui_control_content[i].style.minHeight = window.innerHeight -44 /*- sliderSegmentedControl.offsetHeight+ (window.innerHeight<650?200:100 )*/+'px';
 				}
 				
 			}
@@ -203,9 +203,6 @@
 				//currentScenic.innerHTML = currentInfo.title;
 				currentScenicContent.innerHTML = currentInfo.summary;
 				currentInfo.imgbox = JSON.parse(currentInfo.imgbox);
-				
-				
-				
 			}
 			//编辑的区域容器
 			

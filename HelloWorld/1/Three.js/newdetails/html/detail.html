@@ -263,7 +263,8 @@
 
 					</div>
 					<div id="item3mobile" class="mui-slider-item mui-control-content">
-						<!--<div id="scroll3" class="mui-scroll-wrapper">-->
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
 							<!-- 分享頭像 -->
 		<ul class="mui-table-view mui-comment mui-share-table">
 			<li class="mui-table-view-cell mui-media mui-row-bottom">
@@ -288,8 +289,8 @@
 				</div>
 			</div>
 		</div>
-						<!--</div>-->
-
+						</div>
+						</div>
 					</div>
 	
 	
@@ -352,7 +353,7 @@
 			var isGo = false;
 			for(var i=0,m=mui_scroll_wrapper.length;i<m;i++){
 				mui_scroll_wrapper[i].addEventListener('scroll', function (e ) { 
-//				     console.log(e.detail.y,document.body.scrollTop); 
+				      console.log(e.detail.y,document.body.scrollTop,isGo);
 				     if(e.detail.y>0 && !isGo){
 //				     	document.body.scrollTop = 0;
 						isGo = true;
@@ -383,6 +384,8 @@
 				var mui_control_content  = document.querySelectorAll('.mui-control-content');
 //				console.log(mui_control_content,window.innerHeight,firstContent.offsetHeight,sliderSegmentedControl.offsetHeight);
 				for(var i=0,m=mui_control_content.length;i<m;i++){
+					//mui_control_content[i].style.minHeight = $(mui_control_content[i]).find('.mui-scroll').innerHeight()-10+'px';
+					console.log($(mui_control_content[i]).find('.mui-scroll').innerHeight());
 					mui_control_content[i].style.minHeight = window.innerHeight - firstContent.offsetHeight - sliderSegmentedControl.offsetHeight+ (window.innerHeight<650?200:100 )+'px';
 				}
 				
@@ -446,7 +449,7 @@
 						            });
 								
 								
-								for(var i=0,m=data.length;i<2;i++){
+								for(var i=0,m=data.length;i<(m<2?m:2);i++){
 									var item = data[i];
 									if(!item.nickname||item.nickname==""){
 										item.nickname = '无名氏';
