@@ -47,7 +47,7 @@
 					</div>
 					<div class="mui-input-row">
 						<label class="mui-label-pass"></label>
-						<input type="password" class="mui-input-password" placeholder="请再次输入密码">
+						<input type="password" class="mui-input-password" placeholder="请再次输入密码" id="password_two">
 					</div>
 				</div>
 				<div class="mui-btn-row">
@@ -75,6 +75,7 @@
 			mui.init();
 			var username = document.getElementById("username");
 			var password = document.getElementById("password");
+			var password_two = document.getElementById("password_two");
 			var registerBtn = document.getElementById("registerBtn");
 			console.log(document.querySelector('.form1'));
 			//阻止表单提交
@@ -84,6 +85,13 @@
 			var isRegistering = false;
 			//注册
 			registerBtn.addEventListener('tap',function(e){//alert(9)
+				if(password_two.value!=password.value){
+					mui.toast("两次输入密码不一致！");
+					return;
+				}
+				
+				
+				
 				if(isRegistering)return;
 				
 				isRegistering = true;

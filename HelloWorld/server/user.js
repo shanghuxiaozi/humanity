@@ -35,8 +35,9 @@ router.post('/register', function (req, res, next) {//
 			data = new Object();
 			data.isRegister = true;
 			dbHelper.list('INSERT INTO app_user(account,login_type,openid,password) VALUES ("'+name+'",0,1,"'+newPas+'")', function(datas, ress){
-				req.session.user = data;
-				ress.send(data);
+				console.log(name+"注册成功：",datas);
+				req.session.user = datas;
+				ress.send(datas);
 			}, res);
 		}
 		

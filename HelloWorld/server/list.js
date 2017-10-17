@@ -105,7 +105,7 @@ router.get('/imageFromNet', function (request, response, next) {
 	　　　　　　　　　　　　　　　　　　　//打印出来的就是图片的base64编码格式，格式如下　　　　
 			if (!err && 　　res.statusCode === 200) {
             var contentType = 　　res.headers['content-type'];
-            　　res.setEncoding('binary');
+            　　	res.setEncoding('binary');
             response.set('Content-Type', contentType);
             response.send(base64Img);
         }
@@ -142,6 +142,46 @@ router.get('/getIdbyCityName', function (req, res, next) {
 	dbHelper.list('select * from  cities where name="'+req.query.cityName+'"', callback, res);
 });
 
+/*根据不同的用户等级更新scenices景点表格数据*/
+router.post('/update', function (req, res, next) {
+	console.log('------开始更新数据,首先用户权限验证----');//对于用户的权限验证
+	if(req.session.user){
+		if(req.session.user.user_level < 3){
+			res.send({code:400,msg:'您等级不够3级,请努力刷分!'});
+		}else{
+			if(!req.body.id||isNaN(req.body.id)){
+				res.send({code:400,msg:'输入的景点id非法'});
+			}else if(!req.body.editor_content|| typeof req.body.editor_content != 'string'){
+				res.send({code:400,msg:'输入的景点内容非法'});
+			}else{
+				dbHelper.list('select a.audit_status from scenices as a where id='+req.body.id, function (data_list, ress) {
+					if(data_list.length>0){
+						if(data_list[0].audit_status==2){//审核中
+							ress.send({code:400,msg:'此景点已经有内容在审核中请稍后提交!'});
+						}else{
+							var sql = 'update scenices set editor_content = '+req.body.editor_content+' ,audit_status = '+ 2 +',update_time="'+(new Date()).Format('yyyy-MM-dd HH:mm:ss')+'"  where id='+req.body.id;
+							console.log('景点表格sql=',sql);
+							dbHelper.list( sql
+							, function (data, resss) {
+								resss.send({code:200,msg:'更新景点数据成功!'});
+							}, res);
+						}
+					}else{
+						res.send({code:400,msg:'该景点无数据'});
+					}
+					
+				},res)
+				
+				
+				
+			}
+			
+		}
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
+
 var callback = function (data, res) {
    // res.render('list', {listData: data});
     // 第一个参数：模板名称对应list.ejs，第二个是参数名和数据
@@ -149,5 +189,24 @@ var callback = function (data, res) {
     console.log('success');
 	res.send(data);
 };
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+        "H+" : this.getHours(), //小时     
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+
 
 module.exports = router;

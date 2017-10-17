@@ -68,9 +68,16 @@ connection.query(addSql,addSqlParams,function (err, result) {
 //connection.end();
 
 /*---------------------------------------------------用连接池来进行数据库操作----------------------------------------------------------------------*/
-var pool  = mysql.createPool({
+/*var pool  = mysql.createPool({
   host     : '119.23.13.107',       
   user     : 'root',              
+  password : 'ath123456',       
+  port: '3306',                   
+  database: 'rwmap'
+});*/
+var pool  = mysql.createPool({
+  host     : '121.201.95.97',       
+  user     : 'yhxd',              
   password : 'ath123456',       
   port: '3306',                   
   database: 'rwmap'

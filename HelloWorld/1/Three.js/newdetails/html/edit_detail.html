@@ -251,6 +251,27 @@
 							$(this).parents('.mui-col-xs-12').find('.currentScenicContent').attr('contenteditable',"false");
 							$(this).parents('.mui-col-xs-12').find('.currentScenicContent').removeClass('contentEditive');
 							console.log($(this).parents('.mui-col-xs-12'));
+							var editor_content = [];
+							$('#editorContainer').find(".mui-col-xs-12").each(function(j,a){
+								editor_content.push({'title':$(a).find('b').text(),'content':$(a).find('.currentScenicContent').html()})
+							});
+							
+							
+							humanAjax(JS_PATH+'/list/update',{
+								data:{
+									id:currentInfo.id,
+									editor_content:"'"+JSON.stringify(editor_content)+"'"//非得要加豆豆否则mysql不当字符串儿
+								},
+								crossDomain :true,
+								dataType:'json',//服务器返回json格式数据
+								type:'post',//HTTP请求类型
+								success:function(data){
+									if(data.code==200)
+										mui.toast(data.msg);
+								},error:function(e){
+									
+								}
+							});
 						})
 					
 				});
