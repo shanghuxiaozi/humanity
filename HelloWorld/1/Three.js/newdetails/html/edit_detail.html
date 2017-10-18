@@ -251,27 +251,33 @@
 							$(this).parents('.mui-col-xs-12').find('.currentScenicContent').attr('contenteditable',"false");
 							$(this).parents('.mui-col-xs-12').find('.currentScenicContent').removeClass('contentEditive');
 							console.log($(this).parents('.mui-col-xs-12'));
-							var editor_content = [];
+							var editor_content = "";
 							$('#editorContainer').find(".mui-col-xs-12").each(function(j,a){
-								editor_content.push({'title':$(a).find('b').text(),'content':$(a).find('.currentScenicContent').html()})
+//								editor_content.push({title:$(a).find('b').text(),content:$(a).find('.currentScenicContent').html()})
+								editor_content+= $(a).find('b').text()+"@*|2@"+$(a).find('.currentScenicContent').html()+'@#|5@';
 							});
-							
-							
-							humanAjax(JS_PATH+'/list/update',{
-								data:{
-									id:currentInfo.id,
-									editor_content:"'"+JSON.stringify(editor_content)+"'"//非得要加豆豆否则mysql不当字符串儿
-								},
-								crossDomain :true,
-								dataType:'json',//服务器返回json格式数据
-								type:'post',//HTTP请求类型
-								success:function(data){
-									if(data.code==200)
-										mui.toast(data.msg);
-								},error:function(e){
-									
+							console.log(JSON.stringify(editor_content),typeof JSON.stringify(editor_content));
+							mui.confirm('确定提交！','温馨提示',['取消','确定'],function(e){
+								if(e.index == 1){//确定
+									humanAjax(JS_PATH+'/list/update',{
+										data:{
+											id:currentInfo.id,
+											editor_content:"'"+editor_content+"'"//非得要加豆豆否则mysql不当字符串儿
+											//editor_content:"\""+JSON.stringify(editor_content)+"\""
+										},
+										crossDomain :true,
+										dataType:'json',//服务器返回json格式数据
+										type:'post',//HTTP请求类型
+										success:function(data){
+											if(data.code==200)
+												mui.toast(data.msg);
+										},error:function(e){
+											
+										}
+									});
 								}
 							});
+							
 						})
 					
 				});
@@ -280,7 +286,27 @@
 							var othis = this;
 							mui.confirm('确定删除！','温馨提示',['取消','确定'],function(e){
 								if(e.index == 1){//确定
-									$(othis).parents('.mui-col-xs-12').remove();
+									humanAjax(JS_PATH+'/list/update',{
+										data:{
+											id:currentInfo.id,
+											editor_content:"'[]'"//非得要加豆豆否则mysql不当字符串儿
+										},
+										crossDomain :true,
+										dataType:'json',//服务器返回json格式数据
+										type:'post',//HTTP请求类型
+										success:function(data){
+											if(data.code==200){
+												mui.toast("删除成功");
+												$(othis).parents('.mui-col-xs-12').remove();
+											}
+												
+										},error:function(e){
+											
+										}
+									});
+									
+									
+									
 								}
 							});
 						})

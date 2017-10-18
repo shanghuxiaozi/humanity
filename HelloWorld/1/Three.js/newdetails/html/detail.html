@@ -97,7 +97,7 @@
 					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-		<div class="mui-row mui-detail mb10">
+		<div class="mui-row mui-detail mb10" id="editorContainer">
 			<div class="mui-col-xs-12">
 				<p class="mui-detail-title"><b>景点介绍</b></p>
 				<p class="mui-detail-content"  id="currentScenicContent">
@@ -420,12 +420,42 @@
 					gallery.slider({
 					  interval:5000//自动轮播周期，若为0则不自动播放，默认为0；
 					});
+					
+					
+					//如果有客户提供的景点详情，并且已经通过审核了，那么就可以显示
+					if(currentInfo.audit_status!=2){//表示不在审核中可以显示
+						//var mm = '[{"title":"景点介绍","content":"深圳香蜜湖水上乐园，地处深圳福田中心区，紧靠深南大道，设备最先进的具有国际一流水准的大型水上乐园，深圳第一个新颖有趣的戏水乐园。除了商业割据香蜜湖，地产商蚕食香蜜湖地块，也使得香蜜湖作为旅游用地的功能逐渐式微。香蜜湖已经是深圳乃至整个华南的豪宅聚居区之一，该片区空气质量上乘，环境景观绝佳，人居条件远远优于其他区域。有着“都市绿肺”之称的香蜜湖地块，成了“地产巨头必战之地”、“高品质城市综合社区”、“深圳顶级豪宅集中区域”等已成了香蜜湖的代名词。内设16个游乐项目，主要有登高滑道、高速滑道、组合滑道、冲浪滑道、雪山滑道、造浪池、漂流河、激流探险、儿童戏水池、儿童反斗乐园、跳水池、休闲池、按摩池、游泳池等。"}]'
+						currentInfo.editor_content = currentInfo.editor_content.split('@#|5@');
+						$('#editorContainer').empty();
+//						console.log(currentInfo.editor_content,JSON.parse("[{\"title\":\"景点介绍\",\"content\":\"深圳香蜜湖水上乐园，地处深圳福田中心区，紧靠深南大道，设备最先进的具有国际一流水准的大型水上乐园，深圳第一个新颖有趣的戏水乐园。除了商业割据香蜜湖，地产商蚕食香蜜湖地块，也使得香蜜湖作为旅游用地的功能逐渐式微。香蜜湖已经是深圳乃至整个华南的豪宅聚居区之一，该片区空气质量上乘，环境景观绝佳，人居条件远远优于其他区域。有着“都市绿肺”之称的香蜜湖地块，成了“地产巨头必战之地”、“高品质城市综合社区”、“深圳顶级豪宅集中区域”等已成了香蜜湖的代名词。内设16个游乐项目，主要有登高滑道、高速滑道、组合滑道、冲浪滑道、雪山滑道、造浪池、漂流河、激流探险、儿童戏水池、儿童反斗乐园、跳水池、休闲池、按摩池、游泳池等。\"},{\"title\":\"标\",\"content\":\"内容s\"}]"));
+						for( var i = 0 , m = currentInfo.editor_content.length ; i < m ; i++  ){
+							if(!currentInfo.editor_content[i]||currentInfo.editor_content[i]=="")continue;
+							var item = (currentInfo.editor_content[i]).split('@*|2@');	
+							console.log(item);
+							$('#editorContainer').append('<div class="mui-col-xs-12">'
+								+'<p class="mui-detail-title"><b>'+item[0]+'</b> </p>'
+								+'<p class="mui-detail-content currentScenicContent"  >'
+								+	item[1]
+								+'</p>'
+							+'</div>');
+						}
+						$('#editorContainer').append('<div class="mui-detail-btn mui-clearfix">'
+					+'<div class="mui-col-xs-6 mui-pull-left mui-text-center" id="vrBtn">'
+						+'<img src="../images/watch.png" class="mui-detail-btn">'
+					+'</div>'
+					+'<div class="mui-col-xs-6 mui-pull-left mui-text-center">'
+						+'<img src="../images/feel.png" class="mui-detail-btn">'
+					+'</div>'
+				+'</div>');
+						
+					}
+					
 				}
 				var vrBtn = document.getElementById("vrBtn");
 				//监听点击事件
 				vrBtn.addEventListener("tap",function () {
-				  console.log("tap event trigger");
-				  
+				  	console.log("tap event trigger");
+				  	
 				  	//window.open('http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=512&height=256&location='+currentInfo.longitude+','+currentInfo.latitude+'&fov=360');
 				  	mui.openWindow('../../WebVR_Demo-master/panorama.html?location='+currentInfo.longitude+','+currentInfo.latitude);
 				  
