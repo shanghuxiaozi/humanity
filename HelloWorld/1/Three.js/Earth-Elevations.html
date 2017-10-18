@@ -57,28 +57,31 @@ animate();
 function init() 
 {
 	
-	mui.init({
-					swipeBack:true ,//启用右滑关闭功能
-					 preloadPages:[
-				    {
-				      url:"http://120.25.221.94/human/1/Three.js/schedule/schedule.html",//,"../schedule/schedule.html"
-//				      url:"schedule/schedule.html",
-				      id:"schedule",
-				      styles:{},//窗口参数
-				      extras:{},//自定义扩展参数
-				      subpages:[{},{}]//预加载页面的子页面
-				    },
-				    {
-				      url:"http://120.25.221.94/human/1/Three.js/circle/index.html",//,"../circle/index.html"
-//				      url:"circle/index.html",
-				      id:"circle",
-				      styles:{},//窗口参数
-				      extras:{},//自定义扩展参数
-				      subpages:[{},{}]//预加载页面的子页面
-				    }
-				  ],
-				   preloadLimit:5//预加载窗口数量限制(一旦超出,先进先出)默认不限制
-				});
+//	mui.init({
+//					swipeBack:true ,//启用右滑关闭功能
+//					 preloadPages:[
+//				    {
+//				      url:"http://120.25.221.94/human/1/Three.js/schedule/schedule.html",//,"../schedule/schedule.html"
+////				      url:"schedule/schedule.html",
+//				      id:"schedule",
+//				      styles:{},//窗口参数
+//				      extras:{},//自定义扩展参数
+//				      subpages:[{},{}]//预加载页面的子页面
+//				    },
+//				    {
+//				      url:"http://120.25.221.94/human/1/Three.js/circle/index.html",//,"../circle/index.html"
+////				      url:"circle/index.html",
+//				      id:"circle",
+//				      styles:{},//窗口参数
+//				      extras:{},//自定义扩展参数
+//				      subpages:[{},{}]//预加载页面的子页面
+//				    }
+//				  ],
+//				   preloadLimit:5//预加载窗口数量限制(一旦超出,先进先出)默认不限制
+//				});
+mui.init({
+	swipeBack:true //启用右滑关闭功能
+});
 //	document.addEventListener( "plusready", onPlusReady, false );
 //				// 扩展API加载完毕，现在可以正常调用扩展API
 //				function onPlusReady() {
@@ -259,7 +262,8 @@ function init()
 				
 				//window.location.href = "schedule/schedule.html";
 //			}
-window.location.href = "schedule/schedule.html";
+//window.location.href = "schedule/schedule.html";
+			window.location.href = "http://120.25.221.94:8080/index";
 //			var time = setTimeout(function(){
 //				//window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html";
 //				openSchedule()
@@ -377,8 +381,8 @@ function onDocumentMouseDown( event )
 		
 		if(p.x>-84&& p.x<-75&&p.y>15&&p.y<60&&p.z>0&&p.z<30){
 //			console.log("进入");
-		window.location.href = "http://120.25.221.94/human/1/Three.js/schedule/schedule.html";
-			//window.location.href = "schedule/schedule.html";
+//		window.location.href = "http://120.25.221.94:8080/index";
+			window.location.href = "schedule/schedule.html";
 //window.location.href = "login/index.html";
 //mui.openWindow("http://120.25.221.94/human/1/Three.js/schedule/schedule.html")
 		}

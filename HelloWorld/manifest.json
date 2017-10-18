@@ -177,7 +177,7 @@
                         /*4.0 英寸设备(iPhone5/iPhone5s)启动图片，分辨率：640x1136*/
                         /*4.7 英寸设备(iPhone6)启动图片，分辨率：750x1334*/
                         /*5.5 英寸设备(iPhone6 Plus)启动图片，分辨率：1242x2208*/
-                        "retina55l": "","retina55":"E:/human/20170905/启动页1.png","retina47":"E:/human/20170905/启动页1.png","retina40":"E:/human/20170905/启动页1.png","retina35":"E:/human/20170905/启动页1.png"/*5.5 英寸设备(iPhone6 Plus)横屏启动图片，分辨率：2208x1242*/
+                        "retina55l": "","retina55":"E:/human/20170905/启动页1.png","retina47":"D:/web/human/QQ图片20171018140951.png","retina40":"D:/web/human/QQ图片20171018140951.png","retina35":"D:/web/human/QQ图片20171018140951.png"/*5.5 英寸设备(iPhone6 Plus)横屏启动图片，分辨率：2208x1242*/
                     },
                     "ipad": {
                         "portrait": "", /*iPad竖屏启动图片，分辨率：768x1004*/
@@ -192,7 +192,7 @@
                 },
                 "android": {
                     "mdpi": "", /*普通屏启动图片，分辨率：240x282*/
-                    "ldpi": "","hdpi":"E:/human/20170905/启动页1.png","xhdpi":"E:/human/20170905/启动页1.png","xxhdpi":"E:/human/20170905/启动页2.png"/*1080P高分屏启动图片，分辨率：1080x1882*/
+                    "ldpi": "","hdpi":"D:/web/human/QQ图片20171018140951.png","xhdpi":"D:/web/human/QQ图片20171018140951.png","xxhdpi":"D:/web/human/QQ图片20171018140951.png"/*1080P高分屏启动图片，分辨率：1080x1882*/
                 }
             },"debug":true
         }

@@ -413,7 +413,8 @@
 //				    	if(circle)circle.show();
 				    	
 //				    	mui.openWindow("../cut/index.html");
-						mui.openWindow("../newdetails/html/share_companion.html");
+//						mui.openWindow("../newdetails/html/share_companion.html");
+						window.location.href = "../newdetails/html/share_companion.html"//mui.openWindow有问题，首次进入带ip地址了
 						//mui.openWindow("../hello-mui/examples/tabbar.html")
 				    	//mui.openWindow("http://120.77.249.40:8084/buyer/changeImg");
 				    	//.openWindow("../circle/index.html");
@@ -421,7 +422,8 @@
 				    	//console.log(currentInfo);
 				    	  //mui.openWindow("../detail/detail.html")
 				    	  localStorage.setItem("currentInfo",JSON.stringify(currentInfo));
-				    	  mui.openWindow("../newdetails/html/tourist.html");
+				    	  window.location.href = "../newdetails/html/tourist.html";
+				    	  //mui.openWindow("../newdetails/html/tourist.html");
 				    }else
 				    	mui.openWindow(this.href);
 //				    if(this.name == "scan"){
