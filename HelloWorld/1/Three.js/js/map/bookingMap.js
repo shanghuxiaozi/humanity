@@ -81,7 +81,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		], {strokeColor:"blue", strokeWeight:1, strokeOpacity:0.1});
 //	map.addOverlay(polygon);
 		//var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(26*2,32*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-5, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
-		 var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
+		 var myIcon = new BMap.Icon("../icon/mark/1c7a3e2fd802dc165dd4c3b94691292d.gif", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
 		 _this.createMark("景点",point,myIcon);
 		 icons.push(myIcon);
 		 _this.myIcon = myIcon;

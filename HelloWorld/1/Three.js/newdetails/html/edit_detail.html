@@ -12,8 +12,8 @@
 		}
 		.mui-slider-progress-bar {
 		  height: 3px;
-		  width:10%;
-  			margin-left: 23%;
+		  width:98%;
+  			margin-left: 1%;
  		 }
  		 .mui-detail-btn .mui-detail-btn {
 		  width: 70% !important;
@@ -42,10 +42,12 @@
 				      margin-right: 10px;
 				}
 				#addDiv{
-					  position: fixed;
+					  /*position: fixed;
 				  right: 15px;
-				    top: 8px;
+				    top: 8px;*/
 				  z-index: 1000;
+				    /*border-left: 3px solid #cd3829;*/
+				      width: 100%;
 				}
 			.edit{
 				color: brown;
@@ -62,7 +64,33 @@
 			.contentEditive{
 				  border: 1px solid rgb(208, 136, 136);
 			}
-			
+			.mui-spitslot-textarea_edit {
+			  padding: 15px 10px;
+			  /*position: absolute;
+			  top: 37px;
+			  right: 100px;*/
+			  z-index: 1000;
+			    width: 100px;
+			      margin-top: 10px;
+			}
+			.mui-spitslot-textarea_edit .mui-spitslot-vedio {
+			  /* position: absolute; */
+			  right: 23px;
+			  bottom: 24px;
+			  background: url(../images/tab_vedio_icon.png)no-repeat center 2px;
+			  background-size: 22px 19px;
+			  padding-top: 23px;
+			  font-size: 11px;
+			  color: #b3b3b3;
+			}
+			.mui-spitslot-textarea_edit input{
+				  opacity: 0;
+				  position: absolute;
+  				  top: 60px;
+			}
+			.mui-badge {
+			  background-color: rgba(244, 19, 78, 0.15);
+			}
 	</style>
 </head>
 <body>
@@ -75,6 +103,21 @@
 
 <!-- 详情 游记 以文会友 -->
 <div class="mui-content" >
+	<div id="fileDiv" class="mui-spitslot-textarea_edit">
+	<a class="mui-spitslot-vedio" href="javascript:void(0);">添加轮播图片
+		<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data">
+			<input type="file" name="fulAvatar" class="upload_img" onchange="uploadByForm(this)"/>
+		</form>
+	</a>
+	<div id="preview">
+						<!--<div><img />  <span class="mui-badge">1
+					</span></div>
+						-->
+					</div>
+	</div>
+<div id="addDiv" class="mui-btn ">
+	<span class="mui-icon mui-icon-plusempty " id="add">添加
+</div>
 	<div id="slider" class="mui-slider">
 		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 		
@@ -115,9 +158,8 @@
 	
  </div></div>
 </div>
-<div id="addDiv" class="mui-btn ">
-	<span class="mui-icon mui-icon-plusempty " id="add">添加
-</div>
+
+
 <div class="mui-fixed-comment" id="editorDiv" onmouseover="rotateDIV()" >
 	<a href="javascript:void(0);" id="complaints">
 		<img src="../images/icon_edit.png" >
@@ -132,6 +174,7 @@
 	<script src="../../js/path.js"></script>
 	<script src="../../js/jquery-1.9.1.js"></script>
 <script type="text/javascript">
+	var picHtml = [];//上传的图标内容标签
 		mui.init({
 			swipeBack: false
 		});
@@ -201,10 +244,11 @@
 				var mui_control_content  = document.querySelectorAll('.mui-control-content');
 //				console.log(mui_control_content,window.innerHeight,firstContent.offsetHeight,sliderSegmentedControl.offsetHeight);
 				for(var i=0,m=mui_control_content.length;i<m;i++){
-					mui_control_content[i].style.minHeight = window.innerHeight -44 /*- sliderSegmentedControl.offsetHeight+ (window.innerHeight<650?200:100 )*/+'px';
+					mui_control_content[i].style.minHeight = window.innerHeight -151 /*- sliderSegmentedControl.offsetHeight+ (window.innerHeight<650?200:100 )*/+'px';
 				}
-				
+				$('body')[0].style.minHeight = window.innerHeight + (window.innerHeight<650?100:10 )+'px';
 			}
+			
 			
 			var currentInfo = localStorage.getItem("currentInfo");
 			var currentScenicContent = document.getElementById("currentScenicContent");
@@ -365,6 +409,69 @@
 		}
 		
 		
+		
+		
+		var picNum = 0;//上传图片数量
+		  	
+		  	/**
+		     * ajax 上传。这里主要是上传图片。
+		     */
+			    function uploadByForm(target){
+			    	if(picNum>3){
+			    		mui.toast("提交的轮播图目前不能超过4张!");
+			    		return;
+			    	}
+			    	
+			    	function validate_img(a){
+						 var file = a;
+						 if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(file)){
+						  alert("图片类型必须是.gif,jpeg,jpg,png中的一种");
+						  return false;
+						}else{
+						     var image = new Image();
+						     image.onload = function(){
+						     	var height = image.height;
+							     var width = image.width;
+							     var filesize = image.fileSize;
+							      alert(height+"x.."+filesize);
+							     if(width>780 && height>780 /*&& filesize>102400*/){
+							      alert('请上传780*780像素 或者大小小于100k的图片');
+							      return false;
+							     }else{
+							     	alert("图片通过");
+						 			return true;
+							     }
+						     }
+						     image.src = file;
+						     
+						     
+						 }
+						 
+						}
+			    	
+			    	
+			    	var formData = new FormData($("#myForm")[0]);//获取表单数据
+			    	$Ajax(JS_PATH+'/upload/uploader',{
+							data:formData,
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									
+										mui.toast("图片提交成功");
+										$('#preview').append('<div style="float: left;width: 20%;margin-top: 5px;  margin-left: 20px;"><img style="width: 28px;height: 28px;" src="'+data.newPath+'"/>  <span class="mui-badge" style="position: relative;top:-46px;  right: -20px;">'+(++picNum)+'</span></div>');
+										picHtml.push(data.newPath);
+			    						
+								}else{
+									mui.toast("提交失败");
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true,"上传中");
+			    }
 		
 </script>
 </body>

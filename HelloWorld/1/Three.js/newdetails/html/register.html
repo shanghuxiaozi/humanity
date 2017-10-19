@@ -77,6 +77,7 @@
 			var password = document.getElementById("password");
 			var password_two = document.getElementById("password_two");
 			var registerBtn = document.getElementById("registerBtn");
+			var protocol = document.getElementById('protocol');//条款复选
 			console.log(document.querySelector('.form1'));
 			//阻止表单提交
 			(document.querySelector('.form1')).addEventListener('submit',function(e){
@@ -85,12 +86,25 @@
 			var isRegistering = false;
 			//注册
 			registerBtn.addEventListener('tap',function(e){//alert(9)
+				if(username.value==""){
+					mui.toast("账号未输入");
+					return;
+				}
+				
+				if(password.value==""){
+					mui.toast("密码未输入");
+					return;
+				}
+				
 				if(password_two.value!=password.value){
 					mui.toast("两次输入密码不一致！");
 					return;
 				}
 				
-				
+				if(!protocol.checked){
+					mui.toast("请选择条款！");
+					return;
+				}
 				
 				if(isRegistering)return;
 				
