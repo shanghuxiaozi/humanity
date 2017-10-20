@@ -81,7 +81,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		], {strokeColor:"blue", strokeWeight:1, strokeOpacity:0.1});
 //	map.addOverlay(polygon);
 		//var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(26*2,32*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-5, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
-		 var myIcon = new BMap.Icon("../icon/mark/1c7a3e2fd802dc165dd4c3b94691292d.gif", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
+		 var myIcon = new BMap.Icon("../icon/mark/characteristicArchitecture.png", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
 		 _this.createMark("景点",point,myIcon);
 		 icons.push(myIcon);
 		 _this.myIcon = myIcon;
@@ -676,12 +676,12 @@ Bookingmap.prototype.createMarkFromData = function(obj){
 				marker.addEventListener("click",attribute);
 				
 				function attribute(e){
-					console.log(e.target);
+					console.log(e);
 					//e.stopPropagation();
 					 e.domEvent.stopPropagation();
 					var p = marker.getPosition();  //获取marker的位置
 					//alert("marker的位置是" + p.lng + "," + p.lat);  
-					_this.clickMarkHandler(e.target.result);
+					_this.clickMarkHandler(e.target.result,e);
 				}
 				_this.markList.push(marker);
 				_this.sizeList.push(new BMap.Size(marker.getIcon().imageSize.width,marker.getIcon().imageSize.height) );
@@ -761,7 +761,7 @@ Bookingmap.prototype.createMark = function(nme,p,myIcon){
 					 e.domEvent.stopPropagation();
 					var p = marker.getPosition();  //获取marker的位置
 					//alert("marker的位置是" + p.lng + "," + p.lat);  
-					_this.clickMarkHandler(e.target.result);
+					_this.clickMarkHandler(e.target.result,e);
 				}
 				_this.markList.push(marker);
 				_this.sizeList.push(new BMap.Size(marker.getIcon().imageSize.width,marker.getIcon().imageSize.height) );

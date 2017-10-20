@@ -182,6 +182,15 @@
 			.mui-bar-tab .mui-active .mui-icon-email{width: 100%;background: url(../newdetails/images/tab_fenxiangh_icon.png)no-repeat center;background-size: 21px 21px;}
 			.mui-bar-tab .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_me_icon.png)no-repeat center;background-size: 18px 23px;}
 			.mui-bar-tab .mui-active .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_meh_icon.png)no-repeat center;background-size: 18px 23px;}
+			#spot{
+				border-style: solid;
+            	border-width: 8px 5px 8px 5px;
+            	border-color: rgb(71, 69, 69)  transparent;
+            	  z-index: 999999;
+				  position: absolute;
+				  top: 82px;
+				  left: 71px;
+			}
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -274,6 +283,7 @@
 				<button id="videoBtn" type="button" class="mui-btn"></button>
 				</div>
 			</div>
+			<div id="spot"></div>
 			<!--<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
 			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>-->
 			<!--
@@ -398,6 +408,9 @@
 					//(plus.webview.getWebviewById("H58A84A3C")).back()
 //					alert('=='+plus.webview.currentWebview().parent().id);
 				};
+				
+				var spot = document.getElementById("spot");
+				
 				
 				
 				
@@ -544,8 +557,14 @@
 	        			info.style.bottom = '-50px';
 	        		})
 	        		
-	        		
-	        		map.clickMark(function(o){
+	        		spot.addEventListener('tap',function(){
+	        			spot.style.opacity = 0;
+	        		})
+	        		map.clickMark(function(o,e){
+	        			spot.style.opacity = 0;
+	        			spot.style.width = 10+'px';
+	        			spot.style.height = 10+'px';
+	        			TweenLite.to(spot.style,0.5,{width:50+'px',height:50+'px',opacity:1,top:e.clientY+'px',left:e.clientX+'px'});
 	        			console.log(o);
 	        			currentInfo = o;
 	        			infoContent.innerHTML = o.title+"<p class='mui-ellipsis-2'>"+o.summary+"</p>";
