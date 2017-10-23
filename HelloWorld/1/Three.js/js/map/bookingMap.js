@@ -680,9 +680,10 @@ Bookingmap.prototype.createMarkFromData = function(obj){
 					//e.stopPropagation();
 					 e.domEvent.stopPropagation();
 					var p = marker.getPosition();  //获取marker的位置
+					map.panTo(p);
 					//alert("marker的位置是" + p.lng + "," + p.lat);  
 					if(e.type=="ontouchstart"){
-						_this.clickMarkHandler(e.target.result,e.touches[0]);
+						_this.clickMarkHandler(e.target.result,e.touches[0]);//貌似百度不支持touchstart此事件
 					}else
 						_this.clickMarkHandler(e.target.result,e);
 				}
