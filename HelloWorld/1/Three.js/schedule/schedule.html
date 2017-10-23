@@ -17,7 +17,7 @@
 				  background-repeat: no-repeat;
 				  /*background-size: 100% 100%;*/
 			}
-			#legend{position: absolute; left:0px; top:0px;pointer-events:none;display: none;
+			#legend{position: absolute; left:0px; top:0px;pointer-events:none;  z-index: 99999;
 			}
 			.mui-icon img{  width: 24px; height: 24px;}
 			/*#r-result{position:absolute;top: 20px;width: 100%;text-align: center;background: url("../images/schedule/dizuo.png") no-repeat center center ;background-size:100% 100%;}*/
@@ -293,8 +293,7 @@
             	描述：叫车
             -->
 			<!--<div id="takeAtaxi"><img src="../images/schedule/car.png"/></div>-->
-			<!--<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
-		<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>-->
+			
 		<script src="../mobile/layer.js"></script>
 		<script>
 			var layerIndex = layer.open({
@@ -326,52 +325,10 @@
 				var info = document.getElementById("info");
 				var infoContent = document.getElementById("infoContent");
 				var imgInfo = document.getElementById("imgInfo");
-				//LInit(1000/60, "legend", 750,1334, main);
-				var layer,map;
+				//
+				var map;
 				var currentInfo;//当前点击的景点
-				function main () {
-					layer = new LSprite();
-					addChild(layer);
-					update();
-					initCanvas();
-					LGlobal.stage.addEventListener(LEvent.WINDOW_RESIZE,update);
-				}
 				
-				
-				
-				
-				function initCanvas(){
-					LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
-					layer.graphics.clear();
-					layer.graphics.drawRect(1, "#ff0000", [0, 0, 50, 50], true, "#880088");
-					layer.graphics.drawRect(1, "#ff0000", [700, 0, 50, 50], true, "#880088");
-					var com = new LComboBox();
-					com.x = 50;
-					com.y = 50;
-					com.setChild({label:"测试一",value:"data1"});
-					com.setChild({label:"测试二",value:"data2"});
-					com.setChild({label:"测试三",value:"data3"});
-					com.setChild({label:"测试四",value:"data4"});
-					com.setChild({label:"测试五",value:"data5"});
-					com.setChild({label:"测试六",value:"data6"});
-					com.setChild({label:"测试七",value:"data7"});
-					com.setChild({label:"测试八",value:"data8"});
-					com.setChild({label:"测试九",value:"data9"});
-					com.setChild({label:"测试十",value:"data10"});
-					com.setChild({label:"测试十一",value:"data11"});
-					com.setChild({label:"测试十二",value:"data12"});
-					com.setChild({label:"测试十三",value:"data13"});
-					addChild(com);
-					
-				}
-			
-			
-			function update(){
-				LGlobal.resize(window.innerWidth,window.innerHeight);
-				allmap.style.height = window.innerHeight+"px";
-//				layer.graphics.drawRect(1, "#ff0000", [0, LGlobal.height - 50, 50, 50], true, "#880088");
-//				layer.graphics.drawRect(1, "#ff0000", [LGlobal.width - 50, LGlobal.height - 50, 50, 50], true, "#880088");
-			}
 			initMap();
 			function initMap(){
 //				mui.init({
@@ -552,19 +509,35 @@
 	        			
 	        		});
 	        		
-	        		map.clickhandler(function(){
+	        		var currentE = null;
+	        		map.clickhandler(function(e){
 	        			info.style.display = "none";
 	        			info.style.bottom = '-50px';
+	        			if(e && e.clientY && e.clientY){
+	        				
+	        				currentE = e;
+	        			}
+	        			
+	        			
+	        			
 	        		})
 	        		
 	        		spot.addEventListener('tap',function(){
 	        			spot.style.opacity = 0;
 	        		})
 	        		map.clickMark(function(o,e){
-	        			spot.style.opacity = 0;
-	        			spot.style.width = 10+'px';
-	        			spot.style.height = 10+'px';
-	        			TweenLite.to(spot.style,0.5,{width:50+'px',height:50+'px',opacity:1,top:e.clientY+'px',left:e.clientX+'px'});
+	        			if(e && e.clientY && e.clientY){
+	        				spot.style.opacity = 0;
+	        				spot.style.width = 10+'px';
+	        				spot.style.height = 10+'px';
+	        				TweenLite.to(spot.style,0.5,{width:50+'px',height:50+'px',opacity:1,top:e.clientY+'px',left:e.clientX+'px'});
+	        			}else if(currentE){
+	        				spot.style.opacity = 0;
+	        				spot.style.width = 10+'px';
+	        				spot.style.height = 10+'px';
+	        				TweenLite.to(spot.style,0.5,{width:50+'px',height:50+'px',opacity:1,top:currentE.clientY+'px',left:currentE.clientX+'px'});
+	        			}
+	        			
 	        			console.log(o);
 	        			currentInfo = o;
 	        			infoContent.innerHTML = o.title+"<p class='mui-ellipsis-2'>"+o.summary+"</p>";
@@ -682,6 +655,55 @@
 //				});
 			}
 			</script>
+			<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
+			<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
+			<script>
+				var layerQS;
+				
+				LInit(1000/60, "legend", 750,1334, main);
+				function main () {
+					layerQS = new LSprite();
+					addChild(layerQS);
+					update();
+					initCanvas();
+					LGlobal.stage.addEventListener(LEvent.WINDOW_RESIZE,update);
+				}
+				
+				
+				
+				
+				function initCanvas(){
+					LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
+					layerQS.graphics.clear();
+					layerQS.graphics.drawRect(1, "#ff0000", [0, 0, 50, 50], true, "#880088");
+					layerQS.graphics.drawRect(1, "#ff0000", [700, 0, 50, 50], true, "#880088");
+					var com = new LComboBox();
+					com.x = 50;
+					com.y = 50;
+					com.setChild({label:"测试一",value:"data1"});
+					com.setChild({label:"测试二",value:"data2"});
+					com.setChild({label:"测试三",value:"data3"});
+					com.setChild({label:"测试四",value:"data4"});
+					com.setChild({label:"测试五",value:"data5"});
+					com.setChild({label:"测试六",value:"data6"});
+					com.setChild({label:"测试七",value:"data7"});
+					com.setChild({label:"测试八",value:"data8"});
+					com.setChild({label:"测试九",value:"data9"});
+					com.setChild({label:"测试十",value:"data10"});
+					com.setChild({label:"测试十一",value:"data11"});
+					com.setChild({label:"测试十二",value:"data12"});
+					com.setChild({label:"测试十三",value:"data13"});
+					addChild(com);
+					
+				}
 			
+			
+			function update(){
+				LGlobal.resize(window.innerWidth,window.innerHeight);
+				allmap.style.height = window.innerHeight+"px";
+//				layer.graphics.drawRect(1, "#ff0000", [0, LGlobal.height - 50, 50, 50], true, "#880088");
+//				layer.graphics.drawRect(1, "#ff0000", [LGlobal.width - 50, LGlobal.height - 50, 50, 50], true, "#880088");
+			}
+			</script>
 	</body>
 </html>

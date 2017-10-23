@@ -168,10 +168,10 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		var geoc = new BMap.Geocoder(); 
 		map.addEventListener("touchstart",function(e){
 			//alert("触摸");
-			console.log(e);
+			console.log(e.target.result);
 			var input = document.getElementById("suggestId");
 			input.blur();
-			_this.clickhandler();
+			_this.clickhandler(e.touches[0]);
 		});
 		//单击获取点击的经纬度
 		map.addEventListener("click",function(e){
@@ -681,7 +681,10 @@ Bookingmap.prototype.createMarkFromData = function(obj){
 					 e.domEvent.stopPropagation();
 					var p = marker.getPosition();  //获取marker的位置
 					//alert("marker的位置是" + p.lng + "," + p.lat);  
-					_this.clickMarkHandler(e.target.result,e);
+					if(e.type=="ontouchstart"){
+						_this.clickMarkHandler(e.target.result,e.touches[0]);
+					}else
+						_this.clickMarkHandler(e.target.result,e);
 				}
 				_this.markList.push(marker);
 				_this.sizeList.push(new BMap.Size(marker.getIcon().imageSize.width,marker.getIcon().imageSize.height) );
