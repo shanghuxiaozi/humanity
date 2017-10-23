@@ -5,6 +5,8 @@ var list = require('./list');
 var user = require('./user');
 //上传图片
 var upload = require('./upload');
+//活动
+var activity = require('./activity');
 
 var spitslot = require('./spitslot');
 var bodyParser = require('body-parser');
@@ -46,3 +48,4 @@ app.use('/list',list);
 app.use('/user',user);
 app.use('/spitslot',spitslot);
 app.use('/upload',upload);
+app.use('/activity',activity);

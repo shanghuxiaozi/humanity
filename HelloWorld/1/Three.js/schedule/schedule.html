@@ -150,7 +150,7 @@
 			  bottom: -50px;
 			  display: none;
 			  background-color: rgb(250, 249, 249);
-			  
+			  z-index:999999;
 			}
 			#vrBtn{
 				background-image: url(../images/schedule/vr.png) ;
@@ -188,8 +188,8 @@
             	border-color: rgb(71, 69, 69)  transparent;
             	  z-index: 999999;
 				  position: absolute;
-				  top: 82px;
-				  left: 71px;
+				  top: 68px;
+				  left: 10px;
 			}
 		</style>
 		<!--标准mui.css-->
@@ -524,7 +524,7 @@
 	        		})
 	        		
 	        		spot.addEventListener('tap',function(){
-	        			spot.style.opacity = 0;
+	        			//spot.style.opacity = 0;
 	        		})
 	        		map.clickMark(function(o,e){
 	        			if(e && e.clientY && e.clientY){
@@ -540,7 +540,16 @@
 //	        					TweenLite.to(sprite,0.5,{width:50,height:50,opacity:1,y:e.clientY/window.innerHeight*1334,x:e.clientX/window.innerWidth*750});
 								var timeIndex = setTimeout(function(){
 									clearTimeout(timeIndex);
-									TweenLite.to(sprite,0.3,{scaleX:1,scaleY:1,opacity:1});
+									var ty = sprite.y;
+									sprite.y -= 20;
+									TweenLite.to(sprite,0.2,{y:ty,scaleX:1,scaleY:1,opacity:1,onComplete:function(){
+										TweenLite.to(sprite,0.1,{y:ty+10,scaleX:0.7,scaleY:0.7,opacity:1,onComplete:function(){
+											TweenLite.to(sprite,0.1,{y:ty,scaleX:1,scaleY:1,opacity:1})
+										}})
+									}})
+									
+									
+									;
 								},300);
 								
 							}
@@ -557,7 +566,13 @@
 								lengend.style.pointerEvents = "auto";
 								var timeIndex = setTimeout(function(){
 									clearTimeout(timeIndex);
-									TweenLite.to(sprite,0.3,{scaleX:1,scaleY:1,opacity:1});
+									var ty = sprite.y;
+									sprite.y -= 20;
+									TweenLite.to(sprite,0.2,{y:ty,scaleX:1,scaleY:1,opacity:1,onComplete:function(){
+										TweenLite.to(sprite,0.1,{y:ty+10,scaleX:0.7,scaleY:0.7,opacity:1,onComplete:function(){
+											TweenLite.to(sprite,0.1,{y:ty,scaleX:1,scaleY:1,opacity:1})
+										}})
+									}})
 								},300);
 							}
 	        			}
@@ -668,7 +683,8 @@
 				  console.log("tap event trigger");
 				  if(currentInfo){
 				  	//window.open('http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=512&height=256&location='+currentInfo.longitude+','+currentInfo.latitude+'&fov=360');
-				  	mui.openWindow('../WebVR_Demo-master/panorama.html?location='+currentInfo.longitude+','+currentInfo.latitude);
+				  	
+				  	mui.openWindow(JS_PATH+'/WebVR_Demo-master/panorama.html?location='+currentInfo.longitude+','+currentInfo.latitude);
 				  }
 				});
 //				vrBtn.addEventListener("click",function () {
@@ -677,52 +693,117 @@
 //				  	
 //				  }
 //				});
+				queryActivityAll();
+				//查询限制20条的
+				function queryActivityAll(){
+					humanAjax(JS_PATH+'/activity/queryRecentActivity',{
+							data:{
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								if(data){
+									spot.innerHTML = "目前总共有"+data.length+'组活动';
+									var spotTime = setTimeout(function(){
+										clearTimeout(spotTime);
+										TweenLite.to(spot.style,0.5,{width:'10px'});
+									},1000);
+									
+								}else{
+									
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true);
+				}
+
 			}
 			</script>
 			<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
 			<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
 			<script>
 				var layerQS;
-				
+				var imgData = [
+					{name:"ok_button",path:"../images/schedule/hm_button.png"},
+					{name:"hd_button",path:"../images/schedule/hd_button.png"}
+				];
 				LInit(1000/60, "legend", 750,1334, main);
 				function main () {
+					LLoadManage.load(imgData,null,gameInit);
+					
+				}
+				function gameInit(result){
 					layerQS = new LSprite();
 					addChild(layerQS);
 					
 					sprite = new LSprite();
-					sprite.x = 750/2-50;
-					sprite.y = 1334/2-50;
+					sprite.x = 750/2-60;
+					sprite.y = 1334/2-90;
 					addChild(sprite);
 					
 					update();
-					initCanvas();
+					initCanvas(result);
 					LGlobal.stage.addEventListener(LEvent.WINDOW_RESIZE,update);
 					LGlobal.stage.addEventListener(LMouseEvent.MOUSE_DOWN,mouseHandler);
+					
 				}
-				
 				
 				function mouseHandler(e){
 					if(e.target != sprite){
+						info.style.display = "none";
+	        			info.style.bottom = '-50px';
 						lengend.style.pointerEvents = "none";
-						TweenLite.to(sprite,0.5,{scaleX:0,scaleY:0,opacity:0});
+						TweenLite.to(sprite,0.2,{scaleX:0,scaleY:0,opacity:0});
 					}
 					console.log('舞台',(e.target == sprite))
 				}
 				
 				
-				function initCanvas(){
+				function initCanvas(result){
 					LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
 					layerQS.graphics.clear();
 					layerQS.graphics.drawRect(0.5, "#ffffff", [0, 0, 750, 1334]);
-					sprite.graphics.clear();
-					sprite.graphics.drawRect(1, "#ff0000", [-50, -50, 100, 100], true, "#880088");
+//					sprite.graphics.clear();
+//					sprite.graphics.drawRect(1, "#ff0000", [-50, -50, 100, 100], true, "#880088");
+//					sprite.graphics.drawEllipse(20, "#E4D6AC", [-50, -50, 150, 200]);
 					sprite.scaleX = sprite.scaleY = 0;
 					sprite.addEventListener(LMouseEvent.MOUSE_DOWN,function(e){
 						console.log(e);
 						
 						lengend.style.pointerEvents = "none";
 						TweenLite.to(sprite,0.5,{scaleX:0,scaleY:0,opacity:0});
-					})
+					});
+					var shape = new LShape();
+					shape.graphics.drawEllipse(5, "#DF7979", [-50, -50, 150, 200]);
+					sprite.addChild(shape);
+					var bitmapDataUp = new LBitmapData(result["ok_button"],0,0,98,48);
+					var bitmapUp = new LBitmap(bitmapDataUp);
+					var bitmapDataOver = new LBitmapData(result["ok_button"],0,48,98,48);
+					var bitmapOver = new LBitmap(bitmapDataOver);
+					//bitmapUp.scaleX = 0.5;
+					//bitmapOver.scaleX = 0.5;
+					var button02 = new LButton(bitmapUp,bitmapOver);
+					button02.x = -23;
+					button02.y = -55;
+					sprite.addChild(button02);
+					button02.addEventListener(LMouseEvent.MOUSE_DOWN,function(e){
+						localStorage.setItem("currentInfo",JSON.stringify(currentInfo));
+				    	  window.location.href = "../newdetails/html/tourist.html";
+					});
+					
+					
+					var bitmapDataUp2 = new LBitmapData(result["hd_button"],0,0,98,48);
+					var bitmapUp2 = new LBitmap(bitmapDataUp2);
+					var bitmapDataOver2 = new LBitmapData(result["hd_button"],0,48,98,48);
+					var bitmapOver2 = new LBitmap(bitmapDataOver2);
+					var button03 = new LButton(bitmapUp2,bitmapOver2);
+					button03.x = -23;
+					button03.y = 110;
+					sprite.addChild(button03);
+					
 //					layerQS.graphics.clear();
 //					layerQS.graphics.drawRect(1, "#ff0000", [0, 0, 50, 50], true, "#880088");
 //					layerQS.graphics.drawRect(1, "#ff0000", [700, 0, 50, 50], true, "#880088");
