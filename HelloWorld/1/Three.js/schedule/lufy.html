@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#legend{position: absolute; left:0px; top:0px;
+				/*pointer-events:none;*/ 
+				 z-index: 99999;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="legend"></div>
+		<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
+			<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
+			<script src="../js/tween/TweenLite.js"></script>
+			<script>
+				var lengend = document.getElementById("legend");//canvas容器
+				var allmap;
+				var sprite;
+				var info;
+				var _callBack;
+				var _lufy;
+				var _buttonHandler;
+				function initData(_allmap,lufy,_info,callBack,buttonHandler){
+					info = _info;
+					allmap = _allmap;
+					_callBack = callBack;
+					_lufy = lufy;
+					_buttonHandler = buttonHandler;
+					LInit(1000/60, "legend", 750,1334, main);
+					
+				}
+				
+				function getSprite(){
+					return sprite;
+				}
+				
+				var layerQS;
+				var imgData = [
+					{name:"ok_button",path:"../images/schedule/hm_button.png"},
+					{name:"hd_button",path:"../images/schedule/hd_button.png"}
+				];
+				
+				function main () {
+					LLoadManage.load(imgData,null,gameInit);
+					
+				}
+				function gameInit(result){
+					layerQS = new LSprite();
+					addChild(layerQS);
+					
+					sprite = new LSprite();
+					sprite.x = 750/2-60;
+					sprite.y = 1334/2-90;
+					addChild(sprite);
+					
+					update();
+					initCanvas(result);
+					LGlobal.stage.addEventListener(LEvent.WINDOW_RESIZE,update);
+					LGlobal.stage.addEventListener(LMouseEvent.MOUSE_DOWN,mouseHandler);
+					if(_callBack){
+						_callBack(sprite,lengend);
+					}
+				}
+				
+				function mouseHandler(e){
+					if(e.target != sprite){
+						info.style.display = "none";
+	        			info.style.bottom = '-50px';
+//						lengend.style.pointerEvents = "none";
+//						_lufy.style.pointerEvents = "none";
+_lufy.style.zIndex = -1;
+						TweenLite.to(sprite,0.2,{scaleX:0,scaleY:0,opacity:0});
+						
+					}
+					console.log('舞台',(e.target == sprite))
+				}
+				
+				
+				function initCanvas(result){
+					LMouseEventContainer.set(LMouseEvent.MOUSE_DOWN,true);
+					layerQS.graphics.clear();
+					layerQS.graphics.drawRect(0.5, "#ffffff", [0, 0, 750, 1334]);
+//					sprite.graphics.clear();
+//					sprite.graphics.drawRect(1, "#ff0000", [-50, -50, 100, 100], true, "#880088");
+//					sprite.graphics.drawEllipse(20, "#E4D6AC", [-50, -50, 150, 200]);
+					sprite.scaleX = sprite.scaleY = 0;
+					sprite.addEventListener(LMouseEvent.MOUSE_DOWN,function(e){
+						console.log(e);
+						
+//						lengend.style.pointerEvents = "none";
+//						_lufy.style.pointerEvents = "none";
+_lufy.style.zIndex = -1;
+						TweenLite.to(sprite,0.5,{scaleX:0,scaleY:0,opacity:0});
+					});
+					var shape = new LShape();
+					shape.graphics.drawEllipse(5, "#DF7979", [-50, -50, 150+20, 200+20]);
+					sprite.addChild(shape);
+					var bitmapDataUp = new LBitmapData(result["ok_button"],0,0,98,48);
+					var bitmapUp = new LBitmap(bitmapDataUp);
+					var bitmapDataOver = new LBitmapData(result["ok_button"],0,48,98,48);
+					var bitmapOver = new LBitmap(bitmapDataOver);
+					//bitmapUp.scaleX = 0.5;
+					//bitmapOver.scaleX = 0.5;
+					var button02 = new LButton(bitmapUp,bitmapOver);
+					button02.x = -13;
+					button02.y = -55;
+					sprite.addChild(button02);
+					button02.addEventListener(LMouseEvent.MOUSE_DOWN,function(e){
+						if(_buttonHandler)_buttonHandler();
+					});
+					
+					
+					var bitmapDataUp2 = new LBitmapData(result["hd_button"],0,0,98,48);
+					var bitmapUp2 = new LBitmap(bitmapDataUp2);
+					var bitmapDataOver2 = new LBitmapData(result["hd_button"],0,48,98,48);
+					var bitmapOver2 = new LBitmap(bitmapDataOver2);
+					var button03 = new LButton(bitmapUp2,bitmapOver2);
+					button03.x = -13;
+					button03.y = 130;
+					sprite.addChild(button03);
+					
+//					layerQS.graphics.clear();
+//					layerQS.graphics.drawRect(1, "#ff0000", [0, 0, 50, 50], true, "#880088");
+//					layerQS.graphics.drawRect(1, "#ff0000", [700, 0, 50, 50], true, "#880088");
+//					var com = new LComboBox();
+//					com.x = 50;
+//					com.y = 50;
+//					com.setChild({label:"测试一",value:"data1"});
+//					com.setChild({label:"测试二",value:"data2"});
+//					com.setChild({label:"测试三",value:"data3"});
+//					com.setChild({label:"测试四",value:"data4"});
+//					com.setChild({label:"测试五",value:"data5"});
+//					com.setChild({label:"测试六",value:"data6"});
+//					com.setChild({label:"测试七",value:"data7"});
+//					com.setChild({label:"测试八",value:"data8"});
+//					com.setChild({label:"测试九",value:"data9"});
+//					com.setChild({label:"测试十",value:"data10"});
+//					com.setChild({label:"测试十一",value:"data11"});
+//					com.setChild({label:"测试十二",value:"data12"});
+//					com.setChild({label:"测试十三",value:"data13"});
+//					addChild(com);
+					
+				}
+			
+			
+			function update(){
+				LGlobal.resize(window.innerWidth,window.innerHeight);
+				allmap.style.height = window.innerHeight+"px";
+//				layer.graphics.drawRect(1, "#ff0000", [0, LGlobal.height - 50, 50, 50], true, "#880088");
+//				layer.graphics.drawRect(1, "#ff0000", [LGlobal.width - 50, LGlobal.height - 50, 50, 50], true, "#880088");
+			}
+			</script>
+	</body>
+</html>

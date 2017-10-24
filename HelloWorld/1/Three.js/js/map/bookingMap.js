@@ -30,7 +30,8 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		var longitude =  localStorage.getItem('longitude');
 		var latitude =  localStorage.getItem('latitude');
 		console.log(longitude,latitude);
-		var point = new BMap.Point(longitude||114.06444, latitude||22.548488);
+		//暂时定位到河南登封少林寺
+		var point = new BMap.Point(112.948713,34.512389);//new BMap.Point(longitude||114.06444, latitude||22.548488);
 		map.centerAndZoom(point,15);
 //map.centerAndZoom("北京",15); 
 		//map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
@@ -110,6 +111,10 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 _this.myIconRuins = new BMap.Icon("../icon/mark/ruins.png", new BMap.Size(59,53),{imageSize:new BMap.Size(29.5, 26.5)});
 		 //小镇
 		 _this.myTown = new BMap.Icon("../icon/mark/town.png", new BMap.Size(68,60),{imageSize:new BMap.Size(34, 30)});
+		 
+		 //特效
+		 _this.t4Icon = new BMap.Icon("../icon/mark/t4.gif", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
+		 icons.push(_this.t4Icon);
 		 
 		 map.addEventListener("zoomend",function(e){
 		 	console.log(map.getZoom());
@@ -654,6 +659,8 @@ Bookingmap.prototype.createMarkFromData = function(obj){
 		myIcon = _this.myIcon2;
 	}else if(obj.type_id == 9){//宗教景观
 		myIcon = _this.myTown;
+	}else if(obj.type_id == 8888){//宗教景观
+		myIcon = _this.t4Icon;
 	}else{
 		myIcon = _this.myIcon;
 	}

@@ -18,6 +18,12 @@
 				  /*background-size: 100% 100%;*/
 			}
 			#legend{position: absolute; left:0px; top:0px;pointer-events:none;  z-index: 99999;
+				
+			}
+			#lufy{position: absolute; left:0px; top:0px;
+			/*pointer-events:none;*/  
+			z-index: -1;
+				width:100%;height:100%;border: none;
 			}
 			.mui-icon img{  width: 24px; height: 24px;}
 			/*#r-result{position:absolute;top: 20px;width: 100%;text-align: center;background: url("../images/schedule/dizuo.png") no-repeat center center ;background-size:100% 100%;}*/
@@ -246,8 +252,8 @@
 		<div id="allmap" ></div>
 		<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;z-index:99999999;position: absolute;left: 10px;top: 20px;"></div>
 		</div>
-		<div id="legend">
-			</div>
+			<!--<div id="legend"></div>-->
+		<iframe scrolling="no" src="../schedule/lufy.html" id="lufy"></iframe>
 			<div id="r-result">
 				<!--<div class="mui-input-row mui-search">-->
 					<!--../static/destination.html-->
@@ -329,6 +335,33 @@
 				//
 				var map;
 				var currentInfo;//当前点击的景点
+				var lufyTime = setTimeout(function(){
+					getLufy();
+					
+				},1000);
+				var lufy = document.getElementById('lufy');
+				
+				lufy.addEventListener('tap',function(){
+					alert(88)
+				})
+				
+				function getLufy(){
+					clearTimeout(lufyTime);
+					
+					if((lufy.contentWindow).initData){
+						(lufy.contentWindow).initData(allmap,lufy,info,function(s,l){
+							sprite = s;
+							lengend = l;
+						},function(){
+							localStorage.setItem("currentInfo",JSON.stringify(currentInfo));
+				    		window.location.href = "../newdetails/html/tourist.html";
+						});
+					}else{
+						lufyTime = setTimeout(function(){
+							getLufy();
+						},1000);
+					}
+				}
 				
 			initMap();
 			function initMap(){
@@ -369,7 +402,11 @@
 				
 				var spot = document.getElementById("spot");
 				
-				
+				var suggestId = document.getElementById("suggestId");
+				suggestId.addEventListener('tap',function(){
+					console.log("被点");
+					suggestId.focus();
+				})
 				
 				
 				
@@ -411,17 +448,22 @@
 //						console.log(obj);
 //					});
 	        		var cityId;
+	        		var currentCity = localStorage.getItem("currentCity");
 	        		//获取下拉框点击后的地名
 	        		map.addEventListenDownList(function(value,obj){
 	        			console.log(value,obj);
-	        			
+	        			currentCity = obj;
+//	        			if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
+//							currentCity = currentCity.replace('市','');
+//						}
+	        			currentCityContent.innerHTML = (currentCity||'深圳')+'<span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
 	        			queryCityId(obj);
 	        			
 	        		});
 	        		//setTimeout(function(){queryCityId('深圳市');},300);
 	        		var currentCityContent = document.getElementById("currentCityContent");
 				
-					var currentCity = localStorage.getItem("currentCity");
+					
 					if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
 						currentCity = currentCity.replace('市','');
 					}
@@ -536,7 +578,9 @@
 								sprite.opacity = 0;
 //								sprite.scaleX = 0.2;
 //								sprite.scaleY = 0.2;
-								lengend.style.pointerEvents = "auto";
+//								lengend.style.pointerEvents = "auto";
+//								lufy.style.pointerEvents = "auto";
+							lufy.style.zIndex = 99999;
 //	        					TweenLite.to(sprite,0.5,{width:50,height:50,opacity:1,y:e.clientY/window.innerHeight*1334,x:e.clientX/window.innerWidth*750});
 								var timeIndex = setTimeout(function(){
 									clearTimeout(timeIndex);
@@ -563,7 +607,9 @@
 //								sprite.scaleX = 0.2;
 //								sprite.scaleY = 0.2;
 //	        					TweenLite.to(sprite,0.5,{width:50,height:50,opacity:1,y:currentE.clientY/window.innerHeight*1334,x:currentE.clientX/window.innerWidth*750});
-								lengend.style.pointerEvents = "auto";
+//								lengend.style.pointerEvents = "auto";
+//								lufy.style.pointerEvents = "auto";
+								lufy.style.zIndex = 99999;
 								var timeIndex = setTimeout(function(){
 									clearTimeout(timeIndex);
 									var ty = sprite.y;
@@ -666,6 +712,7 @@
 									map.map.clearOverlays();
 									for(var i=0,m=data.length;i<m;i++){
 										var item = data[i];
+										if(i==0)item.type_id = 8888;
 											map.createMarkFromData(item);
 									}
 								}
@@ -722,7 +769,7 @@
 
 			}
 			</script>
-			<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
+			<!--<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
 			<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>
 			<script>
 				var layerQS;
@@ -757,6 +804,7 @@
 	        			info.style.bottom = '-50px';
 						lengend.style.pointerEvents = "none";
 						TweenLite.to(sprite,0.2,{scaleX:0,scaleY:0,opacity:0});
+						
 					}
 					console.log('舞台',(e.target == sprite))
 				}
@@ -777,7 +825,7 @@
 						TweenLite.to(sprite,0.5,{scaleX:0,scaleY:0,opacity:0});
 					});
 					var shape = new LShape();
-					shape.graphics.drawEllipse(5, "#DF7979", [-50, -50, 150, 200]);
+					shape.graphics.drawEllipse(5, "#DF7979", [-50, -50, 150+20, 200+20]);
 					sprite.addChild(shape);
 					var bitmapDataUp = new LBitmapData(result["ok_button"],0,0,98,48);
 					var bitmapUp = new LBitmap(bitmapDataUp);
@@ -786,12 +834,12 @@
 					//bitmapUp.scaleX = 0.5;
 					//bitmapOver.scaleX = 0.5;
 					var button02 = new LButton(bitmapUp,bitmapOver);
-					button02.x = -23;
+					button02.x = -13;
 					button02.y = -55;
 					sprite.addChild(button02);
 					button02.addEventListener(LMouseEvent.MOUSE_DOWN,function(e){
 						localStorage.setItem("currentInfo",JSON.stringify(currentInfo));
-				    	  window.location.href = "../newdetails/html/tourist.html";
+				    	window.location.href = "../newdetails/html/tourist.html";
 					});
 					
 					
@@ -800,8 +848,8 @@
 					var bitmapDataOver2 = new LBitmapData(result["hd_button"],0,48,98,48);
 					var bitmapOver2 = new LBitmap(bitmapDataOver2);
 					var button03 = new LButton(bitmapUp2,bitmapOver2);
-					button03.x = -23;
-					button03.y = 110;
+					button03.x = -13;
+					button03.y = 130;
 					sprite.addChild(button03);
 					
 //					layerQS.graphics.clear();
@@ -834,6 +882,6 @@
 //				layer.graphics.drawRect(1, "#ff0000", [0, LGlobal.height - 50, 50, 50], true, "#880088");
 //				layer.graphics.drawRect(1, "#ff0000", [LGlobal.width - 50, LGlobal.height - 50, 50, 50], true, "#880088");
 			}
-			</script>
+			</script>-->
 	</body>
 </html>
