@@ -116,6 +116,11 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 _this.t4Icon = new BMap.Icon("../icon/mark/t4.gif", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
 		 icons.push(_this.t4Icon);
 		 
+		 //红旗
+		 _this.flagRed = new BMap.Icon("../icon/flag/flag-red.ico", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
+		 icons.push(_this.flagRed);
+		 
+		 
 		 map.addEventListener("zoomend",function(e){
 		 	console.log(map.getZoom());
 		 	if(map.getZoom()>=16){
@@ -665,8 +670,10 @@ Bookingmap.prototype.createMarkFromData = function(obj){
 		myIcon = _this.myIcon2;
 	}else if(obj.type_id == 9){//宗教景观
 		myIcon = _this.myTown;
-	}else if(obj.type_id == 8888){//宗教景观
+	}else if(obj.type_id == 8888){//活动
 		myIcon = _this.t4Icon;
+	}else if(obj.type_id == 8889){//红旗
+		myIcon = _this.flagRed;
 	}else{
 		myIcon = _this.myIcon;
 	}

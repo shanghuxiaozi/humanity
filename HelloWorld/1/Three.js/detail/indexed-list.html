@@ -193,7 +193,7 @@
 						</li>
 					</ul>
 				</div>
-					<div class="mui-indexed-list-empty-alert">没有数据</div>
+					<div class="mui-indexed-list-empty-alert" id="empty-alert">没有数据</div>
 					<ul class="mui-table-view" id="cityList">
 						<!--<li data-group="" class="mui-table-view-divider mui-indexed-list-group">服务城市<br></li>-->
 						<!--<li data-group="A" class="mui-table-view-divider mui-indexed-list-group">服务城市<br>A</li>
@@ -442,15 +442,20 @@
 				
 				var currentCityDiv = document.getElementById('currentCityDiv');
 				var accessCityDiv = document.getElementById('accessCityDiv');
+				var empty_alert = document.getElementById('empty-alert');
 				
 				var cityList = document.getElementById('cityList');//获取城市列表容器
 				var cityListLi = cityList.querySelectorAll('.mui-indexed-list-item');
 				var cityALi = cityList.querySelectorAll('.mui-indexed-list-group');
 				var searchInput = document.getElementById('searchInput');//获取搜索框
 				searchInput.addEventListener('input',function(){
+					checkWord();
 					
+				})
+				
+				function checkWord(){
 					var v = searchInput.value.toLowerCase();
-						console.log(v);
+					//	console.log(v);
 					if(v==""){
 						currentCityDiv.style.display = '';
 						accessCityDiv.style.display = '';
@@ -459,20 +464,31 @@
 						accessCityDiv.style.display = 'none';
 						
 					}
+					var isData = false;
 					for( var i = 0, m = cityListLi.length ; i < m ;i++ ){
 						var item = cityListLi[i];
 						var value = item.getAttribute('data-value').toLowerCase();
 						var text = item.innerText.toLowerCase();
 						var tag = item.getAttribute('data-tags').toLowerCase();
-						console.log(value,text,tag);
+						//console.log(value,text,tag);
 						if( value.indexOf(v)!=-1||text.indexOf(v)!=-1||tag.indexOf(v)!=-1  ){
 							item.style.display = '';
+							isData = true;
 						}else{
 							item.style.display = 'none';
 						}
 					}
-				})
+					console.log('isData='+isData);
+					if(isData)
+						empty_alert.style.display = 'none';
+					else
+						empty_alert.style.display = '';
+				}
 				
+				
+				searchInput.onfocusout = function(){
+					checkWord();
+				}
 			});
 		</script>
 	</body>

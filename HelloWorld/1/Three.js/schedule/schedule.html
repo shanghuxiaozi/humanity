@@ -191,12 +191,18 @@
 			#spot{
 				border-style: solid;
             	border-width: 4px 5px 4px 5px;
-            	border-color: rgb(137, 195, 133) transparent;;
+            	border-color: rgba(195, 194, 133, 0.16);
             	  z-index: 999999;
 				  position: absolute;
 				  top: 68px;
 				  left: 10px;
 				    color: rgb(21, 111, 77);
+				background: url(../icon/mark/t3.gif) no-repeat center;
+				background-size: 122px 84px;
+				  padding: 17px;
+			}
+			#spot img{
+				width: 20px;
 			}
 			#currentCityContent input{
 				  width: 40px;
@@ -760,9 +766,13 @@
 									
 									
 									spot.innerHTML = "共有"+data.length+'组活动';
+									for(var i = 0 , m = data.length ;i<m; i++ ){
+												spot.innerHTML+='<img src="../icon/flag/label.ico">'
+											}
 									var spotTime = setTimeout(function(){
 										clearTimeout(spotTime);
-										spot.style.width = '100px';
+										spot.style.width = '122px';
+//										spot.style.height="80px";
 										spot.style.borderWidth = "8px 5px 8px 5px;";
 										TweenLite.to(spot.style,1.5,{width:'10px',onComplete:function(){
 											TweenLite.to(spot.style,1,{width:'50px',onComplete:function(){
@@ -777,14 +787,18 @@
 									//给活动赋值
 									spot.addEventListener('tap',function(e){
 										if(spot.innerHTML==""){
-											spot.style.width="120px";
+											spot.style.width="122px";
+											spot.style.height="84px";
 											spot.innerHTML = "共有"+data.length+'组活动';
+											for(var i = 0 , m = data.length ;i<m; i++ ){
+												spot.innerHTML+='<img src="../icon/flag/label.ico">'
+											}
 											spot.style.borderWidth = "4px 5px 4px 5px;";
 										}else{
 											spot.innerHTML = "";
 											spot.style.borderWidth = "8px 5px 8px 5px;";
 											spot.style.width="10px";
-											
+											spot.style.height="10px";
 										}
 										
 									})
