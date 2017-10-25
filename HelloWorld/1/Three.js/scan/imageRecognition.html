@@ -153,7 +153,7 @@ function getBase64Image(img) {
             return dataURL // return dataURL.replace("data:image/png;base64,", ""); 
         } 
 
-//test();
+test();
 function test(){
 	var img = document.createElement('img'); 
             img.src = '../images/nebula-yneg.png'; 
@@ -173,7 +173,7 @@ function test(){
 			    },
 			    beforeSend: function(xhr){
 	//		       token = window.localStorage.getItem('token');
-			            xhr.setRequestHeader("Authorization", "APPCODE d3d17cb32ed343d4a8d540dc2eec0087");
+			            xhr.setRequestHeader("Authorization", "APPCODE d3d17cb32ed343d4a8d540dc2eec0087");//d3d17cb32ed343d4a8d540dc2eec0087
 			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			    }});
             } 

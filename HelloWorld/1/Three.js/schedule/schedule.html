@@ -190,12 +190,17 @@
 			.mui-bar-tab .mui-active .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_meh_icon.png)no-repeat center;background-size: 18px 23px;}
 			#spot{
 				border-style: solid;
-            	border-width: 8px 5px 8px 5px;
-            	border-color: rgb(71, 69, 69)  transparent;
+            	border-width: 4px 5px 4px 5px;
+            	border-color: rgb(137, 195, 133) transparent;;
             	  z-index: 999999;
 				  position: absolute;
 				  top: 68px;
 				  left: 10px;
+				    color: rgb(21, 111, 77);
+			}
+			#currentCityContent input{
+				  width: 40px;
+  				  border: none;
 			}
 		</style>
 		<!--标准mui.css-->
@@ -257,7 +262,8 @@
 			<div id="r-result">
 				<!--<div class="mui-input-row mui-search">-->
 					<!--../static/destination.html-->
-					<a href="../detail/indexed-list.html" id="currentCityContent">深圳
+					<a href="../detail/indexed-list.html"  id="currentCityContent">
+						<input value="深圳" />
 						<span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>
 						<!--<div id="selectArea"></div>-->
 					</a>
@@ -453,10 +459,10 @@
 	        		map.addEventListenDownList(function(value,obj){
 	        			console.log(value,obj);
 	        			currentCity = obj;
-//	        			if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
-//							currentCity = currentCity.replace('市','');
-//						}
-	        			currentCityContent.innerHTML = (currentCity||'深圳')+'<span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
+	        			if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
+							currentCity = currentCity.replace('市','');
+						}
+	        			currentCityContent.innerHTML = '<input readonly value="'+(currentCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
 	        			queryCityId(obj);
 	        			
 	        		});
@@ -468,8 +474,8 @@
 						currentCity = currentCity.replace('市','');
 					}
 				
-				currentCityContent.innerHTML = (currentCity||'深圳')+'<span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
-	        		queryCityId(currentCityContent.innerText);
+				currentCityContent.innerHTML = '<input readonly value="'+(currentCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
+	        		queryCityId((currentCity||'深圳'));
 	        		function queryCityId(obj){
 	        			var cityIndex  = obj.indexOf('市');
 	        			if(layerIndex==-1)
@@ -751,11 +757,37 @@
 							type:'get',//HTTP请求类型
 							success:function(data){
 								if(data){
-									spot.innerHTML = "目前总共有"+data.length+'组活动';
+									
+									
+									spot.innerHTML = "共有"+data.length+'组活动';
 									var spotTime = setTimeout(function(){
 										clearTimeout(spotTime);
-										TweenLite.to(spot.style,0.5,{width:'10px'});
+										spot.style.width = '100px';
+										spot.style.borderWidth = "8px 5px 8px 5px;";
+										TweenLite.to(spot.style,1.5,{width:'10px',onComplete:function(){
+											TweenLite.to(spot.style,1,{width:'50px',onComplete:function(){
+												//spot.style.display = "none";
+												spot.style.width="10px";
+												spot.style.borderWidth = "8px 5px 8px 5px;";
+												spot.innerHTML = "";
+											}});
+										}});
 									},1000);
+									
+									//给活动赋值
+									spot.addEventListener('tap',function(e){
+										if(spot.innerHTML==""){
+											spot.style.width="120px";
+											spot.innerHTML = "共有"+data.length+'组活动';
+											spot.style.borderWidth = "4px 5px 4px 5px;";
+										}else{
+											spot.innerHTML = "";
+											spot.style.borderWidth = "8px 5px 8px 5px;";
+											spot.style.width="10px";
+											
+										}
+										
+									})
 									
 								}else{
 									

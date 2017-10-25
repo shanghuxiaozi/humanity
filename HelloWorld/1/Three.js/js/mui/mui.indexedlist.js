@@ -120,7 +120,7 @@
 			var liArray = self.el.liArray;
 			var itemTotal = liArray.length;
 			self.hiddenGroups = [];
-			var checkGroup = function(currentIndex, last) {
+			var checkGroup = function(currentIndex, last) {console.log(currentIndex,last);
 				if (itemCount >= currentIndex - groupIndex - (last ? 0 : 1)) {
 					selectorBuffer.push(classSelector('indexed-list-inner li') + ':nth-child(' + (groupIndex + 1) + ')');
 					self.hiddenGroups.push(liArray[groupIndex]);
@@ -135,7 +135,7 @@
 				} else {
 					var text = (item.innerText || '').toLowerCase();
 					var value = (item.getAttribute('data-value') || '').toLowerCase();
-					var tags = (item.getAttribute('data-tags') || '').toLowerCase();
+					var tags = (item.getAttribute('data-tags') || '').toLowerCase();console.log(text,value,tags);
 					if (keyword && text.indexOf(keyword) < 0 &&
 						value.indexOf(keyword) < 0 &&
 						tags.indexOf(keyword) < 0) {

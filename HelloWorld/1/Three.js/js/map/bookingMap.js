@@ -145,9 +145,15 @@ Bookingmap.prototype.initBaiduMap=function(id){
 				//icon.size.height *= map.getZoom()/15;
 				//icon.imageUrl
 				var size = _this.sizeList[i];
-				if(i==0)console.log(icon.imageSize);
+				if(i==0){
+					console.log(icon.imageSize);
+				}
 				var zoom = map.getZoom()/15;
-				zoom = (zoom==1?zoom:zoom<1?zoom/2:zoom*1.2)
+				//zoom = (zoom==1?zoom:zoom<1?zoom/2:zoom*1.2)
+				if(zoom >=1.2)zoom = 1.2
+				else if(zoom < 1.2 && zoom >= 1)zoom = 1
+				else if(zoom < 1 && zoom > 0.5)zoom = 0.6
+				else if(zoom <=0.5)zoom = 0.5
 				icon.setImageSize(new BMap.Size(size.width*zoom, size.height*zoom));
 				
 				mark.setIcon(icon);
