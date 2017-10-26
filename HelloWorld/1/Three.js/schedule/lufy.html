@@ -121,7 +121,9 @@ _lufy.style.zIndex = -1;
 					button03.x = -13;
 					button03.y = 130;
 					sprite.addChild(button03);
-					
+					button03.addEventListener(LMouseEvent.MOUSE_DOWN,function(e){
+						alert('暂时无活动')
+					});
 //					layerQS.graphics.clear();
 //					layerQS.graphics.drawRect(1, "#ff0000", [0, 0, 50, 50], true, "#880088");
 //					layerQS.graphics.drawRect(1, "#ff0000", [700, 0, 50, 50], true, "#880088");

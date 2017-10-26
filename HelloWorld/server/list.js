@@ -20,6 +20,14 @@ router.get('/', function (req, res, next) {//
     // list参数，第一个是whereSql查询条件，json格式；第二个是表名，第三个是回调函数，第四个是express返回客户端的response类
 });
 
+/*通过景点id获取旅游景点详情*/
+router.get('/queryScenicById', function (req, res, next) {//
+    	console.log('------通过景点id获取旅游景点详情-----');
+	dbHelper.list('select * from scenices where id='+req.query.id, callback, res);
+    // list参数，第一个是whereSql查询条件，json格式；第二个是表名，第三个是回调函数，第四个是express返回客户端的response类
+});
+
+
 router.get('/scenicSpotbyCity', function (req, res, next) {//scenicSpotbyCity
     	console.log('------通过城市获取当前的旅游景点-----');
 	//dbHelper.list({id:1}, ['id desc'],'scenices', callback, res); select * from scenices where latitude>=23.3 and latitude<=23.38 and city_id = 282////select * from  cities where name='深圳' 
@@ -42,7 +50,7 @@ router.get('/scenicSpotbyPOS', function (req, res, next) {
 	if(zoom < 15 && zoom >= 12){
 		limitNum = 30;
 	}else if(zoom < 12 && zoom > 10){
-		limitNum = 50;
+		limitNum = 10;
 	}
 	
 	//topLat,bottomLat,leftLng,rightLng

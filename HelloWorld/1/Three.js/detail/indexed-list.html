@@ -424,6 +424,9 @@
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
 			mui.ready(function() {
+				
+				
+				
 				var header = document.querySelector('header.mui-bar');
 				var list = document.getElementById('list');
 				//calc hieght
@@ -440,7 +443,7 @@
 				
 				document.getElementById('currentCity').addEventListener('tap',function(){
 					localStorage.setItem('city_nme',this.innerText);
-					localStorage.setItem("currentCity",this.innerText);
+					localStorage.setItem("chooseCity",this.innerText);
 							mui.back();
 				})
 				
@@ -464,7 +467,7 @@
 				mui(accessCityList).each(function(index,item){
 					item.addEventListener('tap',function(e){
 							localStorage.setItem('city_nme',this.innerText);
-							localStorage.setItem("currentCity",this.innerText);
+							localStorage.setItem("chooseCity",this.innerText);
 							mui.back();
 						});
 				})
@@ -475,7 +478,7 @@
 							localStorage.setItem('city_lng',this.getAttribute('lng'));
 							localStorage.setItem('city_lat',this.getAttribute('lat'));
 							localStorage.setItem('city_nme','lat');
-							localStorage.setItem("currentCity",this.getAttribute('data-name'));
+							localStorage.setItem("chooseCity",this.getAttribute('data-name'));
 							mui.back();
 						});
 				}
@@ -517,6 +520,8 @@
 				searchInput.onfocusout = function(){
 					checkWord();
 				}
+				
+				
 			});
 		</script>
 	</body>

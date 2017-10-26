@@ -189,9 +189,9 @@
 			.mui-bar-tab .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_me_icon.png)no-repeat center;background-size: 18px 23px;}
 			.mui-bar-tab .mui-active .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_meh_icon.png)no-repeat center;background-size: 18px 23px;}
 			#spot{
-				border-style: solid;
+				/*border-style: solid;
             	border-width: 4px 5px 4px 5px;
-            	border-color: rgba(195, 194, 133, 0.16);
+            	border-color: rgba(195, 194, 133, 0.16);*/
             	  z-index: 999999;
 				  position: absolute;
 				  top: 68px;
@@ -203,6 +203,7 @@
 			}
 			#spot img{
 				width: 20px;
+				margin-top: 10px;
 			}
 			#currentCityContent input{
 				  width: 40px;
@@ -413,28 +414,26 @@
 				};
 				var currentCity = localStorage.getItem("currentCity");
 				function queryCityPosNow(){
-			        				currentCity = localStorage.getItem("currentCity");
-				        			if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
-										currentCity = currentCity.replace('市','');
+			        				var chooseCity = localStorage.getItem("chooseCity");
+				        			if(chooseCity && chooseCity.length>2 && chooseCity.indexOf('市')!=-1){
+										chooseCity = chooseCity.replace('市','');
 									}
-				        			currentCityContent.innerHTML = '<input readonly value="'+(currentCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
-				        			queryCityId((currentCity||'深圳'));
+				        			currentCityContent.innerHTML = '<input readonly value="'+(chooseCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
+				        			queryCityId((chooseCity||'深圳'));
 			        			}
-				var isPageHide = false;  
+				var isPageShow= false;  
 			    window.addEventListener('pageshow', function () {  
-			        if (isPageHide) {  
-			        	isPageHide = false;
-			        }
-			        
+			        isPageShow= false; 
 			        if(	localStorage.getItem('city_nme')!='over'){
 			        		if(localStorage.getItem('city_nme')!='lat'){
 			        			map.centerAndZoom(localStorage.getItem('city_nme'));
-			        			
-			        			queryCityPosNow()
+			        			isPageShow = true;
+			        			queryCityPosNow();
 			        			
 			        		}else{
+			        			isPageShow = true;
 			        			map.centerAndZoom(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
-			        			queryCityPosNow()
+			        			queryCityPosNow();
 			        		}
 			        		
 			        		localStorage.setItem('city_nme','over');
@@ -444,7 +443,7 @@
 			        
 			    });  
 			    window.addEventListener('pagehide', function () {  
-			        isPageHide = true;  
+			        isPageShow = false;  
 			    });  
 				
 				
@@ -484,7 +483,26 @@
 				    	  window.location.href = "../newdetails/html/tourist.html";
 				    	  //mui.openWindow("../newdetails/html/tourist.html");
 				    }else
-				    	mui.openWindow(this.href);
+				    	var webview = mui.openWindow(this.href);
+				    	webview.addEventListener('loaded', function(e){
+							//alert('Webview Hided');
+						}, false);
+						webview.addEventListener('close', function(e){
+//							alert('Webview closed!');
+							if(	localStorage.getItem('city_nme')!='over'){
+			        		if(localStorage.getItem('city_nme')!='lat'){
+					        			map.centerAndZoom(localStorage.getItem('city_nme'));
+					        			queryCityPosNow();
+					        			
+					        		}else{
+					        			map.centerAndZoom(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
+					        			queryCityPosNow();
+					        		}
+					        		
+					        		localStorage.setItem('city_nme','over');
+					        }
+							webview=null;
+						}, false );
 //				    if(this.name == "scan"){
 //				    	//alert('打开摄像头');
 //				    	captureImage();
@@ -515,10 +533,14 @@
 				
 					
 					
+				if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
+										currentCity = currentCity.replace('市','');
+									}
+				if(!isPageShow){
+					currentCityContent.innerHTML = '<input readonly value="'+(currentCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
+	        		queryCityId((currentCity||'深圳'));
+				}
 				
-//				currentCityContent.innerHTML = '<input readonly value="'+(currentCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
-//	        		queryCityId((currentCity||'深圳'));
-					queryCityPosNow();
 	        		function queryCityId(obj){
 	        			var cityIndex  = obj.indexOf('市');
 	        			if(layerIndex==-1)
@@ -705,6 +727,7 @@
 					    var leftLng = bssw.lng;
 					    var rightLng = bsne.lng;
 					    //console.log(bssw,bsne);
+					    if(map.map.getZoom()>10)
 	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng)
 	        		});
 	        		
@@ -802,10 +825,19 @@
 								if(data){
 									
 									spot.style.width = '122px';
-									spot.innerHTML = "共有"+data.length+'组活动';
+//									spot.innerHTML = "活动"+data.length;
 									for(var i = 0 , m = data.length ;i<m; i++ ){
-												spot.innerHTML+='<img src="../icon/flag/label.ico">'
+												spot.innerHTML+='<img src="../icon/flag/label.ico" data-id="'+ data[i].id  +'">'
 											}
+									var imgList = spot.getElementsByTagName('img');
+									for( var i = 0, m = imgList.length ; i < m ; i++ ){
+										imgList[i].addEventListener('tap',function(){
+											console.log(this);
+											
+											queryRouter(this.getAttribute("data-id"));
+											
+										})
+									}
 									var spotTime = setTimeout(function(){
 										clearTimeout(spotTime);
 										
@@ -819,29 +851,29 @@
 //												spot.innerHTML = "";
 //											}});
 //										}});
-//									TweenLite.to(spot.style,1.5,{left:'400px',onComplete:function(){
-//										
-//									}});
+									TweenLite.to(spot.style,1.5,{backgroundSize:'0px 0px',onComplete:function(){
+										spot.style.padding = "0px";
+									}});
 									},3000);
 									
 									//给活动赋值
-									spot.addEventListener('tap',function(e){
-										if(spot.innerHTML==""){
-											spot.style.width="122px";
-											spot.style.height="84px";
-											spot.innerHTML = "共有"+data.length+'组活动';
-											for(var i = 0 , m = data.length ;i<m; i++ ){
-												spot.innerHTML+='<img src="../icon/flag/label.ico">'
-											}
-											spot.style.borderWidth = "4px 5px 4px 5px;";
-										}else{
-											spot.innerHTML = "";
-											spot.style.borderWidth = "8px 5px 8px 5px;";
-											spot.style.width="10px";
-											spot.style.height="10px";
-										}
-										
-									})
+//									spot.addEventListener('tap',function(e){
+//										if(spot.innerHTML==""){
+//											spot.style.width="122px";
+//											spot.style.height="84px";
+////											spot.innerHTML = "活动"+data.length;
+//											for(var i = 0 , m = data.length ;i<m; i++ ){
+//												spot.innerHTML+='<img src="../icon/flag/label.ico" data-id="'+  data[i].id +'">'
+//											}
+//											spot.style.borderWidth = "4px 5px 4px 5px;";
+//										}else{
+//											spot.innerHTML = "";
+//											spot.style.borderWidth = "8px 5px 8px 5px;";
+//											spot.style.width="10px";
+//											spot.style.height="10px";
+//										}
+//										
+//									})
 									
 								}else{
 									
@@ -850,7 +882,106 @@
 							},error:function(e){
 								mui.toast("系统出错");
 							}
-						},true);
+						},true,'活动查询中');
+				}
+				
+				
+				//根据活动id查询活动路线
+				function queryRouter(id){
+					humanAjax(JS_PATH+'/activity/queryRouter',{
+							data:{
+								id:id
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								
+								for( var i = 0 , m = data.length ; i < m ; i++ ){
+									var item = data[i];
+									if(item.obj_ids&&item.obj_ids!=""){
+										var ids = item.obj_ids.split(',');
+										if(i==0&&ids[0]){
+											queryScenicById(ids[0],data);
+										}
+										
+										
+										
+										
+									}
+									
+									
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+					},false,'活动查路线中');
+				}
+				
+				//通过景点id获取旅游景点详情
+				function queryScenicById(id,d){
+					humanAjax(JS_PATH+'/list/queryScenicById',{
+							data:{
+								id:id
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								
+								for( var i = 0 , m = data.length ; i < m ; i++ ){//景点必须保证只有一个
+									var item = data[i];
+									var lng = parseFloat(item.longitude);
+									var lat = parseFloat(item.latitude);
+									if(!(isNaN(lng)||isNaN(lat)))
+									map.panTo({lng:lng,lat:lat});
+									markIconToActivity(d);
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+					},false);
+				}
+				
+				//当地图跳转到有活动地方后显示有活动的图标
+				function markIconToActivity(data){
+					var _id = [];//保存已经查询过的景点id，避免重复查询
+					for( var i = 0 , m = data.length ; i < m ; i++ ){
+						var item = data[i];
+						if(item.obj_ids&&item.obj_ids!=""){
+							var ids = item.obj_ids.split(',');
+							for(var j = 0 ; j < ids.length ; j++ ){
+								var id = ids[j];
+								if(id&&id!=""&&_id.indexOf(id)==-1){
+									_id.push(id);
+									humanAjax(JS_PATH+'/list/queryScenicById',{
+											data:{
+												id:id
+											},
+											crossDomain :true,
+											dataType:'json',//服务器返回json格式数据
+											type:'get',//HTTP请求类型
+											success:function(data){
+												//设置景点对应图标
+												for( var i = 0 , m = data.length ; i < m ; i++ ){//景点必须保证只有一个
+													var item = data[i];
+													var lng = parseFloat(item.longitude);
+													var lat = parseFloat(item.latitude);
+													map.createMarkFromData(item);
+													map.changeIconSize();
+												}
+												
+											},error:function(e){
+												mui.toast("系统出错");
+											}
+									},false);
+								}
+							}
+						}
+						
+					}
 				}
 
 			}

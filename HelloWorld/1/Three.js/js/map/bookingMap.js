@@ -96,7 +96,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 _this.myIcon1 = myIcon1;
 		 // sizeList.push(new BMap.Size(39, 31));
 		 //var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(52*4,62*4),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
-		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(239,110),{imageSize:new BMap.Size(169.5, 55)});
+		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(239,110),{anchor: new BMap.Size(50,32),imageSize:new BMap.Size(169.5, 55)});
 		 _this.createMark("山脉",point,myIcon2);
 		 icons.push(myIcon2);
 		 _this.myIcon2 = myIcon2;
@@ -137,7 +137,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		 	}
 			for( var i= 0,m=_this.markList.length;i<m;i++ ){
 				var mark = _this.markList[i];
-				if(map.getZoom()<14 &&( i%30!=0)){
+				/*if(map.getZoom()<14 &&( i%30!=0)){
 					
 					mark.hide();
 					continue;
@@ -145,7 +145,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 					
 					mark.hide();
 					continue;
-				}
+				}*/
 				if(!mark.isVisible())mark.show();
 				var icon = mark.getIcon();
 				//icon.size.width *= map.getZoom()/15;
@@ -431,6 +431,51 @@ Bookingmap.prototype.addEventListenError=function(handler){
 	var _this = this;
 	_this.errorHandler = handler;
 	
+}
+
+/**重置中心点**/
+Bookingmap.prototype.panTo=function(p){
+	var _this = this;
+	console.log(p.lng,p.lat);
+	_this.map.centerAndZoom(new BMap.Point(p.lng,p.lat),5);
+	
+}
+
+
+/**改变图标大小**/
+Bookingmap.prototype.changeIconSize=function(){
+	var _this = this;
+	var map = _this.map;
+	for( var i= 0,m=_this.markList.length;i<m;i++ ){
+				var mark = _this.markList[i];
+//				if(map.getZoom()<14 &&( i%30!=0)){
+//					
+//					mark.hide();
+//					continue;
+//				}else if(map.getZoom()>=14 && map.getZoom()<15 &&( i%10!=0)){
+//					
+//					mark.hide();
+//					continue;
+//				}
+//				if(!mark.isVisible())mark.show();
+				var icon = mark.getIcon();
+				//icon.size.width *= map.getZoom()/15;
+				//icon.size.height *= map.getZoom()/15;
+				//icon.imageUrl
+				var size = _this.sizeList[i];
+				if(i==0){
+					console.log(icon.imageSize);
+				}
+				var zoom = map.getZoom()/15;
+				//zoom = (zoom==1?zoom:zoom<1?zoom/2:zoom*1.2)
+				if(zoom >=1.2)zoom = 1.2
+				else if(zoom < 1.2 && zoom >= 1)zoom = 1
+				else if(zoom < 1 && zoom > 0.5)zoom = 0.6
+				else if(zoom <=0.5)zoom = 0.5
+				icon.setImageSize(new BMap.Size(size.width*zoom, size.height*zoom));
+				
+				mark.setIcon(icon);
+			}
 }
 
 /**重置中心点**/
