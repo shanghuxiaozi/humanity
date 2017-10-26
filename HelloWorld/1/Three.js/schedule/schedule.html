@@ -393,7 +393,7 @@
 				mui.init();
 				var circle;
 				
-				document.addEventListener( "plusready", onPlusReady, false );
+//				document.addEventListener( "plusready", onPlusReady, false );
 				// 扩展API加载完毕，现在可以正常调用扩展API
 				function onPlusReady() {
 					circle = plus.webview.getWebviewById('circle');
@@ -411,6 +411,42 @@
 					//(plus.webview.getWebviewById("H58A84A3C")).back()
 //					alert('=='+plus.webview.currentWebview().parent().id);
 				};
+				var currentCity = localStorage.getItem("currentCity");
+				function queryCityPosNow(){
+			        				currentCity = localStorage.getItem("currentCity");
+				        			if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
+										currentCity = currentCity.replace('市','');
+									}
+				        			currentCityContent.innerHTML = '<input readonly value="'+(currentCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
+				        			queryCityId((currentCity||'深圳'));
+			        			}
+				var isPageHide = false;  
+			    window.addEventListener('pageshow', function () {  
+			        if (isPageHide) {  
+			        	isPageHide = false;
+			        }
+			        
+			        if(	localStorage.getItem('city_nme')!='over'){
+			        		if(localStorage.getItem('city_nme')!='lat'){
+			        			map.centerAndZoom(localStorage.getItem('city_nme'));
+			        			
+			        			queryCityPosNow()
+			        			
+			        		}else{
+			        			map.centerAndZoom(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
+			        			queryCityPosNow()
+			        		}
+			        		
+			        		localStorage.setItem('city_nme','over');
+			        }
+			        
+			        
+			        
+			    });  
+			    window.addEventListener('pagehide', function () {  
+			        isPageHide = true;  
+			    });  
+				
 				
 				var spot = document.getElementById("spot");
 				
@@ -423,6 +459,8 @@
 				
 				
 				mui('body').on('tap','a',function(e){
+//					nativeAnimation();
+					
 				    //window.top.location.href=this.href;console.log(this)
 				   // e.stopPropagation();
 				    //alert("进入");
@@ -460,7 +498,7 @@
 //						console.log(obj);
 //					});
 	        		var cityId;
-	        		var currentCity = localStorage.getItem("currentCity");
+	        		
 	        		//获取下拉框点击后的地名
 	        		map.addEventListenDownList(function(value,obj){
 	        			console.log(value,obj);
@@ -476,12 +514,11 @@
 	        		var currentCityContent = document.getElementById("currentCityContent");
 				
 					
-					if(currentCity && currentCity.length>2 && currentCity.indexOf('市')!=-1){
-						currentCity = currentCity.replace('市','');
-					}
+					
 				
-				currentCityContent.innerHTML = '<input readonly value="'+(currentCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
-	        		queryCityId((currentCity||'深圳'));
+//				currentCityContent.innerHTML = '<input readonly value="'+(currentCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
+//	        		queryCityId((currentCity||'深圳'));
+					queryCityPosNow();
 	        		function queryCityId(obj){
 	        			var cityIndex  = obj.indexOf('市');
 	        			if(layerIndex==-1)
@@ -764,25 +801,28 @@
 							success:function(data){
 								if(data){
 									
-									
+									spot.style.width = '122px';
 									spot.innerHTML = "共有"+data.length+'组活动';
 									for(var i = 0 , m = data.length ;i<m; i++ ){
 												spot.innerHTML+='<img src="../icon/flag/label.ico">'
 											}
 									var spotTime = setTimeout(function(){
 										clearTimeout(spotTime);
-										spot.style.width = '122px';
+										
 //										spot.style.height="80px";
 										spot.style.borderWidth = "8px 5px 8px 5px;";
-										TweenLite.to(spot.style,1.5,{width:'10px',onComplete:function(){
-											TweenLite.to(spot.style,1,{width:'50px',onComplete:function(){
-												//spot.style.display = "none";
-												spot.style.width="10px";
-												spot.style.borderWidth = "8px 5px 8px 5px;";
-												spot.innerHTML = "";
-											}});
-										}});
-									},1000);
+//										TweenLite.to(spot.style,0.5,{width:'100px',onComplete:function(){
+//											TweenLite.to(spot.style,0.3,{width:'50px',onComplete:function(){
+//												//spot.style.display = "none";
+//												spot.style.width="10px";
+//												spot.style.borderWidth = "8px 5px 8px 5px;";
+//												spot.innerHTML = "";
+//											}});
+//										}});
+//									TweenLite.to(spot.style,1.5,{left:'400px',onComplete:function(){
+//										
+//									}});
+									},3000);
 									
 									//给活动赋值
 									spot.addEventListener('tap',function(e){
@@ -814,6 +854,34 @@
 				}
 
 			}
+			
+			
+			//-------------------------------------------------------------------------------------------------------------
+			// H5 plus事件处理
+//function plusReady(){
+//	// 弹出系统等待对话框
+//	var w = plus.nativeUI.showWaiting( "等待中..." );//,{loading:{icon:"../icon/mark/1c7a3e2fd802dc165dd4c3b94691292d.gif"}}
+//	// 2秒后更新
+//	setTimeout( function(){
+//			//w.setTitle( "正在更新" );
+//			w.close();
+//	}, 2000 );
+//}
+//if(window.plus){
+//	plusReady();
+//}else{
+//	document.addEventListener("plusready",plusReady,false);
+//}
+		function nativeAnimation(){
+			// 弹出系统等待对话框
+			
+			var w = plus.nativeUI.showWaiting( "等待中..." );//,{loading:{icon:"../icon/mark/1c7a3e2fd802dc165dd4c3b94691292d.gif"}}
+			// 2秒后更新
+			setTimeout( function(){
+					w.close();
+			}, 2000 );
+		}
+			
 			</script>
 			<!--<script type="text/javascript" src="../js/lufy/lufylegend-1.10.1.min.js"></script>
 			<script type="text/javascript" src="../js/lufy/lib/lufylegend.ui-0.14.1.min.js"></script>

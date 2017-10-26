@@ -208,7 +208,7 @@
 							</a>
 						</li>-->
 						<li data-group="S" class="mui-table-view-divider mui-indexed-list-group">服务城市<br>S</li>
-						<li data-value="SZH" data-tags="ShenZheng" class="mui-table-view-cell mui-indexed-list-item">
+						<li data-value="SZH" data-tags="ShenZheng" data-name="深圳" class="mui-table-view-cell mui-indexed-list-item" lat="22.54605355" lng = "114.02597366">
 							<a href="javascript:;">
 								<img class="mui-media-object mui-pull-left" src="https://img1.qunarzz.com/travel/poi/201404/11/c0d913799827527eddb12cfb.jpg_480x360x95_4e490833.jpg">
 								<div class="mui-media-body">
@@ -217,7 +217,7 @@
 								</div>
 							</a>
 						</li>
-						<li data-value="SYA" data-tags="ShiYan" class="mui-table-view-cell mui-indexed-list-item">
+						<li data-value="SYA" data-tags="ShiYan" data-name="十堰" class="mui-table-view-cell mui-indexed-list-item"  lat="32.511268" lng = "111.10292">
 							<a href="javascript:;">
 								<img class="mui-media-object mui-pull-left" src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=e8d87f828601a18be4e61a1dff466c6d/f603918fa0ec08fa3231ea0958ee3d6d55fbda6f.jpg">
 								<div class="mui-media-body">
@@ -227,7 +227,7 @@
 							</a>
 						</li>
 						<li data-group="Z" class="mui-table-view-divider mui-indexed-list-group">Z</li>
-						<li data-value="ZZH" data-tags="ZhengZhou" class="mui-table-view-cell mui-indexed-list-item">
+						<li data-value="ZZH" data-tags="ZhengZhou" data-name="郑州"  class="mui-table-view-cell mui-indexed-list-item" lat="34.512389" lng = "112.948713">
 							<a href="javascript:;">
 								<img class="mui-media-object mui-pull-left" src="https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/crop%3D0%2C0%2C600%2C396%3Bc0%3Dbaike80%2C5%2C5%2C80%2C26/sign=3f3edbfa3301213fdb7c149c69d71ae1/8d5494eef01f3a299fdb3aed9325bc315c607c86.jpg">
 								<div class="mui-media-body">
@@ -438,6 +438,14 @@
 					currentCity = currentCity.replace('市','');
 				}
 				
+				document.getElementById('currentCity').addEventListener('tap',function(){
+					localStorage.setItem('city_nme',this.innerText);
+					localStorage.setItem("currentCity",this.innerText);
+							mui.back();
+				})
+				
+				
+				
 				currentCityContent.innerHTML = currentCity||'深圳';
 				
 				var currentCityDiv = document.getElementById('currentCityDiv');
@@ -452,6 +460,26 @@
 					checkWord();
 					
 				})
+				var accessCityList = accessCityDiv.querySelectorAll(".accessCity");
+				mui(accessCityList).each(function(index,item){
+					item.addEventListener('tap',function(e){
+							localStorage.setItem('city_nme',this.innerText);
+							localStorage.setItem("currentCity",this.innerText);
+							mui.back();
+						});
+				})
+				
+				for( var i = 0, m = cityListLi.length ; i < m ;i++ ){
+						var item = cityListLi[i];
+						item.addEventListener('tap',function(e){
+							localStorage.setItem('city_lng',this.getAttribute('lng'));
+							localStorage.setItem('city_lat',this.getAttribute('lat'));
+							localStorage.setItem('city_nme','lat');
+							localStorage.setItem("currentCity",this.getAttribute('data-name'));
+							mui.back();
+						});
+				}
+				
 				
 				function checkWord(){
 					var v = searchInput.value.toLowerCase();

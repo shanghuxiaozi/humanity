@@ -24,7 +24,9 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			return document.getElementById(id);
 		}
 		var map = new BMap.Map(id, {enableMapClick:false});//
+//		map.setMapType(BMAP_PERSPECTIVE_MAP); 
 		map.setMapStyle({styleJson: mapDefine });
+		
 		_this.map = map;
 		//map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
 		var longitude =  localStorage.getItem('longitude');
@@ -656,6 +658,14 @@ Bookingmap.prototype.drageHandler = function(handler){
 	_this.drageHandler = handler;
 }
 
+/*点击地图*/
+Bookingmap.prototype.centerAndZoom = function(c,v){
+	var _this = this;
+	var map = _this.map;
+	_this.map.centerAndZoom(c,v||15);
+}
+
+
 /*从后台数据查询过来的mark*/
 Bookingmap.prototype.createMarkFromData = function(obj){
 	var map = this.map;
@@ -677,6 +687,7 @@ Bookingmap.prototype.createMarkFromData = function(obj){
 	}else{
 		myIcon = _this.myIcon;
 	}
+	
 	var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
 	map.addOverlay(marker); 
 	var label = new BMap.Label(obj.title,{offset:new BMap.Size(10,-10)});
