@@ -25,6 +25,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		}
 		var map = new BMap.Map(id, {enableMapClick:false});//
 //		map.setMapType(BMAP_PERSPECTIVE_MAP); 
+//		map.setCurrentCity("深圳");
 		map.setMapStyle({styleJson: mapDefine });
 		
 		_this.map = map;

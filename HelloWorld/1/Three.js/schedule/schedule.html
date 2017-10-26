@@ -333,6 +333,7 @@
 		<script src="../js/map/bookingMap.js" charset="utf-8" type="text/javascript"></script>
 		<script src="../js/tween/TweenLite.js"></script>
 		<script src="../js/path.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/library/CurveLine/1.5/src/CurveLine.min.js"></script>
 		<!--<script src="../hello-mui/js/jquery-2.1.0.js"></script>-->
 		<!--<script src="../js/mui/mui.jsonp.js"></script>-->
 			<script>
@@ -945,15 +946,25 @@
 					},false);
 				}
 				
+				
+				
+				
 				//当地图跳转到有活动地方后显示有活动的图标
 				function markIconToActivity(data){
 					var _id = [];//保存已经查询过的景点id，避免重复查询
+					var _ids = [];
+					var idObject= {};
+					var num = 0;
+					var total = 0;
 					for( var i = 0 , m = data.length ; i < m ; i++ ){
 						var item = data[i];
 						if(item.obj_ids&&item.obj_ids!=""){
 							var ids = item.obj_ids.split(',');
+							_ids.push(ids);
+							total+=ids.length ;console.log('ids=',ids,total);
 							for(var j = 0 ; j < ids.length ; j++ ){
 								var id = ids[j];
+								
 								if(id&&id!=""&&_id.indexOf(id)==-1){
 									_id.push(id);
 									humanAjax(JS_PATH+'/list/queryScenicById',{
@@ -967,16 +978,30 @@
 												//设置景点对应图标
 												for( var i = 0 , m = data.length ; i < m ; i++ ){//景点必须保证只有一个
 													var item = data[i];
-													var lng = parseFloat(item.longitude);
-													var lat = parseFloat(item.latitude);
-													map.createMarkFromData(item);
-													map.changeIconSize();
+//													var lng = parseFloat(item.longitude);
+//													var lat = parseFloat(item.latitude);
+													idObject[item.id] = item;
+//													map.createMarkFromData(item);
+//													map.changeIconSize();
 												}
-												
+												console.log(num++);
+												if(num==total){
+													console.log('路线');
+													
+													
+													drawRoute(_ids,idObject);
+													
+												}
 											},error:function(e){
 												mui.toast("系统出错");
 											}
 									},false);
+								}else{
+									console.log(num++);
+									if(num==total){
+										console.log('路线');
+										drawRoute(_ids,idObject);
+									}
 								}
 							}
 						}
@@ -986,6 +1011,25 @@
 
 			}
 			
+			var colors = ["blue","red","green","orange","back"];
+			function drawRoute(_ids,idObject){
+				for(var z = 0; z < _ids.length ; z++ ){
+					var ids = _ids[z];
+					var points = [];
+					for(var i = 0 ; i < ids.length ; i++ ){
+						var item = idObject[ids[i]];
+						var lng = parseFloat(item.longitude);
+						var lat = parseFloat(item.latitude);
+						points.push( new BMap.Point( lng , lat ) );
+					}
+					
+					var curve = new BMapLib.CurveLine(points, {strokeColor:colors[z], strokeWeight:3, strokeOpacity:0.5}); //创建弧线对象
+					map.map.addOverlay(curve); //添加到地图中
+					curve.enableEditing(); //开启编辑功能
+					
+					
+				}
+			}
 			
 			//-------------------------------------------------------------------------------------------------------------
 			// H5 plus事件处理
