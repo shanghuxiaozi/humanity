@@ -209,6 +209,13 @@
 				  width: 40px;
   				  border: none;
 			}
+			#backmap{
+				  z-index: 9999999999;
+				  position: absolute;
+				  top: 50px;
+				  color: darkolivegreen;
+				  display: none;
+			}
 		</style>
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
@@ -303,6 +310,7 @@
 				</div>
 			</div>
 			<div id="spot"></div>
+			<div id="backmap"><span class="mui-icon mui-icon-undo"></span>返回</div>
 			<!--<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
 			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>-->
 			<!--
@@ -414,26 +422,28 @@
 //					alert('=='+plus.webview.currentWebview().parent().id);
 				};
 				var currentCity = localStorage.getItem("currentCity");
+				var chooseCity;
+				var currentCenter;//当前地图的中心点，做活动返回时用
 				function queryCityPosNow(){
-			        				var chooseCity = localStorage.getItem("chooseCity");
-				        			if(chooseCity && chooseCity.length>2 && chooseCity.indexOf('市')!=-1){
-										chooseCity = chooseCity.replace('市','');
-									}
-				        			currentCityContent.innerHTML = '<input readonly value="'+(chooseCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
-				        			queryCityId((chooseCity||'深圳'));
-			        			}
+    				chooseCity = localStorage.getItem("chooseCity");
+        			if(chooseCity && chooseCity.length>2 && chooseCity.indexOf('市')!=-1){
+						chooseCity = chooseCity.replace('市','');
+					}
+        			currentCityContent.innerHTML = '<input readonly value="'+(chooseCity||'深圳')+'" /><span class="mui-icon mui-icon-arrowdown" id="arrowdown"></span>';
+        			queryCityId((chooseCity||'深圳'));
+    			}
 				var isPageShow= false;  
 			    window.addEventListener('pageshow', function () {  
 			        isPageShow= false; 
 			        if(	localStorage.getItem('city_nme')!='over'){
 			        		if(localStorage.getItem('city_nme')!='lat'){
-			        			map.centerAndZoom(localStorage.getItem('city_nme'));
+			        			map.centerAndZoomByName(localStorage.getItem('city_nme'));
 			        			isPageShow = true;
 			        			queryCityPosNow();
 			        			
 			        		}else{
 			        			isPageShow = true;
-			        			map.centerAndZoom(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
+			        			map.centerAndZoomByName(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
 			        			queryCityPosNow();
 			        		}
 			        		
@@ -449,6 +459,15 @@
 				
 				
 				var spot = document.getElementById("spot");
+				var backmap = document.getElementById("backmap");//活动也返回按钮
+				backmap.addEventListener('tap',function(){
+					console.log('从活动页面返回');
+					backmap.style.display = "none";
+					map.isActivity = false;
+			        			map.centerAndZoomByName(currentCenter);
+			        			queryCityPosNow();
+			        		
+				})
 				
 				var suggestId = document.getElementById("suggestId");
 				suggestId.addEventListener('tap',function(){
@@ -492,11 +511,11 @@
 //							alert('Webview closed!');
 							if(	localStorage.getItem('city_nme')!='over'){
 			        		if(localStorage.getItem('city_nme')!='lat'){
-					        			map.centerAndZoom(localStorage.getItem('city_nme'));
+					        			map.centerAndZoomByName(localStorage.getItem('city_nme'));
 					        			queryCityPosNow();
 					        			
 					        		}else{
-					        			map.centerAndZoom(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
+					        			map.centerAndZoomByName(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
 					        			queryCityPosNow();
 					        		}
 					        		
@@ -834,7 +853,10 @@
 									for( var i = 0, m = imgList.length ; i < m ; i++ ){
 										imgList[i].addEventListener('tap',function(){
 											console.log(this);
-											
+											backmap.style.display = "block";
+											currentCenter = map.map.getCenter();
+											map.isActivity = true;
+											map.map.clearOverlays();
 											queryRouter(this.getAttribute("data-id"));
 											
 										})

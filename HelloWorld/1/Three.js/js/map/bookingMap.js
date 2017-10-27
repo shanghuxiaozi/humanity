@@ -18,7 +18,8 @@ Bookingmap.prototype.initBaiduMap=function(id){
 	var searchLsit = [];
 	_this.markList = [];
 	_this.originSize = [];
-
+	
+	_this.isActivity = false;//表示是否在活动页面默认不是
 		// 百度地图API功能
 		function G(id) {
 			return document.getElementById(id);
@@ -126,6 +127,20 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 
 		 map.addEventListener("zoomend",function(e){
 		 	console.log(map.getZoom());
+		 	
+		 	
+		 	if(_this.isActivity){
+		 		
+		 		
+		 		
+		 		
+		 		return;
+		 	}
+		 	
+		 	
+		 	
+		 	
+		 	//--------------------------------------非活动页面-----------------------------------------
 		 	if(map.getZoom()>=16){
 		 		map.setZoom(16);
 		 	}
@@ -170,6 +185,15 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 
 		 //拖拽地图dragend
 		  map.addEventListener("dragend",function(e){
+		  	
+		  	if(_this.isActivity){
+		 		
+		 		
+		 		
+		 		
+		 		return;
+		 	}
+		  		
 		  		_this.drageHandler(map.getCenter(),map.getZoom());
 		  });
 		 
@@ -705,7 +729,7 @@ Bookingmap.prototype.drageHandler = function(handler){
 }
 
 /*点击地图*/
-Bookingmap.prototype.centerAndZoom = function(c,v){
+Bookingmap.prototype.centerAndZoomByName = function(c,v){
 	var _this = this;
 	var map = _this.map;
 	_this.map.centerAndZoom(c,v||15);
