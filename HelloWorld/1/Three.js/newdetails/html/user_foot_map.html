@@ -5,21 +5,30 @@
 		<title>足迹图</title>		
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<script src="../js/mui.min.js"></script>
+		
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/common.css" rel="stylesheet" />
-		
-		<script type="text/javascript" charset="utf-8">
-			mui.init();
-		</script>
+		<style>
+			#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";position: absolute; left:0px; top:0px;
+				  background-image: url(../../load/b.gif);
+				  background-repeat: no-repeat;
+				  /*background-size: 100% 100%;*/
+			}
+			.mui-footmap-wrapper {
+				  height: 100px;
+				}
+			.anchorBL{
+				display: none;
+			}
+		</style>
 	</head>
 	<body>
 		
 	<header class="mui-bar mui-bar-nav mui-search-box">
-		<a href="javascript:void(0);" class="mui-back"></a>
+		<a href="javascript:void(0);" class="mui-back mui-action-back"></a>
 		<h4 class="mui-title">足迹图</h4>
 	</header>
-	
+	<div id="allmap" ></div>
 	<div class="mui-iframe-wrapper mui-footmap-wrapper" style="">
 		<div class="mui-foot-map">
 			<div class="mui-foot-map-con">
@@ -44,5 +53,31 @@
 			</div>
 		</div>
 	</div>
+	<script src="../js/mui.min.js"></script>
+	<!-------------------------------------------------------------百度地图相关js-------------------------------------------------------------->	
+	<script src="../../js/map/baidu.js" charset="utf-8" type="text/javascript"></script>
+	<script src="../../js/map/footMap.js"></script>
+	<script>
+		var allmap = document.getElementById("allmap");
+		allmap.style.height = window.innerHeight+"px";
+		allmap.style.backgroundPositionX = window.innerWidth/2-21+"px";
+		allmap.style.backgroundPositionY = window.innerHeight/2-21+"px";
+		
+		mui.init();
+		mui.ready(function(){
+			map = new Bookingmap();
+	        map.initBaiduMap('allmap');
+	        //c地图当前中心点，v地图当前层级
+    		map.drageHandler(function(c,v){
+    			
+    		});
+    		map.clickMark(function(o,e){
+    			
+    		});
+    		map.clickhandler(function(e){
+    			
+    		});
+		})
+	</script>
 	</body>
 </html>
