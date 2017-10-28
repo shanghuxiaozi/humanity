@@ -11,212 +11,7 @@
 <meta content="email=no" name="format-detection" />
 <meta charset="UTF-8" />
 		<title>WINDOW_RESIZE</title>
-		<style>
-			#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";position: absolute; left:0px; top:0px;
-				  background-image: url(../load/b.gif);
-				  background-repeat: no-repeat;
-				  /*background-size: 100% 100%;*/
-			}
-			#legend{position: absolute; left:0px; top:0px;pointer-events:none;  z-index: 99999;
-				
-			}
-			#lufy{position: absolute; left:0px; top:0px;
-			/*pointer-events:none;*/  
-			z-index: -1;
-				width:100%;height:100%;border: none;
-			}
-			.mui-icon img{  width: 24px; height: 24px;}
-			/*#r-result{position:absolute;top: 20px;width: 100%;text-align: center;background: url("../images/schedule/dizuo.png") no-repeat center center ;background-size:100% 100%;}*/
-			#r-result{
-				position:fixed;top: 0px;width: 100%;height: 50px;
-			  /*left: 5%;*/
-			  /*text-align: center;*/
-			  background-color: rgb(255, 253, 249);
-				border-radius: 5px;
-				-moz-border-radius: 5px;
-				-webkit-border-radius: 5px;
-				
-				-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-				/*-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-				text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-				border-bottom: 1px solid rgba(0,0,0,0.25);*/
-			}
-			/*#suggestId{background: none;height: 35px;
-  font-size: large;text-align: left;
-			
-			}*/
-			#r-result p{
-				  height: 60%;
-				  /*border-left: 1px solid #C2ADAD;*/
-				  margin-left: 48px;
-				  margin-top: 8px;
-			}
-			#r-result img{
-				   position: relative;
-				  top: 8px;
-				  left: 20px;
-				  width: 15px;
-				  float: left;
-			}
-			#selectArea{
-				border-style: solid;
-            border-width: 8px 5px 8px 5px;
-            border-color: rgb(71, 69, 69)  transparent;
-            width: 0px;
-            height: 0px;
-              position: absolute;
-			   right: -12px;
-  			 top: 5px;
-			}
-			#r-result a{
-				   color: rgb(94, 92, 92);
-				  position: absolute;
-				  top: 15px;
-				  left: 15px;
-				  font-size: large;
-			}
-			#notice{
-				position: absolute;
-				  top: 90px;
-				  width: 90%;
-				  height: 30px;
-				  left: 5%;
-				  /* text-align: center; */
-				  background-color: rgba(99, 171, 249, 0.9);
-				  border-radius: 5px;
-				  -moz-border-radius: 5px;
-				  -webkit-border-radius: 5px;
-				  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-				  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-				  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
-				 /* border-bottom: 1px solid rgba(0,0,0,0.25);*/
-				  /*text-align: center;*/
-				  padding-top: 5px;
-				    padding-left: 20px;
-				  color: white;
-				  font-family: fantasy;
-  				font-size: 0.75em;
-			}
-			#notice img{
-				  position: relative;
-  				  top: 3px;
-			}
-			#takeAtaxi{
-				position: absolute;
-				bottom: 70px;
-  				right: 10px;
-				  
-			}
-			#takeAtaxi img{
-				width: 50px;
-			}
-			#overview{
-				position: absolute;
-			    right: 10px;
-  			    top: 130px;
-				  background-color: white;
-				  border-radius: 5px;
-				  -moz-border-radius: 5px;
-				  -webkit-border-radius: 5px;
-				  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-				  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-				 /* text-shadow: 0 -1px 1px rgba(0,0,0,0.25);*/
-				  border-bottom: 1px solid rgba(0,0,0,0.25);
-				  text-align: center;
-			}
-			#overview img{
-				
-				  width: 35px;
-			}
-			#overview p{
-				    margin-top: -10px;
-				  width: 35px;
-				  font-size: 12px;
-				  margin-bottom: 0px;
-				    line-height: 13px;
-				      color: rgb(73, 65, 65);
-			}
-			.mui-bar-tab .mui-tab-item.mui-active {
-			  color: #151617 !important;
-			}
-			#arrowdown{
-				  font-size: 12px;
-				   /*margin-left: -4px;*/
-			}
-			#suggestId{
-				  width: 90%;
-				  background-color: rgba(0, 0, 0, 0.07) !important;
-				  border-radius: 15px !important;
-				  margin-left: 5px;
-			}
-			#info{
-				width: 100%;
-			  height: 160px;
-			  position: fixed;
-			  bottom: -50px;
-			  display: none;
-			  background-color: rgb(250, 249, 249);
-			  z-index:999999;
-			}
-			#vrBtn{
-				background-image: url(../images/schedule/vr.png) ;
-				background-size: 100px,60px;
-				background-repeat:no-repeat;
-				width: 102px;
-				height: 36px;
-			}
-			#videoBtn{
-				background-image: url(../images/schedule/video.png) ;
-				background-size: 100px,60px;
-				background-repeat:no-repeat;
-				width: 102px;
-				height: 36px;
-			}
-			#imgInfo{
-				max-width: 92px;
-  				height: 82px;
-			}
-			.mui-tab-item{
-				  background-color: antiquewhite;
-			}
-			.mui-bar-tab .mui-icon-home{width: 100%;background: url(../newdetails/images/tab_home_icon.png)no-repeat center;background-size: 30px 23px;}
-			.mui-bar-tab .mui-icon-home:before,.mui-bar-tab .mui-icon-phone:before,.mui-bar-tab .mui-icon-email:before,.mui-bar-tab .mui-icon-gear:before{content: '';}
-			.mui-bar-tab .mui-active .mui-icon-home{background: url(../newdetails/images/tab_homeh_icon.png)no-repeat center;background-size: 30px 23px;}
-			.mui-bar-tab .mui-icon-phone{width: 100%;background: url(../newdetails/images/tab_saoyisao_icon.png)no-repeat center;background-size: 22px 21px;}
-			.mui-bar-tab .mui-active .mui-icon-phone{width: 100%;background: url(../newdetails/images/tab_saoyisaoh_icon.png)no-repeat center;background-size: 22px 21px;}
-			.mui-bar-tab .mui-icon-email{width: 100%;background: url(../newdetails/images/tab_fenxiang_icon.png)no-repeat center;background-size: 21px 21px;}
-			.mui-bar-tab .mui-active .mui-icon-email{width: 100%;background: url(../newdetails/images/tab_fenxiangh_icon.png)no-repeat center;background-size: 21px 21px;}
-			.mui-bar-tab .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_me_icon.png)no-repeat center;background-size: 18px 23px;}
-			.mui-bar-tab .mui-active .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_meh_icon.png)no-repeat center;background-size: 18px 23px;}
-			#spot{
-				/*border-style: solid;
-            	border-width: 4px 5px 4px 5px;
-            	border-color: rgba(195, 194, 133, 0.16);*/
-            	  z-index: 999999;
-				  position: absolute;
-				  top: 68px;
-				  left: 10px;
-				    color: rgb(21, 111, 77);
-				background: url(../icon/mark/t3.gif) no-repeat center;
-				background-size: 122px 84px;
-				  padding: 17px;
-			}
-			#spot img{
-				width: 20px;
-				margin-top: 10px;
-			}
-			#currentCityContent input{
-				  width: 40px;
-  				  border: none;
-			}
-			#backmap{
-				  z-index: 9999999999;
-				  position: absolute;
-				  top: 50px;
-				  color: darkolivegreen;
-				  display: none;
-			}
-		</style>
+		<link rel="stylesheet" href="../css/schedule.css">
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="../css/mui/mui.min.css">
 		<link rel="stylesheet" href="../mobile/need/layer.css">
@@ -311,6 +106,44 @@
 			</div>
 			<div id="spot"></div>
 			<div id="backmap"><span class="mui-icon mui-icon-undo"></span>返回</div>
+			
+			
+			<!--
+            	作者：921233883@qq.com
+            	时间：2017-10-28
+            	描述：活动页面下拉菜单
+            -->
+			<div id="activity_menu"><a id="icon-menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-left"  dataindex="false"></a></div>
+			<div id="menu-wrapper" class="menu-wrapper hidden">
+			<div id="menu" class="menu bounce-in-down animated">
+				<ul class="mui-table-view mui-table-view-inverted" id="activity_content">
+					<!--<li class="mui-table-view-cell">
+						<a href="javascript:;" dataindex="false">Item 1</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" dataindex="false">Item 2</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" dataindex="false">Item 3</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" dataindex="false">Item 4</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" class="" dataindex="false">Item 5</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" dataindex="false">Item 6</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="javascript:;" class="" dataindex="false">Item 7</a>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+		<div id="menu-backdrop" class="menu-backdrop" style="opacity: 1;"></div>
+			
+			
 			<!--<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
 			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>-->
 			<!--
@@ -354,6 +187,9 @@
 				var info = document.getElementById("info");
 				var infoContent = document.getElementById("infoContent");
 				var imgInfo = document.getElementById("imgInfo");
+				
+				var resultPanel = document.getElementById('r-result');//搜索框
+				
 				//
 				var map;
 				var currentInfo;//当前点击的景点
@@ -459,13 +295,23 @@
 				
 				
 				var spot = document.getElementById("spot");
+				var activity_menu = document.getElementById("activity_menu");//活动页面下来菜单
+				var activity_content = document.getElementById("activity_content");//活动页面内容
 				var backmap = document.getElementById("backmap");//活动也返回按钮
-				backmap.addEventListener('tap',function(){
+				backmap.addEventListener('tap',function(e){
 					console.log('从活动页面返回');
+					e.stopPropagation();
+					setTimeout(function(){
+						resultPanel.style.display = "block";//由于此按钮与返回按钮处于同一层，当返回后会被触发因此需要延迟显示
+					},200);
+					
 					backmap.style.display = "none";
+					activity_menu.style.display = "none";
+					spot.style.top = "68px";
 					map.isActivity = false;
-			        			map.centerAndZoomByName(currentCenter);
-			        			queryCityPosNow();
+					hideActivityPanel();
+        			map.centerAndZoomByName(currentCenter);
+        			queryCityPosNow();
 			        		
 				})
 				
@@ -502,7 +348,11 @@
 				    	  localStorage.setItem("currentInfo",JSON.stringify(currentInfo));
 				    	  window.location.href = "../newdetails/html/tourist.html";
 				    	  //mui.openWindow("../newdetails/html/tourist.html");
-				    }else
+				    }else if(this.getAttribute("dataindex") == "false"){
+				    	
+				    }else if(this.getAttribute("dataindex") == "activity"){
+				    	drawActivitySingle();//绘制选中的单条线路
+				    }else{
 				    	var webview = mui.openWindow(this.href);
 				    	webview.addEventListener('loaded', function(e){
 							//alert('Webview Hided');
@@ -523,6 +373,8 @@
 					        }
 							webview=null;
 						}, false );
+				    }
+				    	
 //				    if(this.name == "scan"){
 //				    	//alert('打开摄像头');
 //				    	captureImage();
@@ -847,13 +699,26 @@
 									spot.style.width = '122px';
 //									spot.innerHTML = "活动"+data.length;
 									for(var i = 0 , m = data.length ;i<m; i++ ){
-												spot.innerHTML+='<img src="../icon/flag/label.ico" data-id="'+ data[i].id  +'">'
-											}
+										spot.innerHTML+='<img src="../icon/flag/label.ico" data-id="'+ data[i].id  +'">';
+										activity_content.innerHTML+='<li class="mui-table-view-cell">'
+											+ '<a href="javascript:;" dataindex="activity"><p>活动名称：'
+											+data[i].name+'</p><p>内容：'
+											+data[i].content+'</p><p>开始时间：'
+											+data[i].start_time+'</p><p>结束时间：'
+											+data[i].end_time+'</p><p class="mui-ellipsis-2">路线：'
+											+data[i].route+'</p>'
+											+'</a>'
+										+ '</li>';
+										
+									}
 									var imgList = spot.getElementsByTagName('img');
 									for( var i = 0, m = imgList.length ; i < m ; i++ ){
 										imgList[i].addEventListener('tap',function(){
 											console.log(this);
 											backmap.style.display = "block";
+											activity_menu.style.display = "block";
+											resultPanel.style.display = "none";
+											spot.style.top = "28px";
 											currentCenter = map.map.getCenter();
 											map.isActivity = true;
 											map.map.clearOverlays();
@@ -1000,9 +865,25 @@
 												//设置景点对应图标
 												for( var i = 0 , m = data.length ; i < m ; i++ ){//景点必须保证只有一个
 													var item = data[i];
-//													var lng = parseFloat(item.longitude);
-//													var lat = parseFloat(item.latitude);
+													var lng = parseFloat(item.longitude);
+													var lat = parseFloat(item.latitude);
 													idObject[item.id] = item;
+													
+													var opts = {
+														  position : new BMap.Point( lng , lat ),    // 指定文本标注所在的地理位置
+														  offset   : new BMap.Size(10, -30)    //设置文本偏移量
+														}
+														var label = new BMap.Label(item.title, opts);  // 创建文本标注对象
+															label.setStyle({
+																 color : "red",
+																 fontSize : "12px",
+																 height : "20px",
+																 lineHeight : "20px",
+																 fontFamily:"微软雅黑"
+															 });
+														map.map.addOverlay(label);   
+													
+													
 //													map.createMarkFromData(item);
 //													map.changeIconSize();
 												}
@@ -1052,6 +933,15 @@
 					
 				}
 			}
+			
+			
+			
+			function drawActivitySingle(){
+				
+			}
+			
+			
+			
 			
 			//-------------------------------------------------------------------------------------------------------------
 			// H5 plus事件处理
@@ -1194,5 +1084,60 @@
 //				layer.graphics.drawRect(1, "#ff0000", [LGlobal.width - 50, LGlobal.height - 50, 50, 50], true, "#880088");
 			}
 			</script>-->
+			<script>
+			mui.init({
+				swipeBack:true //启用右滑关闭功能
+			});
+			var menuWrapper = document.getElementById("menu-wrapper");
+			var menu = document.getElementById("menu");
+			var menuWrapperClassList = menuWrapper.classList;
+			var backdrop = document.getElementById("menu-backdrop");
+			
+			backdrop.addEventListener('tap', toggleMenu);
+			document.getElementById("icon-menu").addEventListener('tap',toggleMenu)
+			//下沉菜单中的点击事件
+			mui('#menu').on('tap', 'a', function() {
+				toggleMenu();
+				console.log(this.innerHTML);
+			});
+			var busying = false;
+
+			function toggleMenu() {
+				if (busying) {
+					return;
+				}
+				busying = true;
+				if (menuWrapperClassList.contains('mui-active')) {
+					document.body.classList.remove('menu-open');
+					menuWrapper.className = 'menu-wrapper fade-out-up animated';
+					menu.className = 'menu bounce-out-up animated';
+					setTimeout(function() {
+						backdrop.style.opacity = 0;
+						menuWrapper.classList.add('hidden');
+					}, 500);
+				} else {
+					document.body.classList.add('menu-open');
+					menuWrapper.className = 'menu-wrapper fade-in-down animated mui-active';
+					menu.className = 'menu bounce-in-down animated';
+					backdrop.style.opacity = 1;
+				}
+				setTimeout(function() {
+					busying = false;
+				}, 500);
+			}
+			
+			function hideActivityPanel(){
+				if (menuWrapperClassList.contains('mui-active')) {
+					document.body.classList.remove('menu-open');
+					menuWrapper.className = 'menu-wrapper fade-out-up animated';
+					menu.className = 'menu bounce-out-up animated';
+					setTimeout(function() {
+						backdrop.style.opacity = 0;
+						menuWrapper.classList.add('hidden');
+					}, 500);
+				}
+			}
+			
+		</script>
 	</body>
 </html>
