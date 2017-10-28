@@ -217,14 +217,19 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			_this.clickhandler(e.touches[0]);
 			var pt = e.point;
 			geoc.getLocation(pt, function(rs){//console.log(rs);
+				var addComp = rs.addressComponents;
+				if(addComp.province==""&&addComp.city ==""){
+					mui.toast('请把旗帜插在陆地上！~');
+					return;
+				}
 				var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
 //				map.clearOverlays();
 				map.addOverlay(mk);
 				console.log(BMAP_ANIMATION_BOUNCE);
 				mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 				map.panTo(rs.point);
-				var addComp = rs.addressComponents;
-				//console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
+				
+				console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
 				var obj 
 				if(rs.surroundingPois.length>0)
 				 obj = rs.surroundingPois[0];
@@ -286,12 +291,16 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //	        }
 			var pt = e.point;
 			geoc.getLocation(pt, function(rs){//console.log(rs);
+				var addComp = rs.addressComponents;
+				if(addComp.province==""&&addComp.city ==""){
+					mui.toast('请把旗帜插在陆地上！~');
+					return;
+				}
 				var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
 //				map.clearOverlays();
 				map.addOverlay(mk);
 				mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
 				map.panTo(rs.point);
-				var addComp = rs.addressComponents;
 				//console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
 				var obj 
 				if(rs.surroundingPois.length>0)
