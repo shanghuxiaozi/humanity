@@ -15,9 +15,9 @@
 	</head>
 	<body>
 		<header class="mui-bar mui-bar-nav mui-search-box">
-			<a href="javascript:void(0);" class="mui-back"></a>
+			<a href="javascript:void(0);" class="mui-back mui-action-back"></a>
 			<h4 class="mui-title">个人资料</h4>
-			<a href="javascript:void(0);" class="mui-edit"></a>
+			<a href="javascript:void(0);" class="mui-edit" id="editBtn"></a>
 		</header>
 		<div class="mui-iframe-wrapper mui-personal-wrapper" style="top: 44px;">
 			<div class="mui-content">
@@ -55,7 +55,7 @@
 							<div class="mui-pull-right mui-col-xs-8 mui-text-right">
 								<p class="mui-person-readly mui-readly">旅行爱好者</p>
 								<select class="mui-person-select mui-edit-op" dir="rtl">
-									<option value="1">男</option>
+									<option value="1" selected>男</option>
 									<option value="2">女</option>
 									<option value="3">保密</option>
 								</select>
@@ -68,7 +68,7 @@
 							<label class="mui-pull-left mui-person-lable">生日</label>
 							<div class="mui-pull-right mui-col-xs-8 mui-text-right">
 								<p class="mui-person-readly mui-readly">旅行爱好者</p>
-								<input type="date" value="旅行爱好者"  class="mui-person-input mui-edit-op"/>
+								<input type="date" value="2017-10-20"  class="mui-person-input mui-edit-op"/>
 							</div>
 						</div>
 					</li>
@@ -97,12 +97,19 @@
 			</div>
 		
 			<div class="mui-person-save mui-text-center">
-				<a href="javascript:void(0);" class="mui-btn mui-btn-danger">保存</a>
+				<a href="javascript:void(0);" class="mui-btn mui-btn-danger" id="saveBtn">保存</a>
 			</div>
 		</div>
-		
+		<script src="../../js/jquery-1.9.1.js"></script>
 		<script type="text/javascript">
-		
+			var editBtn = document.getElementById("editBtn");
+			editBtn.addEventListener('tap',function(){
+			console.log($('.mui-person-readly.mui-readly'));
+				$('.mui-person-readly.mui-readly').hide();
+				$('.mui-person-input.mui-edit-op').show();
+				$('.mui-person-select.mui-edit-op').show();
+				$('.mui-person-save').show();
+			});
 		</script>
 	</body>
 </html>

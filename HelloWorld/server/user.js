@@ -15,6 +15,14 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
+/*判断是否登录*/
+router.post('/isLogin', function (req, res, next) {
+	if(req.session.user){
+		res.send({code:200,msg:'登录成功',data:req.session.user});
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
 /*注册*/
 router.post('/register', function (req, res, next) {//
     	console.log('------register-----');

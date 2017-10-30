@@ -25,7 +25,14 @@ var humanAjax = function(url,obj,isLoading,content){
 							layer.close(enIndex);
 						}
 						if(data.code == 332){
-							mui.openWindow('login.html');
+							
+							if(obj.isNoToloagin){//判断是否自动跳转到登录页面，默认跳转
+								obj.success(data);
+							}else{
+								mui.openWindow('login.html');
+							}
+							
+							
 						}else if(data.code == 400){
 							mui.toast(data.msg);
 						}else

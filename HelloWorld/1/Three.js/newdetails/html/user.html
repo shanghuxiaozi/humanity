@@ -35,11 +35,11 @@
 						<em class="mui-num-msg">3</em>
 					</a>
 				</div>
-				<div class="mui-login-y mui-clearfix">
-					<img src="../images/img1.png" class="mui-user-logo mui-pull-left" />
+				<div class="mui-login-y mui-clearfix" id="myself">
+					<img src="../images/img1.png" class="mui-user-logo mui-pull-left" id="headimg"/>
 					<span class="mui-pull-left">
-						<p class="mui-user-name">伊娃</p>
-						<p class="mui-user-grade">等级：<b>12</b></p>
+						<p class="mui-user-name"id="userNick">伊娃</p>
+						<p class="mui-user-grade">等级：<b id="user_level">12</b></p>
 					</span>
 				</div>
 			</div>
@@ -153,17 +153,56 @@
 		</nav>
 	</footer>
 	<script src="../js/mui.min.js"></script>
+	<script src="../../js/path.js"></script>
 	<script>
+		var isLogin = false;
 		mui.init();
 		mui('body').on('tap','a',function(e){
-			window.top.location.href=this.href;
+			var _this = this;
+			if(isLogin)
+				window.top.location.href=_this.href;
+			else mui.openWindow('login.html');
+			
+		});
+		var myself = document.getElementById("myself");
+		
+		myself.addEventListener('tap',function(){
+			mui.openWindow('user_personal.html');
 		});
 		
 		var loginDiv = document.getElementById("loginDiv");
 		var noLoginDiv = document.getElementById("noLoginDiv");
 		noLoginDiv.style.display = "block";
 		loginDiv.style.display = "none";
-		
+		var userNick = document.getElementById("userNick");
+		var headimg  = document.getElementById("headimg");
+		var user_level  = document.getElementById("user_level");
+		humanAjax(JS_PATH+'/user/isLogin',{
+			data:{
+				
+				
+			},
+			crossDomain :true,
+			dataType:'json',//服务器返回json格式数据
+			type:'post',//HTTP请求类型
+			isNoToloagin:true,
+			success:function(data){
+				if(data.code == 200){
+					isLogin = true;
+					var userMsg  = data.data;
+					userNick.innerText = userMsg.nickname;
+					headimg.src = userMsg.headimg;
+					user_level.innerText = userMsg.user_level;
+					noLoginDiv.style.display = "none";
+					loginDiv.style.display = "block";
+				}else{
+					mui.toast("您未登录");
+				}
+				
+			},error:function(e){
+				mui.toast("系统出错");
+			}
+		},false);
 		
 	</script>
 	</body>

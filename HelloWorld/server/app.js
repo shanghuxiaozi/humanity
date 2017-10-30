@@ -8,6 +8,9 @@ var upload = require('./upload');
 //活动
 var activity = require('./activity');
 
+//足迹
+var foot = require('./foot');
+
 var spitslot = require('./spitslot');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -49,3 +52,4 @@ app.use('/user',user);
 app.use('/spitslot',spitslot);
 app.use('/upload',upload);
 app.use('/activity',activity);
+app.use('/foot',foot);
