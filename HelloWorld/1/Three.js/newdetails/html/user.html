@@ -134,19 +134,19 @@
 	<div class="mui-height-50"></div>
 	<footer>
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item" href="../../schedule/schedule.html">
+			<a class="mui-tab-item" href="../../schedule/schedule.html" data-type="N">
 				<span class="mui-icon mui-icon-home" ></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item" href="../../detail/scan.html">
+			<a class="mui-tab-item" href="../../detail/scan.html" data-type="N">
 				<span class="mui-icon mui-icon-phone"></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
-			<a class="mui-tab-item" href="share_irrigation.html">
+			<a class="mui-tab-item" href="share_companion.html" data-type="N">
 				<span class="mui-icon mui-icon-email"></span>
 				<span class="mui-tab-label">分享</span>
 			</a>
-			<a class="mui-tab-item mui-active">
+			<a class="mui-tab-item mui-active" data-type="N">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">我</span>
 			</a>
@@ -159,9 +159,16 @@
 		mui.init();
 		mui('body').on('tap','a',function(e){
 			var _this = this;
-			if(isLogin)
-				window.top.location.href=_this.href;
-			else mui.openWindow('login.html');
+			var type = this.getAttribute("data-type");
+			if(type=="N"){
+				mui.openWindow(_this.href);
+			}else{
+				if(isLogin)
+					window.top.location.href=_this.href;
+				else
+					mui.openWindow('login.html');
+			}
+			
 			
 		});
 		var myself = document.getElementById("myself");

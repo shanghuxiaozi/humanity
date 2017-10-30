@@ -13,13 +13,13 @@
 <main class="mui-content scan-content">
 	<div class="mui-row scan-row">
 		<div class="mui-clearfix mui-text-right scan-takepic">
-			<a href="javascript:void(0);">
+			<a href="javascript:void(0);" >
 				<img src="images/takepic1.png" class="takepic">
 			</a>
 			<a href="javascript:void(0);">
 				<img src="images/takepic2.png" class="takepic">
 			</a>
-			<a href="javascript:void(0);">
+			<a href="javascript:void(0);" class="mui-back mui-action-back">
 				<img src="images/takepic3.png" class="takepic">
 			</a>
 		</div>
@@ -74,14 +74,17 @@ function captureImage(){
 				entry.file( function(file){
 					var fileReader = new plus.io.FileReader();
 					alert("getFile:" + JSON.stringify(file));
+					//distinguish(file.fullPath);
 					fileReader.readAsDataURL(file)//readAsText(file, 'utf-8');
 					fileReader.onloadend = function(evt) {
-						alert("11" + evt);
+						alert("--*=" );
 						//alert("this.result" + this.result);
 						//alert(evt.target.result);
-						 result.innerHTML = '<img src="'+evt.target.result+'" alt="" style="width:100%;height:100%"/>'
+						
+						 result.innerHTML = '<img src="'+evt.target.result+'" alt="" style="width:100%;height:100%"/>';
+						 distinguish(evt.target.result.replace("data:image/png;base64,", ""));
 					}
-					alert(file.size + '--' + file.name);
+					//alert(file.size + '--' + file.name);
 				} );
                 /*img_div.src = path; 
                 img_div.onload =function() { 
@@ -150,6 +153,32 @@ function captureImage(){
 	);
 }
 
+
+function distinguish(data){
+	 $.ajax({
+			    type: "POST",
+			    dataType:'json',
+			     contentType: false,
+			    url: "http://txcjsb.market.alicloudapi.com/image/scene",
+			    data:JSON.stringify({  
+				   type:0, //# 0: 通过url识别，参数image_url不为空；1: 通过图片content识别，参数content不为空
+				   image_url:data,  //#输入图像URL
+				   //"content":data //#图像内容，base64编码
+				}),
+			    success: function(data){
+			        alert(data);
+			    },
+			    error:function(v){
+			    	alert(v);
+			    },
+			    beforeSend: function(xhr){
+	//		       token = window.localStorage.getItem('token');
+			            xhr.setRequestHeader("Authorization", "APPCODE d3d17cb32ed343d4a8d540dc2eec0087");
+			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			    }});
+}
+
+
 function getBase64Image(img) {
             var canvas = document.createElement("canvas");
             canvas.width = img.width;
@@ -157,7 +186,8 @@ function getBase64Image(img) {
             var ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, img.width, img.height);
             var dataURL = canvas.toDataURL("image/png");
-            return dataURL // return dataURL.replace("data:image/png;base64,", ""); 
+            //return dataURL //
+            return dataURL.replace("data:image/png;base64,", "");
         } 
 </script>
 </body>

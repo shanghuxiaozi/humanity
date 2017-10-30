@@ -7,26 +7,53 @@
     <script src="../js/mui.min.js"></script>
     <link href="../css/mui.min.css" rel="stylesheet"/>
     <link href="../css/common.css" rel="stylesheet" />
-   <script type="text/javascript" charset="utf-8">
-      	mui.init();
-    </script>
+    <style>
+    	.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar {
+		  background-color: #cd3829;
+		}
+		.mui-slider-progress-bar {
+		  height: 3px;
+		  width:10%;
+  			margin-left: 23%;
+ 		 }
+ 		 .mui-comment .icon-zan {
+		  width: 16px !important;
+		}
+		.mui-segmented-control .mui-control-item {
+		  display: initial;
+		  }
+		  
+		  .mui-slider-item {
+			   border-top: 0px !important; 
+			  border-bottom: 0px !important;
+			}
+			.mui-control-content {
+				/*background-color: white;*/
+				min-height: 215px;
+			}
+			.mui-tab {
+			  padding: 0px 0;
+			}
+			#e
+    </style>
+   
 </head>
 <body>
-	<header class="mui-bar mui-bar-nav mui-search-box mui-bar-fff">
+	<header class="mui-bar mui-bar-nav mui-search-box mui-bar-fff" id='firstContent'>
 		<a href="javascript:void(0);" class="mui-back mui-action-back"></a>
 		<a href="javascript:void(0);" class="mui-other-menu mui-icon mui-icon-plus"></a>
 		<div class="mui-clearfix mui-share-mask">
 			<!--右上角的关闭按钮-->
 			<a href="javascript:void(0);" class="mui-icon mui-icon-plus mui-mask-close"></a>
-			<a class="mui-col-xs-4 mui-pull-left mui-text-center">
+			<a class="mui-col-xs-4 mui-pull-left mui-text-center" href="share_publish_friends.html">
 				<img src="../images/shuoshuo.png" class="mui-img-response mui-img-shuo"/>
 				<p class="mui-name">说说</p>
 			</a>
-			<a class="mui-col-xs-4 mui-pull-left mui-text-center">
+			<a class="mui-col-xs-4 mui-pull-left mui-text-center" href="share_publish_companion.html">
 				<img src="../images/jieban-.png" class="mui-img-response mui-img-jie"/>
 				<p class="mui-name">结伴</p>
 			</a>
-			<a class="mui-col-xs-4 mui-pull-left mui-text-center">
+			<a class="mui-col-xs-4 mui-pull-left mui-text-center" href="share_publish_irrigation.html">
 				<img src="../images/guanshui.png" class="mui-img-response mui-img-guan"/>
 				<p class="mui-name">灌水</p>
 			</a>
@@ -35,7 +62,7 @@
 		</div>
 	</header>
 	
-	<div class="mui-iframe-wrapper" style="">
+	<div class="mui-iframe-wrapper" style="" >
 		
 		<!-- banner -->
 		<div class="mui-slider">
@@ -57,20 +84,130 @@
 		
 		<!-- tab切换 -->
 		<div class="mui-content">
-			<div class="mui-row mui-tab">
-				<div class="mui-col-xs-8">
-					<ul class="tab mui-table-view mui-clearfix">
-						<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center"><a href="javascript:void(0);">朋友圈</a></li>
-						<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center active"><a href="javascript:void(0);">结伴吧</a></li>
-						<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center"><a href="javascript:void(0);">灌水吧</a></li>
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-row mui-tab">
+						<div class="mui-col-xs-8">
+							<ul class="tab mui-table-view mui-clearfix">
+								<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center"><a class="mui-control-item"  href="#item1mobile">朋友圈</a></li>
+								<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center active"><a class="mui-control-item"  href="#item2mobile">结伴吧</a></li>
+								<li class="tab-cell mui-col-xs-4 mui-pull-left mui-text-center"><a class="mui-control-item"  href="#item3mobile">灌水吧</a></li>
+				
+							</ul>
+						</div>
+				
+					</div>
 		
-					</ul>
 				</div>
+			<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+			<div class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+					<!-- 评论 -->
+			<ul class="mui-table-view mui-comment mui-travel-comments">
+			    <li class="mui-table-view-cell mui-media">
+			        <div class="mui-comment-item">
+			        	<div>
+				            <img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">
+				            <div class="mui-media-body">
+				            	<a href="javascript:void(0);">
+									<p class='mui-ellipsis mui-comment-name'>爱旅游的小姐</p>
+									<b class="mui-comment-time">2017-08-03</b>
+									<p class="mui-travel-text">沙井生蚝好吃好久没吃,小伙伴快来吃啊！</p>
+									<img src="../images/img1.png" class="mui-img-response" />
+				            	</a>
+				            	<div class="mui-clearfix">
+				            		
+				            		<a href="javascript:void(0);" class="mui-pull-right mui-operate"></a>
+				            		<div class="mui-pull-right mui-clearfix mui-oper-div">
+				            			<span class="mui-oper-span">
+					            			<a href="javascript:void(0);" class="mui-oper-zan"></a>
+				            			</span>
+										<span class="mui-oper-span">
+											<a href="javascript:void(0);" class="mui-oper-comment"></a>
+										</span>
+				            			
+				            		</div>
+				            	</div>
 		
-			</div>
+		    		            <div class="mui-travel-revert">
+		    		            	<!--三角形-->
+		    		            	<i class="mui-triangle"></i>
+		    		            	<!--点赞-->
+		    		            	<div class="mui-zan">
+		    		            		<i class="mui-icon-zan"></i>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐</span>
+		    		            	</div>
+		    		            	<!--评论-->
+		    		            	<div class="mui-travel-comment">
+		    		            		<p><b class="zan-name">爱旅游的小姐：</b><b class="zan-text">啥时候过来啊！我在这边等你！啥时候过来啊</b></p>
+		    		            	</div>
+		    		            </div>
+				            </div>
 		
-
+			            </div>
+			        </div>
+			    </li>
+			    
+			    <li class="mui-table-view-cell mui-media">
+			        <div class="mui-comment-item">
+			        	<div>
+				            <img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">
+				            <div class="mui-media-body">
+				            	<a href="javascript:void(0);">
+									<p class='mui-ellipsis mui-comment-name'>爱旅游的小姐</p>
+									<b class="mui-comment-time">2017-08-03</b>
+									<p class="mui-travel-text">沙井生蚝好吃好久没吃,小伙伴快来吃啊！</p>
+									<img src="../images/img1.png" class="mui-img-response" />
+				            	</a>
+				            	<div class="mui-clearfix">
+				            		
+				            		<a href="javascript:void(0);" class="mui-pull-right mui-operate"></a>
+				            		<div class="mui-pull-right mui-clearfix mui-oper-div">
+				            			<span class="mui-oper-span">
+					            			<a href="javascript:void(0);" class="mui-oper-zan"></a>
+				            			</span>
+										<span class="mui-oper-span">
+											<a href="javascript:void(0);" class="mui-oper-comment"></a>
+										</span>
+				            			
+				            		</div>
+				            	</div>
+		
+		    		            <div class="mui-travel-revert">
+		    		            	<!--三角形-->
+		    		            	<i class="mui-triangle"></i>
+		    		            	<!--点赞-->
+		    		            	<div class="mui-zan">
+		    		            		<i class="mui-icon-zan"></i>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐、</span>
+		    		            		<span class="zan-name">爱旅游的小姐</span>
+		    		            	</div>
+		    		            	<!--评论-->
+		    		            	<div class="mui-travel-comment">
+		    		            		<p><b class="zan-name">爱旅游的小姐：</b><b class="zan-text">啥时候过来啊！我在这边等你！啥时候过来啊</b></p>
+		    		            	</div>
+		    		            </div>
+				            </div>
+		
+			            </div>
+			        </div>
+			    </li>
+			    
+			 
+			</ul>
 			
+			</div></div></div>
+			
+			<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll2" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
 			<!--评论内容-->
 			<ul class="mui-table-view mui-comment mui-spitslot-lists mui-companion-lists">
 			
@@ -212,8 +349,82 @@
 
 			</ul>
 			
+			</div></div></div>
+			<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div id="scroll3" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+					<!--评论内容-->
+			<ul class="mui-table-view mui-comment mui-spitslot-lists mui-irrigation-lists">
 			
+				<li class="mui-table-view-cell mui-media">
+					<div class="mui-comment-item">
+						<a href="javascript:void(0);">
+							<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">
+							<div class="mui-media-body">
+								<p class="mui-comment-name"><b class="mui-spitslot-name">爱旅游的小姐</b><b class="mui-spitslot-ticket">摄影</b></p>
+								<b class="mui-comment-time">2017-08-03</b>
+							</div>
+							<div class="mui-spitslot-con">
+								<p>生蚝第一次吃，味道还是很不错，下次再来。哈哈！</p>
+							</div>
+						</a>
+						<div class="mui-text-right mui-irrigation-oper">
+							<a href="javascript:void(0);" class="mui-icon-comment">9</a>
+							<!--已点赞  加上active类-->
+							<a href="javascript:void(0);" class="mui-icon-zan active">5</a>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<div class="mui-comment-item">
+						<a href="javascript:void(0);">
+							<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">
+							<div class="mui-media-body">
+								<p class="mui-comment-name"><b class="mui-spitslot-name">爱旅游的小姐</b><b class="mui-spitslot-ticket">摄影</b></p>
+								<b class="mui-comment-time">2017-08-03</b>
+							</div>
+							<div class="mui-spitslot-con">
+								<p>生蚝第一次吃，味道还是很不错，下次再来。哈哈！</p>
+							</div>
+						</a>
+						<div class="mui-text-right mui-irrigation-oper">
+							<a href="javascript:void(0);" class="mui-icon-comment">9</a>
+							<!--已点赞  加上active类-->
+							<a href="javascript:void(0);" class="mui-icon-zan active">5</a>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<div class="mui-comment-item">
+						<a href="javascript:void(0);">
+							<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">
+							<div class="mui-media-body">
+								<p class="mui-comment-name"><b class="mui-spitslot-name">爱旅游的小姐</b><b class="mui-spitslot-ticket">摄影</b></p>
+								<b class="mui-comment-time">2017-08-03</b>
+							</div>
+							<div class="mui-spitslot-con">
+								<p>生蚝第一次吃，味道还是很不错，下次再来。哈哈！</p>
+							</div>
+						</a>
+						<div class="mui-text-right mui-irrigation-oper">
+							<a href="javascript:void(0);" class="mui-icon-comment">9</a>
+							<!--已点赞  加上active类-->
+							<a href="javascript:void(0);" class="mui-icon-zan active">5</a>
+						</div>
+					</div>
+				</li>
+
+			</ul>			
+			</div></div></div>
 			
+			</div>
+		<!--
+        	作者：921233883@qq.com
+        	时间：2017-10-30
+        	描述：<div id="slider" class="mui-slider">
+        -->
+		</div>
+		
 		</div>
 		
 		<div class="mui-height-50"></div>
@@ -221,12 +432,12 @@
 	</div>
 	<footer>
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item">
-				<span class="mui-icon mui-icon-home" href="../../schedule/schedule.html"></span>
+			<a class="mui-tab-item" href="../../schedule/schedule.html">
+				<span class="mui-icon mui-icon-home" ></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item">
-				<span class="mui-icon mui-icon-phone" href="../../detail/scan.html"></span>
+			<a class="mui-tab-item"  href="../../detail/scan.html">
+				<span class="mui-icon mui-icon-phone"></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
 			<a class="mui-tab-item mui-active">
@@ -240,14 +451,131 @@
 		</nav>
 	</footer>
 <script src="../js/mui.min.js"></script>
+<script src="../../js/tween/TweenLite.js"></script>
+<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
 	<script>
-		mui.init();
+		mui.init({
+			pullRefresh: {
+					container: '#item1mobile',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+		});
 		mui('body').on('tap','a',function(e){
 			window.top.location.href=this.href;
 		});
 		
-		
-		
+		(function($S) {
+			var scroll = $S('.mui-scroll-wrapper').scroll({
+					indicators: true //是否显示滚动条
+				});
+				console.log(scroll);
+				var mui_slider_progress_bar  = document.querySelector('.mui-slider-progress-bar');
+			document.getElementById('slider').addEventListener('slide', function(e) {
+				console.log(e.detail.slideNumber );
+				if(e.detail.slideNumber == 0){
+					mui_slider_progress_bar.style.marginLeft = '23%';
+					mui_slider_progress_bar.style.width='10%';
+				}else if(e.detail.slideNumber == 1){
+					mui_slider_progress_bar.style.marginLeft = '35%';
+					mui_slider_progress_bar.style.width='10%';
+				}else if(e.detail.slideNumber == 2){
+					mui_slider_progress_bar.style.marginLeft = '47%';
+					mui_slider_progress_bar.style.width='10%';
+				}
+				initHeight();
+			});
+			
+			initHeight();
+			function initHeight(){
+				var firstContent = document.getElementById("firstContent");
+				var sliderSegmentedControl = document.getElementById("sliderSegmentedControl");
+				var mui_control_content  = document.querySelectorAll('.mui-control-content');
+//				console.log(mui_control_content,window.innerHeight,firstContent.offsetHeight,sliderSegmentedControl.offsetHeight);
+				for(var i=0,m=mui_control_content.length;i<m;i++){
+					//mui_control_content[i].style.minHeight = $(mui_control_content[i]).find('.mui-scroll').innerHeight()-10+'px';
+//					console.log($(mui_control_content[i]).find('.mui-scroll').innerHeight());
+					var minHeight = window.innerHeight - firstContent.offsetHeight - sliderSegmentedControl.offsetHeight-84//+ (window.innerHeight<650?200:100 );
+					mui_control_content[i].style.minHeight = minHeight +'px';
+					if($(mui_control_content[i]).find('.mui-scroll').innerHeight()<minHeight){
+						$(mui_control_content[i]).find('.mui-scroll').innerHeight(minHeight+1) ;
+					}
+//					console.log(minHeight)
+				}
+				$('body')[0].style.minHeight = window.innerHeight + (window.innerHeight<650?200:100 )+'px';
+			}
+			
+			
+			var mui_scroll_wrapper = document.querySelectorAll('.mui-scroll-wrapper');
+			var isGo = false;
+			for(var i=0,m=mui_scroll_wrapper.length;i<m;i++){
+				mui_scroll_wrapper[i].addEventListener('scroll', function (e ) { 
+				      console.log(e.detail.y,document.body.scrollTop,isGo);
+				     if(e.detail.y>0 && !isGo){
+//				     	document.body.scrollTop = 0;
+						isGo = true;
+						TweenLite.to(document.body,1,{scrollTop:0,onComplete:function(){
+//							console.log('往');
+							isGo = false;
+						}});
+				     }else if(e.detail.y<-100 && !isGo){
+				     	isGo = true;
+//				     	document.body.scrollTop = 130;
+						TweenLite.to(document.body,1,{scrollTop:200,onComplete:function(){
+//							console.log('往');
+							isGo = false;
+						}});
+				     }
+				}) 
+			}
+			
+			
+			
+			
+			
+			
+		})(mui);
+		//-----------------------------------------------------
+			 /* 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for (var i = cells.length, len = i + 3; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						//下拉刷新，新纪录插到最前面；
+						table.insertBefore(li, table.firstChild);
+					}
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				}, 1500);
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+					var table = document.body.querySelector('.mui-table-view');
+					var cells = document.body.querySelectorAll('.mui-table-view-cell');
+					for (var i = cells.length, len = i + 5; i < len; i++) {
+						var li = document.createElement('li');
+						li.className = 'mui-table-view-cell';
+						li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+						table.appendChild(li);
+					}
+				}, 1500);
+			}
 		
 	</script>
 </body>
