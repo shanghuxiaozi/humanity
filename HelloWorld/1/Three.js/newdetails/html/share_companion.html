@@ -4,7 +4,7 @@
 	<title>分享-结伴吧</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <script src="../js/mui.min.js"></script>
+   
     <link href="../css/mui.min.css" rel="stylesheet"/>
     <link href="../css/common.css" rel="stylesheet" />
     <style>
@@ -105,7 +105,7 @@
 						<div id="scroll1" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 					<!-- 评论 -->
-			<ul class="mui-table-view mui-comment mui-travel-comments">
+			<ul class="mui-table-view mui-comment mui-travel-comments" id="friends_comments">
 			    <li class="mui-table-view-cell mui-media">
 			        <div class="mui-comment-item">
 			        	<div>
@@ -450,9 +450,9 @@
 			</a>
 		</nav>
 	</footer>
-<script src="../js/mui.min.js"></script>
-<script src="../../js/tween/TweenLite.js"></script>
-<script src="../../mobile/layer.js"></script>
+	<script src="../js/mui.min.js"></script>
+	<script src="../../js/tween/TweenLite.js"></script>
+	<script src="../../mobile/layer.js"></script>
 	<script src="../../js/path.js"></script>
 	<script src="../../js/jquery-1.9.1.js"></script>
 	<script>
@@ -471,6 +471,10 @@
 		mui('body').on('tap','a',function(e){
 			window.top.location.href=this.href;
 		});
+		
+		//分享朋友圈
+		var friends_comments = document.getElementById('friends_comments');
+		
 		
 		(function($S) {
 			var scroll = $S('.mui-scroll-wrapper').scroll({
@@ -540,6 +544,10 @@
 			
 			
 			
+			//通过分页查询分享数据
+			queryByPage();
+			
+			
 			
 		})(mui);
 		//-----------------------------------------------------
@@ -575,6 +583,79 @@
 						table.appendChild(li);
 					}
 				}, 1500);
+			}
+		
+			//通过分页查询分享数据
+			function queryByPage(){
+				humanAjax(JS_PATH+'/friends/queryByPage',{
+							data:{
+								pageNum:0,
+								pageSize:10
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								if(data.code==200&&data.data.length>0){
+									friends_comments.innerHTML = "";
+									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
+										var item = data.data[i];
+										friends_comments.innerHTML+='<li class="mui-table-view-cell mui-media">'
+			        +'<div class="mui-comment-item">'
+			        	+'<div>'
+				            +'<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">'
+				            +'<div class="mui-media-body">'
+				            	+'<a href="javascript:void(0);">'
+									+'<p class="mui-ellipsis mui-comment-name">'+item.user_name+'</p>'
+									+'<b class="mui-comment-time">'+item.publish_time.substring(0,10)+' '+item.publish_time.substring(11,16)+'</b>'
+									+item.publish_content//'<p class="mui-travel-text">'+item.publish_content+'</p>'
+									//+'<img src="../images/img1.png" class="mui-img-response" />'
+				            	+'</a>'
+				            	+'<div class="mui-clearfix">'
+				            		
+				            		+'<a href="javascript:void(0);" class="mui-pull-right mui-operate"></a>'
+				            		+'<div class="mui-pull-right mui-clearfix mui-oper-div">'
+				            			+'<span class="mui-oper-span">'
+					            			+'<a href="javascript:void(0);" class="mui-oper-zan"></a>'
+				            			+'</span>'
+										+'<span class="mui-oper-span">'
+											+'<a href="javascript:void(0);" class="mui-oper-comment"></a>'
+										+'</span>'
+				            			
+				            		+'</div>'
+				            	+'</div>'
+		
+		    		            +'<div class="mui-travel-revert">'
+		    		            	+'<!--三角形-->'
+		    		            	+'<i class="mui-triangle"></i>'
+		    		            	+'<!--点赞-->'
+		    		            	+'<div class="mui-zan">'
+		    		            		+'<i class="mui-icon-zan"></i>'
+		    		            		+'<span class="zan-name">爱旅游的小姐、</span>'
+		    		            		+'<span class="zan-name">爱旅游的小姐、</span>'
+		    		            		+'<span class="zan-name">爱旅游的小姐、</span>'
+		    		            		+'<span class="zan-name">爱旅游的小姐</span>'
+		    		            	+'</div>'
+		    		            	+'<!--评论-->'
+		    		            	+'<div class="mui-travel-comment">'
+		    		            		+'<p><b class="zan-name">爱旅游的小姐：</b><b class="zan-text">啥时候过来啊！我在这边等你！啥时候过来啊</b></p>'
+		    		            	+'</div>'
+		    		            +'</div>'
+				            +'</div>'
+		
+			            +'</div>'
+			        +'</div>'
+			    +'</li>';
+										
+									
+									}
+								}
+								
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+					},false);
 			}
 		
 	</script>

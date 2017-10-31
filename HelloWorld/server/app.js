@@ -11,6 +11,9 @@ var activity = require('./activity');
 //足迹
 var foot = require('./foot');
 
+//朋友圈分享
+var friends = require('./friends');
+
 var spitslot = require('./spitslot');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -53,3 +56,4 @@ app.use('/spitslot',spitslot);
 app.use('/upload',upload);
 app.use('/activity',activity);
 app.use('/foot',foot);
+app.use('/friends',friends);

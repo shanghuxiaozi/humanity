@@ -16,25 +16,51 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-/*查询分享数据*/
-router.get('/queryAll', function (req, res, next) {//
-		if(!req.query.id||req.query.id==""){
-			res.send({code:400,msg:'此景点id不存在'});
-			return;
-		}else{
-			var sql = 'select a.id ,a.publish_content,a.point_number,a.publish_time,a.scenice_id, a.scenice_name,a.type_id,a.user_id,a.user_name ,b.name ,c.nickname,c.headimg,c.login_type,c.openid,c.account from spitslot_record as a join spitslot_type b join app_user c on b.id = a.type_id and a.user_id=c.id  and a.scenice_id='+req.query.id;
-			console.log('------查询吐槽数据----');
-			console.log('sql=',sql);
-			//通过景点id查询
-			dbHelper.list(sql, function (data, res) {
-				
-				res.send(data);
-			}, res);
+/*通过分页查询分享数据*/
+router.get('/queryByPage', function (req, res, next) {//
+		if(!req.query.pageSize||req.query.pageSize==""){
+			req.query.pageSize = 10;
 		}
-    	
-	
-    
+		if(!req.query.pageNum||req.query.pageNum==""){
+			req.query.pageNum = 0;
+		}	
+			var countSql = 'SELECT COUNT(*) FROM say_say';//获取数据总条数
+			//
+			dbHelper.list(countSql, function (data, res) {
+				var totalPage = 0;
+				if(data && data.length>0)
+				totalPage = data[0]['COUNT(*)'];
+				var sql = 'select * from say_say where if_pass=1 limit '+ req.query.pageNum +','+req.query.pageSize*(req.query.pageNum+1);
+				console.log('分享数据总条数=',data,'------查询分享数据----');
+				console.log('sql=',sql);
+				//通过景点id查询
+				dbHelper.list(sql, function (list, res) {
+					
+					res.send({code:200,msg:'查询成功', data:list, totalPage:totalPage});
+				}, res);
+				
+			}, res);
 });
+
+/*朋友圈分享数据*/
+router.post('/publish',function(req, res, next){
+	console.log('------添加朋友圈分享数据----');
+	if(req.session.user){
+		var sql = 'insert into say_say(user_id,user_name,publish_content,publish_time,point_number) values('
+		+req.session.user.id+',"'+req.session.user.nickname+'","'
+			+req.body.publish_content+'","'+req.body.publish_time+'",0)';
+		console.log('sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			
+			res.send({code:200,msg:'分享成功'});
+		}, res);
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
+
+
 
 
 
