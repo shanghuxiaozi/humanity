@@ -20,6 +20,7 @@ var humanAjax = function(url,obj,isLoading,content){
 					crossDomain :obj.crossDomain,
 					dataType:obj.dataType,//服务器返回json格式数据
 					type:obj.type,//HTTP请求类型
+//					async:obj.async||false,
 					success:function(data){
 						if(isLoading){
 							layer.close(enIndex);

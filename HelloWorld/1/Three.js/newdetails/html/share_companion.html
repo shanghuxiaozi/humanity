@@ -456,18 +456,20 @@
 	<script src="../../js/path.js"></script>
 	<script src="../../js/jquery-1.9.1.js"></script>
 	<script>
-		mui.init({
-			pullRefresh: {
-					container: '#item1mobile',
-					down: {
-						callback: pulldownRefresh
-					},
-					up: {
-						contentrefresh: '正在加载...',
-						callback: pullupRefresh
-					}
-				}
-		});
+		mui.init(
+//			{
+//			pullRefresh: {
+//					container: '#item1mobile',
+//					down: {
+//						callback: pulldownRefresh
+//					},
+//					up: {
+//						contentrefresh: '正在加载...',
+//						callback: pullupRefresh
+//					}
+//				}
+//		}
+		);
 		mui('body').on('tap','a',function(e){
 			window.top.location.href=this.href;
 		});
@@ -521,7 +523,7 @@
 			var isGo = false;
 			for(var i=0,m=mui_scroll_wrapper.length;i<m;i++){
 				mui_scroll_wrapper[i].addEventListener('scroll', function (e ) { 
-				      console.log(e.detail.y,document.body.scrollTop,isGo);
+//				      console.log(e.detail.y,document.body.scrollTop,isGo);
 				     if(e.detail.y>0 && !isGo){
 //				     	document.body.scrollTop = 0;
 						isGo = true;
@@ -600,55 +602,123 @@
 									friends_comments.innerHTML = "";
 									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
 										var item = data.data[i];
-										friends_comments.innerHTML+='<li class="mui-table-view-cell mui-media">'
-			        +'<div class="mui-comment-item">'
-			        	+'<div>'
-				            +'<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">'
-				            +'<div class="mui-media-body">'
-				            	+'<a href="javascript:void(0);">'
-									+'<p class="mui-ellipsis mui-comment-name">'+item.user_name+'</p>'
-									+'<b class="mui-comment-time">'+item.publish_time.substring(0,10)+' '+item.publish_time.substring(11,16)+'</b>'
-									+item.publish_content//'<p class="mui-travel-text">'+item.publish_content+'</p>'
-									//+'<img src="../images/img1.png" class="mui-img-response" />'
-				            	+'</a>'
-				            	+'<div class="mui-clearfix">'
-				            		
-				            		+'<a href="javascript:void(0);" class="mui-pull-right mui-operate"></a>'
-				            		+'<div class="mui-pull-right mui-clearfix mui-oper-div">'
-				            			+'<span class="mui-oper-span">'
-					            			+'<a href="javascript:void(0);" class="mui-oper-zan"></a>'
-				            			+'</span>'
-										+'<span class="mui-oper-span">'
-											+'<a href="javascript:void(0);" class="mui-oper-comment"></a>'
-										+'</span>'
-				            			
-				            		+'</div>'
-				            	+'</div>'
-		
-		    		            +'<div class="mui-travel-revert">'
-		    		            	+'<!--三角形-->'
-		    		            	+'<i class="mui-triangle"></i>'
-		    		            	+'<!--点赞-->'
-		    		            	+'<div class="mui-zan">'
-		    		            		+'<i class="mui-icon-zan"></i>'
-		    		            		+'<span class="zan-name">爱旅游的小姐、</span>'
-		    		            		+'<span class="zan-name">爱旅游的小姐、</span>'
-		    		            		+'<span class="zan-name">爱旅游的小姐、</span>'
-		    		            		+'<span class="zan-name">爱旅游的小姐</span>'
-		    		            	+'</div>'
-		    		            	+'<!--评论-->'
-		    		            	+'<div class="mui-travel-comment">'
-		    		            		+'<p><b class="zan-name">爱旅游的小姐：</b><b class="zan-text">啥时候过来啊！我在这边等你！啥时候过来啊</b></p>'
-		    		            	+'</div>'
-		    		            +'</div>'
-				            +'</div>'
-		
-			            +'</div>'
-			        +'</div>'
-			    +'</li>';
+										friends_comments.innerHTML+='<li class="mui-table-view-cell mui-media" id="say_'+item.id+'">'
+											        +'<div class="mui-comment-item">'
+											        	+'<div>'
+												            +'<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">'
+												            +'<div class="mui-media-body">'
+												            	+'<a href="javascript:void(0);">'
+																	+'<p class="mui-ellipsis mui-comment-name">'+item.user_name+'</p>'
+																	+'<b class="mui-comment-time">'+item.publish_time.substring(0,10)+' '+item.publish_time.substring(11,16)+'</b>'
+																	+item.publish_content//'<p class="mui-travel-text">'+item.publish_content+'</p>'
+																	//+'<img src="../images/img1.png" class="mui-img-response" />'
+												            	+'</a>'
+												            	+'<div class="mui-clearfix">'
+												            		
+												            		+'<a href="javascript:void(0);" class="mui-pull-right mui-operate"></a>'
+												            		+'<div class="mui-pull-right mui-clearfix mui-oper-div">'
+												            			+'<span class="mui-oper-span">'
+													            			+'<a href="javascript:void(0);" class="mui-oper-zan" id="zan_'+i+'" say-id="'+item.id+'"></a>'
+												            			+'</span>'
+																		+'<span class="mui-oper-span">'
+																			+'<a href="javascript:void(0);" class="mui-oper-comment"></a>'
+																		+'</span>'
+												            			
+												            		+'</div>'
+												            	+'</div>'
 										
-									
+										    		            +'<div class="mui-travel-revert">'
+										    		            	+'<!--三角形-->'
+										    		            	+'<i class="mui-triangle"></i>'
+										    		            	+'<!--点赞-->'
+										    		            	+'<div class="mui-zan">'
+										    		            		+'<i class="mui-icon-zan"></i>'
+										    		           	+'<span class="zan-name"></span>'
+										    		            		+'<span class="zan-name"></span>'
+										    		            		+'<span class="zan-name"></span>'
+										    		            		+'<span class="zan-name"></span>'
+										    		            	+'</div>'
+										    		            	+'<!--评论-->'
+										    		            	+'<div class="mui-travel-comment">'
+										    		            		+'<p><b class="zan-name">爱旅游的小姐：</b><b class="zan-text">啥时候过来啊！我在这边等你！啥时候过来啊</b></p>'
+										    		            	+'</div>'
+										    		            +'</div>'
+												            +'</div>'
+										
+											            +'</div>'
+											        +'</div>'
+											    +'</li>';
+										var zan = document.getElementById('zan_'+i);//点赞,不知道为什么这样写不生效，原因不明
+//										zan.addEventListener('tap',function(e){
+//											console.log(this)
+//										});
+										//查询自己是否点了此说说
+										queryThumbsUpByMyself( item.id, function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													var _i = _d.data[0];
+													if(_i.if_spot.data[0] == 1){//console.log('点赞',zan)
+														$('#say_'+_i.say_id).find('.mui-oper-zan').css('background-image','url(../images/zanh_icon.png)');//  background: url(../images/zanh_icon.png)no-repeat center center;
+														$('#say_'+_i.say_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
+													}else{
+														$('#say_'+_i.say_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示点赞后被取消
+													}
+													$('#say_'+_i.say_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
+												}
+											}
+											
+										} );
+										
+										//查询朋友圈点赞数据
+										queryThumbsUp(item.id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(0).html(_i.user_name+(j<m-1?'、':''))
+														}
+														
+													}
+												}
+											}
+										});
 									}
+									
+									
+									
+									
+									//点赞按钮
+									var zanList = document.querySelectorAll('.mui-oper-zan');
+									for(var i=0,m=zanList.length;i<m;i++){
+										var zan = zanList[i];
+										zan.addEventListener('tap',function(){
+											console.log(this)
+											var say_id = $(this).attr('say-id');
+											if($(this).attr('isThumbsUp')!='1'&&$(this).attr('isThumbsUp')!='2'){//如果没被点赞
+												
+												thumbsUp(say_id,function(_d){
+													$('#say_'+say_id).find('.mui-oper-zan').css('background-image','url(../images/zanh_icon.png)');
+													$('#say_'+say_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
+												});
+											}else if($(this).attr('isThumbsUp')=='1'){
+												updateThumbsUp($(this).attr('spot_id'),0,function(_d){
+													$('#say_'+say_id).find('.mui-oper-zan').css('background-image','url(../images/good.png)');
+													$('#say_'+say_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示取消点赞
+													mui.toast('您已经取消点赞!')
+												});
+											}else if($(this).attr('isThumbsUp')=='2'){
+												updateThumbsUp($(this).attr('spot_id'),1,function(_d){
+													$('#say_'+say_id).find('.mui-oper-zan').css('background-image','url(../images/zanh_icon.png)');
+													$('#say_'+say_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示取消点赞
+													mui.toast('点赞成功!')
+												});
+											}
+											
+										});
+										
+									}
+									
 								}
 								
 								
@@ -658,6 +728,84 @@
 					},false);
 			}
 		
+		
+		
+			/*查询自己当前说说id朋友圈点赞数据*/
+			function queryThumbsUpByMyself(say_id,_backFunc){
+				humanAjax(JS_PATH+'/friends/queryThumbsUpByMyself',{
+					data:{
+						say_id:say_id
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					//async:true,
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+		
+			/*查询朋友圈点赞数据*/
+			function queryThumbsUp(say_id,_backFunc){
+				humanAjax(JS_PATH+'/friends/queryThumbsUp',{
+					data:{
+						say_id:say_id,
+						pageNum:0,
+						pageSize:10
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+			
+			/*点赞*/
+			function thumbsUp(say_id,_backFunc){
+				humanAjax(JS_PATH+'/friends/thumbsUp',{
+					data:{
+						say_id:say_id,
+						create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+						if_spot:1,
+						
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+			
+			/*更新点赞*/
+			function updateThumbsUp(id,if_spot,_backFunc){
+				humanAjax(JS_PATH+'/friends/upDateThumbsUp',{
+					data:{
+						id:id,
+						if_spot:if_spot
+						
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+			
 	</script>
 </body>
-</html>
+</html>3
