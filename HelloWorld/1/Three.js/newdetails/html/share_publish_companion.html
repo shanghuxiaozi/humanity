@@ -5,17 +5,17 @@
 		<title>发布-结伴吧</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<script src="../js/mui.min.js"></script>
+		
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/common.css" rel="stylesheet" />
-		
-		
+		<link href="../../hello-mui/css/mui.picker.css" rel="stylesheet" />
+		<link href="../../hello-mui/css/mui.dtpicker.css" rel="stylesheet" />
 	</head>
 	<body>
 	<header class="mui-bar mui-bar-nav mui-search-box">
 		<a href="javascript:void(0);" class="mui-action-back mui-link-back">返回</a>
 		<h4 class="mui-title">结伴吧</h4>
-		<a class="mui-link">发布</a>
+		<a class="mui-link" id="publishBtn">发布</a>
 	</header>
 	
 	<div class="mui-iframe-wrapper" style="top: 44px;">
@@ -23,37 +23,41 @@
 		<ul class="mui-table-view mui-table-companion">
 			<li class="mui-table-view-cell mui-clearfix mui-row-bottom">
 				<label class="mui-pull-left mui-form-lable">结伴时间：</label>
-				<input type="text" class="mui-pull-left mui-form-control"/>
+				<input type="text" class="mui-pull-left mui-form-control" readonly="readonly" id="timeBtn"/>
 			</li>
 			<li class="mui-table-view-cell mui-clearfix mui-row-bottom">
 				<label class="mui-pull-left mui-form-lable">结伴人数：</label>
-				<input type="number" class="mui-pull-left mui-form-control"/>
+				<input type="number" class="mui-pull-left mui-form-control" id="tc_number"/>
 			</li>
 			<li class="mui-table-view-cell mui-clearfix mui-row-bottom">
 				<label class="mui-pull-left mui-form-lable">结伴要求：</label>
-				<input type="text" class="mui-pull-left mui-form-control"/>
+				<input type="text" class="mui-pull-left mui-form-control" id="tc_require"/>
 			</li>
 			<li class="mui-table-view-cell mui-clearfix mui-row-bottom">
 				<label class="mui-pull-left mui-form-lable">目的地：</label>
-				<input type="text" class="mui-pull-left mui-form-control"/>
+				<input type="text" class="mui-pull-left mui-form-control" id="destination"/>
 			</li>
 
 		</ul>
 		<div class="mui-row-item mui-publish-friends">
-			<textarea placeholder="把你这一刻记录下来吧！" class="mui-form-control"></textarea>
+			<textarea placeholder="把你这一刻记录下来吧！" class="mui-form-control" id="publish_content"></textarea>
 			<div class="mui-clearfix mui-row-bottom mui-padbom-10">
 				<!--预览的图片-->
-				<span class="mui-pull-left mui-phone-preview">
+				<div id="preview">
+				<!--<span class="mui-pull-left mui-phone-preview">
 					<a href="javascript:void(0);" class="mui-icon-remove"></a>
 					<img src="../images/img1.png" class="mui-img-response"/>
 				</span>
 				<span class="mui-pull-left mui-phone-preview">
 					<a href="javascript:void(0);" class="mui-icon-remove"></a>
 					<img src="../images/img1.png" class="mui-img-response"/>
-				</span>
+				</span>-->
+				</div>
 				<!--上传图片-->
 				<span class="mui-publish-vedio mui-text-center mui-pull-left">
-					<input type="file"  class="mui-file"/>
+					<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data">
+							<input type="file" name="fulAvatar" class="mui-file upload_img" onchange="uploadByForm(this)"/>
+						</form>
 					<img src="../images/tab_vediodark_icon.png" class="mui-vedio-phone"/>
 					<p class="mui-vedio-text">图片 / 视频</p>
 				</span>
@@ -61,8 +65,8 @@
 			<!--所在位置-->
 			<ul class="mui-table-view mui-table-vedio">
 				<li class="mui-table-view-cell mui-row-bottom">
-					<a href="javascript:void(0);" class="mui-clearfix">
-						<div class="mui-pull-left mui-left-text"><i class="mui-icon-address"></i>所在位置</div>
+					<a href="javascript:void(0);" class="mui-clearfix" id="chooseMap">
+						<div class="mui-pull-left mui-left-text" id="address"><i class="mui-icon-address"></i>所在位置</div>
 						<div class="mui-pull-right mui-right-traggle">
 							<i class="mui-icon-traggle"></i>
 						</div>
@@ -70,17 +74,255 @@
 				</li>
 				<li class="mui-table-view-cell mui-row-bottom mui-clearfix">
 					<div class="mui-pull-left mui-left-text mui-groud-check">
-						<input type="checkbox" class="mui-checked-input"/>
-						<label class="mui-checked-label">所在群组</label>
+						<input type="checkbox" class="mui-checked-input" id="check_group"/>
+						<label class="mui-checked-label">创建群组</label>
 					</div>
-
+					
+				</li>
+				<li class="mui-table-view-cell mui-row-bottom ">
+					<label class="mui-pull-left mui-left-text">群名称：</label>
+					<input type="text" class="mui-pull-right" id="createGroup"/>
 				</li>
 			</ul>
 		</div>
 
 	</div>
+	<script src="../js/mui.min.js"></script>
+	<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
+	<script src="../../hello-mui/js/mui.picker.js"></script>
+	<script src="../../hello-mui/js/mui.dtpicker.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
+			var picNum = 0;//上传图片数量
+			var picHtml = "";//图片返回的img内容
+		  	
+		  	
+		  	/**
+		     * ajax 上传。这里主要是上传图片。
+		     */
+			    function uploadByForm(target){
+			    	
+			    	function validate_img(a){
+						 var file = a;
+						 if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(file)){
+						  alert("图片类型必须是.gif,jpeg,jpg,png中的一种");
+						  return false;
+						}else{
+						     var image = new Image();
+						     image.onload = function(){
+						     	var height = image.height;
+							     var width = image.width;
+							     var filesize = image.fileSize;
+							      alert(height+"x.."+filesize);
+							     if(width>780 && height>780 /*&& filesize>102400*/){
+							      alert('请上传780*780像素 或者大小小于100k的图片');
+							      return false;
+							     }else{
+							     	alert("图片通过");
+						 			return true;
+							     }
+						     }
+						     image.src = file;
+						     
+						     
+						 }
+						 
+						}
+			    	
+			    	
+			    	var formData = new FormData($("#myForm")[0]);//获取表单数据
+			    	$Ajax(JS_PATH+'/upload/uploader',{
+							data:formData,
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									
+//									if(validate_img(data.newPath)){
+										mui.toast("图片提交成功");
+										picNum++;
+										$('#preview').append('<span class="mui-pull-left mui-phone-preview">'
+											+'<a href="javascript:void(0);" class="mui-icon-remove" id="remove_'+picNum+'"></a>'
+											+'<img src="'+data.newPath+'" class="mui-img-response"/>'
+										+'</span>');
+										
+										//删除图片按钮
+										document.getElementById('remove_'+picNum).addEventListener('tap',function(){
+											var _this = this;
+											//把删除的图片从里面删除
+											picHtml=picHtml.replace("<div class='mui-companion-img mui-pull-left'><img class='mui-img'  src='"+($(_this).parents('.mui-phone-preview').find('img').attr('src'))+"'/></div>",'')
+											$(_this).parents('.mui-phone-preview').remove();
+										});
+										
+										
+										
+										
+										if((data.newPath).indexOf('.mp4')!=-1){
+											
+										}else
+											picHtml += "<div class='mui-companion-img mui-pull-left'><img class='mui-img'  src='"+data.newPath+"'/></div>";
+										
+										console.log(picHtml);
+								}else{
+									mui.toast("提交失败");
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true,"上传中");
+			    }
+			    
+			    
+			    //发布按钮
+			    var publishBtn = document.getElementById("publishBtn");
+			    var publish_content = document.getElementById("publish_content");
+			    publishBtn.addEventListener('tap',function(){
+//			    	console.log($('#check_group')[0].checked);return
+			    	if(timeBtn.value==""||$('#timeBtn').val()==""||$('#timeBtn').val()==""){
+			    		mui.toast("必输项为空!");
+			    		return;
+			    	}
+			    	if($('#check_group')[0].checked){
+			    		
+			    		creatGrounp(function(_d){
+			    			
+			    			humanAjax(JS_PATH+'/companion/publish',{
+							data:{
+								tc_content:"<div class='mui-clearfix mui-companion-groud'><p>"+publish_content.value+"</p></div><div class='mui-companion-groud mui-companion-imgs mui-clearfix'>"+picHtml+"</div>",
+								push_time:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+								tc_time:timeBtn.value,
+								tc_require:$('#tc_require').val(),
+								tc_number:$('#tc_number').val()||1,
+								destination:$('#destination').val(),
+								tc_location:$('#address').text(),
+								start_time:$('#timeBtn').val(),
+								group_id:_d.data.insertId
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									mui.toast("提交成功");
+								}else{
+									mui.toast("提交失败");
+								}
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+							},true,'提交中...');
+			    		});
+			    	}else{
+			    		humanAjax(JS_PATH+'/companion/publish',{
+							data:{
+								tc_content:"<div class='mui-clearfix mui-companion-groud'><p>"+publish_content.value+"</p></div><div class='mui-companion-groud mui-companion-imgs mui-clearfix'>"+picHtml+"</div>",
+								push_time:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+								tc_time:timeBtn.value,
+								tc_require:$('#tc_require').val(),
+								tc_number:$('#tc_number').val(),
+								destination:$('#destination').val(),
+								tc_location:$('#address').text(),
+								start_time:$('#timeBtn').val()
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									mui.toast("提交成功");
+								}else{
+									mui.toast("提交失败");
+								}
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true,'提交中...');
+			    	}
+			    	
+			    	
+			    	
+			    	
+			    	
+			    })
+			    
+			    
+			    var chooseMap = document.getElementById('chooseMap');
+			    chooseMap.addEventListener('tap',function(){
+			    	
+			    	var webview = mui.openWindow("choose_map.html")
+			    	webview.addEventListener('loaded', function(e){
+//							alert('Webview Hided');
+						}, false);
+						webview.addEventListener('close', function(e){
+//							alert('Webview close');
+							if(localStorage.getItem('choose_from')=='true'){
+					       		localStorage.setItem('choose_from','false');
+					       		$('#address').html('<i class="mui-icon-address"></i>'+localStorage.getItem('choose_destination'));
+					       }
+						}, false );
+			    	
+			    });
+			    
+			    
+			    var isPageShow= false;  
+			    window.addEventListener('pageshow', function () {  
+			        isPageShow= false; 
+			       if(localStorage.getItem('choose_from')=='true'){
+			       		localStorage.setItem('choose_from','false');
+			       		$('#address').html('<i class="mui-icon-address"></i>'+localStorage.getItem('choose_destination'));
+			       }
+			    });  
+			    window.addEventListener('pagehide', function () {  
+			        isPageShow = false;  
+			    }); 
+			    
+			    
+			    
+			    //时间选择器
+			     var dtPicker = new mui.DtPicker({type:'datetime'}); 
+			    
+			    
+			    var timeBtn = document.getElementById('timeBtn');
+			    timeBtn.addEventListener('tap',function(){
+				    	dtPicker.show(function (selectItems) { 
+				        console.log(selectItems);//{text: "2016",value: 2016} 
+				        //console.log(selectItems.m);//{text: "05",value: "05"} 
+				        timeBtn.value = selectItems.text;
+			    	})
+			    })
+			    
+			    //创建群组
+			    function creatGrounp( _callBack ){
+			    	humanAjax(JS_PATH+'/companion/group',{
+							data:{
+								create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+								name:$('#createGroup').val(),
+								state:1,
+								type:0
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									mui.toast("群组创建成功");
+									if(typeof _callBack == 'function'){
+										_callBack(data);
+									}
+								}else{
+									mui.toast("提交失败");
+								}
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+					},true,'提交中...');
+			    }
+			    
+			    
 		</script>
 	</body>
 </html>

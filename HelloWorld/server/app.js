@@ -14,6 +14,9 @@ var foot = require('./foot');
 //朋友圈分享
 var friends = require('./friends');
 
+//结伴
+var companion = require('./companion');
+
 var spitslot = require('./spitslot');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -57,3 +60,4 @@ app.use('/upload',upload);
 app.use('/activity',activity);
 app.use('/foot',foot);
 app.use('/friends',friends);
+app.use('/companion',companion);

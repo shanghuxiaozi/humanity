@@ -226,7 +226,7 @@
 						<div id="scroll2" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 			<!--评论内容-->
-			<ul class="mui-table-view mui-comment mui-spitslot-lists mui-companion-lists">
+			<ul class="mui-table-view mui-comment mui-spitslot-lists mui-companion-lists" id="companion_comments">
 			
 				<li class="mui-table-view-cell mui-media">
 					<div class="mui-comment-item">
@@ -322,6 +322,8 @@
 									目的地：<b>厦门</b>
 								</div>
 							</div>
+							<div class="companion_content">
+								
 							<div class="mui-clearfix mui-companion-groud">
 								<p>在家无聊，有一期去厦门玩玩的吗</p>
 							</div>
@@ -337,7 +339,7 @@
 									<img src="../images/img1.png" class="mui-img"/>
 								</div>
 							</div>
-														
+							</div>							
 						</a>
 						<div class="mui-clearfix mui-companion-opers">
 							<div class="mui-pull-left">
@@ -577,7 +579,8 @@
 			//通过分页查询分享数据
 			queryByPage();
 			
-			
+			//查询结伴记录
+			queryCompanionByPage();
 			
 		})(mui);
 		//-----------------------------------------------------
@@ -865,6 +868,26 @@
 						if_spot:if_spot
 						
 					},
+					webviewBackHandler:function(){
+						
+						//查询自己是否点了此说说
+										queryThumbsUpByMyself( id, function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													var _i = _d.data[0];
+													if(_i.if_spot.data[0] == 1){//console.log('点赞',zan)
+														$('#say_'+_i.say_id).find('.mui-oper-zan').css('background-image','url(../images/zanh_icon.png)');//  background: url(../images/zanh_icon.png)no-repeat center center;
+														$('#say_'+_i.say_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
+													}else{
+														$('#say_'+_i.say_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示点赞后被取消
+													}
+													$('#say_'+_i.say_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
+												}
+											}
+											
+										} );
+						
+					},
 					crossDomain :true,
 					dataType:'json',//服务器返回json格式数据
 					type:'post',//HTTP请求类型
@@ -951,6 +974,96 @@
 						mui.toast("系统出错");
 				}});
 			});
+			
+			
+			
+			
+			
+			
+			//-----------------------------------------------结伴-------------------------------------------------------
+			var companion_comments = document.getElementById('companion_comments');
+			//通过分页查询结伴数据
+			function queryCompanionByPage(){
+			
+				humanAjax(JS_PATH+'/companion/queryByPage',{
+							data:{
+								pageNum:0,
+								pageSize:10
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								companion_comments.innerHTML = "";
+								if(data.code==200&&data.data.length>0){
+									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
+										var item = data.data[i];
+										companion_comments.innerHTML+= '<li class="mui-table-view-cell mui-media">'
+												+'<div class="mui-comment-item">'
+													+'<a class="mui-btn mui-btn-danger">关注</a>'
+													+'<a href="javascript:void(0);">'
+														+'<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">'
+														+'<div class="mui-media-body">'
+															+'<p class="mui-comment-name"><b class="mui-spitslot-name">'+item.user_name+'</b></p>'
+															+'<b class="mui-comment-time">'+item.tc_time.substring(0,10)+' '+item.push_time.substring(11,16)+'</b>'
+														+'</div>'
+														
+														+'<div class="mui-clearfix mui-companion-groud">'
+															+'<div class="mui-pull-left">'
+																+'出发时间：<b>'+item.start_time.substring(5,7)+'月'+item.start_time.substring(8,10)+'号</b>'
+															+'</div>'
+															+'<div class="mui-pull-right">'
+																+'旅行要求：<b>'+item.tc_require+'</b>'
+															+'</div>'
+														+'</div>'
+														+'<div class="mui-clearfix mui-companion-groud">'
+															+'<div class="mui-pull-left">'
+																+'出发人数：<b>'+item.tc_number+'</b>人'
+															+'</div>'
+															+'<div class="mui-pull-right">'
+																+'目的地：<b>'+item.destination+'</b>'
+															+'</div>'
+														+'</div>'
+														+'<div class="companion_content">'
+															+item.tc_content
+														+'</div>'
+																					
+													+'</a>'
+													+'<div class="mui-clearfix mui-companion-opers">'
+														+'<div class="mui-pull-left">'
+															+'<p class="mui-position">'
+																+item.location
+															+'</p>'
+														+'</div>'
+														+'<div class="mui-pull-right mui-text-right">'
+															+'<a href="javascript:void(0);" class="mui-group-chat">'
+																+'群聊'
+															+'</a>'
+															+'<a href="javascript:void(0);" class="mui-private-chat">'
+																+'私信'
+															+'</a>'
+															+'<a href="javascript:void(0);" class="mui-comment-chat">'
+																+'评论'
+															+'</a>'
+													
+														+'</div>'
+													+'</div>'
+											
+												+'</div>'
+											+'</li>';
+									}
+									
+								}
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+							
+					});
+			
+			}
+			
+			
+			
 			
 	</script>
 </body>
