@@ -1000,7 +1000,7 @@
 										var item = data.data[i];
 										companion_comments.innerHTML+= '<li class="mui-table-view-cell mui-media">'
 												+'<div class="mui-comment-item">'
-													+'<a class="mui-btn mui-btn-danger">关注</a>'
+													+'<a href="javascript:void(0);" company-id="'+item.id+'" class="mui-btn mui-btn-danger followBtn" id="follow_'+item.id+'">关注</a>'
 													+'<a href="javascript:void(0);">'
 														+'<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">'
 														+'<div class="mui-media-body">'
@@ -1036,7 +1036,7 @@
 															+'</p>'
 														+'</div>'
 														+'<div class="mui-pull-right mui-text-right">'
-															+'<a href="javascript:void(0);" class="mui-group-chat">'
+															+'<a href="../chat/index.html?group_id='+item.group_id+'" class="mui-group-chat" group_id="'+item.group_id+'">'
 																+'群聊'
 															+'</a>'
 															+'<a href="javascript:void(0);" class="mui-private-chat">'
@@ -1051,8 +1051,66 @@
 											
 												+'</div>'
 											+'</li>';
+											
+											queryFloow(item.id,function(_d){
+												if(_d.code == 200 && _d.data.length > 0){
+													var _i = _d.data[0];
+													console.log($('#follow_'+ _i.company_id));
+													$('#follow_'+ _i.company_id).css('background-color','grey');
+													$('#follow_'+ _i.company_id).attr('isFloow','true');
+													$('#follow_'+ _i.company_id).html('已关注');
+													//$('#follow_'+ _i.company_id).attr('disabled','disabled');
+												}
+											});
+//											
+											
 									}
 									
+									
+									
+									
+									
+									//关注按钮
+									var followList = document.querySelectorAll('.followBtn');
+									for(var i = 0,m = followList.length ; i < m ; i++){
+										var f = followList[i];
+										f.addEventListener('tap',function(){
+											var _this = this;
+											if($(_this).attr('isFloow')=='true'){
+												deleteFloow($(_this).attr('company-id'),function(_d){
+													if(_d.code == 200 ){
+														var _i = _d.data;
+														$('#follow_'+ _i.company_id).css('background-color','#cd3829');
+														$('#follow_'+ _i.company_id).attr('isFloow','false');
+														$('#follow_'+ _i.company_id).html('关注');
+													}
+												});
+											}else{
+												insertFloow($(_this).attr('company-id'),function(_d){
+													if(_d.code == 200 ){
+														var _i = _d.data;
+														$('#follow_'+ _i.company_id).css('background-color','grey');
+														$('#follow_'+ _i.company_id).attr('isFloow','true');
+														$('#follow_'+ _i.company_id).html('已关注');
+													}
+												});
+											}
+											
+										})
+										
+										
+									}
+									//群聊
+									var chatList = document.querySelectorAll('.mui-group-chat');
+									for(var i = 0,m = chatList.length ; i < m ; i++){
+										var s = chatList[i];console.log(s);
+										s.addEventListener('tap',function(){
+											console.log(this);
+//											mui.openWindow(this.href+'?group_id='+this.getAttribute('group_id'));
+//											window.open('../chat/index.html')
+//											window.location.href = '../chat/index.html';
+										});
+									}
 								}
 							},error:function(e){
 								mui.toast("系统出错");
@@ -1062,8 +1120,58 @@
 			
 			}
 			
+			function queryFloow(company_id,_backFunc){
+				humanAjax(JS_PATH+'/companion/queryFollow',{
+					data:{
+						company_id:company_id
+						
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}},false,null,true);
+			}
 			
 			
+			function insertFloow(company_id,_backFunc){
+				humanAjax(JS_PATH+'/companion/follow',{
+					data:{
+						company_id:company_id,
+						status:1
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					success:function(data){
+						mui.toast("关注成功");
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+			
+			function deleteFloow(company_id,_backFunc){
+				humanAjax(JS_PATH+'/companion/deleteFollow',{
+					data:{
+						company_id:company_id
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					success:function(data){
+						mui.toast("取消关注");
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
 			
 	</script>
 </body>

@@ -8,7 +8,16 @@
 		<script src="../js/mui.min.js"></script>
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/common.css" rel="stylesheet" />
-
+		<style>
+			.mui-file {
+			  position: absolute;
+			  left: 0;
+			  top: 0;
+			  width: 100%;
+			  height: 100%;
+			  opacity: 0;
+			}
+		</style>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
 		</script>
@@ -29,7 +38,10 @@
 							<div class="mui-pull-right mui-line-height-0">
 								<!--只读内容-->
 								<span class="mui-readly">
-									<img src="../images/foot_img.png" class="mui-img-response mui-person-logo" />
+									<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data">
+										<input type="file" name="fulAvatar" class="mui-file upload_img" onchange="uploadByForm(this)"/>
+									</form>
+									<img src="../images/foot_img.png" class="mui-img-response mui-person-logo" id="headImgC"/>
 								</span>
 								<!--修改内容-->
 								<a href="javascript:void(0);" class="mui-edit-op">
@@ -100,6 +112,8 @@
 				<a href="javascript:void(0);" class="mui-btn mui-btn-danger" id="saveBtn">保存</a>
 			</div>
 		</div>
+		<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
 		<script src="../../js/jquery-1.9.1.js"></script>
 		<script type="text/javascript">
 			var editBtn = document.getElementById("editBtn");
@@ -110,6 +124,65 @@
 				$('.mui-person-select.mui-edit-op').show();
 				$('.mui-person-save').show();
 			});
+			
+			var picNum = 0;//上传图片数量
+			var picHtml = "";//图片返回的img内容
+		  	
+		  	
+		  	/**
+		     * ajax 上传。这里主要是上传图片。
+		     */
+			    function uploadByForm(target){
+			    	
+			    	function validate_img(a){
+						 var file = a;
+						 if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(file)){
+						  alert("图片类型必须是.gif,jpeg,jpg,png中的一种");
+						  return false;
+						}else{
+						     var image = new Image();
+						     image.onload = function(){
+						     	var height = image.height;
+							     var width = image.width;
+							     var filesize = image.fileSize;
+							      alert(height+"x.."+filesize);
+							     if(width>780 && height>780 /*&& filesize>102400*/){
+							      alert('请上传780*780像素 或者大小小于100k的图片');
+							      return false;
+							     }else{
+							     	alert("图片通过");
+						 			return true;
+							     }
+						     }
+						     image.src = file;
+						     
+						     
+						 }
+						 
+						}
+			    	
+			    	
+			    	var formData = new FormData($("#myForm")[0]);//获取表单数据
+			    	$Ajax(JS_PATH+'/upload/uploader',{
+							data:formData,
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+										$('#headImgC').attr('src',data.newPath)
+										mui.toast("图片提交成功");
+								}else{
+									mui.toast("提交失败");
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true,"上传中");
+			    }
+			
+			
 		</script>
 	</body>
 </html>

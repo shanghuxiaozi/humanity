@@ -5,7 +5,7 @@ var JS_PATH="http://120.25.221.94:8080";//本项目所有ajax，域名配置
  * @param {Object} obj 请求参数，函数
  * @param {Object} isLoading 是否启用遮罩动画效果
  */
-var humanAjax = function(url,obj,isLoading,content){
+var humanAjax = function(url,obj,isLoading,content,isNptips){
 	var enIndex  = -1;
 	if(isLoading){
 		//loading效果
@@ -45,6 +45,7 @@ var humanAjax = function(url,obj,isLoading,content){
 							
 							
 						}else if(data.code == 400){
+							if(!isNptips)
 							mui.toast(data.msg);
 						}else
 							obj.success(data);

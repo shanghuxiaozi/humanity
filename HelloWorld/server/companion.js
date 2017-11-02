@@ -94,6 +94,58 @@ router.post('/group',function(req, res, next){
 });
 
 
+/*查询自己对应的结伴关注*/
+router.get('/queryFollow',function(req, res, next){
+	if(req.query.company_id && req.session.user ){
+		
+		var sql = 'select * from follow_company where company_id='+req.query.company_id +' and user_id = '+req.session.user.id;
+		console.log('查询自己对应的结伴关注---sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			res.send({code:200,msg:'查询成功',data:data});
+		}, res);
+	}else{
+		res.send({code:400,msg:''});
+	}
+	
+});
+
+/*结伴关注*/
+router.post('/follow',function(req, res, next){
+	console.log('------关注结伴----');
+	if(req.session.user){
+		var sql = 'insert into follow_company(user_id,user_name,company_id,status) values('
+		+req.session.user.id+',"'+req.session.user.nickname+'",'
+			+req.body.company_id+','+req.body.status+')';
+		console.log('sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			console.log('------关注结伴成功----',data);
+			res.send({code:200,msg:'关注结伴',data:{company_id:req.body.company_id}});
+		}, res);
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
+
+/*删除结伴关注*/
+router.post('/deleteFollow',function(req, res, next){
+	console.log('------关注结伴----');
+	if(req.session.user){
+		var sql = 'delete from follow_company where user_id = '+req.session.user.id +' and company_id=' +req.body.company_id;
+		console.log('sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			console.log('------删除关注结伴----',data);
+			res.send({code:200,msg:'删除关注结伴',data:{company_id:req.body.company_id}});
+		}, res);
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
+
+
+
 var callback = function (data, res) {
    // res.render('list', {listData: data});
     // 第一个参数：模板名称对应list.ejs，第二个是参数名和数据
