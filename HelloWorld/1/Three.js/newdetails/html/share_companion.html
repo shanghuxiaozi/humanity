@@ -34,7 +34,24 @@
 			.mui-tab {
 			  padding: 0px 0;
 			}
-			#e
+			#commentDiv{
+				position: fixed;
+				bottom: 60px;
+				width: 100%;
+				border: rgb(229, 229, 249) solid;
+				background-color: antiquewhite;
+  				z-index: 999;
+  				display: none;
+			}
+			#editContent{
+				width: 100%;
+				height: 50px;
+			}
+			#sendBtn{
+			   position: absolute;
+			  right: 0px;
+			  top: 10px;
+			}
     </style>
    
 </head>
@@ -430,6 +447,14 @@
 		<div class="mui-height-50"></div>
 
 	</div>
+	
+	<div id="commentDiv"> 
+		<div id="editContent" contenteditable="true">
+		
+		</div><div class="mui-btn mui-btn-blue" id="sendBtn">发送</div>
+	</div>
+	
+	
 	<footer>
 		<nav class="mui-bar mui-bar-tab">
 			<a class="mui-tab-item" href="../../schedule/schedule.html">
@@ -473,6 +498,9 @@
 		mui('body').on('tap','a',function(e){
 			window.top.location.href=this.href;
 		});
+		
+		
+		var to_name ,_say_id;//评论发送给那个人
 		
 		//分享朋友圈
 		var friends_comments = document.getElementById('friends_comments');
@@ -621,7 +649,7 @@
 													            			+'<a href="javascript:void(0);" class="mui-oper-zan" id="zan_'+i+'" say-id="'+item.id+'"></a>'
 												            			+'</span>'
 																		+'<span class="mui-oper-span">'
-																			+'<a href="javascript:void(0);" class="mui-oper-comment"></a>'
+																			+'<a href="javascript:void(0);" class="mui-oper-comment" say-id="'+item.id+'" to-name="'+item.user_name+'" ></a>'
 																		+'</span>'
 												            			
 												            		+'</div>'
@@ -640,7 +668,10 @@
 										    		            	+'</div>'
 										    		            	+'<!--评论-->'
 										    		            	+'<div class="mui-travel-comment">'
-										    		            		+'<p><b class="zan-name">爱旅游的小姐：</b><b class="zan-text">啥时候过来啊！我在这边等你！啥时候过来啊</b></p>'
+										    		            		+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+										    		            		+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+										    		            		+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+										    		            		+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
 										    		            	+'</div>'
 										    		            +'</div>'
 												            +'</div>'
@@ -676,17 +707,42 @@
 													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
 														var _i = _d.data[j];
 														if(_i.if_spot.data[0] == 1){
-															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(0).html(_i.user_name+(j<m-1?'、':''))
+															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
 														}
 														
 													}
 												}
 											}
 										});
+										
+										//查询朋友圈说说
+										queryComment(item.id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前2，如果小于2取本身
+														var _i = _d.data[j];
+														
+														$('#say_'+_i.say_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+														$('#say_'+_i.say_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+														
+													}
+												}
+											}
+											
+										});
 									}
 									
-									
-									
+									//评论按钮
+									var pList = document.querySelectorAll('.mui-oper-comment');
+									for(var i=0,m=pList.length;i<m;i++){
+										var p = pList[i];
+										p.addEventListener('tap',function(){
+											console.log(this)
+											$('#commentDiv').show();
+											_say_id =  $(this).attr('say-id');
+											to_name = $(this).attr('to-name');
+										});
+									}
 									
 									//点赞按钮
 									var zanList = document.querySelectorAll('.mui-oper-zan');
@@ -782,6 +838,20 @@
 					success:function(data){
 						if(typeof _backFunc == 'function')
 							_backFunc(data);
+							
+						queryThumbsUp(say_id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+														}
+														
+													}
+												}
+											}
+										});
 					},error:function(e){
 						mui.toast("系统出错");
 				}});
@@ -801,10 +871,86 @@
 					success:function(data){
 						if(typeof _backFunc == 'function')
 							_backFunc(data);
+							
+						queryThumbsUp(id,function(_d){
+											if(_d.code == 200){
+												$('#say_'+id).find('.mui-zan .zan-name').each(function(index,item){
+													$(item).html('');
+												});
+												
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+														}
+														
+													}
+												}
+											}
+										});
 					},error:function(e){
 						mui.toast("系统出错");
 				}});
 			}
+			
+			/*查询说说评论*/
+			function queryComment(say_id,_backFunc){
+				humanAjax(JS_PATH+'/friends/queryComment',{
+					data:{
+						say_id:say_id,
+						pageNum:0,
+						pageSize:10
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+				
+			}
+			
+			var sendBtn = document.getElementById('sendBtn');//发送说说评论
+			var edit = document.getElementById('editContent');
+			sendBtn.addEventListener('tap',function(){
+				humanAjax(JS_PATH+'/friends/sendComment',{
+					data:{
+						say_id:_say_id,
+						create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+						comment_content:edit.innerHTML,
+						to_name:to_name
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+						
+						$('#commentDiv').hide();
+						//查询朋友圈说说
+										queryComment(_say_id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<2?_d.data.length:2;  j < m ; j++ ){//只取前2，如果小于2取本身
+														var _i = _d.data[j];
+														
+														$('#say_'+_i.say_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+														$('#say_'+_i.say_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+														
+													}
+												}
+											}
+											
+										});
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			});
 			
 	</script>
 </body>

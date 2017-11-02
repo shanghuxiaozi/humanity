@@ -148,13 +148,13 @@ router.get('/queryComment', function (req, res, next) {
 	if(!req.query.pageNum||req.query.pageNum==""){
 		req.query.pageNum = 0;
 	}
-	var countSql = 'SELECT COUNT(*) FROM say_say_spot where say_id='+req.query.say_id;//获取当前说说id总条数
+	var countSql = 'SELECT COUNT(*) FROM say_say_comment where say_id='+req.query.say_id;//获取当前说说id总条数
 	dbHelper.list(countSql, function (data, res) {
 		var totalPage = 0;
 		if(data && data.length>0)
 		totalPage = data[0]['COUNT(*)'];
-		var sql = 'select * from say_say_spot where say_id=' + req.query.say_id+ ' limit '+ req.query.pageNum + ',' + req.query.pageSize*(req.query.pageNum+1);
-		console.log('朋友圈点赞数据总条数=',data,'------查询朋友圈点赞数据----');
+		var sql = 'select * from say_say_comment where say_id=' + req.query.say_id+ ' limit '+ req.query.pageNum + ',' + req.query.pageSize*(req.query.pageNum+1);
+		console.log('说说评论数据总条数=',data,'------查询说说评论数据----');
 		console.log('sql=',sql);
 		//通过景点id查询
 		dbHelper.list(sql, function (list, res) {
@@ -166,6 +166,26 @@ router.get('/queryComment', function (req, res, next) {
 	
 	
 	
+});
+
+
+/*发送评论*/
+router.post('/sendComment',function(req, res, next){
+	console.log('------发送评论----');
+	if(req.session.user){
+		var sql = 'insert into say_say_comment(user_id,user_name,create_date,comment_content,say_id,to_name) values('
+		+req.session.user.id+',"'+req.session.user.nickname+'","'
+			+req.body.create_date+'","'+req.body.comment_content+'",'+req.body.say_id +',"'+req.body.to_name+'")';
+		console.log('sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			
+			res.send({code:200,msg:'发送成功',data:{say_id:req.body.say_id}});
+		}, res);
+		
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
 });
 
 
