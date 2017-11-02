@@ -56,7 +56,7 @@
 							<label class="mui-pull-left mui-person-lable">昵称</label>
 							<div class="mui-pull-right mui-col-xs-8 mui-text-right">
 								<p class="mui-person-readly mui-readly">旅行爱好者</p>
-								<input type="text" value="旅行爱好者"  class="mui-person-input mui-edit-op"/>
+								<input type="text" value="旅行爱好者"  class="mui-person-input mui-edit-op" id="nickname"/>
 							</div>
 						</div>
 					</li>
@@ -124,7 +124,11 @@
 				$('.mui-person-select.mui-edit-op').show();
 				$('.mui-person-save').show();
 			});
+			var user = JSON.parse(localStorage.getItem('user_myself'));
 			
+			$('#nickname').val(user.nickname);
+			if(user.headimg&&user.headimg!="")
+				$('#headImgC').attr('src',user.headimg);
 			var picNum = 0;//上传图片数量
 			var picHtml = "";//图片返回的img内容
 		  	
