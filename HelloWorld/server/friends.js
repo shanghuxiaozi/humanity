@@ -148,21 +148,27 @@ router.get('/queryComment', function (req, res, next) {
 	if(!req.query.pageNum||req.query.pageNum==""){
 		req.query.pageNum = 0;
 	}
-	var countSql = 'SELECT COUNT(*) FROM say_say_comment where say_id='+req.query.say_id;//获取当前说说id总条数
-	dbHelper.list(countSql, function (data, res) {
-		var totalPage = 0;
-		if(data && data.length>0)
-		totalPage = data[0]['COUNT(*)'];
-		var sql = 'select * from say_say_comment where say_id=' + req.query.say_id+ ' limit '+ req.query.pageNum + ',' + req.query.pageSize*(req.query.pageNum+1);
-		console.log('说说评论数据总条数=',data,'------查询说说评论数据----');
-		console.log('sql=',sql);
-		//通过景点id查询
-		dbHelper.list(sql, function (list, res) {
+	if(!req.query.say_id ||req.query.say_id == "" ){
+		console.log('说说id为空');
+		res.send({code:400,msg:'说说id为空'});
+	}else{
+		var countSql = 'SELECT COUNT(*) FROM say_say_comment where say_id='+req.query.say_id;//获取当前说说id总条数
+		dbHelper.list(countSql, function (data, res) {
+			var totalPage = 0;
+			if(data && data.length>0)
+			totalPage = data[0]['COUNT(*)'];
+			var sql = 'select * from say_say_comment where say_id=' + req.query.say_id+ ' limit '+ req.query.pageNum + ',' + req.query.pageSize*(req.query.pageNum+1);
+			console.log('说说评论数据总条数=',data,'------查询说说评论数据----');
+			console.log('sql=',sql);
+			//通过景点id查询
+			dbHelper.list(sql, function (list, res) {
+				
+				res.send({code:200,msg:'查询成功', data:list, totalPage:totalPage});
+			}, res);
 			
-			res.send({code:200,msg:'查询成功', data:list, totalPage:totalPage});
 		}, res);
-		
-	}, res);
+	}
+	
 	
 	
 	
