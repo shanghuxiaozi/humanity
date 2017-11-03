@@ -52,6 +52,33 @@
 			  right: 0px;
 			  top: 10px;
 			}
+			.mui-companion-lists .mui-travel-revert {
+			  position: relative;
+			  background-color: #ededed;
+			  border-radius: 4px;
+			  padding: 14px 10px;
+			  margin-top: 20px;
+			  }
+			  .mui-companion-lists .mui-travel-revert .zan-name {
+				  font-size: 12px;
+				  color: #cd3829;
+				  font-weight: normal;
+				}
+				.mui-companion-lists  .mui-travel-revert .mui-triangle {
+				  position: absolute;
+				  top: -10px;
+				  left: 43px;
+				  width: 0;
+				  height: 0;
+				  border-left: 10px solid transparent;
+				  border-right: 10px solid transparent;
+				  border-bottom: 14px solid #ededed;
+				}
+				.mui-companion-lists  .mui-travel-revert .zan-text {
+				  font-size: 12px;
+				  color: #666;
+				  font-weight: normal;
+				}
     </style>
    
 </head>
@@ -503,7 +530,8 @@
 		
 		
 		var to_name ,_say_id;//评论发送给那个人
-		
+		var _company_id;//当前结伴的评论id
+		var _type_ = 0;//表示当前评论的类型是0说说，1结伴，还是2灌水
 		//分享朋友圈
 		var friends_comments = document.getElementById('friends_comments');
 		
@@ -741,6 +769,7 @@
 										var p = pList[i];
 										p.addEventListener('tap',function(){
 											console.log(this)
+											_type_ = 0;
 											$('#commentDiv').show();
 											_say_id =  $(this).attr('say-id');
 											to_name = $(this).attr('to-name');
@@ -862,6 +891,13 @@
 			
 			/*更新点赞*/
 			function updateThumbsUp(id,if_spot,_backFunc){
+				
+				if(!id||id==""){
+					mui.toast("不允许取消点赞");
+					return;
+				}
+				
+				
 				humanAjax(JS_PATH+'/friends/upDateThumbsUp',{
 					data:{
 						id:id,
@@ -937,42 +973,101 @@
 				
 			}
 			
-			var sendBtn = document.getElementById('sendBtn');//发送说说评论
-			var edit = document.getElementById('editContent');
-			sendBtn.addEventListener('tap',function(){
-				humanAjax(JS_PATH+'/friends/sendComment',{
+			/*查询结伴评论*/
+			function queryJBComment(jb_id,_backFunc){
+				humanAjax(JS_PATH+'/companion/queryComment',{
 					data:{
-						say_id:_say_id,
-						create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
-						comment_content:edit.innerHTML,
-						to_name:to_name
+						jb_id:jb_id,
+						pageNum:0,
+						pageSize:10
 					},
 					crossDomain :true,
 					dataType:'json',//服务器返回json格式数据
-					type:'post',//HTTP请求类型
+					type:'get',//HTTP请求类型
 					success:function(data){
 						if(typeof _backFunc == 'function')
 							_backFunc(data);
-						
-						$('#commentDiv').hide();
-						//查询朋友圈说说
-										queryComment(_say_id,function(_d){
-											if(_d.code == 200){
-												if(_d.data.length>0){
-													for(var j = 0 , m = _d.data.length<2?_d.data.length:2;  j < m ; j++ ){//只取前2，如果小于2取本身
-														var _i = _d.data[j];
-														
-														$('#say_'+_i.say_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
-														$('#say_'+_i.say_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
-														
-													}
-												}
-											}
-											
-										});
 					},error:function(e){
 						mui.toast("系统出错");
 				}});
+				
+			}
+			
+			
+			var sendBtn = document.getElementById('sendBtn');//发送说说,结伴，灌水评论
+			var edit = document.getElementById('editContent');
+			sendBtn.addEventListener('tap',function(){
+				edit.focus();
+				if(_type_ == 0){//发送说说评论
+					humanAjax(JS_PATH+'/friends/sendComment',{
+						data:{
+							say_id:_say_id,
+							create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+							comment_content:edit.innerHTML,
+							to_name:to_name
+						},
+						crossDomain :true,
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						success:function(data){
+							if(typeof _backFunc == 'function')
+								_backFunc(data);
+							
+							$('#commentDiv').hide();
+							//查询朋友圈说说
+											queryComment(_say_id,function(_d){
+												if(_d.code == 200){
+													if(_d.data.length>0){
+														for(var j = 0 , m = _d.data.length<2?_d.data.length:2;  j < m ; j++ ){//只取前2，如果小于2取本身
+															var _i = _d.data[j];
+															
+															$('#say_'+_i.say_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+															$('#say_'+_i.say_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+															
+														}
+													}
+												}
+												
+											});
+						},error:function(e){
+							mui.toast("系统出错");
+					}});
+				}else if(_type_ == 1){//发送结伴评论
+					humanAjax(JS_PATH+'/companion/sendComment',{
+						data:{
+							jb_id:_company_id,
+							create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+							comment_content:edit.innerHTML,
+							to_name:to_name
+						},
+						crossDomain :true,
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						success:function(data){
+							if(typeof _backFunc == 'function')
+								_backFunc(data);
+							
+							$('#commentDiv').hide();
+							//查询朋友圈说说
+											queryJBComment(_company_id,function(_d){
+												if(_d.code == 200){
+													if(_d.data.length>0){
+														for(var j = 0 , m = _d.data.length<2?_d.data.length:2;  j < m ; j++ ){//只取前2，如果小于2取本身
+															var _i = _d.data[j];
+															
+															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+															
+														}
+													}
+												}
+												
+											});
+						},error:function(e){
+							mui.toast("系统出错");
+					}});
+				}
+				
 			});
 			
 			
@@ -998,7 +1093,7 @@
 								if(data.code==200&&data.data.length>0){
 									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
 										var item = data.data[i];
-										companion_comments.innerHTML+= '<li class="mui-table-view-cell mui-media">'
+										companion_comments.innerHTML+= '<li class="mui-table-view-cell mui-media" id="g_follow_'+item.id+'">'
 												+'<div class="mui-comment-item">'
 													+'<a href="javascript:void(0);" company-id="'+item.id+'" class="mui-btn mui-btn-danger followBtn" id="follow_'+item.id+'">关注</a>'
 													+'<a href="javascript:void(0);">'
@@ -1042,13 +1137,20 @@
 															+'<a href="javascript:void(0);" class="mui-private-chat">'
 																+'私信'
 															+'</a>'
-															+'<a href="javascript:void(0);" class="mui-comment-chat">'
+															+'<a href="javascript:void(0);" company-id="'+item.id+'" to-name="'+item.user_name+'" class="mui-comment-chat">'
 																+'评论'
 															+'</a>'
-													
+															
 														+'</div>'
+														
 													+'</div>'
-											
+													//'<!--评论-->'
+		    		            						+'<div class="mui-travel-revert"><i class="mui-triangle"></i><div class="mui-travel-comment">'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+		    		            						+'</div></div>'
 												+'</div>'
 											+'</li>';
 											
@@ -1063,10 +1165,34 @@
 												}
 											});
 //											
-											
+											queryJBComment(item.id,function(_d){
+												if(_d.code == 200){
+													if(_d.data.length>0){
+														for(var j = 0 , m = _d.data.length<2?_d.data.length:2;  j < m ; j++ ){//只取前2，如果小于2取本身
+															var _i = _d.data[j];
+															console.log($('#follow_'+_i.jb_id))
+															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+															
+														}
+													}
+												}
+												
+											});
 									}
 									
-									
+									//评论按钮
+									var pList = document.querySelectorAll('.mui-comment-chat');
+									for(var i=0,m=pList.length;i<m;i++){
+										var p = pList[i];
+										p.addEventListener('tap',function(){
+											console.log(this)
+											_type_ = 1;
+											$('#commentDiv').show();
+											_company_id =  $(this).attr('company-id');
+											to_name = $(this).attr('to-name');
+										});
+									}
 									
 									
 									

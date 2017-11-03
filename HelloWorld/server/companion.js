@@ -144,6 +144,53 @@ router.post('/deleteFollow',function(req, res, next){
 	}
 });
 
+/*查询结伴评论数据*/
+router.get('/queryComment', function (req, res, next) {
+	if(!req.query.pageSize||req.query.pageSize==""){
+		req.query.pageSize = 10;
+	}
+	if(!req.query.pageNum||req.query.pageNum==""){
+		req.query.pageNum = 0;
+	}
+	var countSql = 'SELECT COUNT(*) FROM travel_company_comment where jb_id='+req.query.jb_id;//获取当前说说id总条数
+	dbHelper.list(countSql, function (data, res) {
+		var totalPage = 0;
+		if(data && data.length>0)
+		totalPage = data[0]['COUNT(*)'];
+		var sql = 'select * from travel_company_comment where jb_id=' + req.query.jb_id+ ' limit '+ req.query.pageNum + ',' + req.query.pageSize*(req.query.pageNum+1);
+		console.log('结伴评论数据总条数=',data,'------查询结伴评论数据----');
+		console.log('sql=',sql);
+		//通过景点id查询
+		dbHelper.list(sql, function (list, res) {
+			
+			res.send({code:200,msg:'查询成功', data:list, totalPage:totalPage});
+		}, res);
+		
+	}, res);
+	
+	
+	
+});
+
+/*发送评论*/
+router.post('/sendComment',function(req, res, next){
+	console.log('------发送评论----');
+	if(req.session.user){
+		var sql = 'insert into travel_company_comment(user_id,user_name,create_date,comment_content,jb_id,to_name) values('
+		+req.session.user.id+',"'+req.session.user.nickname+'","'
+			+req.body.create_date+'","'+req.body.comment_content+'",'+req.body.jb_id +',"'+req.body.to_name+'")';
+		console.log('sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			
+			res.send({code:200,msg:'发送成功',data:{jb_id:req.body.jb_id}});
+		}, res);
+		
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
+
 
 
 var callback = function (data, res) {
