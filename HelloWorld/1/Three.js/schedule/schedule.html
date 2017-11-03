@@ -678,6 +678,14 @@
 				  	mui.openWindow(JS_PATH+'/WebVR_Demo-master/panorama.html?location='+currentInfo.longitude+','+currentInfo.latitude);
 				  }
 				});
+				
+				var videoBtn = document.getElementById("videoBtn");
+				videoBtn.addEventListener("tap",function () {
+				  console.log("tap event trigger");
+//				  alert('无视频')
+					mui.openWindow('https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&DOM&Video&core');
+				});
+				
 //				vrBtn.addEventListener("click",function () {
 //				  console.log("tap event trigger");
 //				  if(currentInfo){

@@ -5,27 +5,25 @@
 		<title>发布-灌水吧</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<script src="../js/mui.min.js"></script>
+		
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link href="../css/common.css" rel="stylesheet" />
 		
-		<script type="text/javascript" charset="utf-8">
-			mui.init();
-		</script>
+		
 	</head>
 	<body>
 		
 	<header class="mui-bar mui-bar-nav mui-search-box">
 		<a href="javascript:void(0);" class="mui-action-back mui-link-back">返回</a>
 		<h4 class="mui-title">灌水吧</h4>
-		<a class="mui-link">发布</a>
+		<a class="mui-link" id="publishBtn">发布</a>
 	</header>
 	
 	
 	<div class="mui-iframe-wrapper" style="top: 44px;">
 		<div class="mui-share-irrigation">
 			<p class="mui-col-xs-12 mui-publish-title">灌水类型</p>
-			<div class="mui-clearfix">
+			<div class="mui-clearfix" id="typeContainer">
 				<div class="mui-col-xs-3 mui-pull-left mui-com-ticket active"><b>全部</b></div>
 				<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>诗词</b></div>
 				<div class="mui-col-xs-3 mui-pull-left mui-com-ticket"><b>文学</b></div>
@@ -37,20 +35,24 @@
 		</div>
 		
 		<div class="mui-row-item mui-publish-friends">
-			<textarea placeholder="灌水那点事..." class="mui-form-control"></textarea>
+			<textarea placeholder="灌水那点事..." class="mui-form-control" id="publish_content"></textarea>
 			<div class="mui-clearfix mui-row-bottom mui-padbom-10">
 				<!--预览的图片-->
-				<span class="mui-pull-left mui-phone-preview">
+				<div id="preview">
+				<!--<span class="mui-pull-left mui-phone-preview">
 					<a href="javascript:void(0);" class="mui-icon-remove"></a>
 					<img src="../images/img1.png" class="mui-img-response"/>
 				</span>
 				<span class="mui-pull-left mui-phone-preview">
 					<a href="javascript:void(0);" class="mui-icon-remove"></a>
 					<img src="../images/img1.png" class="mui-img-response"/>
-				</span>
+				</span>-->
+				</div>
 				<!--上传图片-->
 				<span class="mui-publish-vedio mui-text-center mui-pull-left">
-					<input type="file"  class="mui-file"/>
+					<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data">
+							<input type="file" name="fulAvatar" class="mui-file upload_img" onchange="uploadByForm(this)"/>
+						</form>
 					<img src="../images/tab_vediodark_icon.png" class="mui-vedio-phone"/>
 					<p class="mui-vedio-text">图片 / 视频</p>
 				</span>
@@ -71,5 +73,159 @@
 
 		
 	</div>
+	<script src="../js/mui.min.js"></script>
+	<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" charset="utf-8">
+			mui.init();
+			var type_id ;
+			/*查询灌水类型数据*/
+			function queryType(_backFunc){
+				humanAjax(JS_PATH+'/irrigation/queryType',{
+					data:{
+						
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+			
+			queryType(function(data){
+				if(data.code==200&&data.data.length>0){
+					$('#typeContainer').empty();
+					for(var i = 0,m = data.data.length; i < m ; i++){
+						var item = data.data[i];
+						if(i==0)type_id = item.id;
+						$('#typeContainer').append('<div type-id="'+item.id+'" class="mui-col-xs-3 mui-pull-left mui-com-ticket '+(i==0?'active':'')+'"><b>'+item.name+'</b></div>');
+						
+					}
+					
+					var ticketList = document.querySelectorAll('.mui-com-ticket');
+					for(var i = 0,m = ticketList.length; i < m ;i++){
+						var a = ticketList[i];
+						a.addEventListener('tap',function(){
+							$(this).siblings().removeClass('active');
+							$(this).addClass('active');
+							type_id = this.getAttribute('type-id');
+						})
+					}
+				}
+			});
+			
+			var picNum = 0;//上传图片数量
+			var picHtml = "";//图片返回的img内容
+		  	
+		  	
+		  	/**
+		     * ajax 上传。这里主要是上传图片。
+		     */
+			    function uploadByForm(target){
+			    	
+			    	function validate_img(a){
+						 var file = a;
+						 if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(file)){
+						  alert("图片类型必须是.gif,jpeg,jpg,png中的一种");
+						  return false;
+						}else{
+						     var image = new Image();
+						     image.onload = function(){
+						     	var height = image.height;
+							     var width = image.width;
+							     var filesize = image.fileSize;
+							      alert(height+"x.."+filesize);
+							     if(width>780 && height>780 /*&& filesize>102400*/){
+							      alert('请上传780*780像素 或者大小小于100k的图片');
+							      return false;
+							     }else{
+							     	alert("图片通过");
+						 			return true;
+							     }
+						     }
+						     image.src = file;
+						     
+						     
+						 }
+						 
+						}
+			    	
+			    	
+			    	var formData = new FormData($("#myForm")[0]);//获取表单数据
+			    	$Ajax(JS_PATH+'/upload/uploader',{
+							data:formData,
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									
+//									if(validate_img(data.newPath)){
+										mui.toast("图片提交成功");
+										picNum++;
+										$('#preview').append('<span class="mui-pull-left mui-phone-preview">'
+											+'<a href="javascript:void(0);" class="mui-icon-remove" id="remove_'+picNum+'"></a>'
+											+'<img src="'+data.newPath+'" class="mui-img-response"/>'
+										+'</span>');
+										
+										//删除图片按钮
+										document.getElementById('remove_'+picNum).addEventListener('tap',function(){
+											var _this = this;
+											//把删除的图片从里面删除
+											picHtml=picHtml.replace("<img class='mui-img-response'  src='"+($(_this).parents('.mui-phone-preview').find('img').attr('src'))+"'/>",'')
+											$(_this).parents('.mui-phone-preview').remove();
+										});
+										
+										
+										
+										
+										if((data.newPath).indexOf('.mp4')!=-1){
+											
+										}else
+											picHtml += "<img class='mui-img-response'  src='"+data.newPath+"'/>";
+										
+										console.log(picHtml);
+								}else{
+									mui.toast("提交失败");
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true,"上传中");
+			    }
+			    
+			    
+			    //发布按钮
+			    var publishBtn = document.getElementById("publishBtn");
+			    var publish_content = document.getElementById("publish_content");
+			    publishBtn.addEventListener('tap',function(){
+			    	humanAjax(JS_PATH+'/irrigation/publish',{
+							data:{
+								publish_content:"<p class='mui-travel-text'>"+publish_content.value+"</p>"+picHtml,
+								publish_time:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+								type_id:type_id
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									mui.toast("提交成功");
+								}else{
+									mui.toast("提交失败");
+								}
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+					},true,'提交中...');
+			    	
+			    })
+	</script>
 	</body>
 </html>

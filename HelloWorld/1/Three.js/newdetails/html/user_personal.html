@@ -79,7 +79,7 @@
 						<div class="mui-clearfix mui-table-view-cell-box mui-row-bottom">
 							<label class="mui-pull-left mui-person-lable">生日</label>
 							<div class="mui-pull-right mui-col-xs-8 mui-text-right">
-								<p class="mui-person-readly mui-readly">旅行爱好者</p>
+								<p class="mui-person-readly mui-readly">2017-10-20</p>
 								<input type="date" value="2017-10-20"  class="mui-person-input mui-edit-op"/>
 							</div>
 						</div>
@@ -186,7 +186,24 @@
 						},true,"上传中");
 			    }
 			
-			
+			var saveBtn = document.getElementById('saveBtn');
+			saveBtn.addEventListener('tap',function(){
+				humanAjax(JS_PATH+'/user/update',{
+					data:{
+						id:user.id,
+						nickname:$('#nickname').val(),
+						headimg:$('#headImgC').attr('src')
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					//async:true,
+					success:function(data){
+						mui.toast("更新成功");
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			});
 		</script>
 	</body>
 </html>

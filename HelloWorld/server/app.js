@@ -17,6 +17,10 @@ var friends = require('./friends');
 //结伴
 var companion = require('./companion');
 
+//灌水
+var irrigation = require('./irrigation');
+
+
 var spitslot = require('./spitslot');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -61,3 +65,4 @@ app.use('/activity',activity);
 app.use('/foot',foot);
 app.use('/friends',friends);
 app.use('/companion',companion);
+app.use('/irrigation',irrigation);

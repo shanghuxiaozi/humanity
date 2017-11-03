@@ -35,25 +35,28 @@
 				<div class="mui-clearfix mui-footmap-indication">
 					<div class="mui-col-xs-3 mui-text-center mui-pull-left">
 						<p>省份</p>
-						<p>10</p>
+						<p>0</p>
 					</div>
 					<div class="mui-col-xs-3 mui-text-center mui-pull-left">
 						<p>城市</p>
-						<p>10</p>
+						<p>0</p>
 					</div>
 					<div class="mui-col-xs-3 mui-text-center mui-pull-left">
 						<p>地点</p>
-						<p>10</p>
+						<p id="placeNum">0</p>
 					</div>
 					<div class="mui-col-xs-3 mui-text-center mui-pull-left">
 						<p>里程km</p>
-						<p><b>10</b>k</p>
+						<p><b id="distance">0</b>km</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script src="../js/mui.min.js"></script>
+	<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
 	<!-------------------------------------------------------------百度地图相关js-------------------------------------------------------------->	
 	<script src="../../js/map/baidu.js" charset="utf-8" type="text/javascript"></script>
 	<script src="../../js/map/footMap.js"></script>
@@ -72,11 +75,132 @@
     			
     		});
     		map.clickMark(function(o,e){
+    			console.log(o,e);
+    		});
+    		
+    		var pointA = null;
+    		var firstA ;
+    		var pointB = null;
+    		var isFirst = true;
+    		var total = 0;
+    		var placeNum = 0;
+    		var placeNum_t = document.getElementById('placeNum');
+    		
+    		var distance = document.getElementById('distance');
+    		map.clickhandler(function(o,e){
+    			console.log(o,e);
+    			placeNum++;
+    			placeNum_t.innerHTML = placeNum;
+    			if(isFirst){
+    				pointA = e;
+    				firstA = o;
+    				isFirst = false;
+    			}else{
+    				total += parseFloat((map.map.getDistance(pointA,e)).toFixed(2));
+    				distance.innerHTML = (total/1000).toFixed(2);
+    				mui.toast('从'+firstA+'到'+o+'的距离是：' + distance.innerHTML + '千米');  //获取两点距离,保留小数点后两位
+					var polyline = new BMap.Polyline([pointA,e], {strokeColor:"blue", strokeWeight:3, strokeOpacity:0.5});  //定义折线
+					map.map.addOverlay(polyline); 
+					pointA = e;
+    				firstA = o;
+    			}
+    			
+    			
+    			humanAjax(JS_PATH+'/user/insertFoot',{
+					data:{
+						create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+						longitude:e.lng ,
+						latitude: e.lat,
+						name:o
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					//async:true,
+					success:function(data){
+						
+					},error:function(e){
+						mui.toast("系统出错");
+					}
+					
+    			});
+    			
     			
     		});
-    		map.clickhandler(function(e){
-    			
-    		});
+    		
+    		queryFoot();
+    		function queryFoot(){
+    			humanAjax(JS_PATH+'/user/queryFoot',{
+					data:{
+						
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					//async:true,
+					success:function(data){
+						if(data.code==200&&data.data.length>0){
+							var lastA = null;
+							var poits = [];
+//							for(var i = 0,m = data.data.length; i < m; i++){
+	var i = 0,m = data.data.length;
+	//map.map.setZoom(14)
+	var time = setInterval(function(){
+		drawrot();
+	},500);
+	function  drawrot(){
+		
+	
+								var item = data.data[i];
+								
+								if(i>0){
+									var lastB = new BMap.Point(item.longitude,item.latitude);
+									total += parseFloat((map.map.getDistance(lastA,lastB)).toFixed(2));;
+									console.log(total);
+    								distance.innerHTML = (total/1000).toFixed(2);
+    								var polyline = new BMap.Polyline([lastA,lastB], {strokeColor:"green", strokeWeight:3, strokeOpacity:0.5});  //定义折线
+									map.map.addOverlay(polyline); 
+								}
+								lastA = new BMap.Point(item.longitude,item.latitude);
+								var mk = new BMap.Marker(new BMap.Point(item.longitude,item.latitude),{icon:map.flagRed});
+							map.map.addOverlay(mk);
+							mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+							var label = new BMap.Label(item.name,{offset:new BMap.Size(10,10)});
+								label.setStyle({
+									border:true,
+									backgroundColor:false,
+								 color : "red",
+								 fontSize : "10px",
+								 height : "20px",
+								// lineHeight : "20px",
+								 fontFamily:"微软雅黑"
+							 });
+							 
+								mk.setLabel(label);
+							//centerAndZoom(new BMap.Point(item.longitude,item.latitude),15);
+							map.map.panTo(new BMap.Point(item.longitude,item.latitude));
+//								poits.push(new BMap.Point(item.longitude,item.latitude));
+								
+								
+								i++;
+								placeNum++;
+								placeNum_t.innerHTML = placeNum;
+								if(i>=m){
+									pointA = new BMap.Point(item.longitude,item.latitude);
+									firstA = item.name;
+									isFirst = false;
+									clearInterval(time);
+								}
+//							}
+						}
+							
+						}
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+    		}
+    		
+    		
 		})
 	</script>
 	</body>

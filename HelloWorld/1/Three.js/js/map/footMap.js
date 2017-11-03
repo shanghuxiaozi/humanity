@@ -38,7 +38,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		var point = new BMap.Point(112.948713,34.512389);//new BMap.Point(longitude||114.06444, latitude||22.548488);
 		map.centerAndZoom(point,4);
 //map.centerAndZoom("北京",15); 
-		//map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
+//		map.addControl(new BMap.NavigationControl()); //添加默认缩放平移控件
 		/*var geolocation = new BMap.Geolocation();
 		geolocation.getCurrentPosition(function(r){
 			if(this.getStatus() == BMAP_STATUS_SUCCESS){
@@ -121,7 +121,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 icons.push(_this.t4Icon);
 		 
 		 //红旗
-		 _this.flagRed = new BMap.Icon("../../icon/flag/flag-red.ico", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
+		 _this.flagRed = new BMap.Icon("../../icon/flag/flag-red.ico", new BMap.Size(66,71),{anchor: new BMap.Size(10,10), imageSize:new BMap.Size(33, 35.5)});
 		 icons.push(_this.flagRed);
 		 
 		 
@@ -214,7 +214,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			console.log(e);
 			var input = document.getElementById("suggestId");
 //			input.blur();
-			_this.clickhandler(e.touches[0]);
+//			_this.clickhandler(e.touches[0]);
 			var pt = e.point;
 			geoc.getLocation(pt, function(rs){//console.log(rs);
 				var addComp = rs.addressComponents;
@@ -222,14 +222,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 					mui.toast('请把旗帜插在陆地上！~');
 					return;
 				}
-				var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
-//				map.clearOverlays();
-				map.addOverlay(mk);
-				console.log(BMAP_ANIMATION_BOUNCE);
-				mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-				map.panTo(rs.point);
-				
-				console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
+				var address = rs.addressComponents;
 				var obj 
 				if(rs.surroundingPois.length>0)
 				 obj = rs.surroundingPois[0];
@@ -238,16 +231,35 @@ Bookingmap.prototype.initBaiduMap=function(id){
 					obj.title = "";
 				}
 				 
-				var address = rs.addressComponents;
 				var _value = address.province +  address.city +  address.district +  address.street +  (rs.business!=""? rs.business:obj.title);
-				//$('#suggestId').val(_value);
-				//$('#suggestId').focusout();
-				if( typeof _this.handler === 'function' ){
-					_this.handler(_value,pt);
-				}
-				if( typeof _this.pointHandler === 'function' ){
-					_this.pointHandler(pt);
-				}
+				mui.confirm('您选择的足迹地点：'+_value,'温馨提示', ['取消','确认'],function(e){
+					
+					if(e.index == 0){
+						
+					}else{
+						var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
+		//				map.clearOverlays();
+						map.addOverlay(mk);
+						console.log(BMAP_ANIMATION_BOUNCE);
+						mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+						map.panTo(rs.point);
+						
+						console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
+						
+						
+						//$('#suggestId').val(_value);
+						//$('#suggestId').focusout();
+						if( typeof _this.clickhandler === 'function' ){
+							_this.clickhandler(_value,pt);
+						}
+						if( typeof _this.pointHandler === 'function' ){
+							_this.pointHandler(pt);
+						}
+					}
+				})
+				
+				
+				
 			}); 
 			
 			
@@ -258,7 +270,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 			//alert(9);
 			var input = document.getElementById("suggestId");
 //			input.blur();
-			_this.clickhandler();
+//			_this.clickhandler();
 			//console.log('覆盖物',map.getOverlays());
 //			return;
 			//var os = map.getOverlays();
@@ -296,12 +308,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 					mui.toast('请把旗帜插在陆地上！~');
 					return;
 				}
-				var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
-//				map.clearOverlays();
-				map.addOverlay(mk);
-				mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-				map.panTo(rs.point);
-				//console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
+				var address = rs.addressComponents;
 				var obj 
 				if(rs.surroundingPois.length>0)
 				 obj = rs.surroundingPois[0];
@@ -309,17 +316,33 @@ Bookingmap.prototype.initBaiduMap=function(id){
 					obj = new Object();
 					obj.title = "";
 				}
-				 
-				var address = rs.addressComponents;
 				var _value = address.province +  address.city +  address.district +  address.street +  (rs.business!=""? rs.business:obj.title);
-				//$('#suggestId').val(_value);
-				//$('#suggestId').focusout();
-				if( typeof _this.handler === 'function' ){
-					_this.handler(_value,pt);
-				}
-				if( typeof _this.pointHandler === 'function' ){
-					_this.pointHandler(pt);
-				}
+				mui.confirm('您选择的足迹地点：'+_value,'温馨提示', ['取消','确认'],function(e){
+					
+					if(e.index == 0){
+						
+					}else{
+						var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
+		//				map.clearOverlays();
+						map.addOverlay(mk);
+						mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+						map.panTo(rs.point);
+						//console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
+						
+						 
+						
+						//$('#suggestId').val(_value);
+						//$('#suggestId').focusout();
+						if( typeof _this.clickhandler === 'function' ){
+							_this.clickhandler(_value,pt);
+						}
+						if( typeof _this.pointHandler === 'function' ){
+							_this.pointHandler(pt);
+						}
+					}
+					
+				});
+				
 			});   
 		});
 //		var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
@@ -498,10 +521,10 @@ Bookingmap.prototype.addEventListenError=function(handler){
 }
 
 /**重置中心点**/
-Bookingmap.prototype.panTo=function(p){
+Bookingmap.prototype.panTo=function(p,v){
 	var _this = this;
 	console.log(p.lng,p.lat);
-	_this.map.centerAndZoom(new BMap.Point(p.lng,p.lat),5);
+	_this.map.centerAndZoom(new BMap.Point(p.lng,p.lat),v||15);
 	
 }
 

@@ -79,6 +79,55 @@ router.post('/login', function (req, res, next) {//
     // list参数，第一个是whereSql查询条件，json格式；第二个是表名，第三个是回调函数，第四个是express返回客户端的response类
 });
 
+
+/*更新*/
+router.post('/update', function (req, res, next) {//
+    	console.log('------更新用户-----');
+		console.log(req.body);
+		var name = req.body.nickname;
+		var sql = 'update  app_user set headimg = "'+req.body.headimg+'" ,  nickname = "'+name+'" where id="'+req.body.id+'" ';
+		console.log('sql=',sql);
+		dbHelper.list(sql, function (data, res) {
+		
+		res.send({code:200,msg:'更新成功',data:data});
+	}, res);
+    // list参数，第一个是whereSql查询条件，json格式；第二个是表名，第三个是回调函数，第四个是express返回客户端的response类
+});
+
+/*插入足迹*/
+router.post('/insertFoot', function (req, res, next) {//
+    	console.log('------插入足迹-----');
+	if(req.session.user){
+		var sql = 'insert into footprint(user_id,user_name,create_date,longitude,latitude,name) values('
+		+req.session.user.id+',"'+req.session.user.nickname+'","'
+			+req.body.create_date+'",'+req.body.longitude+','+req.body.latitude +',"'+req.body.name+'")';
+		console.log('sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			
+			res.send({code:200,msg:'插入成功',data:data});
+		}, res);
+		
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
+
+/*查询自己足迹通过gs_id,user_id*/
+router.get('/queryFoot', function (req, res, next) {
+	if(req.session.user ){
+		var sql = 'select * from footprint where  user_id=' + req.session.user.id ;
+		console.log('查询自己点赞灌水','sql=',sql);
+		dbHelper.list(sql, function (data, res) {
+			res.send({code:200,msg:'查询成功', data:data});
+		}, res);
+	}else{
+		res.send({code:330,msg:'未登录查询不到自己足迹的信息'});
+	}
+});
+
+
+
 var callback = function (data, res) {
    // res.render('list', {listData: data});
     // 第一个参数：模板名称对应list.ejs，第二个是参数名和数据

@@ -49,6 +49,11 @@
 			}
 			#sendBtn{
 			   position: absolute;
+			  right: 60px;
+			  top: 10px;
+			}
+			#quitBtn{
+				position: absolute;
 			  right: 0px;
 			  top: 10px;
 			}
@@ -400,7 +405,7 @@
 						<div id="scroll3" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
 					<!--评论内容-->
-			<ul class="mui-table-view mui-comment mui-spitslot-lists mui-irrigation-lists">
+			<ul class="mui-table-view mui-comment mui-spitslot-lists mui-irrigation-lists"  id="irrigation_comments">
 			
 				<li class="mui-table-view-cell mui-media">
 					<div class="mui-comment-item">
@@ -481,6 +486,7 @@
 		<div id="editContent" contenteditable="true">
 		
 		</div><div class="mui-btn mui-btn-blue" id="sendBtn">发送</div>
+		<div class="mui-btn mui-btn-forget" id="quitBtn">取消</div>
 	</div>
 	
 	
@@ -609,6 +615,9 @@
 			
 			//查询结伴记录
 			queryCompanionByPage();
+			
+			//查询灌水记录
+			queryIrrigationByPage()
 			
 		})(mui);
 		//-----------------------------------------------------
@@ -996,6 +1005,12 @@
 			
 			var sendBtn = document.getElementById('sendBtn');//发送说说,结伴，灌水评论
 			var edit = document.getElementById('editContent');
+			
+			var quitBtn = document.getElementById('quitBtn');
+			quitBtn.addEventListener('tap',function(){
+				$('#commentDiv').hide();
+			});
+			
 			sendBtn.addEventListener('tap',function(){
 				edit.focus();
 				if(_type_ == 0){//发送说说评论
@@ -1010,8 +1025,8 @@
 						dataType:'json',//服务器返回json格式数据
 						type:'post',//HTTP请求类型
 						success:function(data){
-							if(typeof _backFunc == 'function')
-								_backFunc(data);
+//							if(typeof _backFunc == 'function')
+//								_backFunc(data);
 							
 							$('#commentDiv').hide();
 							//查询朋友圈说说
@@ -1044,8 +1059,8 @@
 						dataType:'json',//服务器返回json格式数据
 						type:'post',//HTTP请求类型
 						success:function(data){
-							if(typeof _backFunc == 'function')
-								_backFunc(data);
+//							if(typeof _backFunc == 'function')
+//								_backFunc(data);
 							
 							$('#commentDiv').hide();
 							//查询朋友圈说说
@@ -1146,7 +1161,7 @@
 													+'</div>'
 													//'<!--评论-->'
 		    		            						+'<div class="mui-travel-revert"><i class="mui-triangle"></i><div class="mui-travel-comment">'
-		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text">暂时还没有评论</b></p>'
 		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
 		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
 		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
@@ -1299,6 +1314,240 @@
 				}});
 			}
 			
+			
+		//-----------------------------------------------灌水-------------------------------------------------------
+		var irrigation_comments = document.getElementById('irrigation_comments');//灌水总显示内容	
+		
+		//通过分页查询灌水数据
+			function queryIrrigationByPage(){
+			
+				humanAjax(JS_PATH+'/irrigation/queryByPage',{
+							data:{
+								pageNum:0,
+								pageSize:10
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								irrigation_comments.innerHTML = "";
+								if(data.code==200&&data.data.length>0){
+									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
+										
+										var item = data.data[i];
+										
+										irrigation_comments.innerHTML += '<li class="mui-table-view-cell mui-media" id="irrigation_'+item.id+'">'
+												+'<div class="mui-comment-item">'
+													+'<a href="javascript:void(0);">'
+														+'<img class="mui-media-object mui-pull-left mui-comment-logo" src="../images/img1.png">'
+														+'<div class="mui-media-body">'
+															+'<p class="mui-comment-name"><b class="mui-spitslot-name">'+item.user_name+'</b><b class="mui-spitslot-ticket">摄影</b></p>'
+															+'<b class="mui-comment-time">'+item.publish_time.substring(0,10)+' '+item.publish_time.substring(11,16)+'</b>'
+														+'</div>'
+														+'<div class="mui-spitslot-con">'
+															+'<p>'+item.publish_content+'</p>'
+														+'</div>'
+													+'</a>'
+													+'<div class="mui-text-right mui-irrigation-oper">'
+														+'<a href="javascript:void(0);" class="mui-icon-comment">9</a>'
+														//<!--已点赞  加上active类-->
+														+'<a href="javascript:void(0);" class="mui-icon-zan">'+item.point_number+'</a>'
+													+'</div>'
+												+'</div>'
+											+'</li>';
+											
+											//查询自己是否点了此灌水
+										queryThumbsUpByMyself_irrigation( item.id, function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													var _i = _d.data[0];
+													if(_i.if_spot.data[0] == 1){//console.log('点赞',zan)
+														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').addClass('active');
+														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
+													}else{
+														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示点赞后被取消
+													}
+													$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
+												}
+											}
+											
+										} );
+										
+										//查询灌水点赞数据
+										queryThumbsUp_irrigation(item.id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+															$('#irrigation_'+_i.gs_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+														}
+														
+													}
+												}
+											}
+										});
+										
+										//查询灌水说说
+//										queryComment_irrigation(item.id,function(_d){
+//											if(_d.code == 200){
+//												if(_d.data.length>0){
+//													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前2，如果小于2取本身
+//														var _i = _d.data[j];
+//														
+//														$('#irrigation_'+_i.gs_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+//														$('#irrigation_'+_i.gs_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+//														
+//													}
+//												}
+//											}
+//											
+//										});
+											
+											
+										
+									}
+								}
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+					});
+			}
+			
+			/*查询自己当前灌水id点赞数据*/
+			function queryThumbsUpByMyself_irrigation(gs_id,_backFunc){
+				humanAjax(JS_PATH+'/irrigation/queryThumbsUpByMyself',{
+					data:{
+						gs_id:gs_id
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					//async:true,
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+		
+			/*查询灌水点赞数据*/
+			function queryThumbsUp_irrigation(gs_id,_backFunc){
+				humanAjax(JS_PATH+'/irrigation/queryThumbsUp',{
+					data:{
+						gs_id:gs_id,
+						pageNum:0,
+						pageSize:10
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+			
+			/*点赞*/
+			function thumbsUp_irrigation(gs_id,_backFunc){
+				humanAjax(JS_PATH+'/irrigation/thumbsUp',{
+					data:{
+						gs_id:gs_id,
+						create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+						if_spot:1,
+						
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+							
+						queryThumbsUp_irrigation(gs_id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+															$('#irrigation_'+_i.gs_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+														}
+														
+													}
+												}
+											}
+										});
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+			
+			/*更新点赞*/
+			function updateThumbsUp_irrigation(id,if_spot,_backFunc){
+				
+				if(!id||id==""){
+					mui.toast("不允许取消点赞");
+					return;
+				}
+				
+				
+				humanAjax(JS_PATH+'/irrigation/upDateThumbsUp',{
+					data:{
+						id:id,
+						if_spot:if_spot
+						
+					},
+					webviewBackHandler:function(){
+						
+						//查询自己是否点了此说说
+										queryThumbsUpByMyself_irrigation( id, function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													var _i = _d.data[0];
+													if(_i.if_spot.data[0] == 1){//console.log('点赞',zan)
+														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').addClass('active');
+														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
+													}else{
+														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示点赞后被取消
+													}
+													$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
+												}
+											}
+											
+										} );
+						
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'post',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+							
+						queryThumbsUp_irrigation(id,function(_d){
+											if(_d.code == 200){
+												$('#irrigation_'+id).find('.mui-zan .zan-name').each(function(index,item){
+													$(item).html('');
+												});
+												
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+															$('#irrigation_'+_i.gs_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+														}
+														
+													}
+												}
+											}
+										});
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
 	</script>
 </body>
-</html>3
+</html>
