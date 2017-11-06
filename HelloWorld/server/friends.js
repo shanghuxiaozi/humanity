@@ -115,7 +115,7 @@ router.post('/thumbsUp',function(req, res, next){
 		dbHelper.list( sql
 		, function (data, res) {
 			
-			res.send({code:200,msg:'点赞成功',data:{say_id:req.body.say_id}});
+			res.send({code:200,msg:'点赞成功',data:{say_id:req.body.say_id,nickname:req.session.user.nickname}});
 		}, res);
 		
 	}else{
@@ -132,7 +132,7 @@ router.post('/upDateThumbsUp',function(req, res, next){
 		dbHelper.list( sql
 		, function (data, res) {
 			
-			res.send({code:200,msg:'更新点赞',data:{id:req.body.id}});
+			res.send({code:200,msg:'更新点赞',data:{id:req.body.id,nickname:req.session.user.nickname}});
 		}, res);
 		
 	}else{

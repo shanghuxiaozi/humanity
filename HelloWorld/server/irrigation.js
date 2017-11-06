@@ -103,8 +103,8 @@ router.get('/queryThumbsUp', function (req, res, next) {
 
 /*查询自己灌水点赞数据通过gs_id,user_id*/
 router.get('/queryThumbsUpByMyself', function (req, res, next) {
-	if(req.session.user && !isNaN(req.query.say_id)){
-		var sql = 'select * from irrigation_spot where gs_id=' + req.query.say_id+ ' and user_id=' + req.session.user.id ;
+	if(req.session.user && !isNaN(req.query.gs_id)){
+		var sql = 'select * from irrigation_spot where gs_id=' + req.query.gs_id+ ' and user_id=' + req.session.user.id ;
 		console.log('查询自己点赞灌水','sql=',sql);
 		dbHelper.list(sql, function (data, res) {
 			res.send({code:200,msg:'查询成功', data:data});

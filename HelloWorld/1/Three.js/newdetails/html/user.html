@@ -193,6 +193,15 @@
 			dataType:'json',//服务器返回json格式数据
 			type:'post',//HTTP请求类型
 			isNoToloagin:true,
+			webviewBackHandler:function(data){
+				var userMsg  = data;
+					userNick.innerText = userMsg.nickname;
+					headimg.src = userMsg.headimg;
+					user_level.innerText = userMsg.user_level;
+					noLoginDiv.style.display = "none";
+					loginDiv.style.display = "block";
+					localStorage.setItem('user_myself',JSON.stringify(userMsg))
+			},
 			success:function(data){
 				if(data.code == 200){
 					isLogin = true;

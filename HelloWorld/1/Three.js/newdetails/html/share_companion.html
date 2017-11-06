@@ -708,10 +708,10 @@
 										    		            	+'</div>'
 										    		            	+'<!--评论-->'
 										    		            	+'<div class="mui-travel-comment">'
-										    		            		+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
-										    		            		+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
-										    		            		+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
-										    		            		+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+										    		            		//+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+										    		            		//+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+										    		            		//+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+										    		            		//+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
 										    		            	+'</div>'
 										    		            +'</div>'
 												            +'</div>'
@@ -734,7 +734,7 @@
 													}else{
 														$('#say_'+_i.say_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示点赞后被取消
 													}
-													$('#say_'+_i.say_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
+													
 												}
 											}
 											
@@ -744,12 +744,14 @@
 										queryThumbsUp(item.id,function(_d){
 											if(_d.code == 200){
 												if(_d.data.length>0){
+													$('#say_'+item.id).find('.mui-zan .zan-name').remove();
 													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
 														var _i = _d.data[j];
 														if(_i.if_spot.data[0] == 1){
-															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+//															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+															$('#say_'+_i.say_id).find('.mui-zan').append('<span class="zan-name">'+(j>0?'、':'')+_i.user_name+'</span>');
 														}
-														
+														$('#say_'+_i.say_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
 													}
 												}
 											}
@@ -759,12 +761,12 @@
 										queryComment(item.id,function(_d){
 											if(_d.code == 200){
 												if(_d.data.length>0){
-													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前2，如果小于2取本身
+													for(var j = 0 , m = _d.data.length<10?_d.data.length:10;  j < m ; j++ ){//只取前2，如果小于2取本身
 														var _i = _d.data[j];
 														
-														$('#say_'+_i.say_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
-														$('#say_'+_i.say_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
-														
+														//$('#say_'+_i.say_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+														//$('#say_'+_i.say_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+														$('#say_'+_i.say_id).find('.mui-travel-comment').append('<p><b class="zan-name">'+_i.user_name+'：'+'</b><b class="zan-text">'+_i.comment_content+'</b></p>');
 													}
 												}
 											}
@@ -799,22 +801,27 @@
 													$('#say_'+say_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
 												});
 											}else if($(this).attr('isThumbsUp')=='1'){
-												updateThumbsUp($(this).attr('spot_id'),0,function(_d){
+												updateThumbsUp($(this).attr('spot_id'),0,say_id,function(_d){
 													$('#say_'+say_id).find('.mui-oper-zan').css('background-image','url(../images/good.png)');
 													$('#say_'+say_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示取消点赞
 													mui.toast('您已经取消点赞!')
 												});
 											}else if($(this).attr('isThumbsUp')=='2'){
-												updateThumbsUp($(this).attr('spot_id'),1,function(_d){
+												updateThumbsUp($(this).attr('spot_id'),1,say_id,function(_d){
 													$('#say_'+say_id).find('.mui-oper-zan').css('background-image','url(../images/zanh_icon.png)');
 													$('#say_'+say_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示取消点赞
 													mui.toast('点赞成功!')
 												});
 											}
 											
+											
+											
 										});
 										
 									}
+									
+									
+									
 									
 								}
 								
@@ -876,6 +883,41 @@
 					crossDomain :true,
 					dataType:'json',//服务器返回json格式数据
 					type:'post',//HTTP请求类型
+					webviewBackHandler:function(data){
+						//查询自己是否点了此说说
+										queryThumbsUpByMyself( say_id, function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													var _i = _d.data[0];
+													if(_i.if_spot.data[0] == 1){//console.log('点赞',zan)
+														$('#say_'+_i.say_id).find('.mui-oper-zan').css('background-image','url(../images/zanh_icon.png)');//  background: url(../images/zanh_icon.png)no-repeat center center;
+														$('#say_'+_i.say_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
+													}else{
+														$('#say_'+_i.say_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示点赞后被取消
+													}
+													$('#say_'+_i.say_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
+												}
+											}
+											
+										} );
+										
+										//查询朋友圈点赞数据
+										queryThumbsUp(say_id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													$('#say_'+say_id).find('.mui-zan .zan-name').remove();
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+//															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+															$('#say_'+_i.say_id).find('.mui-zan').append('<span class="zan-name">'+(j>0?'、':'')+_i.user_name+'</span>');
+														}
+														
+													}
+												}
+											}
+										});
+					},
 					success:function(data){
 						if(typeof _backFunc == 'function')
 							_backFunc(data);
@@ -883,10 +925,13 @@
 						queryThumbsUp(say_id,function(_d){
 											if(_d.code == 200){
 												if(_d.data.length>0){
+													$('#say_'+say_id).find('.mui-zan .zan-name').remove();
 													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
 														var _i = _d.data[j];
+														
 														if(_i.if_spot.data[0] == 1){
-															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+//															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+															$('#say_'+_i.say_id).find('.mui-zan').append('<span class="zan-name">'+(j>0?'、':'')+_i.user_name+'</span>');
 														}
 														
 													}
@@ -899,7 +944,7 @@
 			}
 			
 			/*更新点赞*/
-			function updateThumbsUp(id,if_spot,_backFunc){
+			function updateThumbsUp(id,if_spot,say_id,_backFunc){
 				
 				if(!id||id==""){
 					mui.toast("不允许取消点赞");
@@ -916,7 +961,7 @@
 					webviewBackHandler:function(){
 						
 						//查询自己是否点了此说说
-										queryThumbsUpByMyself( id, function(_d){
+										queryThumbsUpByMyself( say_id, function(_d){
 											if(_d.code == 200){
 												if(_d.data.length>0){
 													var _i = _d.data[0];
@@ -931,7 +976,22 @@
 											}
 											
 										} );
-						
+										//查询朋友圈点赞数据
+										queryThumbsUp(say_id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													$('#say_'+say_id).find('.mui-zan .zan-name').remove();
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+//															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+															$('#say_'+_i.say_id).find('.mui-zan').append('<span class="zan-name">'+(j>0?'、':'')+_i.user_name+'</span>');
+														}
+														
+													}
+												}
+											}
+										});
 					},
 					crossDomain :true,
 					dataType:'json',//服务器返回json格式数据
@@ -940,17 +1000,21 @@
 						if(typeof _backFunc == 'function')
 							_backFunc(data);
 							
-						queryThumbsUp(id,function(_d){
+						queryThumbsUp(say_id,function(_d){
 											if(_d.code == 200){
 												$('#say_'+id).find('.mui-zan .zan-name').each(function(index,item){
 													$(item).html('');
 												});
 												
 												if(_d.data.length>0){
+													$('#say_'+say_id).find('.mui-zan .zan-name').remove();
 													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														
 														var _i = _d.data[j];
+														
 														if(_i.if_spot.data[0] == 1){
-															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+//															$('#say_'+_i.say_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''));
+															$('#say_'+_i.say_id).find('.mui-zan').append('<span class="zan-name">'+(j>0?'、':'')+_i.user_name+'</span>');
 														}
 														
 													}
@@ -1033,12 +1097,13 @@
 											queryComment(_say_id,function(_d){
 												if(_d.code == 200){
 													if(_d.data.length>0){
-														for(var j = 0 , m = _d.data.length<2?_d.data.length:2;  j < m ; j++ ){//只取前2，如果小于2取本身
+														$('#say_'+_i.say_id).find('.mui-travel-comment').empty();
+														for(var j = 0 , m = _d.data.length<10?_d.data.length:10;  j < m ; j++ ){//只取前2，如果小于2取本身
 															var _i = _d.data[j];
 															
-															$('#say_'+_i.say_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
-															$('#say_'+_i.say_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
-															
+//															$('#say_'+_i.say_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：');
+//															$('#say_'+_i.say_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+															$('#say_'+_i.say_id).find('.mui-travel-comment').append('<p><b class="zan-name">'+_i.user_name+'：'+'</b><b class="zan-text">'+_i.comment_content+'</b></p>');
 														}
 													}
 												}
@@ -1067,7 +1132,7 @@
 											queryJBComment(_company_id,function(_d){
 												if(_d.code == 200){
 													if(_d.data.length>0){
-														for(var j = 0 , m = _d.data.length<2?_d.data.length:2;  j < m ; j++ ){//只取前2，如果小于2取本身
+														for(var j = 0 , m = _d.data.length<10?_d.data.length:10;  j < m ; j++ ){//只取前2，如果小于2取本身
 															var _i = _d.data[j];
 															
 															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
@@ -1351,7 +1416,7 @@
 													+'<div class="mui-text-right mui-irrigation-oper">'
 														+'<a href="javascript:void(0);" class="mui-icon-comment">9</a>'
 														//<!--已点赞  加上active类-->
-														+'<a href="javascript:void(0);" class="mui-icon-zan">'+item.point_number+'</a>'
+														+'<a href="javascript:void(0);" class="mui-icon-zan" irrigation-id="'+item.id+'">'+item.point_number+'</a>'
 													+'</div>'
 												+'</div>'
 											+'</li>';
@@ -1362,12 +1427,12 @@
 												if(_d.data.length>0){
 													var _i = _d.data[0];
 													if(_i.if_spot.data[0] == 1){//console.log('点赞',zan)
-														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').addClass('active');
-														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').addClass('active');
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示点赞
 													}else{
-														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示点赞后被取消
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('isThumbsUp','2');//表示点赞后被取消
 													}
-													$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
+													$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('spot_id',_i.id+"");
 												}
 											}
 											
@@ -1403,10 +1468,43 @@
 //											}
 //											
 //										});
-											
+										
+										
 											
 										
 									}
+									
+									
+									var zanList = irrigation_comments.querySelectorAll('.mui-icon-zan');
+									for(var i = 0,m = zanList.length ; i < m ; i++){
+										var zan = zanList[i];
+										zan.addEventListener('tap',function(){
+											console.log(this)
+											var irrigation_id = $(this).attr('irrigation-id');
+											if($(this).attr('isThumbsUp')!='1'&&$(this).attr('isThumbsUp')!='2'){//如果没被点赞
+												
+												thumbsUp_irrigation(irrigation_id,function(_d){
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/zanh_icon.png)');
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示点赞
+												});
+											}else if($(this).attr('isThumbsUp')=='1'){
+												updateThumbsUp_irrigation($(this).attr('spot_id'),0,irrigation_id,function(_d){
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/good.png)');
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','2');//表示取消点赞
+													mui.toast('您已经取消点赞!')
+												});
+											}else if($(this).attr('isThumbsUp')=='2'){
+												updateThumbsUp_irrigation($(this).attr('spot_id'),1,irrigation_id,function(_d){
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/zanh_icon.png)');
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示取消点赞
+													mui.toast('点赞成功!')
+												});
+											}
+											
+										})
+									}
+									
+									
 								}
 							},error:function(e){
 								mui.toast("系统出错");
@@ -1463,6 +1561,38 @@
 					crossDomain :true,
 					dataType:'json',//服务器返回json格式数据
 					type:'post',//HTTP请求类型
+					webviewBackHandler:function(){
+						
+						//查询自己是否点了此说说
+										queryThumbsUpByMyself_irrigation( gs_id, function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													var _i = _d.data[0];
+													if(_i.if_spot.data[0] == 1){//console.log('点赞',zan)
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').addClass('active');
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示点赞
+													}else{
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('isThumbsUp','2');//表示点赞后被取消
+													}
+													$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('spot_id',_i.id+"");
+												}
+											}
+											
+										} );
+										queryThumbsUp_irrigation(gs_id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+															$('#irrigation_'+_i.gs_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+														}
+														
+													}
+												}
+											}
+										});
+					},
 					success:function(data){
 						if(typeof _backFunc == 'function')
 							_backFunc(data);
@@ -1508,17 +1638,33 @@
 												if(_d.data.length>0){
 													var _i = _d.data[0];
 													if(_i.if_spot.data[0] == 1){//console.log('点赞',zan)
-														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').addClass('active');
-														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('isThumbsUp','1');//表示点赞
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').addClass('active');
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示点赞
 													}else{
-														$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('isThumbsUp','2');//表示点赞后被取消
+														$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('isThumbsUp','2');//表示点赞后被取消
 													}
-													$('#irrigation_'+_i.gs_id).find('.mui-oper-zan').attr('spot_id',_i.id+"");
+													$('#irrigation_'+_i.gs_id).find('.mui-icon-zan').attr('spot_id',_i.id+"");
 												}
 											}
 											
 										} );
-						
+									queryThumbsUp_irrigation(id,function(_d){
+											if(_d.code == 200){
+												$('#irrigation_'+id).find('.mui-zan .zan-name').each(function(index,item){
+													$(item).html('');
+												});
+												
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前4，如果小于4取本身
+														var _i = _d.data[j];
+														if(_i.if_spot.data[0] == 1){
+															$('#irrigation_'+_i.gs_id).find('.mui-zan .zan-name').eq(j).html(_i.user_name+(j<m-1?'、':''))
+														}
+														
+													}
+												}
+											}
+										});
 					},
 					crossDomain :true,
 					dataType:'json',//服务器返回json格式数据

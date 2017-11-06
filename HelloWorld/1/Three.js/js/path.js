@@ -36,8 +36,8 @@ var humanAjax = function(url,obj,isLoading,content,isNptips){
 	//									alert('Webview Hided');
 									}, false);
 									webview.addEventListener('close', function(e){
-										alert('Webview close');
-										obj.webviewBackHandler();
+//										alert('Webview close');
+										obj.webviewBackHandler(data);
 									}, false );
 								}
 								
