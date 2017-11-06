@@ -1173,6 +1173,13 @@
 								if(data.code==200&&data.data.length>0){
 									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
 										var item = data.data[i];
+										var turnHtml = "";
+										if(item.group_id){
+											turnHtml = "../chat/index.html?group_id="+item.group_id;
+										}else{
+											turnHtml = "javascript:void(0);";
+										}
+										
 										companion_comments.innerHTML+= '<li class="mui-table-view-cell mui-media" id="g_follow_'+item.id+'">'
 												+'<div class="mui-comment-item">'
 													+'<a href="javascript:void(0);" company-id="'+item.id+'" class="mui-btn mui-btn-danger followBtn" id="follow_'+item.id+'">关注</a>'
@@ -1211,7 +1218,7 @@
 															+'</p>'
 														+'</div>'
 														+'<div class="mui-pull-right mui-text-right">'
-															+'<a href="../chat/index.html?group_id='+item.group_id+'" class="mui-group-chat" group_id="'+item.group_id+'">'
+															+'<a href="'+turnHtml+'" class="mui-group-chat" group_id="'+item.group_id+'">'
 																+'群聊'
 															+'</a>'
 															+'<a href="javascript:void(0);" class="mui-private-chat">'
@@ -1484,18 +1491,21 @@
 											if($(this).attr('isThumbsUp')!='1'&&$(this).attr('isThumbsUp')!='2'){//如果没被点赞
 												
 												thumbsUp_irrigation(irrigation_id,function(_d){
-													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/zanh_icon.png)');
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').addClass('active');
+//													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/zanh_icon.png)');
 													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示点赞
 												});
 											}else if($(this).attr('isThumbsUp')=='1'){
 												updateThumbsUp_irrigation($(this).attr('spot_id'),0,irrigation_id,function(_d){
-													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/good.png)');
+//													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/good.png)');
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').removeClass('active');
 													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','2');//表示取消点赞
 													mui.toast('您已经取消点赞!')
 												});
 											}else if($(this).attr('isThumbsUp')=='2'){
 												updateThumbsUp_irrigation($(this).attr('spot_id'),1,irrigation_id,function(_d){
-													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/zanh_icon.png)');
+//													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/zanh_icon.png)');
+													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').addClass('active');
 													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示取消点赞
 													mui.toast('点赞成功!')
 												});

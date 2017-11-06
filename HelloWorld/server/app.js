@@ -1,4 +1,5 @@
 var express = require('express');
+
 //查询景点信息
 var list = require('./list');
 //用户登录注册
@@ -19,7 +20,8 @@ var companion = require('./companion');
 
 //灌水
 var irrigation = require('./irrigation');
-
+//聊天
+var chat = require('./chat');
 
 var spitslot = require('./spitslot');
 var bodyParser = require('body-parser');
@@ -51,12 +53,20 @@ app.get('/earth', function(req,res){
 	res.sendfile("1/Three.js/Earth-Elevations.html");
 });
 
-var server = app.listen(8080, function () {
-  var host = server.address().address;
-  var port = server.address().port;
+ 
 
-  console.log('Example app listening at http://%s:%s', host, port);
+
+var server = app.listen(8080, function () {
+var host = server.address().address;
+var port = server.address().port;
+chat.prepareSocketIO(server);
+console.log('Example app listening at http://%s:%s', host, port);
 });
+//var http = require('http').Server(app);
+//var server = http.createServer(app);
+app.ready=function(server){
+  chat.prepareSocketIO(server);
+};
 app.use('/list',list);
 app.use('/user',user);
 app.use('/spitslot',spitslot);
@@ -66,3 +76,10 @@ app.use('/foot',foot);
 app.use('/friends',friends);
 app.use('/companion',companion);
 app.use('/irrigation',irrigation);
+app.use('/chat',chat);
+
+
+
+//http.listen(8080, function(){
+//  console.log('listening on *:8080');
+//});

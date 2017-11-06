@@ -32,7 +32,8 @@
                 var obj = {
                     userid: this.userid,
                     username: this.username,
-                    content: content
+                    content: content,
+                    groupid:this.getGroupId()
                 };
                 this.socket.emit('message', obj);
                 d.getElementById("content").value = '';
@@ -41,6 +42,9 @@
         },
         genUid:function(){
             return new Date().getTime()+""+Math.floor(Math.random()*899+100);
+        },
+        getGroupId:function(){
+        	return getQueryString('group_id');
         },
         //更新系统消息，本例中在用户加入、退出的时候调用
         updateSysMsg:function(o, action){
@@ -98,23 +102,24 @@
             this.scrollToBottom();
              
             //连接websocket后端服务器
-            this.socket = io.connect('ws://120.25.221.94:3000');
+            this.socket = io.connect('ws://120.25.221.94:8080');
              
             //告诉服务器端有用户登录
-            this.socket.emit('login', {userid:this.userid, username:this.username});
+            this.socket.emit('login', {userid:this.userid, username:this.username ,groupid:this.getGroupId()});
              
             //监听新用户登录
-            this.socket.on('login', function(o){
+            this.socket.on('login'+this.getGroupId(), function(o){
                 CHAT.updateSysMsg(o, 'login'); 
             });
              
             //监听用户退出
-            this.socket.on('logout', function(o){
+            this.socket.on('logout'+this.getGroupId(), function(o){
                 CHAT.updateSysMsg(o, 'logout');
             });
              
             //监听消息发送
-            this.socket.on('message', function(obj){
+            this.socket.on('message'+this.getGroupId(), function(obj){
+//          	obj.groupid = this.getGroupId();
                 var isme = (obj.userid == CHAT.userid) ? true : false;
                 var contentDiv = '<div>'+obj.content+'</div>';
                 var usernameDiv = '<span>'+obj.username+'</span>';
@@ -147,4 +152,11 @@
             CHAT.submit();
         }
     };
+    
+    //获取window.location.url后面的字段
+	function getQueryString(name){  
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
+        var r = window.location.search.substr(1).match(reg);  
+        if (r != null) return unescape(r[2]);  
+    }
 })();
