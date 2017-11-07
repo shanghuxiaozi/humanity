@@ -160,6 +160,9 @@ router.get('/queryComment', function (req, res, next) {
 		req.query.pageNum = 0;
 	}
 	var countSql = 'SELECT COUNT(*) FROM irrigation_comment where gs_id='+req.query.gs_id;//获取当前说说id总条数
+	
+	console.log("查询灌水评论数据",countSql,'当前用户：',req.session.user);
+	
 	dbHelper.list(countSql, function (data, res) {
 		var totalPage = 0;
 		if(data && data.length>0)

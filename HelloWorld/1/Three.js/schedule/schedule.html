@@ -146,6 +146,7 @@
 			
 			<!--<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
 			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>-->
+			<div id="introduction">之于</div>
 			<!--
             	作者：921233883@qq.com nohup node mycraft.js > sw.log 2>&1 &
 
@@ -650,13 +651,14 @@
 									data = data.slice(0,50);
 								}
 								console.log(data);
+								localStorage.setItem('scenicSpotbyPOS',JSON.stringify(data))
 								if(data&& data.length>0){
 									map.markList = [];
 									map.sizeList = [];
 									map.map.clearOverlays();
 									for(var i=0,m=data.length;i<m;i++){
 										var item = data[i];
-										if(i==0)item.type_id = 8888;
+//										if(i==0)item.type_id = 8888;//显示活动图标
 											map.createMarkFromData(item);
 									}
 								}

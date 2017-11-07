@@ -57,9 +57,9 @@ app.get('/earth', function(req,res){
 
 
 var server = app.listen(8080, function () {
-var host = server.address().address;
-var port = server.address().port;
-chat.prepareSocketIO(server);
+	var host = server.address().address;
+	var port = server.address().port;
+	chat.prepareSocketIO(server);
 console.log('Example app listening at http://%s:%s', host, port);
 });
 //var http = require('http').Server(app);

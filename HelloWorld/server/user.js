@@ -42,7 +42,7 @@ router.post('/register', function (req, res, next) {//
 		}else{
 			data = new Object();
 			data.isRegister = true;
-			dbHelper.list('INSERT INTO app_user(account,login_type,openid,password) VALUES ("'+name+'",0,1,"'+newPas+'")', function(datas, ress){
+			dbHelper.list('INSERT INTO app_user(account,login_type,openid,password,create_time) VALUES ("'+name+'",0,1,"'+newPas+'","'+(new Date()).Format('yyyy-MM-dd HH:mm:ss')+'")', function(datas, ress){
 				console.log(name+"注册成功：",datas);
 				req.session.user = datas;
 				ress.send(datas);
@@ -126,6 +126,47 @@ router.get('/queryFoot', function (req, res, next) {
 	}
 });
 
+/*查询热门驴友*/
+router.get('/queryTourpal', function (req, res, next) {
+	
+		var sql = 'select * from app_user ' ;
+		console.log('查询热门驴友','sql=',sql);
+		dbHelper.list(sql, function (data, res) {
+			res.send({code:200,msg:'查询成功', data:data});
+		}, res);
+	
+});
+
+/*互相关注*/
+router.post('/mutualConcern', function (req, res, next) {
+	if(req.session.user ){
+		var sql = 'insert into mutual_concern( one_id, other_id,create_date) values(' + req.session.user.id +',' + req.body.other_id + ',"'+ (new Date()).Format('yyyy-MM-dd HH:mm:ss') +'")' ;
+		console.log('互注=','sql=',sql);
+		dbHelper.list(sql, function (data, res) {
+			res.send({code:200,msg:'互注成功', data:data});
+		}, res);
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
+
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+        "H+" : this.getHours(), //小时     
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 
 
 var callback = function (data, res) {

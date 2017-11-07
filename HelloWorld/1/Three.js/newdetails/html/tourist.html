@@ -48,7 +48,7 @@
 			<div class="mui-col-xs-12 mui-scoll-x">
 				<p class="mui-detail-title"><b>人文景观</b></p>
 				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div class="mui-scroll">
+					<div class="mui-scroll" id="culturalHeritage">
 						<a class="mui-control-item">
 							<div class="mui-scoll-imgs">
 								<img src="../images/img1.png" class="mui-scoll-img mui-img-response" />
@@ -99,7 +99,7 @@
 			<div class="mui-col-xs-12 mui-scoll-x mui-scoll-travelers">
 				<p class="mui-detail-title"><b>热门驴友</b></p>
 				<div class="mui-scroll-wrapper mui-control-travelers mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-					<div class="mui-scroll">
+					<div class="mui-scroll" id="tourPal">
 						<div class="mui-control-item">
 							<a href="javascript:void(0);">
 								<img src="../images/img1.png" class="mui-scoll-img mui-img-response" />
@@ -240,6 +240,9 @@
 	</div></div></div>
 	<script src="../js/mui.min.js"></script>
 	<script src="../../js/tween/TweenLite.js"></script>
+	<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
 	<script>
 		mui.init();
 		mui.ready(function(){
@@ -282,7 +285,113 @@
 				
 				});
 				
+				
+				var  scenicSpotbyPOS = JSON.parse(localStorage.getItem('scenicSpotbyPOS'));
+				console.log(scenicSpotbyPOS);
+				var culturalHeritage = document.getElementById('culturalHeritage');
+				culturalHeritage.innerHTML = "";
+				for(var i = 0, m = scenicSpotbyPOS.length ; i < m ; i++){
+					var item = scenicSpotbyPOS[ i ];
+					if(item.id == currentInfo.id)continue;//过滤掉自己点选的
+					
+					culturalHeritage.innerHTML+='<a class="mui-control-item">'
+							+'<div class="mui-scoll-imgs">'
+								+'<img src="'+JSON.parse(item.imgbox)[0]+'" class="mui-scoll-img mui-img-response" />'
+							+'</div>'
+							+'<div class="mui-scoll-txt mui-text-left">'
+								+'<p class="mui-scoll-title">'+item.title+'</p>'
+								+'<p class="mui-scoll-con mui-ellipsis-2">'+item.summary+'</p>'
+							+'</div>'
+						+'</a>';
+				}
+				
+				
+				var culturalList = culturalHeritage.querySelectorAll('.mui-control-item');
+				for(var i = 0,m= culturalList.length ; i < m ; i++){
+					var cultural = culturalList[ i ];
+					var h = cultural.offsetHeight;
+					var w = cultural.offsetWidth;
+					cultural.addEventListener('tap',function(e){
+						console.log(e);
+						
+						TweenLite.to(this.style,1,{height:h+200+'px',onComplete:function(){
+							console.log('w');
+							//currentScenicContent.style.height = '100%';
+						}});
+					});
+				}
+				
+				
 			}
+			
+			var tourPal = document.getElementById('tourPal');//热门驴友容器
+			queryTourpal();
+			//查询热门驴友
+				function queryTourpal(){
+					humanAjax(JS_PATH+'/user/queryTourpal',{
+							data:{
+								
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									tourPal.innerHTML = "";
+									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
+										var item = data.data[i];
+										if(item.id == currentInfo.id)continue;//过滤掉自己的
+										if(!item.flag||item.flag.data[0] != 1)continue;
+										tourPal.innerHTML += '<div class="mui-control-item">'
+										+'<a href="javascript:void(0);">'
+											+'<img src="'+item.headimg+'" class="mui-scoll-img mui-img-response" alt="暂时无头像"/>'
+											+'<div class="mui-scoll-txt mui-text-center">'
+												+'<p class="mui-scoll-title">'+item.nickname+'</p>'
+												+'<p class="mui-scoll-con mui-ellipsis-2">'+(item.description||"")+'</p>'
+											+'</div>'
+										+'</a>'
+										+'<a href="javascript:void(0);" class="mui-scoll-btn" other_id="'+ item.id +'">+关注</a>'
+										+'</div>';
+										
+									}
+									
+									//-------------------------------------------------------------------
+									var followList = tourPal.querySelectorAll('.mui-scoll-btn');//关注按钮
+									for( var i = 0, m = followList.length ; i < m ; i++ ){
+										var follow = followList[i];
+										follow.addEventListener('tap',function(){
+											console.log('关注');
+											var _this = this;
+											
+											humanAjax(JS_PATH+'/user/mutualConcern',{
+													data:{
+														other_id:_this.getAttribute('other_id')
+													},
+													crossDomain :true,
+													dataType:'json',//服务器返回json格式数据
+													type:'post',//HTTP请求类型
+													success:function(data){
+														
+														if(data.code==200){
+															mui.toast("关注了他");
+														}
+													},error:function(e){
+														mui.toast("系统出错");
+													}
+												});
+										});
+									}
+									
+									
+								}
+								
+								
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+					});
+				}
 			
 			
 			

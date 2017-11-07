@@ -389,9 +389,10 @@
 					var minHeight = window.innerHeight - firstContent.offsetHeight - sliderSegmentedControl.offsetHeight+ (window.innerHeight<650?200:100 );
 					mui_control_content[i].style.minHeight = minHeight +'px';
 					if($(mui_control_content[i]).find('.mui-scroll').innerHeight()<minHeight){
-						$(mui_control_content[i]).find('.mui-scroll').innerHeight(minHeight+1) ;
+						$(mui_control_content[i]).find('.mui-scroll').innerHeight(minHeight+300) ;
 					}
 //					console.log(minHeight)
+					
 				}
 				$('body')[0].style.minHeight = window.innerHeight + (window.innerHeight<650?200:100 )+'px';
 			}
