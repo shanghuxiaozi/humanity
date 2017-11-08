@@ -346,7 +346,44 @@
 			//吐槽
 			var complaints = document.getElementById("complaints");
 			complaints.addEventListener('tap',function(e){
-				mui.openWindow("edit_detail.html");//spitslot_create.html
+				humanAjax(JS_PATH+'/user/isLogin',{
+						data:{
+							
+							
+						},
+						crossDomain :true,
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						isNoToloagin:true,
+						webviewBackHandler:function(data){
+							var userMsg  = data;
+							if(userMsg.user_level >=3){
+								mui.openWindow("edit_detail.html");//spitslot_create.html
+							}else{
+								mui.toast('您的等级不够3级无法编辑');
+							}
+							
+						},
+						success:function(data){
+							if(data.code == 200){
+								isLogin = true;
+								var userMsg  = data.data;
+								if(userMsg.user_level >=3){
+									mui.openWindow("edit_detail.html");//spitslot_create.html
+								}else{
+									mui.toast('您的等级不够3级无法编辑');
+									
+								}
+							}else{
+								//mui.toast("您未登录");
+								mui.openWindow('login.html');
+							}
+							
+						},error:function(e){
+							mui.toast("系统出错");
+						}
+					},false);
+				
 			});
 			
 			var mui_scroll_wrapper = document.querySelectorAll('.mui-scroll-wrapper');
@@ -429,7 +466,7 @@
 					
 				}
 					//如果有客户提供的景点详情，并且已经通过审核了，那么就可以显示
-					if(currentInfo.audit_status!=2 && currentInfo.editor_content){//表示不在审核中可以显示
+					if((currentInfo.audit_status!=2 &&currentInfo.audit_status!=4)&& currentInfo.editor_content){//表示不在审核中可以显示,也没有审核不通过
 						//var mm = '[{"title":"景点介绍","content":"深圳香蜜湖水上乐园，地处深圳福田中心区，紧靠深南大道，设备最先进的具有国际一流水准的大型水上乐园，深圳第一个新颖有趣的戏水乐园。除了商业割据香蜜湖，地产商蚕食香蜜湖地块，也使得香蜜湖作为旅游用地的功能逐渐式微。香蜜湖已经是深圳乃至整个华南的豪宅聚居区之一，该片区空气质量上乘，环境景观绝佳，人居条件远远优于其他区域。有着“都市绿肺”之称的香蜜湖地块，成了“地产巨头必战之地”、“高品质城市综合社区”、“深圳顶级豪宅集中区域”等已成了香蜜湖的代名词。内设16个游乐项目，主要有登高滑道、高速滑道、组合滑道、冲浪滑道、雪山滑道、造浪池、漂流河、激流探险、儿童戏水池、儿童反斗乐园、跳水池、休闲池、按摩池、游泳池等。"}]'
 						currentInfo.editor_content = currentInfo.editor_content.split('@#|5@');
 						$('#editorContainer').empty();
@@ -453,7 +490,20 @@
 								+'<img src="../images/feel.png" class="mui-detail-btn">'
 							+'</div>'
 						+'</div>');
-						
+						var currentScenicContentListTiTle = (document.getElementById('editorContainer')).querySelectorAll('.mui-detail-title');
+						var currentScenicContentList = (document.getElementById('editorContainer')).querySelectorAll('.currentScenicContent');
+						for( var i = 0,m = currentScenicContentListTiTle.length ; i < m ; i++ ){
+							if(i==0)continue;
+							var scenic = currentScenicContentListTiTle[ i ];
+							$(currentScenicContentList[i]).hide();
+							scenic.addEventListener('tap',function(){
+								console.log('展开');
+								if($(this).parents('.mui-col-xs-12').find('.currentScenicContent').is(":hidden"))
+								$(this).parents('.mui-col-xs-12').find('.currentScenicContent').show();
+								else
+								$(this).parents('.mui-col-xs-12').find('.currentScenicContent').hide();
+							})
+						}
 					}
 					
 				
@@ -614,7 +664,7 @@
 			
 		}
 		
-		
+		//update scenices set audit_status = 3 where id=11095
 		
 </script>
 </body>

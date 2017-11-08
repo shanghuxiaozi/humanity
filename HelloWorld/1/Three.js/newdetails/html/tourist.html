@@ -374,6 +374,8 @@
 														
 														if(data.code==200){
 															mui.toast("关注了他");
+															$(_this).attr('disabled','disabled');
+															$(_this).attr('background-color','#C8B7B5');
 														}
 													},error:function(e){
 														mui.toast("系统出错");

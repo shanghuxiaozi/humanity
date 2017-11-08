@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'/>
+<title>www.layabox.com</title>
+<meta name='apple-mobile-web-app-capable' content='yes' />
+<meta name='full-screen' content='true' />
+<meta name='screen-orientation' content='portrait' />
+<meta name='x5-fullscreen' content='true' />
+<meta name='360-fullscreen' content='true' />
+<meta http-equiv='expires' content='0' />
+<meta name='laya' logoimg='logo.png' logobkcolor='#ffffff' screenorientation='landscape' cacheid='fffffffff' />
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=LIhOlvWfdiPYMCsK5wsqlFQD8wW4Bfy6&s=1"></script> -->
+<script src="../../js/laya.core.min.js"></script>
+</head>
+<body style="background-color: black;">
+<script>
+
+Laya.init(1200,1600);
+Laya.stage.bgColor = "#FFFFFF";
+Laya.stage.alignH = Laya.Stage.ALIGN_CENTER;
+Laya.stage.alignV = Laya.Stage.ALIGN_MIDDLE;
+
+// 创建Video元素
+var videoElement = Laya.Browser.createElement("video");
+Laya.Browser.document.body.appendChild(videoElement);
+
+// 设置Video元素地样式和属性
+videoElement.style.zInddex = Laya.Render.canvas.style.zIndex + 1;
+videoElement.src = "http://k.youku.com/player/getFlvPath/sid/05101404858921238cda1/st/mp4/fileid/0300080100588917FC52300000000173284D8F-57C1-E8C7-9D9C-EFD42C7DCFED?k=b3dfc0d42b864a9b282cce40&hd=1&myp=0&ts=161&ctype=12&ev=1&token=0514&oip=3072837110&ep=cieVGkiJVsoI4CvWij8bZCSxICYOXP4J9h%2BFidJjALshQOC2mDmntJiyTf9CFvkZciIGEezyqdjj%0AHkhiYfVE2mkQqkbbPvrpivmQ5dglsJQCFR5CAbuiwFSeRjH1&ccode=050F&duration=160&expire=18000&psid=5bf8444d68765951045320d6c99750d7&ups_client_netip=183.39.197.246&ups_ts=1510140485&ups_userid=&utid=QYNLEnli4E0CAbcn5RstS21C&vid=XMjAzMzM5Njg0MA%3D%3D&vkey=A4ccc213e897ba491adfa4160d027e212";
+videoElement.controls = true;
+// 阻止IOS视频全屏
+videoElement.setAttribute("webkit-playsinline", true);
+videoElement.setAttribute("playsinline", true);
+
+// 设置画布上的对齐参照物
+var reference = new Laya.Sprite();
+Laya.stage.addChild(reference);
+reference.pos(100, 100);
+reference.size(1000, 1300);
+reference.graphics.drawRect(0, 0, reference.width, reference.height, "#CCCCCC");
+
+// 每次舞台尺寸变更时，都会调用Utils.fitDOMElementInArea设置Video的位置，对齐的位置和refence重合
+Laya.stage.on(Laya.Event.RESIZE, this, Laya.Utils.fitDOMElementInArea, [videoElement, reference, 0, 0, reference.width, reference.height]);
+</script>
+</body>
+</html>
