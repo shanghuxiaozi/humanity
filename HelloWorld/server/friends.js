@@ -30,7 +30,7 @@ router.get('/queryByPage', function (req, res, next) {//
 				var totalPage = 0;
 				if(data && data.length>0)
 				totalPage = data[0]['COUNT(*)'];
-				var sql = 'select * from say_say where if_pass=1 limit '+ req.query.pageNum +','+req.query.pageSize*(req.query.pageNum+1);
+				var sql = 'select * from say_say where if_pass=1 limit '+ req.query.pageSize*req.query.pageNum +','+req.query.pageSize;
 				console.log('分享数据总条数=',data,'------查询分享数据----');
 				console.log('sql=',sql);
 				//通过景点id查询
@@ -74,7 +74,7 @@ router.get('/queryThumbsUp', function (req, res, next) {
 		var totalPage = 0;
 		if(data && data.length>0)
 		totalPage = data[0]['COUNT(*)'];
-		var sql = 'select * from say_say_spot where say_id=' + req.query.say_id+ ' limit '+ req.query.pageNum + ',' + req.query.pageSize*(req.query.pageNum+1);
+		var sql = 'select * from say_say_spot where say_id=' + req.query.say_id+ ' limit '+ req.query.pageSize*req.query.pageNum + ',' + req.query.pageSize;
 		console.log('朋友圈点赞数据总条数=',data,'------查询朋友圈点赞数据----');
 		console.log('sql=',sql);
 		//通过景点id查询
@@ -157,7 +157,7 @@ router.get('/queryComment', function (req, res, next) {
 			var totalPage = 0;
 			if(data && data.length>0)
 			totalPage = data[0]['COUNT(*)'];
-			var sql = 'select * from say_say_comment where say_id=' + req.query.say_id+ ' limit '+ req.query.pageNum + ',' + req.query.pageSize*(req.query.pageNum+1);
+			var sql = 'select * from say_say_comment where say_id=' + req.query.say_id+ ' limit '+ req.query.pageSize*req.query.pageNum + ',' + req.query.pageSize;
 			console.log('说说评论数据总条数=',data,'------查询说说评论数据----');
 			console.log('sql=',sql);
 			//通过景点id查询

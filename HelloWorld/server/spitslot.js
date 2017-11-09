@@ -32,7 +32,13 @@ router.get('/queryAll', function (req, res, next) {//
 			res.send({code:400,msg:'此景点id不存在'});
 			return;
 		}else{
-			var sql = 'select a.id ,a.publish_content,a.point_number,a.publish_time,a.scenice_id, a.scenice_name,a.type_id,a.user_id,a.user_name ,b.name ,c.nickname,c.headimg,c.login_type,c.openid,c.account from spitslot_record as a join spitslot_type b join app_user c on b.id = a.type_id and a.user_id=c.id  and a.scenice_id='+req.query.id;
+			if(!req.query.pageSize||req.query.pageSize==""){
+				req.query.pageSize = 10;
+			}
+			if(!req.query.pageNum||req.query.pageNum==""){
+				req.query.pageNum = 0;
+			}
+			var sql = 'select a.id ,a.publish_content,a.point_number,a.publish_time,a.scenice_id, a.scenice_name,a.type_id,a.user_id,a.user_name ,b.name ,c.nickname,c.headimg,c.login_type,c.openid,c.account from spitslot_record as a join spitslot_type b join app_user c on b.id = a.type_id and a.user_id=c.id  and a.scenice_id='+req.query.id +' limit '+ req.query.pageSize*req.query.pageNum +','+req.query.pageSize;
 			console.log('------查询吐槽数据----');
 			console.log('sql=',sql);
 			//通过景点id查询

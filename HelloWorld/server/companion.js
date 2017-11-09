@@ -31,7 +31,7 @@ router.get('/queryByPage', function (req, res, next) {//
 				var totalPage = 0;
 				if(data && data.length>0)
 				totalPage = data[0]['COUNT(*)'];
-				var sql = 'select * from travel_company where state=1 limit '+ req.query.pageNum +','+req.query.pageSize*(req.query.pageNum+1);
+				var sql = 'select * from travel_company where state=1 limit '+ req.query.pageSize*req.query.pageNum +','+req.query.pageSize;
 				console.log('结伴数据总条数=',data,'------查询结伴数据----');
 				console.log('sql=',sql);
 				//通过景点id查询
@@ -157,7 +157,7 @@ router.get('/queryComment', function (req, res, next) {
 		var totalPage = 0;
 		if(data && data.length>0)
 		totalPage = data[0]['COUNT(*)'];
-		var sql = 'select * from travel_company_comment where jb_id=' + req.query.jb_id+ ' limit '+ req.query.pageNum + ',' + req.query.pageSize*(req.query.pageNum+1);
+		var sql = 'select * from travel_company_comment where jb_id=' + req.query.jb_id+ ' limit '+ req.query.pageSize*req.query.pageNum + ',' + req.query.pageSize;
 		console.log('结伴评论数据总条数=',data,'------查询结伴评论数据----');
 		console.log('sql=',sql);
 		//通过景点id查询

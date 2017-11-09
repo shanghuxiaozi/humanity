@@ -84,6 +84,74 @@
 				  color: #666;
 				  font-weight: normal;
 				}
+				
+				
+				/*下拉上拉刷新*/
+				.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				
+				margin: 0;
+			}
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
     </style>
    
 </head>
@@ -515,6 +583,8 @@
 	<script src="../../mobile/layer.js"></script>
 	<script src="../../js/path.js"></script>
 	<script src="../../js/jquery-1.9.1.js"></script>
+	<script src="../../hello-mui/js/mui.pullToRefresh.js"></script>
+		<script src="../../hello-mui/js/mui.pullToRefresh.material.js"></script>
 	<script>
 		mui.init(
 //			{
@@ -540,8 +610,9 @@
 		var _type_ = 0;//表示当前评论的类型是0说说，1结伴，还是2灌水
 		//分享朋友圈
 		var friends_comments = document.getElementById('friends_comments');
-		
-		
+		//结伴
+		var companion_comments = document.getElementById('companion_comments');
+		var irrigation_comments = document.getElementById('irrigation_comments');//灌水总显示内容	
 		(function($S) {
 			var scroll = $S('.mui-scroll-wrapper').scroll({
 					indicators: true //是否显示滚动条
@@ -611,13 +682,16 @@
 			
 			
 			//通过分页查询分享数据
-			queryByPage();
+			friends_comments.innerHTML = "";
+			queryByPage(0,3);
 			
 			//查询结伴记录
-			queryCompanionByPage();
+				companion_comments.innerHTML = "";
+			queryCompanionByPage(0,3);
 			
 			//查询灌水记录
-			queryIrrigationByPage()
+			irrigation_comments.innerHTML = "";
+			queryIrrigationByPage(0,3);
 			
 		})(mui);
 		//-----------------------------------------------------
@@ -656,18 +730,19 @@
 			}
 		
 			//通过分页查询分享数据
-			function queryByPage(){
+			function queryByPage(pageNum,pageSize,_callBack){
 				humanAjax(JS_PATH+'/friends/queryByPage',{
 							data:{
-								pageNum:0,
-								pageSize:10
+								pageNum:pageNum,
+								pageSize:pageSize
 							},
 							crossDomain :true,
 							dataType:'json',//服务器返回json格式数据
 							type:'get',//HTTP请求类型
 							success:function(data){
+								if(typeof _callBack == 'function')_callBack(data);
 								if(data.code==200&&data.data.length>0){
-									friends_comments.innerHTML = "";
+									
 									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
 										var item = data.data[i];
 										friends_comments.innerHTML+='<li class="mui-table-view-cell mui-media" id="say_'+item.id+'">'
@@ -828,6 +903,7 @@
 								
 							},error:function(e){
 								mui.toast("系统出错");
+								if(typeof _callBack == 'function')_callBack(e);
 							}
 					},false);
 			}
@@ -1156,20 +1232,21 @@
 			
 			
 			//-----------------------------------------------结伴-------------------------------------------------------
-			var companion_comments = document.getElementById('companion_comments');
+			
 			//通过分页查询结伴数据
-			function queryCompanionByPage(){
+			function queryCompanionByPage(pageNum,pageSize,_callBack){
 			
 				humanAjax(JS_PATH+'/companion/queryByPage',{
 							data:{
-								pageNum:0,
-								pageSize:10
+								pageNum:pageNum,
+								pageSize:pageSize
 							},
 							crossDomain :true,
 							dataType:'json',//服务器返回json格式数据
 							type:'get',//HTTP请求类型
 							success:function(data){
-								companion_comments.innerHTML = "";
+								if(typeof _callBack == 'function')_callBack(data);
+							
 								if(data.code==200&&data.data.length>0){
 									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
 										var item = data.data[i];
@@ -1327,6 +1404,7 @@
 								}
 							},error:function(e){
 								mui.toast("系统出错");
+								if(typeof _callBack == 'function')_callBack(e);
 							}
 							
 					});
@@ -1388,21 +1466,22 @@
 			
 			
 		//-----------------------------------------------灌水-------------------------------------------------------
-		var irrigation_comments = document.getElementById('irrigation_comments');//灌水总显示内容	
+		
 		
 		//通过分页查询灌水数据
-			function queryIrrigationByPage(){
+			function queryIrrigationByPage(pageNum,pageSize,_callBack){
 			
 				humanAjax(JS_PATH+'/irrigation/queryByPage',{
 							data:{
-								pageNum:0,
-								pageSize:10
+								pageNum:pageNum,
+								pageSize:pageSize
 							},
 							crossDomain :true,
 							dataType:'json',//服务器返回json格式数据
 							type:'get',//HTTP请求类型
 							success:function(data){
-								irrigation_comments.innerHTML = "";
+								if(typeof _callBack == 'function')_callBack(data);
+								
 								if(data.code==200&&data.data.length>0){
 									for( var i = 0 , m = data.data.length ; i < m ; i++ ){
 										
@@ -1518,6 +1597,7 @@
 								}
 							},error:function(e){
 								mui.toast("系统出错");
+								if(typeof _callBack == 'function')_callBack(e);
 							}
 					});
 			}
@@ -1704,6 +1784,68 @@
 						mui.toast("系统出错");
 				}});
 			}
+			
+			
+			//滚动加载上拉下拉刷新
+			var pageNumList = [0,0,0];
+			(function($S) {
+				//阻尼系数
+				var deceleration = mui.os.ios?0.003:0.0009;
+				$S('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration:deceleration
+				});
+				$S.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$S.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						$S(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										self.endPullDownToRefresh();
+									}, 1000);
+								}
+							},
+							up: {
+								callback: function() {
+									var self = this;
+									pageNumList[index]++;
+									if(index==0){
+										queryByPage(pageNumList[index],3,function(v){
+											setTimeout(function() {
+												if(v&&v.code==200&&v.data.length>0){
+													self.endPullUpToRefresh();
+												}else self.endPullUpToRefresh(true);
+												
+											}, 1000);
+										});
+									}else if(index==1){
+										queryCompanionByPage(pageNumList[index],3,function(v){
+											setTimeout(function() {
+												if(v&&v.code==200&&v.data.length>0){
+													self.endPullUpToRefresh();
+												}else self.endPullUpToRefresh(true);
+											}, 1000);
+										});
+									}else if(index==2){
+										queryIrrigationByPage(pageNumList[index],3,function(v){
+											setTimeout(function() {
+												if(v&&v.code==200&&v.data.length>0){
+													self.endPullUpToRefresh();
+												}else self.endPullUpToRefresh(true);
+											}, 1000);
+										});
+									}
+									
+								}
+							}
+						});
+					});
+				});
+			})(mui);
+			
 	</script>
 </body>
 </html>
