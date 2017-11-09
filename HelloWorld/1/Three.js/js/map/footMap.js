@@ -209,141 +209,162 @@ Bookingmap.prototype.initBaiduMap=function(id){
 	//map.setMapStyle({styleJson: mapDefine });
 		 
 		var geoc = new BMap.Geocoder(); 
+		var touchKong = 0;
 		map.addEventListener("touchstart",function(e){
 			//alert("触摸");
 			console.log(e);
-			var input = document.getElementById("suggestId");
-//			input.blur();
-//			_this.clickhandler(e.touches[0]);
-			var pt = e.point;
-			geoc.getLocation(pt, function(rs){//console.log(rs);
-				var addComp = rs.addressComponents;
-				if(addComp.province==""&&addComp.city ==""){
-					mui.toast('请把旗帜插在陆地上！~');
-					return;
-				}
-				var address = rs.addressComponents;
-				var obj 
-				if(rs.surroundingPois.length>0)
-				 obj = rs.surroundingPois[0];
-				else{
-					obj = new Object();
-					obj.title = "";
-				}
-				 
-				var _value = address.province +  address.city +  address.district +  address.street +  (rs.business!=""? rs.business:obj.title);
-				mui.confirm('您选择的足迹地点：'+_value,'温馨提示', ['取消','确认'],function(e){
-					
-					if(e.index == 0){
-						
-					}else{
-						var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
-		//				map.clearOverlays();
-						map.addOverlay(mk);
-						console.log(BMAP_ANIMATION_BOUNCE);
-						mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-						map.panTo(rs.point);
-						
-						console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
-						
-						
-						//$('#suggestId').val(_value);
-						//$('#suggestId').focusout();
-						if( typeof _this.clickhandler === 'function' ){
-							_this.clickhandler(_value,pt);
-						}
-						if( typeof _this.pointHandler === 'function' ){
-							_this.pointHandler(pt);
-						}
+			touchKong++;
+			var time = setTimeout(function(){
+				touchKong = 0;
+				clearTimeout(time);
+				
+			},400);
+			if(touchKong==2){
+				touchKong=0;
+				
+				var input = document.getElementById("suggestId");
+	//			input.blur();
+	//			_this.clickhandler(e.touches[0]);
+				var pt = e.point;
+				geoc.getLocation(pt, function(rs){//console.log(rs);
+					var addComp = rs.addressComponents;
+					if(addComp.province==""&&addComp.city ==""){
+						mui.toast('请把旗帜插在陆地上！~');
+						return;
 					}
-				})
-				
-				
-				
-			}); 
-			
+					var address = rs.addressComponents;
+					var obj 
+					if(rs.surroundingPois.length>0)
+					 obj = rs.surroundingPois[0];
+					else{
+						obj = new Object();
+						obj.title = "";
+					}
+					 
+					var _value = address.province +  address.city +  address.district +  address.street +  (rs.business!=""? rs.business:obj.title);
+					mui.confirm('您选择的足迹地点：'+_value,'温馨提示', ['取消','确认'],function(e){
+						
+						if(e.index == 0){
+							
+						}else{
+							var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
+			//				map.clearOverlays();
+							map.addOverlay(mk);
+							console.log(BMAP_ANIMATION_BOUNCE);
+							mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+							map.panTo(rs.point);
+							
+							console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
+							
+							
+							//$('#suggestId').val(_value);
+							//$('#suggestId').focusout();
+							if( typeof _this.clickhandler === 'function' ){
+								_this.clickhandler(_value,pt);
+							}
+							if( typeof _this.pointHandler === 'function' ){
+								_this.pointHandler(pt);
+							}
+						}
+					})
+					
+					
+					
+				}); 
+			}
 			
 		});
 		//单击获取点击的经纬度
+		var clickKong = 0;
 		map.addEventListener("click",function(e){
 			console.log(e.point);
 			//alert(9);
-			var input = document.getElementById("suggestId");
-//			input.blur();
-//			_this.clickhandler();
-			//console.log('覆盖物',map.getOverlays());
-//			return;
-			//var os = map.getOverlays();
-			
-			
-			
-//			for(var i = 0; i < os.length ; i++){
-//			             //不同覆盖物调用不同的计算方法
-//			             switch (os[i].toString()) {
-//			                 case "[object Polyline]":
-//			                     //
-//			                     break;
-//			                 case "[object Polygon]":
-//			                     //
-//			                     break;
-//			                 case "[object Circle]":
-//			                     //
-//			                     break;
-//			                 case "[object Marker]":
-//			                     //
-//			                	 console.log();
-//			                     break;
-//			            }
-//			}
-			
-			
-//			if( os._indexOf(e.overlay)!=-1){
-//	            console.log('你点击的是覆盖物：',e.overlay);   
-//	            //return;
-//	        }
-			var pt = e.point;
-			geoc.getLocation(pt, function(rs){//console.log(rs);
-				var addComp = rs.addressComponents;
-				if(addComp.province==""&&addComp.city ==""){
-					mui.toast('请把旗帜插在陆地上！~');
-					return;
-				}
-				var address = rs.addressComponents;
-				var obj 
-				if(rs.surroundingPois.length>0)
-				 obj = rs.surroundingPois[0];
-				else{
-					obj = new Object();
-					obj.title = "";
-				}
-				var _value = address.province +  address.city +  address.district +  address.street +  (rs.business!=""? rs.business:obj.title);
-				mui.confirm('您选择的足迹地点：'+_value,'温馨提示', ['取消','确认'],function(e){
-					
-					if(e.index == 0){
-						
-					}else{
-						var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
-		//				map.clearOverlays();
-						map.addOverlay(mk);
-						mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
-						map.panTo(rs.point);
-						//console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
-						
-						 
-						
-						//$('#suggestId').val(_value);
-						//$('#suggestId').focusout();
-						if( typeof _this.clickhandler === 'function' ){
-							_this.clickhandler(_value,pt);
-						}
-						if( typeof _this.pointHandler === 'function' ){
-							_this.pointHandler(pt);
-						}
-					}
-					
-				});
+			clickKong++;
+			var time = setTimeout(function(){
+				clickKong = 0;
+				clearTimeout(time);
 				
-			});   
+			},400);
+			if(clickKong==2){
+				clickKong=0
+			
+				var input = document.getElementById("suggestId");
+	//			input.blur();
+	//			_this.clickhandler();
+				//console.log('覆盖物',map.getOverlays());
+	//			return;
+				//var os = map.getOverlays();
+				
+				
+				
+	//			for(var i = 0; i < os.length ; i++){
+	//			             //不同覆盖物调用不同的计算方法
+	//			             switch (os[i].toString()) {
+	//			                 case "[object Polyline]":
+	//			                     //
+	//			                     break;
+	//			                 case "[object Polygon]":
+	//			                     //
+	//			                     break;
+	//			                 case "[object Circle]":
+	//			                     //
+	//			                     break;
+	//			                 case "[object Marker]":
+	//			                     //
+	//			                	 console.log();
+	//			                     break;
+	//			            }
+	//			}
+				
+				
+	//			if( os._indexOf(e.overlay)!=-1){
+	//	            console.log('你点击的是覆盖物：',e.overlay);   
+	//	            //return;
+	//	        }
+				var pt = e.point;
+				geoc.getLocation(pt, function(rs){//console.log(rs);
+					var addComp = rs.addressComponents;
+					if(addComp.province==""&&addComp.city ==""){
+						mui.toast('请把旗帜插在陆地上！~');
+						return;
+					}
+					var address = rs.addressComponents;
+					var obj 
+					if(rs.surroundingPois.length>0)
+					 obj = rs.surroundingPois[0];
+					else{
+						obj = new Object();
+						obj.title = "";
+					}
+					var _value = address.province +  address.city +  address.district +  address.street +  (rs.business!=""? rs.business:obj.title);
+					mui.confirm('您选择的足迹地点：'+_value,'温馨提示', ['取消','确认'],function(e){
+						
+						if(e.index == 0){
+							
+						}else{
+							var mk = new BMap.Marker(rs.point,{icon:_this.flagRed});
+			//				map.clearOverlays();
+							map.addOverlay(mk);
+							mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+							map.panTo(rs.point);
+							//console.log(addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber,addComp);
+							
+							 
+							
+							//$('#suggestId').val(_value);
+							//$('#suggestId').focusout();
+							if( typeof _this.clickhandler === 'function' ){
+								_this.clickhandler(_value,pt);
+							}
+							if( typeof _this.pointHandler === 'function' ){
+								_this.pointHandler(pt);
+							}
+						}
+						
+					});
+					
+				});  
+			}
 		});
 //		var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
 //				{"input" : "suggestId"
