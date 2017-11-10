@@ -98,9 +98,9 @@ router.post('/update', function (req, res, next) {//
 router.post('/insertFoot', function (req, res, next) {//
     	console.log('------插入足迹-----');
 	if(req.session.user){
-		var sql = 'insert into footprint(user_id,user_name,create_date,longitude,latitude,name) values('
+		var sql = 'insert into footprint(user_id,user_name,create_date,longitude,latitude,name,content,imgbox) values('
 		+req.session.user.id+',"'+req.session.user.nickname+'","'
-			+req.body.create_date+'",'+req.body.longitude+','+req.body.latitude +',"'+req.body.name+'")';
+			+req.body.create_date+'",'+req.body.longitude+','+req.body.latitude +',"'+req.body.name+'","'+req.body.content+'","'+req.body.imgbox+'")';
 		console.log('sql=',sql);
 		dbHelper.list( sql
 		, function (data, res) {

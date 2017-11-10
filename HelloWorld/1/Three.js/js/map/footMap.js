@@ -212,7 +212,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		var touchKong = 0;
 		map.addEventListener("touchstart",function(e){
 			//alert("触摸");
-			console.log(e);
+			console.log(e);return;
 			touchKong++;
 			var time = setTimeout(function(){
 				touchKong = 0;
@@ -277,7 +277,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		//单击获取点击的经纬度
 		var clickKong = 0;
 		map.addEventListener("click",function(e){
-			console.log(e.point);
+			console.log(e.point);return;
 			//alert(9);
 			clickKong++;
 			var time = setTimeout(function(){

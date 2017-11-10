@@ -20,7 +20,7 @@
 		
 		<div class="mui-iframe-wrapper" style="top: 44px;">
 			<div class="mui-foot-row">
-				<ul class="mui-table-view">
+				<ul class="mui-table-view" id="contentUL">
 					<li class="mui-table-view-cell">
 						<i class="mui-foot-circle"></i>
 						<div class="mui-foot-contents">
@@ -83,8 +83,66 @@
 		
 		</div>
 		<script src="../js/mui.min.js"></script>
+			<script src="../../mobile/layer.js"></script>
+	<script src="../../js/path.js"></script>
+	<script src="../../js/jquery-1.9.1.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			mui.init();
+			
+			queryFoot();
+    		function queryFoot(){
+    			humanAjax(JS_PATH+'/user/queryFoot',{
+					data:{
+						
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					//async:true,
+					success:function(data){
+						
+						if(data.code ==200 && data.data.length > 0){
+							$('#contentUL').empty();
+							$(data.data).each(function(index,item){
+//								console.log(item)
+								$('#contentUL').append('<li class="mui-table-view-cell">'
+									+'<i class="mui-foot-circle"></i>'
+									+'<div class="mui-foot-contents">'
+										+'<p class="mui-foot-time">'+item.create_date.substring(0,4)+'年'+item.create_date.substring(5,7)+'月'+item.create_date.substring(8,10)+'日</p>'
+										+'<p class="mui-foot-addr">北京</p>'
+										+'<div class="mui-clearfix">'
+											+'<div class="mui-col-xs-4 mui-pull-left mui-foot-imgb">'
+												+'<img src="../images/foot_img.png" class="mui-img-response mui-foot-img" />'
+											+'</div>'
+											+'<div class="mui-col-xs-4 mui-pull-left mui-foot-imgl">'
+												+'<div class="mui-col-xs-12">'
+													+'<img src="../images/img1.png" class="mui-img-response mui-foot-img" />'
+												+'</div>'
+												+'<div class="mui-col-xs-12">'
+													+'<img src="../images/img1.png" class="mui-img-response mui-foot-img" />'
+												+'</div>'
+											+'</div>'
+											+'<div class="mui-col-xs-4 mui-pull-left mui-foot-imgl mui-foot-imgl2">'
+												+'<div class="mui-col-xs-12">'
+													+'<img src="../images/img1.png" class="mui-img-response mui-foot-img" />'
+												+'</div>'
+												+'<div class="mui-col-xs-12">'
+													+'<img src="../images/img1.png" class="mui-img-response mui-foot-img" />'
+												+'</div>'
+											+'</div>'
+										+'</div>'
+									+'</div>'
+								+'</li>');
+							});
+						}
+						
+					},error:function(e){
+								mui.toast("系统出错");
+							}
+					
+    			
+    			});
+    			}
 		</script>
 	</body>
 </html>

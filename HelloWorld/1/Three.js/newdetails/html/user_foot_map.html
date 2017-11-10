@@ -20,6 +20,36 @@
 			.anchorBL{
 				display: none;
 			}
+			#footDiv{
+				position: absolute;
+				background-image: url(../../images/foot/timg.png);
+				background-size: 100px,60px;
+				background-repeat:no-repeat;
+				top: 100px;
+  				right: 10px;
+			    width: 100px;
+			    height: 100px;
+			}
+			#deleteDiv{
+				position: absolute;
+				font-size: 3em;
+				right: 10px;
+  				bottom: 10px;
+			    width: 40px;
+			    height: 40px;
+			}
+			#infoDiv{
+				position: absolute;
+				/*background-color: #0062CC;*/
+				top: 200px;
+  				left: 150px;
+			    /*width: 40px;*/
+			    /*height: 40px;*/
+			}
+			#publishBtn{
+				  font-size: 15px;
+  				  margin-top: 10px;
+			}
 		</style>
 	</head>
 	<body>
@@ -53,6 +83,49 @@
 			</div>
 		</div>
 	</div>
+	<div id="footDiv">
+		
+	</div>
+	<div id="infoDiv" ><button type="button" class="mui-btn mui-btn-danger">编辑</button></div>
+	<div class="mui-icon mui-icon-trash" id="deleteDiv"></div>
+	
+	<div id="modal" class="mui-modal">
+		<header class="mui-bar mui-bar-nav mui-search-box">
+			<a  id="publishBtn">发布</a>
+			<a class="mui-icon mui-icon-close mui-pull-right" href="#modal"></a>
+			<h1 class="mui-title  mui-close">编辑足迹</h1>
+			
+		</header>
+		<div class="mui-iframe-wrapper" style="top: 44px;">
+			<div class="mui-row-item mui-publish-friends">
+				<textarea placeholder="把你这一刻记录下来吧！" class="mui-form-control" id="publish_content"></textarea>
+				<div class="mui-clearfix mui-row-bottom mui-padbom-10">
+					<!--预览的图片-->
+					<div id="preview">
+						<!--<span class="mui-pull-left mui-phone-preview">
+							<a href="javascript:void(0);" class="mui-icon-remove"></a>
+							<img src="../images/img1.png" class="mui-img-response"/>
+						</span>
+						<span class="mui-pull-left mui-phone-preview">
+							<a href="javascript:void(0);" class="mui-icon-remove"></a>
+							<img src="../images/img1.png" class="mui-img-response"/>
+						</span>-->
+					</div>
+					<!--上传图片-->
+					<span class="mui-publish-vedio mui-text-center mui-pull-left">
+						<form role="form" id="myForm" action="" method="post" enctype="multipart/form-data">
+								<input type="file" name="fulAvatar" class="mui-file upload_img" onchange="uploadByForm(this)"/>
+							</form>
+						<img src="../images/tab_vediodark_icon.png" class="mui-vedio-phone"/>
+						<p class="mui-vedio-text">图片 / 视频</p>
+					</span>
+				</div>
+				<!--所在位置-->
+				
+			</div>
+		</div>
+	</div>
+	
 	<script src="../js/mui.min.js"></script>
 	<script src="../../mobile/layer.js"></script>
 	<script src="../../js/path.js"></script>
@@ -65,14 +138,16 @@
 		allmap.style.height = window.innerHeight+"px";
 		allmap.style.backgroundPositionX = window.innerWidth/2-21+"px";
 		allmap.style.backgroundPositionY = window.innerHeight/2-21+"px";
-		
+		var currentMark = null;//当前标注
 		mui.init();
 		mui.ready(function(){
 			map = new Bookingmap();
 	        map.initBaiduMap('allmap');
 	        //c地图当前中心点，v地图当前层级
     		map.drageHandler(function(c,v){
-    			
+    			if(currentMark)
+    			currentMark.disableDragging(); 
+				$('#infoDiv').hide();
     		});
     		map.clickMark(function(o,e){
     			console.log(o,e);
@@ -155,7 +230,7 @@
 								
 								if(i>0){
 									var lastB = new BMap.Point(item.longitude,item.latitude);
-									total += parseFloat((map.map.getDistance(lastA,lastB)).toFixed(2));;
+									total += parseFloat((map.map.getDistance(lastA,lastB)).toFixed(2));
 									console.log(total);
     								distance.innerHTML = (total/1000).toFixed(2);
     								var polyline = new BMap.Polyline([lastA,lastB], {strokeColor:"green", strokeWeight:3, strokeOpacity:0.5});  //定义折线
@@ -200,8 +275,248 @@
 				}});
     		}
     		
+    		mui.toast('从我的足迹拖拽图标设置旗帜',{ duration:'long', type:'div' });
     		
+    		
+    		var geoc = new BMap.Geocoder();
+    		var infoDiv = document.getElementById('infoDiv');
+    		infoDiv.addEventListener('tap',function(){
+    			$('#modal').addClass('mui-active')
+    		});
+    		$('#infoDiv').hide();
+    		var footDiv = document.getElementById('footDiv');
+    		footDiv.addEventListener('tap',function(){
+    			var pp = map.map.getCenter();
+    			var mk = new BMap.Marker(pp,{icon:map.flagRed});console.log('pp=',pp);
+				map.map.addOverlay(mk);
+//				mk.disableDragging();   
+				mk.enableDragging();
+				geoc.getLocation(pp , function(rs){
+						var addComp = rs.addressComponents;
+						if(addComp.province==""&&addComp.city ==""){
+							mui.toast('请把旗帜插在陆地上！~');
+							return;
+						}
+						var address = rs.addressComponents;
+						var obj 
+						if(rs.surroundingPois.length>0)
+						 	obj = rs.surroundingPois[0];
+						else{
+							obj = new Object();
+							obj.title = "";
+						}
+						
+						var _value = address.province +  address.city +  address.district +  address.street +  (rs.business!=""? rs.business:obj.title);
+						mk.getLabel().setContent(_value);
+						
+					});
+				//
+//				$('#infoDiv').css({top:$(mk.V).offset().top() + 'px',left:$(mk.V).offset().left() + 'px'});
+				currentMark = mk;
+				mk.isDrag = true;//默认可以拖拽
+				mk.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+				var label = new BMap.Label("名字",{offset:new BMap.Size(10,-30)});
+					label.setStyle({
+					border:true,
+					backgroundColor:false,
+					color : "black",
+					fontSize : "10px",
+					height : "20px",
+					// lineHeight : "20px",
+					fontFamily:"微软雅黑"
+				 });
+				mk.setLabel(label);
+				mk.addEventListener('click',function(){
+					console.log('点',this.isDrag,$(this.V).offset().top,$(this.V).offset().left);
+					this.isDrag = !this.isDrag;
+					if(this.isDrag ){//可编辑状态
+						this.enableDragging();
+						$('#infoDiv').show();
+						$('#infoDiv').css({top:$(this.V).offset().top-50 + 'px',left:$(this.V).offset().left + 'px'});
+					}else{
+						this.disableDragging(); 
+						$('#infoDiv').hide();
+//						mp.getPanes().labelPane.
+					}
+				})
+				mk.addEventListener('dragging',function(e){
+					if(currentMark&&!$('#infoDiv').is(":hidden")){
+						$('#infoDiv').css({top:$(currentMark.V).offset().top-70 + 'px',left:$(currentMark.V).offset().left + 'px'});
+					}
+				});
+				mk.addEventListener('dragstart',function(e){
+					
+					currentMark = this;
+				});
+				mk.addEventListener('dragend',function(e){
+					console.log(e,e.target.point);
+					map.map.panTo(e.point);
+					var _this = this;
+					setTimeout(function(){
+						if(currentMark&&!$('#infoDiv').is(":hidden")){
+							$('#infoDiv').css({top:$(currentMark.V).offset().top-70 + 'px',left:$(currentMark.V).offset().left + 'px'});
+						}
+					},500);
+					geoc.getLocation(e.point, function(rs){
+						var addComp = rs.addressComponents;
+						if(addComp.province==""&&addComp.city ==""){
+							mui.toast('请把旗帜插在陆地上！~');
+							return;
+						}
+						var address = rs.addressComponents;
+						var obj 
+						if(rs.surroundingPois.length>0)
+						 	obj = rs.surroundingPois[0];
+						else{
+							obj = new Object();
+							obj.title = "";
+						}
+						
+						var _value = address.province +  address.city +  address.district +  address.street +  (rs.business!=""? rs.business:obj.title);
+						console.log(_value,_this.getLabel().getContent());
+						_this.getLabel().setContent(_value);
+						
+					});
+				})
+				
+				setTimeout(function(){
+					$('#infoDiv').show();
+					$('#infoDiv').css({top:$(mk.V).offset().top-70 + 'px',left:$(mk.V).offset().left + 'px'});
+					console.log(mk.V,$(mk.V).offset(),$(mk.V).offset())
+				},200);
+    		});
+//  		footDiv.addEventListener('dragstart',function(){//开始拖动
+//  			console.log('开始拖动');
+//  			
+//  		});
+//  		footDiv.addEventListener('dragend',function(){//拖动结束
+//  			console.log('拖动结束');
+//  		});
+//  		footDiv.addEventListener('drag',function(){//拖动中
+//  			console.log('拖动中');
+//  		});
+//  		map.map.addEventListener('dragend',function(e){
+//  			console.log(e);
+//  		});
+			var deleteDiv = document.getElementById('deleteDiv');
+			deleteDiv.addEventListener('touchmove',function(){
+					console.log('move');
+			});
 		})
+		
+		
+		var picNum = 0;//上传图片数量
+			var picHtml = "";//图片返回的img内容
+		  	var picList = [];
+		  	
+		  	/**
+		     * ajax 上传。这里主要是上传图片。
+		     */
+			    function uploadByForm(target){
+			    	
+			    	function validate_img(a){
+						 var file = a;
+						 if(!/.(gif|jpg|jpeg|png|GIF|JPG|png)$/.test(file)){
+						  alert("图片类型必须是.gif,jpeg,jpg,png中的一种");
+						  return false;
+						}else{
+						     var image = new Image();
+						     image.onload = function(){
+						     	var height = image.height;
+							     var width = image.width;
+							     var filesize = image.fileSize;
+							      alert(height+"x.."+filesize);
+							     if(width>780 && height>780 /*&& filesize>102400*/){
+							      alert('请上传780*780像素 或者大小小于100k的图片');
+							      return false;
+							     }else{
+							     	alert("图片通过");
+						 			return true;
+							     }
+						     }
+						     image.src = file;
+						     
+						     
+						 }
+						 
+						}
+			    	
+			    	
+			    	var formData = new FormData($("#myForm")[0]);//获取表单数据
+			    	
+			    	$Ajax(JS_PATH+'/upload/uploader',{
+							data:formData,
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									
+//									if(validate_img(data.newPath)){
+										mui.toast("图片提交成功");
+										picNum++;
+										$('#preview').append('<span class="mui-pull-left mui-phone-preview">'
+											+'<a href="javascript:void(0);" class="mui-icon-remove" id="remove_'+picNum+'"></a>'
+											+'<img src="'+data.newPath+'" class="mui-img-response"/>'
+										+'</span>');
+										
+										//删除图片按钮
+										document.getElementById('remove_'+picNum).addEventListener('tap',function(){
+											var _this = this;
+											//把删除的图片从里面删除
+											picHtml=picHtml.replace("<img class='mui-img-response'  src='"+($(_this).parents('.mui-phone-preview').find('img').attr('src'))+"'/>",'')
+											$(_this).parents('.mui-phone-preview').remove();
+										});
+										
+										
+										picList.push(data.newPath);
+										
+										if((data.newPath).indexOf('.mp4')!=-1){
+											
+										}else
+											picHtml += "<img class='mui-img-response'  src='"+data.newPath+"'/>";
+										
+										console.log(picHtml);
+								}else{
+									mui.toast("提交失败");
+								}
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true,"上传中");
+			    }
+		
+				//发布按钮
+			    var publishBtn = document.getElementById("publishBtn");
+			    var publish_content = document.getElementById("publish_content");
+			    publishBtn.addEventListener('tap',function(){
+//			    	if(picList.length<1){
+//			    		mui.toast('没上传图片！');
+//			    		return false;
+//			    	}
+			    	humanAjax(JS_PATH+'/user/insertFoot',{
+						data:{
+							create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+							content:"<p class='mui-travel-text'>"+publish_content.value+"</p>",
+							imgbox:  picList.join(','),
+							longitude:currentMark.getPosition().lng ,
+							latitude: currentMark.getPosition().lat,
+							name:currentMark.getLabel().getContent()
+						},
+						crossDomain :true,
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						//async:true,
+						success:function(data){
+							
+						},error:function(e){
+							mui.toast("系统出错");
+						}
+						
+	    			},true,'提交中...');
+			    })
+		
 	</script>
 	</body>
 </html>
