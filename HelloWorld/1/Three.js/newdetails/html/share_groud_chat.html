@@ -5,28 +5,26 @@
 		<title>群聊</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<script src="../js/mui.min.js"></script>
+		
 		<link href="../css/mui.min.css" rel="stylesheet"/>
 		<link href="../css/common.css" rel="stylesheet" />
-
-	   <script type="text/javascript" charset="utf-8">
-		  	mui.init();
-		</script>
+<link rel="stylesheet" type="text/css" href="../chat/style.css" />
+	   
 	</head>
 	<body>
 	<header class="mui-bar mui-bar-nav mui-search-box mui-groudchat-box">
 		<a href="javascript:void(0);" class="mui-back"></a>
-		<h4 class="mui-title">群聊(<b>3</b>/<b>5</b>)</h4>
+		<h4 class="mui-title">群聊(<b id="onlinecount">3</b>/<b>5</b>)</h4>
 		<a class="mui-groud" href="share_groud_members.html"></a>
 	</header>
-	<div class="mui-iframe-wrapper mui-iframe-groudchat" style="top: 44px;">
+	<div id="chatbox"  class="mui-iframe-wrapper mui-iframe-groudchat" style="top: 44px;display:none;">
 		<div class="mui-content">
 			<div class="mui-row">
-				<div class="mui-col-xs-12">
+				<div class="mui-col-xs-12" id="message">
 					<!--时间-->
 					<div class="mui-chat-time mui-text-center">2017-08-08 23:19:00</div>
 					<!--接收-->
-					<div class="mui-chat-receive">
+					<!--<div class="mui-chat-receive">
 						<div class="mui-chat-logo">
 							<img src="../images/img1.png" class="mui-img-response"/>
 						</div>
@@ -36,9 +34,9 @@
 								<p>我们一起出去玩把</p>
 							</div>
 						</div>
-					</div>
+					</div>-->
 					<!--发送-->
-					<div class="mui-chat-receive mui-chat-send">
+					<!--<div class="mui-chat-receive mui-chat-send">
 						<div class="mui-chat-content">
 							<p class="mui-chat-name">旅行爱好者</p>
 							<div class="mui-chat-text">
@@ -49,7 +47,7 @@
 							<img src="../images/img1.png" class="mui-img-response" />
 						</div>
 					</div>
-				</div>
+				</div>-->
 				
 			</div>
 		</div>
@@ -57,15 +55,47 @@
 		<div class="mui-height-50"></div>
 	
 	</div>
-	
+	<span id="showusername" style="display: none;"></span> |
 	
 	<footer class="mui-groudchat-footer">
 		<nav class="mui-bar mui-bar-tab">
 			<a href="javascript:void(0);" class="mui-groud-add"></a>
 			<a href="javascript:void(0);" class="mui-groud-smile"></a>
-			<input type="text" class="mui-groud-input"/>
-			<a href="javascript:void(0);" class="mui-groud-send">发送</a>
+			<input type="text" class="mui-groud-input" id="content" name="content"/>
+			<a href="javascript:void(0);" class="mui-groud-send" id="mjr_send" onclick="CHAT.submit();">发送</a>
 		</nav>
 	</footer>
+	<script src="../js/mui.min.js"></script>
+	 <script src="http://120.25.221.94:8080/socket.io/socket.io.js"></script>
+	 <script type="text/javascript" src="../chat/client.js"></script>
+		<script src="../../js/path.js"></script>
+	 <script type="text/javascript" charset="utf-8">
+		  	mui.init();
+		  	humanAjax(JS_PATH+'/user/isLogin',{
+				data:{
+					
+					
+				},
+				crossDomain :true,
+				dataType:'json',//服务器返回json格式数据
+				type:'post',//HTTP请求类型
+				isNoToloagin:true,
+				success:function(data){
+					if(data.code == 200){
+						var userMsg  = data.data;
+						if(userMsg.nickname=="")
+							mui.openWindow('../html/user_personal.html');
+						else
+						CHAT.usernameSubmit(userMsg.nickname);
+					}else{
+						mui.toast("您未登录");
+						mui.openWindow('../html/login.html')
+					}
+					
+				},error:function(e){
+					mui.toast("系统出错");
+				}
+			},false);
+		</script>
 	</body>
 </html>

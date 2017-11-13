@@ -511,6 +511,13 @@
 	        		
 	        		spot.addEventListener('tap',function(){
 	        			//spot.style.opacity = 0;
+	        			if(sprite){
+								info.style.display = "none";
+	        				info.style.bottom = '-50px';
+							lufy.style.zIndex = -1;
+							TweenLite.to(sprite,0.2,{scaleX:0,scaleY:0,opacity:0});
+								
+							}
 	        		})
 	        		map.clickMark(function(o,e){
 	        			if(e && e.clientY && e.clientY){
@@ -685,7 +692,8 @@
 				videoBtn.addEventListener("tap",function () {
 				  console.log("tap event trigger");
 //				  alert('无视频')
-					mui.openWindow('https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&DOM&Video&core');
+//					mui.openWindow('https://layaair.ldc.layabox.com/demo/h5/demo.html?2d&DOM&Video&core');
+					mui.openWindow('../newdetails/html/video.html');
 				});
 				
 //				vrBtn.addEventListener("click",function () {

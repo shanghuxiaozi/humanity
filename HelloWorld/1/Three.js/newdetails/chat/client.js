@@ -64,8 +64,8 @@
                     separator = '、';
                 }
             }
-            d.getElementById("onlinecount").innerHTML = '当前共有 '+onlineCount+' 人在线，在线列表：'+userhtml;
-             
+           // d.getElementById("onlinecount").innerHTML = '当前共有 '+onlineCount+' 人在线，在线列表：'+userhtml;
+             d.getElementById("onlinecount").innerHTML = onlineCount
             //添加系统消息
             var html = '';
             html += '<div class="msg-system">';

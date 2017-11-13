@@ -15,7 +15,7 @@ router.use(function timeLog(req, res, next) {
 //在线用户
 var onlineUsers = {};
 //当前在线人数
-var onlineCount = 0;
+var onlineCount = {};
  
 //按用户的userid保存生成的socket
 var users = {};
@@ -33,17 +33,18 @@ router.prepareSocketIO = function (server) {
         users[obj.userid] = socket;//保存当前用户的socket,还是放到外面
         //检查在线列表，如果不在里面就加入
         if(!onlineUsers[obj.groupid])onlineUsers[obj.groupid]={};
+        if(!onlineCount[obj.groupid])onlineCount[obj.groupid]=0;
         if(!onlineUsers[obj.groupid].hasOwnProperty(obj.userid)) {
             onlineUsers[obj.groupid][obj.userid] = obj.username;
             
             
             
             //在线人数+1
-            onlineCount++;
+            onlineCount[obj.groupid]++;
         }
          
         //向所有客户端广播用户加入
-        io.emit('login'+obj.groupid, {onlineUsers:onlineUsers[obj.groupid], onlineCount:onlineCount, user:obj});
+        io.emit('login'+obj.groupid, {onlineUsers:onlineUsers[obj.groupid], onlineCount:onlineCount[obj.groupid], user:obj});
         console.log(obj.username+'加入了聊天室');
     });
      
@@ -57,10 +58,10 @@ router.prepareSocketIO = function (server) {
             //删除
             delete onlineUsers[socket.groupid][socket.name];
             //在线人数-1
-            onlineCount--;
+            onlineCount[socket.groupid]--;
              
             //向所有客户端广播用户退出
-            io.emit('logout'+socket.groupid, {onlineUsers:onlineUsers[socket.groupid], onlineCount:onlineCount, user:obj});
+            io.emit('logout'+socket.groupid, {onlineUsers:onlineUsers[socket.groupid], onlineCount:onlineCount[obj.groupid], user:obj});
             console.log(obj.username+'退出了聊天室');
         }
     });

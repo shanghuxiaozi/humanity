@@ -22,6 +22,8 @@ var companion = require('./companion');
 var irrigation = require('./irrigation');
 //聊天
 var chat = require('./chat');
+//异常抛错处理模块
+var domain = require('domain');
 
 var spitslot = require('./spitslot');
 var bodyParser = require('body-parser');
@@ -40,6 +42,23 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
 }));
+//domain来处理异常
+app.use(function (req,res, next) {
+  var d = domain.create();
+  //监听domain的错误事件
+  d.on('error', function (err) {
+    logger.error(err);
+    res.statusCode = 500;
+    res.json({sucess:false, messag: '服务器异常'});
+    d.dispose();
+  });
+  
+  d.add(req);
+  d.add(res);
+  d.run(next);
+});
+
+
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
