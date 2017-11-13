@@ -181,6 +181,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 				
 				mark.setIcon(icon);
 			}
+			//_this.zoomHandler(map.getCenter(),map.getZoom());
 		 });
 		 
 		 //拖拽地图dragend
@@ -727,6 +728,13 @@ Bookingmap.prototype.drageHandler = function(handler){
 	var _this = this;
 	_this.drageHandler = handler;
 }
+
+/*缩放地图*/
+Bookingmap.prototype.zoomHandler = function(handler){
+	var _this = this;
+	_this.zoomHandler = handler;
+}
+
 
 /*点击地图*/
 Bookingmap.prototype.centerAndZoomByName = function(c,v){

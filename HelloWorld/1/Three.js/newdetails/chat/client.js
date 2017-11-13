@@ -27,7 +27,7 @@
         },
         //提交聊天消息内容
         submit:function(){
-            var content = d.getElementById("content").value;
+            var content = d.getElementById("content").innerHTML;
             if(content != ''){
                 var obj = {
                     userid: this.userid,

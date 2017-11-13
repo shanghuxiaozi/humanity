@@ -12,7 +12,7 @@ router.use(function timeLog(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "x-requested-with");
     res.header('Access-Control-Allow-Headers', 'content-type');*/
-  console.log('Time: ', Date.now());
+  console.log('Time: ', (new Date()).Format('yyyy-MM-dd HH:mm:ss'));
   next();
 });
 
@@ -191,6 +191,24 @@ router.post('/sendComment',function(req, res, next){
 	}
 });
 
+/*发送私信*/
+router.post('/sendLetter',function(req, res, next){
+	console.log('------发送私信----');
+	if(req.session.user){
+		var sql = 'insert into travel_private_letter(user_id,user_name,create_date,comment_content,jb_id,to_name) values('
+		+req.session.user.id+',"'+req.session.user.nickname+'","'
+			+req.body.create_date+'","'+req.body.comment_content+'",'+req.body.jb_id +',"'+req.body.to_name+'")';
+		console.log('sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			
+			res.send({code:200,msg:'发送成功',data:{jb_id:req.body.jb_id}});
+		}, res);
+		
+	}else{
+		res.send({code:332,msg:'请您登录'});
+	}
+});
 
 
 var callback = function (data, res) {
@@ -200,5 +218,22 @@ var callback = function (data, res) {
     console.log('success');
 	res.send(data);
 };
+
+Date.prototype.Format = function (fmt) { //author: meizz 
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+        "H+" : this.getHours(), //小时     
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
 
 module.exports = router;

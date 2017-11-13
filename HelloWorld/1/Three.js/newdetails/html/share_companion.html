@@ -1222,6 +1222,40 @@
 						},error:function(e){
 							mui.toast("系统出错");
 					}});
+				}else if(_type_ == 2){//发表私信
+					humanAjax(JS_PATH+'/companion/sendLetter',{
+						data:{
+							jb_id:_company_id,
+							create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+							comment_content:edit.innerHTML,
+							to_name:to_name
+						},
+						crossDomain :true,
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						success:function(data){
+//							if(typeof _backFunc == 'function')
+//								_backFunc(data);
+							
+							$('#commentDiv').hide();
+							//查询朋友圈说说
+											queryJBComment(_company_id,function(_d){
+												if(_d.code == 200){
+													if(_d.data.length>0){
+														for(var j = 0 , m = _d.data.length<10?_d.data.length:10;  j < m ; j++ ){//只取前2，如果小于2取本身
+															var _i = _d.data[j];
+															
+															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+															
+														}
+													}
+												}
+												
+											});
+						},error:function(e){
+							mui.toast("系统出错");
+					}});
 				}
 				
 			});
@@ -1252,7 +1286,8 @@
 										var item = data.data[i];
 										var turnHtml = "";
 										if(item.group_id){
-											turnHtml = "../chat/index.html?group_id="+item.group_id;
+//											turnHtml = "../chat/index.html?group_id="+item.group_id;
+											turnHtml = "share_groud_chat.html?group_id="+item.group_id;
 										}else{
 											turnHtml = "javascript:void(0);";
 										}
@@ -1295,10 +1330,10 @@
 															+'</p>'
 														+'</div>'
 														+'<div class="mui-pull-right mui-text-right">'
-															+'<a href="'+turnHtml+'" class="mui-group-chat" group_id="'+item.group_id+'">'
+															+'<a  href="'+turnHtml+'" class="mui-group-chat" group_id="'+item.group_id+'">'
 																+'群聊'
 															+'</a>'
-															+'<a href="javascript:void(0);" class="mui-private-chat">'
+															+'<a href="javascript:void(0);" company-id="'+item.id+'" to-name="'+item.user_name+'" class="mui-private-chat">'
 																+'私信'
 															+'</a>'
 															+'<a href="javascript:void(0);" company-id="'+item.id+'" to-name="'+item.user_name+'" class="mui-comment-chat">'
@@ -1395,10 +1430,24 @@
 									for(var i = 0,m = chatList.length ; i < m ; i++){
 										var s = chatList[i];console.log(s);
 										s.addEventListener('tap',function(){
-											console.log(this);
+											console.log(this.getAttribute('hrefs'));
+//											mui.openWindow(this.getAttribute('hrefs'));
+//											 window.top.location.href=this.getAttribute('hrefs');
 //											mui.openWindow(this.href+'?group_id='+this.getAttribute('group_id'));
 //											window.open('../chat/index.html')
 //											window.location.href = '../chat/index.html';
+										});
+									}
+									//私信
+									var pChatList = document.querySelectorAll('.mui-private-chat');
+									for(var i = 0,m = pChatList.length ; i < m ; i++){
+										var s = pChatList[i];console.log(s);
+										s.addEventListener('tap',function(){
+											console.log(this);
+											_type_ = 2;
+											$('#commentDiv').show();
+											_company_id =  $(this).attr('company-id');
+											to_name = $(this).attr('to-name');
 										});
 									}
 								}

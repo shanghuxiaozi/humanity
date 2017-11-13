@@ -611,7 +611,21 @@
 	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng)
 	        		});
 	        		
-	        		
+	        		map.zoomHandler(function(c,v){
+	        			console.log(c,v);
+	        			// 获取经纬度范围参数
+					    var bs = map.map.getBounds();   //获取可视区域
+					    var bssw = bs.getSouthWest();   //可视区域左下角
+					    var bsne = bs.getNorthEast();   //可视区域右上角
+					     
+					    var topLat = bsne.lat;
+					    var bottomLat = bssw.lat;
+					    var leftLng = bssw.lng;
+					    var rightLng = bsne.lng;
+					    //console.log(bssw,bsne);
+					    if(map.map.getZoom()>10)
+	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng)
+	        		});
 	        		//map.trajectory();	显示赛程的
 	        	//map.getRoute(null,null,{lng: 114.036184, lat: 22.6139},{lng: 113.906253, lat: 22.485729});
 	        	

@@ -11,7 +11,7 @@ router.use(function timeLog(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "x-requested-with");
     res.header('Access-Control-Allow-Headers', 'content-type');*/
-  console.log('Time: ', Date.now());
+  console.log('Time: ', (new Date()).Format('yyyy-MM-dd HH:mm:ss'));
   next();
 });
 

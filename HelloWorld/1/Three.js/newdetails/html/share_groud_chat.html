@@ -9,11 +9,17 @@
 		<link href="../css/mui.min.css" rel="stylesheet"/>
 		<link href="../css/common.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="../chat/style.css" />
-	   
+	   <style>
+	   		#content{
+	   			border: 1px solid rgb(219, 210, 210);
+			    font-size: 2em;
+			  	height: 70%;
+	   		}
+	   </style>
 	</head>
 	<body>
 	<header class="mui-bar mui-bar-nav mui-search-box mui-groudchat-box">
-		<a href="javascript:void(0);" class="mui-back"></a>
+		<a href="javascript:void(0);" class="mui-back mui-action-back"></a>
 		<h4 class="mui-title">群聊(<b id="onlinecount">3</b>/<b>5</b>)</h4>
 		<a class="mui-groud" href="share_groud_members.html"></a>
 	</header>
@@ -22,7 +28,7 @@
 			<div class="mui-row">
 				<div class="mui-col-xs-12" id="message">
 					<!--时间-->
-					<div class="mui-chat-time mui-text-center">2017-08-08 23:19:00</div>
+					<div class="mui-chat-time mui-text-center" id="timeDiv">2017-08-08 23:19:00</div>
 					<!--接收-->
 					<!--<div class="mui-chat-receive">
 						<div class="mui-chat-logo">
@@ -61,7 +67,8 @@
 		<nav class="mui-bar mui-bar-tab">
 			<a href="javascript:void(0);" class="mui-groud-add"></a>
 			<a href="javascript:void(0);" class="mui-groud-smile"></a>
-			<input type="text" class="mui-groud-input" id="content" name="content"/>
+			<!--<input type="text" class="mui-groud-input" id="content" name="content"/>-->
+			<div class="mui-groud-input" id="content" name="content" contenteditable="true"></div>
 			<a href="javascript:void(0);" class="mui-groud-send" id="mjr_send" onclick="CHAT.submit();">发送</a>
 		</nav>
 	</footer>
@@ -96,6 +103,28 @@
 					mui.toast("系统出错");
 				}
 			},false);
+			
+			
+			var timeDiv = document.getElementById('timeDiv');
+			timeDiv.innerHTML = (new Date()).Format('yyyy-MM-dd HH:mm:ss');
+			
+			Date.prototype.Format = function (fmt) { //author: meizz 
+		    var o = {
+		        "M+": this.getMonth() + 1, //月份 
+		        "d+": this.getDate(), //日 
+		        "h+" : this.getHours()%12 == 0 ? 12 : this.getHours()%12, //小时         
+		        "H+" : this.getHours(), //小时     
+		        "m+": this.getMinutes(), //分 
+		        "s+": this.getSeconds(), //秒 
+		        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+		        "S": this.getMilliseconds() //毫秒 
+		    };
+		    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+		    for (var k in o)
+		    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		    return fmt;
+		}
+
 		</script>
 	</body>
 </html>
