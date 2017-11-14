@@ -159,49 +159,11 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		 		size.height *= map.getZoom()/15;
 //		 		icon.setImageSize(size);
 //		 	}
-			for( var i= 0,m=_this.markList.length;i<m;i++ ){
-				var mark = _this.markList[i];
-				if(map.getZoom()<11&& i!=0){
-					mark.hide();
-					continue;
-				}else if(map.getZoom()<14 && map.getZoom()>11 && i%2!=0 && i%3!=0 && i%5!=0 ){
-					mark.hide();
-					continue;
-				}else if(map.getZoom() == 11 &&(i!=0||i!=1) ){
-					mark.hide();
-					continue;
-				}
+			
+			_this.zoomHandler(map.getCenter(),map.getZoom(),function(){
+				_this.zoomIcon();
 				
-				
-				/*if(map.getZoom()<14 &&( i%30!=0)){
-					
-					mark.hide();
-					continue;
-				}else if(map.getZoom()>=14 && map.getZoom()<15 &&( i%10!=0)){
-					
-					mark.hide();
-					continue;
-				}*/
-				if(!mark.isVisible())mark.show();
-				var icon = mark.getIcon();//console.log(icon.mapSize);
-				//icon.size.width *= map.getZoom()/15;
-				//icon.size.height *= map.getZoom()/15;
-				//icon.imageUrl
-				var size = icon.mapSize.imageSize;//_this.sizeList[i];
-				if(i==0){
-					console.log(icon.imageSize);
-				}
-				var zoom = map.getZoom()/15;
-				//zoom = (zoom==1?zoom:zoom<1?zoom/2:zoom*1.2)
-				if(zoom >=1.2)zoom = 1.2
-				else if(zoom < 1.2 && zoom >= 1)zoom = 1
-				else if(zoom < 1 && zoom > 0.5)zoom = 0.6
-				else if(zoom <=0.5)zoom = 0.5
-				icon.setImageSize(new BMap.Size(size.width*zoom, size.height*zoom));
-				
-				mark.setIcon(icon);
-			}
-			_this.zoomHandler(map.getCenter(),map.getZoom());
+			});
 		 });
 		 
 		 //拖拽地图dragend
@@ -761,6 +723,55 @@ Bookingmap.prototype.centerAndZoomByName = function(c,v){
 	var _this = this;
 	var map = _this.map;
 	_this.map.centerAndZoom(c,v||15);
+}
+
+/*缩放地图图标*/
+Bookingmap.prototype.zoomIcon =function(){
+	var _this = this;
+	var map = _this.map;
+	for( var i= 0,m=_this.markList.length;i<m;i++ ){
+					var mark = _this.markList[i];
+					if(map.getZoom()<11&& i!=0){
+						mark.hide();
+						continue;
+					}else if(map.getZoom()<14 && map.getZoom()>11 && i%2!=0 && i%3!=0 && i%5!=0 ){console.log(mark)
+						mark.hide();
+						continue;
+					}else if(map.getZoom() == 11 &&(i!=0||i!=1) ){
+						mark.hide();
+						continue;
+					}
+					
+					
+					/*if(map.getZoom()<14 &&( i%30!=0)){
+						
+						mark.hide();
+						continue;
+					}else if(map.getZoom()>=14 && map.getZoom()<15 &&( i%10!=0)){
+						
+						mark.hide();
+						continue;
+					}*/
+					if(!mark.isVisible())mark.show();
+					var icon = mark.getIcon();//console.log(icon.mapSize);
+					//icon.size.width *= map.getZoom()/15;
+					//icon.size.height *= map.getZoom()/15;
+					//icon.imageUrl
+					var size = icon.mapSize.imageSize;//_this.sizeList[i];
+					if(i==0){
+						console.log(icon.imageSize);
+					}
+					var zoom = map.getZoom()/15;
+					//zoom = (zoom==1?zoom:zoom<1?zoom/2:zoom*1.2)
+					if(zoom >=1.2)zoom = 1.2
+					else if(zoom < 1.2 && zoom >= 1)zoom = 1
+					else if(zoom < 1 && zoom > 0.5)zoom = 0.6
+					else if(zoom <=0.5)zoom = 0.5
+					icon.setImageSize(new BMap.Size(size.width*zoom, size.height*zoom));
+					
+					mark.setIcon(icon);
+				}
+				
 }
 
 

@@ -304,7 +304,8 @@
 					e.stopPropagation();
 					setTimeout(function(){
 						resultPanel.style.display = "block";//由于此按钮与返回按钮处于同一层，当返回后会被触发因此需要延迟显示
-					},400);
+						resultPanel.style.pointerEvents = "auto";
+					},1500);
 					
 					backmap.style.display = "none";
 					activity_menu.style.display = "none";
@@ -609,9 +610,11 @@
 					    //console.log(bssw,bsne);
 					    if(map.map.getZoom()>10)
 	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng)
+	        			else
+	        				map.zoomIcon()
 	        		});
 	        		
-	        		map.zoomHandler(function(c,v){
+	        		map.zoomHandler(function(c,v,_callBack){
 	        			console.log(c,v);
 	        			// 获取经纬度范围参数
 					    var bs = map.map.getBounds();   //获取可视区域
@@ -624,7 +627,9 @@
 					    var rightLng = bsne.lng;
 					    //console.log(bssw,bsne);
 					    if(map.map.getZoom()>10)
-	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng)
+	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng,_callBack)
+	        			else
+	        			map.zoomIcon()
 	        		});
 	        		//map.trajectory();	显示赛程的
 	        	//map.getRoute(null,null,{lng: 114.036184, lat: 22.6139},{lng: 113.906253, lat: 22.485729});
@@ -653,7 +658,7 @@
 	        	}
 	        	//queryScenicSpotbyPOS(new BMap.Point(114.06444, 22.548488),15)
 	        	/*通过城市经纬度获取景点,p中心点，zoom地图层级*/
-	        	function queryScenicSpotbyPOS(p,zoom,topLat,bottomLat,leftLng,rightLng){
+	        	function queryScenicSpotbyPOS(p,zoom,topLat,bottomLat,leftLng,rightLng,_callBack){
 	        		if(layerIndex==-1)
 	        			layerIndex = layer.open({
 						    type: 2
@@ -682,6 +687,13 @@
 //										if(i==0)item.type_id = 8888;//显示活动图标
 											map.createMarkFromData(item);
 									}
+									
+									
+									if(typeof _callBack == 'function'){
+										_callBack();
+									}
+									
+									
 								}
 								layer.close(layerIndex);
 							},error:function(e,t,errorThrown){
@@ -750,6 +762,7 @@
 											backmap.style.display = "block";
 											activity_menu.style.display = "block";
 											resultPanel.style.display = "none";
+											resultPanel.style.pointerEvents = "none";
 											spot.style.top = "28px";
 											currentCenter = map.map.getCenter();
 											map.isActivity = true;
