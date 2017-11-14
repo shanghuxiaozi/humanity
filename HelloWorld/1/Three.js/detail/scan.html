@@ -37,7 +37,7 @@
 	<div class="mui-clearfix">
 		<div class="mui-col-xs-4 mui-pull-left"></div>
 		<div class="mui-col-xs-4 mui-pull-left mui-text-center">
-			<a href="javascript:void(0);" class="scan-take-a"  onclick="captureImage()"><img src="images/takepic.png" class="scan-take" /></a>
+			<a href="javascript:void(0);" class="scan-take-a" ><img src="images/takepic.png" class="scan-take" /></a>
 		</div>
 		<div class="mui-col-xs-4 mui-pull-left mui-text-center scan-photos-d">
 			<a href="javascript:void(0);">
@@ -201,8 +201,8 @@ function distinguish(data){
 			    }});
 }
 
-function distinguisImg(img){
-	var  enIndex = layer.open({
+	function distinguisImg(img){
+		var  enIndex = layer.open({
 								    type: 2
 								    ,content: '识别图像中...'
 								  });
@@ -246,12 +246,55 @@ function distinguisImg(img){
 			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			    }});
             
-}
+	}
+	
+	var startX = 0;
+	$('.scan-take-txt')[0].addEventListener('dragstart',function(e){
+		console.log('开始拖拽',e.detail.touches[0]);
+		startX = e.detail.touches[0].x;
+	});
+	
+	$('.scan-take-txt')[0].addEventListener('drag',function(e){
+		console.log('拖拽中');
+		if(e.detail.touches[0].x>(startX-61) && e.detail.touches[0].x<(startX+61))
+		$('.scan-take-txt').css('left',(e.detail.touches[0].x-startX)+'px');
+	});
+	
+	$('.scan-take-txt')[0].addEventListener('dragend',function(e){
+		console.log('拖拽结束',e.detail.touches[0]);
+		startX = 0;
+	});
+	
+	var scanType = 0;//默认拍照
+	/*二维码*/
+	$('.scan-take-txt2')[0].addEventListener('tap',function(e){
+		e.stopPropagation();
+		console.log('二维码');
+		scanType = 1;
+		$('.scan-take-txt').css('left','-58px');
+		$('.scan-take-txt2').css('color','#cd3829');
+		$('.scan-take-txt').css('color','#262626');
+	});
+
+	/*拍照*/
+	$('.scan-take-txt')[0].addEventListener('tap',function(){
+		console.log('拍照');
+		scanType = 0;
+		$('.scan-take-txt').css('left','0px');
+		$('.scan-take-txt').css('color','#cd3829');
+		$('.scan-take-txt2').css('color','#262626');
+	});
 
 
-
-
-function getBase64Image(img) {
+	$('.scan-take')[0].addEventListener('tap',function(e){
+		if(scanType == 0){
+			captureImage();
+		}else if(scanType == 1){
+			
+		}
+		
+	});
+	function getBase64Image(img) {
             var canvas = document.createElement("canvas");
             canvas.width = img.width;
             canvas.height = img.height;
