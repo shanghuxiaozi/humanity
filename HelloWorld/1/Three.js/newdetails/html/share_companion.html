@@ -1238,21 +1238,24 @@
 //								_backFunc(data);
 							
 							$('#commentDiv').hide();
+							if(data.code == 200){
+								mui.toast('发送私信成功')
+							}
 							//查询朋友圈说说
-											queryJBComment(_company_id,function(_d){
-												if(_d.code == 200){
-													if(_d.data.length>0){
-														for(var j = 0 , m = _d.data.length<10?_d.data.length:10;  j < m ; j++ ){//只取前2，如果小于2取本身
-															var _i = _d.data[j];
-															
-															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
-															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
-															
-														}
-													}
-												}
-												
-											});
+//											queryJBComment(_company_id,function(_d){
+//												if(_d.code == 200){
+//													if(_d.data.length>0){
+//														for(var j = 0 , m = _d.data.length<10?_d.data.length:10;  j < m ; j++ ){//只取前2，如果小于2取本身
+//															var _i = _d.data[j];
+//															
+//															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+//															$('#g_follow_'+_i.jb_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+//															
+//														}
+//													}
+//												}
+//												
+//											});
 						},error:function(e){
 							mui.toast("系统出错");
 					}});

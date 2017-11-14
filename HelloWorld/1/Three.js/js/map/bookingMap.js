@@ -90,38 +90,46 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 _this.createMark("景点",point,myIcon);
 		 icons.push(myIcon);
 		 _this.myIcon = myIcon;
+		  _this.myIcon.mapSize = {src:"../icon/mark/characteristicArchitecture.png",size:new BMap.Size(66,71),imageSize:new BMap.Size(33, 35.5) };
 		// sizeList.push(new BMap.Size(33, 35.5));
 		 //var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(26*2,36*2),{anchor: new BMap.Size(24*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon1 = new BMap.Icon("../icon/mark/hill.png", new BMap.Size(78,62),{imageSize:new BMap.Size(39, 31)});
 		 _this.createMark("山",point,myIcon1);
 		 icons.push(myIcon1);
 		 _this.myIcon1 = myIcon1;
+		 _this.myIcon1.mapSize = {src:"../icon/mark/hill.png",size:new BMap.Size(78,62),imageSize:new BMap.Size(39, 31)};
 		 // sizeList.push(new BMap.Size(39, 31));
 		 //var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(52*4,62*4),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 17),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon2 = new BMap.Icon("../icon/mark/hill1.png", new BMap.Size(239,110),{anchor: new BMap.Size(50,32),imageSize:new BMap.Size(169.5, 55)});
 		 _this.createMark("山脉",point,myIcon2);
 		 icons.push(myIcon2);
 		 _this.myIcon2 = myIcon2;
+		 _this.myIcon2.mapSize = {src:"../icon/mark/hill1.png",size:new BMap.Size(239,110),anchor: new BMap.Size(50,32),imageSize:new BMap.Size(169.5, 55)};
 		// sizeList.push(new BMap.Size(169.5, 55));
 		 //var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(28*2,40*2),{anchor: new BMap.Size(20*1,32*1), imageOffset: new BMap.Size(0-12, 0 - 0),imageSize:new BMap.Size(0.5, 0.5)});
 		 var myIcon3 = new BMap.Icon("../icon/mark/hole.png", new BMap.Size(74,53),{imageSize:new BMap.Size(37, 26.5)});
 		 _this.createMark("洞",point,myIcon3);
 		 icons.push(myIcon3);
 		 _this.myIcon3 = myIcon3;
+		  _this.myIcon3.mapSize = {src:"../icon/mark/hole.png",size:new BMap.Size(74,53),imageSize:new BMap.Size(37, 26.5)};
 		  //sizeList.push(new BMap.Size(37, 26.5));
 		 //岛
 		 _this.myIconIsland = new BMap.Icon("../icon/mark/island.png", new BMap.Size(80,51),{imageSize:new BMap.Size(40, 25.5)});
+		 _this.myIconIsland.mapSize = {src:"../icon/mark/island.png",size:new BMap.Size(80,51),imageSize:new BMap.Size(40, 25.5)};
 		 //ruins遗址
 		 _this.myIconRuins = new BMap.Icon("../icon/mark/ruins.png", new BMap.Size(59,53),{imageSize:new BMap.Size(29.5, 26.5)});
+		  _this.myIconRuins.mapSize = {src:"../icon/mark/ruins.png",size:new BMap.Size(59,53),imageSize:new BMap.Size(29.5, 26.5)};
 		 //小镇
 		 _this.myTown = new BMap.Icon("../icon/mark/town.png", new BMap.Size(68,60),{imageSize:new BMap.Size(34, 30)});
-		 
+		 _this.myTown.mapSize = {src:"../icon/mark/town.png",size:new BMap.Size(68,60),imageSize:new BMap.Size(34, 30)};
 		 //特效
 		 _this.t4Icon = new BMap.Icon("../icon/mark/t4.gif", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
+		 _this.t4Icon.mapSize = {src:"../icon/mark/t4.gif",size:new BMap.Size(66,71),imageSize:new BMap.Size(33, 35.5)};
 		 icons.push(_this.t4Icon);
 		 
 		 //红旗
 		 _this.flagRed = new BMap.Icon("../icon/flag/flag-red.ico", new BMap.Size(66,71),{imageSize:new BMap.Size(33, 35.5)});
+		 _this.flagRed.mapSize = {src:"../icon/flag/flag-red.ico",size:new BMap.Size(66,71),imageSize:new BMap.Size(33, 35.5)};
 		 icons.push(_this.flagRed);
 		 
 		 
@@ -153,6 +161,18 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		 	}
 			for( var i= 0,m=_this.markList.length;i<m;i++ ){
 				var mark = _this.markList[i];
+				if(map.getZoom()<11&& i!=0){
+					mark.hide();
+					continue;
+				}else if(map.getZoom()<14 && map.getZoom()>11 && i%2!=0 && i%3!=0 && i%5!=0 ){
+					mark.hide();
+					continue;
+				}else if(map.getZoom() == 11 &&(i!=0||i!=1) ){
+					mark.hide();
+					continue;
+				}
+				
+				
 				/*if(map.getZoom()<14 &&( i%30!=0)){
 					
 					mark.hide();
@@ -163,11 +183,11 @@ Bookingmap.prototype.initBaiduMap=function(id){
 					continue;
 				}*/
 				if(!mark.isVisible())mark.show();
-				var icon = mark.getIcon();
+				var icon = mark.getIcon();//console.log(icon.mapSize);
 				//icon.size.width *= map.getZoom()/15;
 				//icon.size.height *= map.getZoom()/15;
 				//icon.imageUrl
-				var size = _this.sizeList[i];
+				var size = icon.mapSize.imageSize;//_this.sizeList[i];
 				if(i==0){
 					console.log(icon.imageSize);
 				}
@@ -181,7 +201,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 				
 				mark.setIcon(icon);
 			}
-			//_this.zoomHandler(map.getCenter(),map.getZoom());
+			_this.zoomHandler(map.getCenter(),map.getZoom());
 		 });
 		 
 		 //拖拽地图dragend
