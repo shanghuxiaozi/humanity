@@ -307,6 +307,7 @@
 				p.find('.edit').each(function(index,item){
 						item.addEventListener('tap',function(){
 						$(this).parents('.mui-col-xs-12').find('b').attr('contenteditable',"true");
+						//ios还得加-webkit-user-select: auto
 						$(this).parents('.mui-col-xs-12').find('b').addClass('titleEditive');
 						$(this).parents('.mui-col-xs-12').find('.currentScenicContent').attr('contenteditable',"true");
 						$(this).parents('.mui-col-xs-12').find('.currentScenicContent').addClass('contentEditive');
