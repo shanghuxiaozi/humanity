@@ -6,10 +6,37 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" type="text/css" href="style/mui.min.css">
 	<link rel="stylesheet" type="text/css" href="style/common.css">
-
+	<style>
+		#bcid {
+				  background: #F1FAF1;
+				  height: 80%;
+				  width: 80%;
+				  position: absolute;
+				  left: 10%;
+				  top: 10%;
+			  display: none;
+			}
+			#closeBtn{
+				position: absolute ;
+				  left: 40%;
+				  top: 5%;
+  				z-index: 99999999999;
+  				display: none;
+			}
+	</style>
 </head>
 <body>
-
+<script>
+	// 扩展API加载完毕后调用onPlusReady回调函数 
+	document.addEventListener( "plusready", onPlusReady, false );
+	// 二维码,扩展API加载完毕后调用onPlusReady回调函数 
+	var scan = null;
+	// 扩展API加载完毕，现在可以正常调用扩展API 
+	function onPlusReady() {
+		console.log("plusready");
+		scan = new Scan();
+	}
+</script>
 <main class="mui-content scan-content">
 	<div class="mui-row scan-row">
 		<div class="mui-clearfix mui-text-right scan-takepic">
@@ -47,19 +74,17 @@
 		</div>
 	</div>
 </footer>
+<button type="button" id="closeBtn" class="mui-btn mui-btn-danger btn-close">取消扫描</button>
+<div id= "bcid"></div>
 <script src="../js/mui/mui.js"></script>
 <script src="../hello-mui/js/jquery-2.1.0.js"></script>
 <script src="../mobile/layer.js"></script>
+<script src="../js/scan/scan.js"></script>
 <script>
 	mui.init();
 	var result = document.getElementById('demo_result');
 	var imageC = document.getElementById('imageC');
-	// 扩展API加载完毕后调用onPlusReady回调函数 
-	document.addEventListener( "plusready", onPlusReady, false );
-	// 扩展API加载完毕，现在可以正常调用扩展API 
-	function onPlusReady() {
-		console.log("plusready");
-	}
+	
 	// 拍照
 function captureImage(){
 	var cmr = plus.camera.getCamera();
@@ -271,6 +296,7 @@ function distinguish(data){
 		e.stopPropagation();
 		console.log('二维码');
 		scanType = 1;
+		
 		$('.scan-take-txt').css('left','-58px');
 		$('.scan-take-txt2').css('color','#cd3829');
 		$('.scan-take-txt').css('color','#262626');
@@ -280,6 +306,7 @@ function distinguish(data){
 	$('.scan-take-txt')[0].addEventListener('tap',function(){
 		console.log('拍照');
 		scanType = 0;
+		
 		$('.scan-take-txt').css('left','0px');
 		$('.scan-take-txt').css('color','#cd3829');
 		$('.scan-take-txt2').css('color','#262626');
@@ -288,12 +315,30 @@ function distinguish(data){
 
 	$('.scan-take')[0].addEventListener('tap',function(e){
 		if(scanType == 0){
+			$('#bcid').hide();
+			$('#closeBtn').hide();
 			captureImage();
 		}else if(scanType == 1){
-			
+			$('#bcid').show();
+			$('#closeBtn').show();alert(scan.scan.start())
+			if(scan)
+				scan.startScan();
 		}
 		
 	});
+	
+	$('#closeBtn')[0].addEventListener('tap',function(){
+		if(scan)
+		scan.closeScan();
+		$('#bcid').hide();
+		$('#closeBtn').hide();
+		scanType = 0;
+		$('.scan-take-txt').css('left','0px');
+		$('.scan-take-txt').css('color','#cd3829');
+		$('.scan-take-txt2').css('color','#262626');
+	});
+	
+	
 	function getBase64Image(img) {
             var canvas = document.createElement("canvas");
             canvas.width = img.width;
@@ -301,10 +346,11 @@ function distinguish(data){
             var ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, img.width, img.height);
 //          alert('w='+img.width+'  h='+img.height)
-            var dataURL = canvas.toDataURL("image/png",0.1);alert(dataURL.substr(0,100));
+            var dataURL = canvas.toDataURL("image/png",0.1);//alert(dataURL.substr(0,100));
             //return dataURL //
             return dataURL.replace("data:image/png;base64,", "");
         } 
 </script>
+
 </body>
 </html>

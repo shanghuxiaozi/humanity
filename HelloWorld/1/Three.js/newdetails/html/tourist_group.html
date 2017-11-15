@@ -9,14 +9,12 @@
 		<link href="../css/mui.min.css" rel="stylesheet"/>
 		<link href="../css/common.css" rel="stylesheet" />
 
-	   <script type="text/javascript" charset="utf-8">
-		  	mui.init();
-		</script>
+	  
 	</head>
 	
 	<body>
 		<header class="mui-bar mui-bar-nav mui-search-box">
-			<a href="javascript:void(0);" class="mui-back"></a>
+			<a href="javascript:void(0);" class="mui-back mui-action-back"></a>
 				<h4 class="mui-title">攻略群</h4>
 			<a href="javascript:void(0);" class="mui-more"></a>
 		</header>
@@ -28,9 +26,9 @@
 			        <a href="javascript:;">
 			            <img class="mui-media-object mui-pull-left" src="../images/img1.png">
 			            <div class="mui-media-body">
-			                <p class="mui-groud-title">无锡攻略群</p>
-			                <p class='mui-ellipsis mui-groud-txt'>成员：<b>40</b>人</p>
-			                <p class="mui-groud-txt">2017-08-12</p>
+			                <p class="mui-groud-title" id="title">无锡攻略群</p>
+			                <p class='mui-ellipsis mui-groud-txt'>成员：<b id="number">40</b>人</p>
+			                <p class="mui-groud-txt" id="time">2017-08-12</p>
 			            </div>
 			        </a>
 			    </li>
@@ -39,7 +37,7 @@
 			    <div class="mui-row">
 			        <div class="mui-col-xs-12">
 						<h4 class="mui-profile-title">简介：</h4>
-						<p class="mui-profile-text">目的地攻略微信群，为您提供最专业的攻略、地道玩法咨询，优质产品推荐服务，帮助您轻松出行的同时，您还可以在群里找到志同道合的伙伴一起出游。</p>
+						<p class="mui-profile-text">目的地攻略群，为您提供最专业的攻略、地道玩法咨询，优质产品推荐服务，帮助您轻松出行的同时，您还可以在群里找到志同道合的伙伴一起出游。</p>
 			        	<div class="mui-text-center">
 			        		<a href="javascript:void(0);" class="mui-btn mui-btn-danger mui-profile-btn">加入群组</a>
 			        	</div>
@@ -83,5 +81,40 @@
 
 
 		</div>
+		 <script type="text/javascript" charset="utf-8">
+		  	mui.init();
+		  	
+			document.addEventListener( "plusready", onPlusReady, false );
+		
+			function onPlusReady() {
+//				plus.key.addEventListener("backbutton",function(){
+//					alert( "group" );
+//				});
+			}
+			var title = document.getElementById('title');
+			var number = document.getElementById('number');
+			var time = document.getElementById('time');
+			mui.ready(function(){
+				var group = JSON.parse(localStorage.getItem('group_team_'+getQueryString('id')));console.log(group);
+				title.innerHTML = group.name;
+				number.innerHTML = group.people_number;
+				time.innerHTML = group.create_date.substring(0,10);
+//				var team = "";
+//				for(var i=0;i<group.length; i++){console.log(group[i]);
+//					if(group[i].id == parseInt(getQueryString('id'))){
+//						team = group[i];
+//						title.innerHTML = team.title;
+//					}
+//				}
+			})
+			
+			
+		//获取window.location.url后面的字段
+		function getQueryString(name){  
+	        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
+	        var r = window.location.search.substr(1).match(reg);  
+	        if (r != null) return unescape(r[2]);  
+	    }
+		</script>
 	</body>
 </html>

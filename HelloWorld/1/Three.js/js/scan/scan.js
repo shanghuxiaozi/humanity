@@ -3,7 +3,7 @@
  */
 function Scan(){
 	var that = this;
-	that.scan = new plus.barcode.Barcode('bcid',null);
+	that.scan = new plus.barcode.Barcode('bcid');
 	that.scan.onmarked = onmarked; 
 	function onmarked( type, result ) {
 	var text = '未知: ';

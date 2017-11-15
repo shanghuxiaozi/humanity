@@ -93,6 +93,38 @@ router.post('/group',function(req, res, next){
 	}
 });
 
+/*查询群组*/
+router.get('/queryGroup',function(req, res, next){
+	if(req.query.id){
+		
+		var sql = 'select * from strategy_group where id = '+req.query.id  ;
+		console.log('查询群组信息---sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			res.send({code:200,msg:'查询成功',data:data});
+		}, res);
+	}else{
+		res.send({code:400,msg:''});
+	}
+	
+});
+
+
+/*通过目的地结伴信息*/
+router.get('/queryCompany',function(req, res, next){
+	if(req.query.destination){
+		
+		var sql = 'select * from travel_company where destination like "%'+req.query.destination +'%"' ;
+		console.log('通过目的地查询结伴信息---sql=',sql);
+		dbHelper.list( sql
+		, function (data, res) {
+			res.send({code:200,msg:'查询成功',data:data});
+		}, res);
+	}else{
+		res.send({code:400,msg:''});
+	}
+	
+});
 
 /*查询自己对应的结伴关注*/
 router.get('/queryFollow',function(req, res, next){

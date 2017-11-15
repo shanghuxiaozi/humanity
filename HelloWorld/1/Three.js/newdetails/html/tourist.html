@@ -38,7 +38,7 @@
 				简介：凤凰山森林公园风景区由山下宝塔胜景区、山中古庙胜景区和山顶晚霞胜景区三部分景区组成。山下的凤凰古村是文天祥族人后裔的祖居和民居，始建于宋末年初大德年间，被《深圳市紫线规划》列为六大重点古村落之一。
 			</p>
 			<div class="mui-text-center" >
-				<a href="detail.html" class="mui-look-more">查看更多</a>
+				<a href="detail.html" class="mui-look-more mui-btn">查看更多</a>
 			</div>
 		</div>
 		
@@ -154,7 +154,7 @@
 		
 			<div class="mui-col-xs-12">
 				<p class="mui-detail-title"><b>攻略朋友群</b></p>
-				<div class="mui-clearfix mui-row-item">
+				<div class="mui-clearfix mui-row-item" id="strategyDiv">
 					<div class="mui-control-strategy mui-pull-left">
 						<div class="mui-strategy-img">
 							<img src="../images/img1.png" class="mui-img-response" />
@@ -245,7 +245,19 @@
 	<script src="../../js/jquery-1.9.1.js"></script>
 	<script>
 		mui.init();
+		
+//		document.addEventListener( "plusready", onPlusReady, false );
+//		
+//		function onPlusReady() {
+//			plus.key.addEventListener("backbutton",function(){
+//				alert( "BackButton Key pressed!" );
+//			});
+//		}
+		
 		mui.ready(function(){
+			
+			
+			
 			var scroll = mui('.mui-scroll-wrapper').scroll({
 					indicators: true //是否显示滚动条
 				});
@@ -314,10 +326,10 @@
 					cultural.addEventListener('tap',function(e){
 						console.log(e);
 						
-						TweenLite.to(this.style,1,{height:h+200+'px',onComplete:function(){
-							console.log('w');
-							//currentScenicContent.style.height = '100%';
-						}});
+//						TweenLite.to(this.style,1,{height:h+200+'px',onComplete:function(){
+//							console.log('w');
+//							//currentScenicContent.style.height = '100%';
+//						}});
 					});
 				}
 				
@@ -395,8 +407,85 @@
 					});
 				}
 			
-			
-			
+				//查询攻略群
+				
+				queryStrategy();
+				function queryStrategy(){
+					//先查询结伴信息
+					humanAjax(JS_PATH+'/companion/queryCompany',{
+							data:{
+								destination:currentInfo.title
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									$('#strategyDiv').empty();
+									for(var i = 0 ; i < data.data.length ; i++){
+										var item = data.data[i];
+										var url = '../images/img1.png';
+										if(item.tc_content){
+											var c = item.tc_content.indexOf("src=");
+											if(c!=-1){
+												var d = item.tc_content.indexOf("'",c+5);
+												url = item.tc_content.substring(c+5,d)
+												console.log(c,d,url);
+											}
+											
+										}
+										
+										queryGroup(item.group_id,url);
+									}
+								}
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+							
+					});
+				}
+				
+				//查询相应的攻略群
+				
+				function queryGroup(id,url){
+					humanAjax(JS_PATH+'/companion/queryGroup',{
+							data:{
+								destination:currentInfo.title,
+								id:id
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'get',//HTTP请求类型
+							success:function(data){
+								if(data.code == 200){
+									
+									for(var i = 0;i<data.data.length ; i++){
+										var item = data.data[i];
+										localStorage.setItem('group_team_'+item.id,JSON.stringify(item));
+										$('#strategyDiv').append('<div class="mui-control-strategy mui-pull-left" id="group_' + item.id + '">'
+											+'<div class="mui-strategy-img">'
+												+'<img src="'+url+'" class="mui-img-response" />'
+											+'</div>'
+											+'<div class="mui-strategy-collect">'
+												+'<!--已收藏 引用mui-icon-collected类-->'
+												+'<a href="javascript:void(0);" class="mui-icon-collect mui-icon-collected"></a>'
+												+'<b>' + item.name + '人气</b><b>' + item.people_number + '</b>'
+											+'</div>'
+										+'</div>');
+										
+										$('#group_'+item.id)[0].addEventListener('tap',function(){
+											console.log('进入攻略群');
+											mui.openWindow('tourist_group.html?id='+item.id)
+										});
+										
+									}
+								}
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+							
+					});
+				}
 		})
 	</script>
 	</body>
