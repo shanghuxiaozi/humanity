@@ -9,14 +9,14 @@
 <meta name='360-fullscreen' content='true' />
 <meta http-equiv='expires' content='0' />
 <meta name='laya' logoimg='logo.png' logobkcolor='#ffffff' screenorientation='landscape' cacheid='fffffffff' />
-<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=LIhOlvWfdiPYMCsK5wsqlFQD8wW4Bfy6&s=1"></script> -->
 <script src="../../js/laya.core.min.js"></script>
 </head>
 <body style="background-color: black;">
 <script>
 
-Laya.init(1200,1600);
+Laya.init(1100,1500);
 Laya.stage.bgColor = "#FFFFFF";
 Laya.stage.alignH = Laya.Stage.ALIGN_CENTER;
 Laya.stage.alignV = Laya.Stage.ALIGN_MIDDLE;
@@ -27,7 +27,7 @@ Laya.Browser.document.body.appendChild(videoElement);
 
 // 设置Video元素地样式和属性
 videoElement.style.zInddex = Laya.Render.canvas.style.zIndex + 1;
-videoElement.src = "http://k.youku.com/player/getFlvPath/sid/05101404858921238cda1/st/mp4/fileid/0300080100588917FC52300000000173284D8F-57C1-E8C7-9D9C-EFD42C7DCFED?k=b3dfc0d42b864a9b282cce40&hd=1&myp=0&ts=161&ctype=12&ev=1&token=0514&oip=3072837110&ep=cieVGkiJVsoI4CvWij8bZCSxICYOXP4J9h%2BFidJjALshQOC2mDmntJiyTf9CFvkZciIGEezyqdjj%0AHkhiYfVE2mkQqkbbPvrpivmQ5dglsJQCFR5CAbuiwFSeRjH1&ccode=050F&duration=160&expire=18000&psid=5bf8444d68765951045320d6c99750d7&ups_client_netip=183.39.197.246&ups_ts=1510140485&ups_userid=&utid=QYNLEnli4E0CAbcn5RstS21C&vid=XMjAzMzM5Njg0MA%3D%3D&vkey=A4ccc213e897ba491adfa4160d027e212";
+videoElement.src = "http://pgccdn.v.baidu.com/2245461155_2869819908_20171005232604.mp4?authorization=bce-auth-v1%2Fc308a72e7b874edd9115e4614e1d62f6%2F2017-10-05T15%3A26%3A07Z%2F-1%2F%2Ff3e4bcbd4730d900c4c7857dc0ab25612c21911c666bcccd1f07ee2999ce20d5&responseCacheControl=max-age%3D8640000&responseExpires=Sat%2C+13+Jan+2018+23%3A26%3A07+GMT&xcode=d9707d6788259816fc6e3a0ff582c94ac558b9a71155b95e&time=1510884784&_=1510798311805";//"http://k.youku.com/player/getFlvPath/sid/05101404858921238cda1/st/mp4/fileid/0300080100588917FC52300000000173284D8F-57C1-E8C7-9D9C-EFD42C7DCFED?k=b3dfc0d42b864a9b282cce40&hd=1&myp=0&ts=161&ctype=12&ev=1&token=0514&oip=3072837110&ep=cieVGkiJVsoI4CvWij8bZCSxICYOXP4J9h%2BFidJjALshQOC2mDmntJiyTf9CFvkZciIGEezyqdjj%0AHkhiYfVE2mkQqkbbPvrpivmQ5dglsJQCFR5CAbuiwFSeRjH1&ccode=050F&duration=160&expire=18000&psid=5bf8444d68765951045320d6c99750d7&ups_client_netip=183.39.197.246&ups_ts=1510140485&ups_userid=&utid=QYNLEnli4E0CAbcn5RstS21C&vid=XMjAzMzM5Njg0MA%3D%3D&vkey=A4ccc213e897ba491adfa4160d027e212";
 videoElement.controls = true;
 // 阻止IOS视频全屏
 videoElement.setAttribute("webkit-playsinline", true);
@@ -37,7 +37,7 @@ videoElement.setAttribute("playsinline", true);
 var reference = new Laya.Sprite();
 Laya.stage.addChild(reference);
 reference.pos(100, 100);
-reference.size(1000, 1300);
+reference.size(900, 1200);
 reference.graphics.drawRect(0, 0, reference.width, reference.height, "#CCCCCC");
 
 // 每次舞台尺寸变更时，都会调用Utils.fitDOMElementInArea设置Video的位置，对齐的位置和refence重合

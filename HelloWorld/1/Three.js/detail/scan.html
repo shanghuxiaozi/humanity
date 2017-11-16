@@ -26,6 +26,7 @@
 	</style>
 </head>
 <body>
+	<script src="../js/scan/scan.js"></script>
 <script>
 	// 扩展API加载完毕后调用onPlusReady回调函数 
 	document.addEventListener( "plusready", onPlusReady, false );
@@ -79,7 +80,7 @@
 <script src="../js/mui/mui.js"></script>
 <script src="../hello-mui/js/jquery-2.1.0.js"></script>
 <script src="../mobile/layer.js"></script>
-<script src="../js/scan/scan.js"></script>
+
 <script>
 	mui.init();
 	var result = document.getElementById('demo_result');
@@ -300,6 +301,8 @@ function distinguish(data){
 		$('.scan-take-txt').css('left','-58px');
 		$('.scan-take-txt2').css('color','#cd3829');
 		$('.scan-take-txt').css('color','#262626');
+//		if(scan)
+//		scan.startRecognize();
 	});
 
 	/*拍照*/
@@ -320,7 +323,7 @@ function distinguish(data){
 			captureImage();
 		}else if(scanType == 1){
 			$('#bcid').show();
-			$('#closeBtn').show();alert(scan.scan.start())
+			$('#closeBtn').show();//alert(( typeof scan.scan)+'--'+(scan == null)+'-'+(scan.scan == null))
 			if(scan)
 				scan.startScan();
 		}
@@ -329,7 +332,7 @@ function distinguish(data){
 	
 	$('#closeBtn')[0].addEventListener('tap',function(){
 		if(scan)
-		scan.closeScan();
+			scan.closeScan();
 		$('#bcid').hide();
 		$('#closeBtn').hide();
 		scanType = 0;

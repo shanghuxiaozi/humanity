@@ -95,7 +95,7 @@
 			var number = document.getElementById('number');
 			var time = document.getElementById('time');
 			mui.ready(function(){
-				var group = JSON.parse(localStorage.getItem('group_team_'+getQueryString('id')));console.log(group);
+				var group = JSON.parse(localStorage.getItem('group_team_'+getQueryString('id')));//console.log(group);
 				title.innerHTML = group.name;
 				number.innerHTML = group.people_number;
 				time.innerHTML = group.create_date.substring(0,10);

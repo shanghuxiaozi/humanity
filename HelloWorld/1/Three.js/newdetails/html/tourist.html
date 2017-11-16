@@ -473,7 +473,7 @@
 											+'</div>'
 										+'</div>');
 										
-										$('#group_'+item.id)[0].addEventListener('tap',function(){
+										$('#group_'+item.id)[0].addEventListener('tap',function(){ 
 											console.log('进入攻略群');
 											mui.openWindow('tourist_group.html?id='+item.id)
 										});
