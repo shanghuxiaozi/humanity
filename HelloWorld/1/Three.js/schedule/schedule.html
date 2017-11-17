@@ -360,7 +360,8 @@
 							//alert('Webview Hided');
 						}, false);
 						webview.addEventListener('close', function(e){
-//							alert('Webview closed!');
+							
+							//alert('Webview closed!');
 							if(	localStorage.getItem('city_nme')!='over'){
 			        		if(localStorage.getItem('city_nme')!='lat'){
 					        			map.centerAndZoomByName(localStorage.getItem('city_nme'));

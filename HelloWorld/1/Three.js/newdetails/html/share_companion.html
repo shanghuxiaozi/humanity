@@ -560,19 +560,19 @@
 	
 	<footer>
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item" href="../../schedule/schedule.html">
+			<a class="mui-tab-item" href="../../schedule/schedule.html" data-type="N">
 				<span class="mui-icon mui-icon-home" ></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item"  href="../../detail/scan.html">
+			<a class="mui-tab-item"  href="../../detail/scan.html" data-type="N">
 				<span class="mui-icon mui-icon-phone"></span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
-			<a class="mui-tab-item mui-active">
+			<a class="mui-tab-item mui-active" data-type="N">
 				<span class="mui-icon mui-icon-email"></span>
 				<span class="mui-tab-label">分享</span>
 			</a>
-			<a class="mui-tab-item" href="user.html">
+			<a class="mui-tab-item" href="user.html" data-type="N">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">我</span>
 			</a>
@@ -600,8 +600,30 @@
 //				}
 //		}
 		);
+		
+		var footList = document.querySelectorAll('.mui-tab-item');
 		mui('body').on('tap','a',function(e){
-			window.top.location.href=this.href;
+			var _this = this;
+			var type = this.getAttribute("data-type");
+			if(type=="N"){
+				var webview = mui.openWindow(_this.href);
+				webview.addEventListener('loaded', function(e){
+//									alert('Webview Hided');
+						}, false);
+						webview.addEventListener('close', function(e){
+//										alert('Webview close');
+							mui(footList).each(function(index,item){
+								if(index==2){
+									item.className = 'mui-tab-item mui-active'
+								}else{
+									item.className = 'mui-tab-item'
+								}
+							})
+							
+							
+						}, false );
+			}else
+				window.top.location.href=this.href;
 		});
 		
 		

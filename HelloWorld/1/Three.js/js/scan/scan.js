@@ -47,7 +47,7 @@ Scan.prototype.startRecognize = function(){
 	}
 }
 
-Scan.prototype.startScan = function(){
+Scan.prototype.startScan = function(_callBcak){
 	var that = this;
 	that.scan = new plus.barcode.Barcode('bcid');
 	that.scan.onmarked = onmarked; 
@@ -64,7 +64,10 @@ Scan.prototype.startScan = function(){
 			text = 'EAN8: ';
 			break;
 		}
-		alert( text+result );
+		if(typeof _callBcak == 'function'){
+			_callBcak(text+result);
+		}
+		
 	}
 	that.scan.start();
 }

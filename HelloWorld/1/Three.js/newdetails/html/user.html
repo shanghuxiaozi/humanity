@@ -157,11 +157,30 @@
 	<script>
 		var isLogin = false;
 		mui.init();
+		
+		var footList = document.querySelectorAll('.mui-tab-item');
+		
+		
 		mui('body').on('tap','a',function(e){
 			var _this = this;
 			var type = this.getAttribute("data-type");
 			if(type=="N"){
-				mui.openWindow(_this.href);
+				var webview = mui.openWindow(_this.href);
+				webview.addEventListener('loaded', function(e){
+//									alert('Webview Hided');
+						}, false);
+						webview.addEventListener('close', function(e){
+//										alert('Webview close');
+							mui(footList).each(function(index,item){
+								if(index==3){
+									item.className = 'mui-tab-item mui-active'
+								}else{
+									item.className = 'mui-tab-item'
+								}
+							})
+							
+							
+						}, false );
 			}else{
 				if(isLogin)
 					window.top.location.href=_this.href;
@@ -172,7 +191,6 @@
 						}, false);
 						webview.addEventListener('close', function(e){
 //										alert('Webview close');
-							
 							checkLogin();
 							
 							

@@ -190,15 +190,15 @@
 			.mui-tab-item{
 				  background-color: antiquewhite;
 			}
-			.mui-bar-tab .mui-icon-home{width: 100%;background: url(../newdetails/images/tab_home_icon.png)no-repeat center;background-size: 30px 23px;}
+			.mui-bar-tab .mui-icon-home{width: 100%;background: url(../newdetails/images/tab_homeh_icon.png)no-repeat center;background-size: 30px 23px;}
 			.mui-bar-tab .mui-icon-home:before,.mui-bar-tab .mui-icon-phone:before,.mui-bar-tab .mui-icon-email:before,.mui-bar-tab .mui-icon-gear:before{content: '';}
-			.mui-bar-tab .mui-active .mui-icon-home{background: url(../newdetails/images/tab_homeh_icon.png)no-repeat center;background-size: 30px 23px;}
+			/*.mui-bar-tab .mui-active .mui-icon-home{background: url(../newdetails/images/tab_homeh_icon.png)no-repeat center;background-size: 30px 23px;}*/
 			.mui-bar-tab .mui-icon-phone{width: 100%;background: url(../newdetails/images/tab_saoyisao_icon.png)no-repeat center;background-size: 22px 21px;}
-			.mui-bar-tab .mui-active .mui-icon-phone{width: 100%;background: url(../newdetails/images/tab_saoyisaoh_icon.png)no-repeat center;background-size: 22px 21px;}
+			/*.mui-bar-tab .mui-active .mui-icon-phone{width: 100%;background: url(../newdetails/images/tab_saoyisaoh_icon.png)no-repeat center;background-size: 22px 21px;}*/
 			.mui-bar-tab .mui-icon-email{width: 100%;background: url(../newdetails/images/tab_fenxiang_icon.png)no-repeat center;background-size: 21px 21px;}
-			.mui-bar-tab .mui-active .mui-icon-email{width: 100%;background: url(../newdetails/images/tab_fenxiangh_icon.png)no-repeat center;background-size: 21px 21px;}
+			/*.mui-bar-tab .mui-active .mui-icon-email{width: 100%;background: url(../newdetails/images/tab_fenxiangh_icon.png)no-repeat center;background-size: 21px 21px;}*/
 			.mui-bar-tab .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_me_icon.png)no-repeat center;background-size: 18px 23px;}
-			.mui-bar-tab .mui-active .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_meh_icon.png)no-repeat center;background-size: 18px 23px;}
+			/*.mui-bar-tab .mui-active .mui-icon-gear{width: 100%;background: url(../newdetails/images/tab_meh_icon.png)no-repeat center;background-size: 18px 23px;}*/
 			#spot{
 				/*border-style: solid;
             	border-width: 4px 5px 4px 5px;
@@ -208,7 +208,7 @@
 				  top: 68px;
 				  left: 10px;
 				    color: rgb(21, 111, 77);
-				background: url(../icon/mark/t3.gif) no-repeat center;
+				/*background: url(../icon/mark/t3.gif) no-repeat center;*/
 				background-size: 122px 84px;
 				  padding: 17px;
 			}

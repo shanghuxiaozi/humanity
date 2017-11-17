@@ -9,17 +9,17 @@
 	<style>
 		#bcid {
 				  background: #F1FAF1;
-				  height: 80%;
-				  width: 80%;
+				  height: 100%;
+				  width: 100%;
 				  position: absolute;
-				  left: 10%;
-				  top: 10%;
+				  /*left: 10%;*/
+				  top: 0px;
 			  display: none;
 			}
 			#closeBtn{
 				position: absolute ;
 				  left: 40%;
-				  top: 5%;
+				  top: 25%;
   				z-index: 99999999999;
   				display: none;
 			}
@@ -99,8 +99,8 @@ function captureImage(){
 			//file.path = path;
 			 plus.io.resolveLocalFileSystemURL(e, function(entry) { 
                 var path = entry.toLocalURL(); 
-                mui.toast("读取拍照文件：" + path); 
-                
+               // mui.toast("读取拍照文件：" + path); 
+                mui.toast("读取拍照文件...");
                 //readFile(new File(path,"image/png"));
                 // 可通过entry对象操作test.html文件 
 				entry.file( function(file){
@@ -325,7 +325,16 @@ function distinguish(data){
 			$('#bcid').show();
 			$('#closeBtn').show();//alert(( typeof scan.scan)+'--'+(scan == null)+'-'+(scan.scan == null))
 			if(scan)
-				scan.startScan();
+				scan.startScan(function(v){
+					alert( v);
+					scan.closeScan();
+					$('#bcid').hide();
+					$('#closeBtn').hide();
+					scanType = 0;
+					$('.scan-take-txt').css('left','0px');
+					$('.scan-take-txt').css('color','#cd3829');
+					$('.scan-take-txt2').css('color','#262626');
+				});
 		}
 		
 	});
