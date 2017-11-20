@@ -725,24 +725,36 @@ Bookingmap.prototype.centerAndZoomByName = function(c,v){
 	_this.map.centerAndZoom(c,v||15);
 }
 
+/*过滤不需要的地图图标*/
+Bookingmap.prototype.checkMark =function(){
+	
+	
+}
+
 /*缩放地图图标*/
 Bookingmap.prototype.zoomIcon =function(){
 	var _this = this;
 	var map = _this.map;
+	
+	
+	
+	
 	for( var i= 0,m=_this.markList.length;i<m;i++ ){
 					var mark = _this.markList[i];
 					if(map.getZoom()<11&& i!=0){
 						mark.hide();
 						continue;
-					}else if(map.getZoom()<14 && map.getZoom()>11 && i%2!=0 && i%3!=0 && i%5!=0 ){console.log(mark)
+					}else if(map.getZoom()<14 && map.getZoom()>11 && i%2!=0 && i%3!=0 && i%5!=0){console.log(mark)
 						mark.hide();
 						continue;
 					}else if(map.getZoom() == 11 &&(i!=0||i!=1) ){
 						mark.hide();
 						continue;
+					}else if(map.getZoom()==14){
+						
 					}
 					
-					
+					              
 					/*if(map.getZoom()<14 &&( i%30!=0)){
 						
 						mark.hide();
@@ -799,14 +811,15 @@ Bookingmap.prototype.createMarkFromData = function(obj){
 	
 	var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
 	map.addOverlay(marker); 
-	var label = new BMap.Label(obj.title,{offset:new BMap.Size(10,-10)});
+	var label = new BMap.Label(obj.title,{offset:new BMap.Size(-10,-20)});
 				label.setStyle({
+					opacity:0.65,
 					border:false,
 					backgroundColor:false,
 				// color : "red",
 				 fontSize : "12px",
 				 height : "20px",
-				// lineHeight : "20px",
+				 //lineHeight : "20px",
 				 fontFamily:"微软雅黑"
 			 });
 			 

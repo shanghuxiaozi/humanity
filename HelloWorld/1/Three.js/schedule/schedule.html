@@ -209,7 +209,7 @@
 					
 					if((lufy.contentWindow).initData){
 						(lufy.contentWindow).initData(allmap,lufy,info,function(s,l){
-							sprite = s;
+							//sprite = s;
 							lengend = l;
 						},function(){
 							localStorage.setItem("currentInfo",JSON.stringify(currentInfo));
@@ -609,7 +609,7 @@
 					    var leftLng = bssw.lng;
 					    var rightLng = bsne.lng;
 					    //console.log(bssw,bsne);
-					    if(map.map.getZoom()>10)
+					    if(map.map.getZoom()>8)
 	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng)
 	        			else
 	        				map.zoomIcon()
@@ -627,7 +627,7 @@
 					    var leftLng = bssw.lng;
 					    var rightLng = bsne.lng;
 					    //console.log(bssw,bsne);
-					    if(map.map.getZoom()>10)
+					    if(map.map.getZoom()>8)
 	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng,_callBack)
 	        			else
 	        			map.zoomIcon()
@@ -680,9 +680,44 @@
 								console.log(data);
 								localStorage.setItem('scenicSpotbyPOS',JSON.stringify(data))
 								if(data&& data.length>0){
+									var left_data = [];
+									if(zoom<14){//当地图等级大于14时过滤图标
+										
+										for(var i=0,m=data.length;i<m;i++){
+											var item = data[i];
+											var isF = true;
+											for( var z = i+1;z<m-1;z++ ){
+												var citem = data[z];
+												if(zoom>12&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.2){
+													//console.log(parseFloat(citem.longitude),parseFloat(item.longitude),parseFloat(citem.latitude),parseFloat(item.latitude));
+													isF = false;
+													break;
+												}if(zoom<=12&&zoom>=11&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.3){
+													//console.log(parseFloat(citem.longitude),parseFloat(item.longitude),parseFloat(citem.latitude),parseFloat(item.latitude));
+													isF = false;
+													break;
+												}else if(zoom<11&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.8){
+													
+													
+													
+												}
+											}
+											if(isF)left_data.push(item);
+											
+										}
+										
+										
+									}
+									
+									
 									map.markList = [];
 									map.sizeList = [];
 									map.map.clearOverlays();
+									if(left_data.length > 0)
+									data = left_data;
+									
+									
+									console.log('过滤后的=',left_data);
 									for(var i=0,m=data.length;i<m;i++){
 										var item = data[i];
 //										if(i==0)item.type_id = 8888;//显示活动图标
