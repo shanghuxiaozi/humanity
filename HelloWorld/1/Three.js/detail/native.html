@@ -17,28 +17,178 @@
 <script>
 function main()
 {
-    var IntentMana = plus.android.importClass('android.content.Intent');
-    var MediaStore = plus.android.importClass('android.provider.MediaStore');
-    var App        = plus.android.runtimeMainActivity();
-    var Uri        = plus.android.importClass('android.net.Uri');
-    var FILE       = plus.android.importClass('java.io.File');
-    var intent  = new IntentMana(MediaStore.ACTION_IMAGE_CAPTURE);
+//  var IntentMana = plus.android.importClass('android.content.Intent');
+//  var MediaStore = plus.android.importClass('android.provider.MediaStore');
+//  var App        = plus.android.runtimeMainActivity();
+//  var Uri        = plus.android.importClass('android.net.Uri');
+//  var FILE       = plus.android.importClass('java.io.File');
+//  var intent  = new IntentMana(MediaStore.ACTION_IMAGE_CAPTURE);
+//
+//  var vfile    = new FILE("/storage/emulated/0/my/test/img.jpg");
+//
+//  if(!vfile.exists())
+//  {
+//      var vDirPath = vfile.getParentFile(); //new File(vFile.getParent());
+//      vDirPath.mkdirs();
+//  }
+//  else{
+//      alert("文件存在!");
+//  }
+//
+//  var uri = Uri.fromFile(vfile);
+//  //
+//  intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//
+//  App.startActivityForResult(intent,100);
+var ioOptions = plus.android.importClass('java.io.IOException');
 
-    var vfile    = new FILE("/storage/emulated/0/my/test/img.jpg");
+var activityInfo = plus.android.importClass('android.content.pm.ActivityInfo');
 
-    if(!vfile.exists())
-    {
-        var vDirPath = vfile.getParentFile(); //new File(vFile.getParent());
-        vDirPath.mkdirs();
-    }
-    else{
-        alert("文件存在!");
-    }
+var PixelFormat = plus.android.importClass('android.graphics.PixelFormat');
 
-    var uri = Uri.fromFile(vfile);
-    //
-    intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//
-    App.startActivityForResult(intent,100);
+var Camera = plus.android.importClass('android.hardware.Camera');
+
+var SurfaceView = plus.android.importClass('android.view.SurfaceView');
+
+var MediaRecorder = plus.android.importClass('android.media.MediaRecorder');
+
+var Bundle = plus.android.importClass('android.os.Bundle');
+
+var SurfaceHolder = plus.android.implements('android.view.SurfaceHolder');
+
+// var View = plus.android.importClass('android.view.View');
+
+var LinearLayout = plus.android.importClass('android.widget.LinearLayout');
+
+var Surface = plus.android.importClass('android.view.Surface');
+
+var SurfaceTexture = plus.android.importClass('android.graphics.SurfaceTexture');
+	//alert(Camera);
+	var  cameras = Camera.getNumberOfCameras();
+	alert(cameras);
+//	var bitmap1 = new plus.nativeObj.Bitmap('bmp1');
+//	bitmap1.load('bmp1.png',function(){
+//		console.log('bmp1.png load success!');
+//	},function(e){
+//		console.log('bmp1.png load failed! '+JSON.stringify(e));
+//	});
+var main = plus.android.runtimeMainActivity();
+var view = new LinearLayout(main);
+
+
+alert('0-');
+//	var view = new plus.nativeObj.View('test',{top:'200px',left:'0px',height:'50%',width:'100%'});
+//	// 绘制矩形
+//	view.drawRect("#FF0000", {top:'0px',left:'0px',width:'100%',height:'100%'});
+//	
+//	
+//	view.show();
+//	
+
+	
+//设置布局参数
+
+var lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+//console.log(&quot;1010101010&quot;+lp);
+alert('1-');
+view.setLayoutParams(lp);//设置布局参数
+
+//console.log(&quot;2020202020&quot;);
+
+var surfaceview = new SurfaceView(main);
+
+//console.log(&quot;30303030&quot;+surfaceview);
+alert('2-');
+var linearParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); //取控件surfaceview当前的布局参数
+
+alert("4040404004"+linearParams);
+
+view.addView(surfaceview,linearParams);
+
+main.setContentView(view);
+
+
+alert('3-');
+
+
+
+
+var mediarecorder = new MediaRecorder();// 创建mediarecorder对象
+
+
+
+//设置摄像头以及摄像头的方向
+
+//var CammeraIndex=FindBackCamera();//网上参考的一个函数，用来获取后置摄像头的info
+
+alert('1111111111');
+
+var mCamera=Camera.open();
+
+console.log('222222222');
+
+mCamera.setDisplayOrientation(90);
+
+//mCamera.unlock();
+
+alert('33333');
+
+
+
+//alert(surfaceview);
+
+var SurfaceHolder = surfaceview.getHolder();// 取得holder
+alert(SurfaceHolder)
+
+
+ mCamera.setPreviewDisplay(SurfaceHolder);
+ 
+ alert('4-');
+ mCamera.startPreview();
+ alert('拍照');
+/*mediarecorder.setCamera(mCamera);
+
+
+
+// 设置录制视频源为Camera(相机)
+
+mediarecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+// 设置录制完成后视频的封装格式THREE_GPP为3gp.MPEG_4为mp4
+
+mediarecorder .setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+
+// 设置录制的视频编码h263 h264
+
+mediarecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+
+// 设置视频录制的分辨率。必须放在设置编码和格式的后面，否则报错
+
+mediarecorder.setVideoSize(1280, 720);
+
+// 设置录制的视频帧率。必须放在设置编码和格式的后面，否则报错
+
+mediarecorder.setVideoFrameRate(20);
+
+
+
+
+mediarecorder.setPreviewDisplay(surfaceview.getHolder().getSurface());
+
+
+// 设置视频文件输出的路径
+
+mediarecorder.setOutputFile("/sdcard/love.3gp");
+
+
+// 准备录制
+
+mediarecorder.prepare();
+
+
+// 开始录制
+
+mediarecorder.start();*/
 
 }
 </script>
