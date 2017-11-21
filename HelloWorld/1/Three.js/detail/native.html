@@ -75,7 +75,7 @@ var main = plus.android.runtimeMainActivity();
 var view = new LinearLayout(main);
 
 
-alert('0-');
+//alert('0-');
 //	var view = new plus.nativeObj.View('test',{top:'200px',left:'0px',height:'50%',width:'100%'});
 //	// 绘制矩形
 //	view.drawRect("#FF0000", {top:'0px',left:'0px',width:'100%',height:'100%'});
@@ -90,7 +90,7 @@ alert('0-');
 var lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 //console.log(&quot;1010101010&quot;+lp);
-alert('1-');
+//alert('1-');
 view.setLayoutParams(lp);//设置布局参数
 
 //console.log(&quot;2020202020&quot;);
@@ -98,17 +98,16 @@ view.setLayoutParams(lp);//设置布局参数
 var surfaceview = new SurfaceView(main);
 
 //console.log(&quot;30303030&quot;+surfaceview);
-alert('2-');
+//alert('2-');
 var linearParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); //取控件surfaceview当前的布局参数
 
-alert("4040404004"+linearParams);
+//alert("4040404004"+linearParams);
 
 view.addView(surfaceview,linearParams);
 
 main.setContentView(view);
 
-
-alert('3-');
+//alert('3-');
 
 
 
@@ -121,7 +120,7 @@ var mediarecorder = new MediaRecorder();// 创建mediarecorder对象
 
 //var CammeraIndex=FindBackCamera();//网上参考的一个函数，用来获取后置摄像头的info
 
-alert('1111111111');
+//alert('1111111111');
 
 var mCamera=Camera.open();
 
@@ -131,21 +130,21 @@ mCamera.setDisplayOrientation(90);
 
 //mCamera.unlock();
 
-alert('33333');
+//alert('33333');
 
 
 
 //alert(surfaceview);
 
 var SurfaceHolder = surfaceview.getHolder();// 取得holder
-alert(SurfaceHolder)
+//alert(SurfaceHolder)
 
 
  mCamera.setPreviewDisplay(SurfaceHolder);
  
- alert('4-');
+ //alert('4-');
  mCamera.startPreview();
- alert('拍照');
+ //alert('拍照');
 /*mediarecorder.setCamera(mCamera);
 
 
