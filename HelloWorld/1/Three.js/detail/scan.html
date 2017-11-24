@@ -37,7 +37,9 @@
 	function onPlusReady() {
 		console.log("plusready");
 		scan = new Scan();
-		
+		$('#bcid').hide();
+			$('#closeBtn').hide();
+			captureImage();
 //		view = new plus.nativeObj.View('test',
 //	{top:'0px',left:'0px',height:'44px',width:'100%'},
 //	[{tag:'img',id:'img',src:'nbg.png',position:{top:'0px',left:'0px',width:'100%',height:'100%'}},
@@ -93,6 +95,7 @@
 
 <script>
 	mui.init();
+	mui.toast('正在调用摄像头')
 	var result = document.getElementById('demo_result');
 	var imageC = document.getElementById('imageC');
 	
@@ -207,7 +210,8 @@ function captureImage(){
 			
 		},
 		function( error ) {
-			alert( "Capture image failed: " + error.message );
+			//alert( "Capture image failed: " + error.message );
+			mui.toast('未拍取照片')
 		},
 		{resolution:res,format:fmt}
 	);
@@ -308,6 +312,9 @@ function distinguish(data){
 	});
 	
 	var scanType = 0;//默认拍照
+	
+	
+	
 	/*二维码*/
 	$('.scan-take-txt2')[0].addEventListener('tap',function(e){
 		e.stopPropagation();
@@ -334,10 +341,12 @@ function distinguish(data){
 
 	$('.scan-take')[0].addEventListener('tap',function(e){
 		if(scanType == 0){
+			mui.toast('正在调用摄像头')
 			$('#bcid').hide();
 			$('#closeBtn').hide();
 			captureImage();
 		}else if(scanType == 1){
+			mui.toast('正在调用扫描组件')
 			$('#bcid').show();
 			$('#closeBtn').show();//alert(( typeof scan.scan)+'--'+(scan == null)+'-'+(scan.scan == null))
 			if(scan)

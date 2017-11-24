@@ -36,7 +36,7 @@
 				</span>
 				<span class="mui-tab-label">扫一扫</span>
 			</a>
-			<a class="mui-tab-item" href="javascript:void(0)" dataindex="2">
+			<a class="mui-tab-item" href="../newdetails/html/share_companion.html" >
 				<span class="mui-icon  mui-icon-email">
 					<!--<img src="../icon/tab_fenxiang_icon.png"/>-->
 					<span class="mui-badge">9
@@ -243,7 +243,7 @@
 //				document.addEventListener( "plusready", onPlusReady, false );
 				// 扩展API加载完毕，现在可以正常调用扩展API
 				function onPlusReady() {
-					circle = plus.webview.getWebviewById('circle');
+					circle = plus.webview.getWebviewById('circle'); 
 					/*setTimeout(function(){
 						var array = plus.webview.all();
 						if(array){
@@ -257,6 +257,7 @@
 //					}
 					//(plus.webview.getWebviewById("H58A84A3C")).back()
 //					alert('=='+plus.webview.currentWebview().parent().id);
+					
 				};
 				var currentCity = localStorage.getItem("currentCity");
 				var chooseCity;
@@ -340,7 +341,7 @@
 				    	
 //				    	mui.openWindow("../cut/index.html");
 //						mui.openWindow("../newdetails/html/share_companion.html");
-						window.location.href = "../newdetails/html/share_companion.html"//mui.openWindow有问题，首次进入带ip地址了
+//						window.location.href = "../newdetails/html/share_companion.html"//mui.openWindow有问题，首次进入带ip地址了
 						//mui.openWindow("../hello-mui/examples/tabbar.html")
 				    	//mui.openWindow("http://120.77.249.40:8084/buyer/changeImg");
 				    	//.openWindow("../circle/index.html");
@@ -609,10 +610,14 @@
 					    var leftLng = bssw.lng;
 					    var rightLng = bsne.lng;
 					    //console.log(bssw,bsne);
+					    
 					    if(map.map.getZoom()>8)
 	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng)
-	        			else
+	        			else{
+	        				map.map.clearOverlays();
 	        				map.zoomIcon()
+	        			}
+	        				
 	        		});
 	        		
 	        		map.zoomHandler(function(c,v,_callBack){
@@ -627,10 +632,14 @@
 					    var leftLng = bssw.lng;
 					    var rightLng = bsne.lng;
 					    //console.log(bssw,bsne);
+					   
 					    if(map.map.getZoom()>8)
 	        			queryScenicSpotbyPOS(c,v,topLat,bottomLat,leftLng,rightLng,_callBack)
-	        			else
-	        			map.zoomIcon()
+	        			else{
+	        				 map.map.clearOverlays();
+	        				 map.zoomIcon()
+	        			}
+	        			
 	        		});
 	        		//map.trajectory();	显示赛程的
 	        	//map.getRoute(null,null,{lng: 114.036184, lat: 22.6139},{lng: 113.906253, lat: 22.485729});
@@ -681,7 +690,7 @@
 								localStorage.setItem('scenicSpotbyPOS',JSON.stringify(data))
 								if(data&& data.length>0){
 									var left_data = [];
-									if(zoom<14){//当地图等级大于14时过滤图标
+									if(zoom<=14){//当地图等级大于14时过滤图标
 										
 										for(var i=0,m=data.length;i<m;i++){
 											var item = data[i];
@@ -697,8 +706,8 @@
 													isF = false;
 													break;
 												}else if(zoom<11&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.8){
-													
-													
+													isF = false;
+													break;
 													
 												}
 											}
