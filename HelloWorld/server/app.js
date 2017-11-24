@@ -47,7 +47,7 @@ app.use(function (req,res, next) {
   var d = domain.create();
   //监听domain的错误事件
   d.on('error', function (err) {
-    logger.error(err);
+    console.log(err);
     res.statusCode = 500;
     res.json({sucess:false, messag: '服务器异常'});
     d.dispose();

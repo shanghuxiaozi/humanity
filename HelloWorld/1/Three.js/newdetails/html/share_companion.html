@@ -85,6 +85,34 @@
 				  font-weight: normal;
 				}
 				
+				.mui-spitslot-lists .mui-travel-revert {
+				  position: relative;
+				  background-color: #ededed;
+				  border-radius: 4px;
+				  padding: 14px 10px;
+				  margin-top: 20px;
+				}
+				.mui-spitslot-lists .mui-travel-revert .zan-name {
+				  font-size: 12px;
+				  color: #cd3829;
+				  font-weight: normal;
+				}
+				.mmui-spitslot-lists  .mui-travel-revert .mui-triangle {
+				  position: absolute;
+				  top: -10px;
+				  left: 43px;
+				  width: 0;
+				  height: 0;
+				  border-left: 10px solid transparent;
+				  border-right: 10px solid transparent;
+				  border-bottom: 14px solid #ededed;
+				}
+				.mui-spitslot-lists  .mui-travel-revert .zan-text {
+				  font-size: 12px;
+				  color: #666;
+				  font-weight: normal;
+				}
+				
 				
 				/*下拉上拉刷新*/
 				.mui-pull-top-tips {
@@ -653,9 +681,9 @@
 		});
 		
 		
-		var to_name ,_say_id;//评论发送给那个人
+		var to_name ,_say_id,_irrigation_id;//评论发送给那个人
 		var _company_id;//当前结伴的评论id
-		var _type_ = 0;//表示当前评论的类型是0说说，1结伴，还是2灌水
+		var _type_ = 0;//表示当前评论的类型是0说说，1结伴，2发表私信，还是3灌水
 		//分享朋友圈
 		var friends_comments = document.getElementById('friends_comments');
 		//结伴
@@ -1307,6 +1335,40 @@
 						},error:function(e){
 							mui.toast("系统出错");
 					}});
+				}else if(_type_ == 3){
+					humanAjax(JS_PATH+'/irrigation/sendComment',{
+						data:{
+							gs_id:_irrigation_id,
+							create_date:(new Date()).Format('yyyy-MM-dd HH:mm:ss'),
+							comment_content:edit.innerHTML,
+							to_name:to_name
+						},
+						crossDomain :true,
+						dataType:'json',//服务器返回json格式数据
+						type:'post',//HTTP请求类型
+						success:function(data){
+//							if(typeof _backFunc == 'function')
+//								_backFunc(data);
+							
+							$('#commentDiv').hide();
+							//查询朋友圈说说
+											queryComment_irrigation(_irrigation_id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前2，如果小于2取本身
+														var _i = _d.data[j];
+														
+														$('#irrigation_'+_i.gs_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+														$('#irrigation_'+_i.gs_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+														
+													}
+												}
+											}
+											
+										});
+						},error:function(e){
+							mui.toast("系统出错");
+					}});
 				}
 				
 			});
@@ -1600,10 +1662,17 @@
 														+'</div>'
 													+'</a>'
 													+'<div class="mui-text-right mui-irrigation-oper">'
-														+'<a href="javascript:void(0);" class="mui-icon-comment">9</a>'
+														+'<a href="javascript:void(0);" class="mui-icon-comment" irrigation-id="'+item.id+'" to-name="'+item.user_name+'">9</a>'
 														//<!--已点赞  加上active类-->
 														+'<a href="javascript:void(0);" class="mui-icon-zan" irrigation-id="'+item.id+'">'+item.point_number+'</a>'
 													+'</div>'
+													//'<!--评论-->'
+		    		            						+'<div class="mui-travel-revert"><i class="mui-triangle"></i><div class="mui-travel-comment">'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text">暂时还没有评论</b></p>'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+		    		            						+'<p><b class="zan-name"></b><b class="zan-text"></b></p>'
+		    		            						+'</div></div>'
 												+'</div>'
 											+'</li>';
 											
@@ -1640,24 +1709,38 @@
 										});
 										
 										//查询灌水说说
-//										queryComment_irrigation(item.id,function(_d){
-//											if(_d.code == 200){
-//												if(_d.data.length>0){
-//													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前2，如果小于2取本身
-//														var _i = _d.data[j];
-//														
-//														$('#irrigation_'+_i.gs_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
-//														$('#irrigation_'+_i.gs_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
-//														
-//													}
-//												}
-//											}
-//											
-//										});
+										queryComment_irrigation(item.id,function(_d){
+											if(_d.code == 200){
+												if(_d.data.length>0){
+													for(var j = 0 , m = _d.data.length<4?_d.data.length:4;  j < m ; j++ ){//只取前2，如果小于2取本身
+														var _i = _d.data[j];
+														
+														$('#irrigation_'+_i.gs_id).find('.mui-travel-comment .zan-name').eq(j).html(_i.user_name+'：')
+														$('#irrigation_'+_i.gs_id).find('.mui-travel-comment .zan-text').eq(j).html(_i.comment_content);
+														
+													}
+												}
+											}
+											
+										});
 										
 										
 											
 										
+									}
+									
+									
+									//评论按钮
+									var pList = irrigation_comments.querySelectorAll('.mui-icon-comment');
+									for(var i=0,m=pList.length;i<m;i++){
+										var p = pList[i];
+										p.addEventListener('tap',function(){
+											console.log(this)
+											_type_ = 3;
+											$('#commentDiv').show();
+											_irrigation_id =  $(this).attr('irrigation-id');
+											to_name = $(this).attr('to-name');
+										});
 									}
 									
 									
@@ -1675,14 +1758,14 @@
 													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示点赞
 												});
 											}else if($(this).attr('isThumbsUp')=='1'){
-												updateThumbsUp_irrigation($(this).attr('spot_id'),0,irrigation_id,function(_d){
+												updateThumbsUp_irrigation($(this).attr('spot_id'),0,function(_d){
 //													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/good.png)');
 													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').removeClass('active');
 													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','2');//表示取消点赞
 													mui.toast('您已经取消点赞!')
 												});
 											}else if($(this).attr('isThumbsUp')=='2'){
-												updateThumbsUp_irrigation($(this).attr('spot_id'),1,irrigation_id,function(_d){
+												updateThumbsUp_irrigation($(this).attr('spot_id'),1,function(_d){
 //													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').css('background-image','url(../images/zanh_icon.png)');
 													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').addClass('active');
 													$('#irrigation_'+irrigation_id).find('.mui-icon-zan').attr('isThumbsUp','1');//表示取消点赞
@@ -1720,6 +1803,27 @@
 				}});
 			}
 		
+		
+		
+			/**/
+			function queryComment_irrigation(gs_id,_backFunc){
+				humanAjax(JS_PATH+'/irrigation/queryComment',{
+					data:{
+						gs_id:gs_id,
+						pageNum:0,
+						pageSize:10
+					},
+					crossDomain :true,
+					dataType:'json',//服务器返回json格式数据
+					type:'get',//HTTP请求类型
+					success:function(data){
+						if(typeof _backFunc == 'function')
+							_backFunc(data);
+					},error:function(e){
+						mui.toast("系统出错");
+				}});
+			}
+			
 			/*查询灌水点赞数据*/
 			function queryThumbsUp_irrigation(gs_id,_backFunc){
 				humanAjax(JS_PATH+'/irrigation/queryThumbsUp',{
