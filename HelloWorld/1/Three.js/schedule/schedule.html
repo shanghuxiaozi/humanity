@@ -259,7 +259,7 @@
 //					alert('=='+plus.webview.currentWebview().parent().id);
 					
 				};
-				var currentCity = localStorage.getItem("currentCity");
+				var currentCity = '郑州'//localStorage.getItem("currentCity");
 				var chooseCity;
 				var currentCenter;//当前地图的中心点，做活动返回时用
 				function queryCityPosNow(){
@@ -582,6 +582,14 @@
 	        			infoContent.innerHTML = o.title+"<p class='mui-ellipsis-2'>"+o.summary+"</p>";
 	        			info.style.display = "block";
 	        			imgInfo.src = JSON.parse(o.imgbox)[0];
+	        			
+	        			if(currentInfo.isground&&currentInfo.isground.data[0] == '0'){//已经明确无vr图
+	        				vrBtn.disabled = true;
+	        			}else{
+	        				vrBtn.disabled = false;
+	        			}
+	        			
+	        			
 	        			//info.style.bottom = '50px';
 	        			TweenLite.to(info.style,0.5,{bottom:'50px'});
 //	        			var i = -50;
@@ -755,7 +763,14 @@
 				  if(currentInfo){
 				  	//window.open('http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=512&height=256&location='+currentInfo.longitude+','+currentInfo.latitude+'&fov=360');
 				  	
-				  	mui.openWindow(JS_PATH+'/WebVR_Demo-master/panorama.html?location='+currentInfo.longitude+','+currentInfo.latitude);
+				  	if(currentInfo.isground&&currentInfo.isground.data[0] == '1'){
+				  		mui.openWindow(JS_PATH+'/WebVR_Demo-master/panorama.html?location=1,true');
+				  		localStorage.setItem('ground_img',currentInfo.ground_img);
+				  	}else
+				  		mui.openWindow(JS_PATH+'/WebVR_Demo-master/panorama.html?location='+currentInfo.longitude+','+currentInfo.latitude);
+				  	
+				  	
+				  	
 				  }
 				});
 				

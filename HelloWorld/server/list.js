@@ -100,7 +100,7 @@ router.get('/imageFromNet', function (request, response, next) {
 
 	　　　　var data = Buffer.concat(chunks, size);　　//Buffer.concat将chunks数组中的缓冲数据拼接起来，返回一个新的Buffer对象赋值给data
 
-	　　　　console.log(Buffer.isBuffer(data));　　　　//可通过Buffer.isBuffer()方法判断变量是否为一个Buffer对象
+	　　　　console.log('判断变量是否为一个Buffer对象'+Buffer.isBuffer(data));　　　　//可通过Buffer.isBuffer()方法判断变量是否为一个Buffer对象
 
 	　　　　
 
@@ -123,6 +123,69 @@ router.get('/imageFromNet', function (request, response, next) {
 	
 });
 
+
+//通过已有的图片url获取网络图片
+router.get('/imageFromNetByURL', function (request, response, next) {
+
+	var url = request.query.url;
+	console.log('通过已有的图片url获取网络图片='+url);
+	if(!url){
+		response.send({code:400,msg:'路径为空'});
+	}else{
+	http.get(url,function(res){
+	　　var chunks = []; //用于保存网络请求不断加载传输的缓冲数据
+	　　var size = 0;　　 //保存缓冲数据的总长度
+
+	　　res.on('data',function(chunk){
+	　　　　chunks.push(chunk);　 //在进行网络请求时，会不断接收到数据(数据不是一次性获取到的)，
+
+	　　　　　　　　　　　　　　　　//node会把接收到的数据片段逐段的保存在缓冲区（Buffer），
+
+	　　　　　　　　　　　　　　　　//这些数据片段会形成一个个缓冲对象（即Buffer对象），
+
+	　　　　　　　　　　　　　　　　//而Buffer数据的拼接并不能像字符串那样拼接（因为一个中文字符占三个字节），
+
+	　　　　　　　　　　　　　　　　//如果一个数据片段携带着一个中文的两个字节，下一个数据片段携带着最后一个字节，
+
+	　　　　　　　　　　　　　　　　//直接字符串拼接会导致乱码，为避免乱码，所以将得到缓冲数据推入到chunks数组中，
+
+	　　　　　　　　　　　　　　　　//利用下面的node.js内置的Buffer.concat()方法进行拼接
+
+	　　　　　　　　　
+	　　　　size += chunk.length;　　//累加缓冲数据的长度
+	　　});
+
+	　　
+
+	　　res.on('end',function(err){
+
+	　　　　var data = Buffer.concat(chunks, size);　　//Buffer.concat将chunks数组中的缓冲数据拼接起来，返回一个新的Buffer对象赋值给data
+
+	　　　　console.log('判断变量是否为一个Buffer对象'+Buffer.isBuffer(data));　　　　//可通过Buffer.isBuffer()方法判断变量是否为一个Buffer对象
+
+	　　　　//console.log(data)
+
+	　　　//　var base64Img = data.toString('base64');　　//将Buffer对象转换为字符串并以base64编码格式显示
+
+	　　　//　console.log("base64图片:"+base64Img);　　 //进入终端terminal,然后进入index.js所在的目录，
+
+	　　　　　　　　　　　　　　　　　　　//在终端中输入node index.js
+
+	　　　　　　　　　　　　　　　　　　　//打印出来的就是图片的base64编码格式，格式如下　　　　
+			if (!err && 　　res.statusCode === 200) {
+            var contentType = 　　res.headers['content-type'];
+            　　	res.setEncoding('binary');
+            response.set('Content-Type', contentType);
+            response.send(data);
+        }
+	　　});
+
+	});
+	}
+});
+
+
+//update `scenices` set isground=1,ground_img='http://pcsv1.map.bdimg.com/?qt=pdata&sid=0902890012170607113549000IN&pos=0_0&z=1&udt=20171116' where id= 11095;
 
 var FurionImgHandler = function (req, res) {
     var url = req.url.split('/fimg/')[1];

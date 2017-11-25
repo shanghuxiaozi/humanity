@@ -111,11 +111,17 @@ var path_result = getQueryString(window.location.href);
 	_worship.scale.x = -1;
 	scene.add( _worship );
 	var img = new Image();
+	var _l = path_result.location.split(',');
+	console.log(_l);
 	var url= 'http://120.25.221.94:8080/list/imageFromNet?location='+path_result.location;//'http://api.map.baidu.com/panorama/v2?ak=tulhDZioYexd9Zub0DojUU9g&width=1024&height=512&location='+path_result.location+'&fov=360';
+	if(_l[1]=='true'){console.log(encodeURIComponent(localStorage.getItem('ground_img')))
+		url='http://120.25.221.94:8080/list/imageFromNetByURL?url='+encodeURIComponent(localStorage.getItem('ground_img'));
+	}
 //	 img.crossOrigin = "";
 //	img.src = 'http://120.25.221.94:8080/list/imageFromNet?location='+path_result.location;
 //	//img.crossOrigin="Anonymous";
 	img.onload =  function(){
+		layer.close(layerIndex);
 		console.log('图片加载完成');
 		
 		_worship.material.map.image = img;
@@ -123,10 +129,10 @@ var path_result = getQueryString(window.location.href);
 	}
 	img.onerror = function(){
 		 layer.open({
-	    content: '抱歉此处没有VR图'
-	    ,skin: 'msg'
-	    ,time: 2 //2秒后自动关闭
-	  });
+		    content: '抱歉此处没有VR图'
+		    ,skin: 'msg'
+		    ,time: 2 //2秒后自动关闭
+		  });
 	  setTimeout(function(){
 	  	plus.screen.unlockOrientation();
 			plus.screen.lockOrientation( "portrait-primary")
@@ -134,6 +140,9 @@ var path_result = getQueryString(window.location.href);
 	  },2000);
 		
 	}
+	if(_l[1]=='true'){
+		img.src =url;
+	}else
 	imageFromNetH();
 	
 	document.addEventListener( "plusready", onPlusReady, false );
@@ -163,6 +172,7 @@ var path_result = getQueryString(window.location.href);
 								layer.close(layerIndex);
 								//alert(9);
 								//获得服务器响应
+								
 								img.src = 'data:image/png;base64,'+data;
 								console.log(img)
 							},
@@ -171,7 +181,7 @@ var path_result = getQueryString(window.location.href);
 									//异常处理；
 									//alert(type);
 									//console.log(type);
-									imageFromNetH();
+									//imageFromNetH();
 								}
 						});
 	}

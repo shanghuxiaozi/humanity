@@ -29,6 +29,30 @@ Bookingmap.prototype.initBaiduMap=function(id){
 //		map.setCurrentCity("深圳");
 		map.setMapStyle({styleJson: mapDefine });
 		
+		 // 添加定位控件
+  var geolocationControl = new BMap.GeolocationControl({offset:new BMap.Size(16,71)});
+  geolocationControl.addEventListener("locationSuccess", function(e){
+    // 定位成功事件
+    var address = '';
+    address += e.addressComponent.province;
+    address += e.addressComponent.city;
+    address += e.addressComponent.district;
+    address += e.addressComponent.street;
+    address += e.addressComponent.streetNumber;
+    alert("当前定位地址为：" + address);
+    if( typeof _this.handler === 'function' ){//console.log("点击下来选项");
+					_this.handler(address,e.addressComponent.city );
+			    }
+  });
+  geolocationControl.addEventListener("locationError",function(e){
+    // 定位失败事件
+    alert(e.message);
+  });
+  map.addControl(geolocationControl);
+		
+		
+		
+		
 		_this.map = map;
 		//map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
 		var longitude =  localStorage.getItem('longitude');
