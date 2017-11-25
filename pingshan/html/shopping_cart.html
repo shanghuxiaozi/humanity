@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的购物车</title>
+    <link rel="stylesheet" type="text/css" href="../plusIn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <!--[if IE]>
+    <link rel="stylesheet" href="../css/ieCss.css">
+    <![endif]-->
+</head>
+<body>
+
+    <header class="head-cart">
+        <div class="common-1200 clearfix">
+            <div class="pull-left">
+                <img src="../images/cart_logo.png" class="">
+                <b class="cart-title">我的购物车</b>
+            </div>
+            <div class="pull-right">
+                <span class="account">12345678</span>
+                <a href="javascript:void(0);" class="order">我的订单</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="common-1200 cart-table">
+
+                <table class="table">
+                    <thead>
+                        <tr class="text-center">
+                            <th width="80" class="thead-check">
+                                <input type="checkbox" name="cart-all" class="cart-check">
+                                <i class="check-span">全选</i>
+                            </th>
+                            <th width="500">商品名称</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>小计</th>
+                            <th width="60">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--购物列表-->
+                        <tr class="goods-list">
+                            <td class="tbody-check" width="80">
+                                <input type="checkbox" name="cart" class="cart-check">
+                                <i class="check-span"></i>
+                            </td>
+                            <td width="500">
+                                <span class="pro-img-box pull-left">
+                                    <img src="../images/tabel-img.png" class="img">
+                                </span>
+                                <p class="pro-name pull-left">邦健心电机  白色</p>
+                            </td>
+                            <td class="table-price text-center"><b>1200</b>元</td>
+                            <td class="text-center">
+                                <div class="cart-oper clearfix">
+                                    <span class="oper pull-left">-</span>
+                                    <span class="num pull-left">1</span>
+                                    <span class="oper pull-left">+</span>
+                                </div>
+                            </td>
+                            <td class="table-list-price text-center">
+                                <b>1299</b>元
+                            </td>
+                            <td class="text-center"><a href="javascript:void(0);" class="td-delete glyphicon glyphicon-remove"></a></td>
+                        </tr>
+                        <!--赠送的礼品-->
+                        <tr class="gift-tr">
+                            <td class="tbody-check" width="120">
+                            </td>
+                            <td colspan="5" class="gift-td">
+                                <i class="gift-triangle"></i>
+                                <div class="giveaway clearfix">
+                                    <span class="giveaway-img pull-left">
+                                        <img src="../images/detial-img1.png" class="img-responsive">
+                                    </span>
+                                    <span class="giveaway-name pull-left">
+                                        <b class="gift-tic">赠品</b>
+                                        <p class="gift-text">米粉卡日租卡</p>
+                                    </span>
+                                    <span class="pull-left gift-num">
+                                        1
+                                    </span>
+                                </div>
+
+                            </td>
+                        </tr>
+
+                        <!--保险-->
+                        <tr class="insurance-tr">
+                            <td class="tbody-check" width="120">
+                            </td>
+                            <td colspan="5" class="insurance-td">
+                                <div class="insurance-div">
+                                    <img src="../images/insurance_add.png">
+                                    <b>心电机意外保险 249元</b>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+
+
+                </table>
+                <div class="table-foot clearfix">
+                    <div class="pull-left">
+                        <a href="javascript:void(0);" class="foot-l foot-l-a">继续购物</a>
+                        <span class="foot-l">共</span>
+                        <span class="foot-l foot-l-num">2</span>
+                        <span class="foot-l">件商品，已选择</span>
+                        <span class="foot-l foot-l-num">2</span>
+                        <span class="foot-l">件</span>
+                    </div>
+                    <div class="pull-right">
+                        <span class="foot-r-text">合计：</span>
+                        <span class="foot-r-num">2599</span>
+                        <span class="foot-r-text">元</span>
+                        <a href="javascript:void(0);" class="foot-r-a btn">去结算</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--底部-->
+    <!--底部-->
+    <footer class="foot">
+        <div class="foot-border">
+            <div class="common-1200 foot-common1">
+                <ul class="list-inline foot-list1">
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper">
+                            <img src="../images/icon_oper1.png" class="icon-oper-img">预约维修服务</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper2">
+                            <img src="../images/icon_oper2.png" class="icon-oper-img">7天无理由换货</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper3">
+                            <img src="../images/icon_oper3.png" class="icon-oper-img">15天免费换货</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper4">
+                            <img src="../images/icon_oper4.png" class="icon-oper-img">满150元包邮</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper5">
+                            <img src="../images/icon_oper5.png" class="icon-oper-img">520余家售后网点</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="foot-more-oper">
+            <div class="common-1200 clearfix">
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">关于公司</a></p>
+					<p class="text"><a href="javascript:void(0);">邦健简介</a></p>
+					<p class="text" ><a href="javascript:void(0);">大事记</a></p>
+					<p class="text"><a href="javascript:void(0);">企业文化</a></p>
+					<p class="text"><a href="javascript:void(0);">企业荣誉</a></p>
+
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">联系我们</a></p>
+					<p class="text"><a href="javascript:void(0);">联系方式</a></p>
+					<p class="text" ><a href="javascript:void(0);">在线反馈</a></p>
+					<p class="text"><a href="javascript:void(0);">人才招聘</a></p>
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">服务中心</a></p>
+					<p class="text"><a href="javascript:void(0);">技术支持</a></p>
+					<p class="text" ><a href="javascript:void(0);">产品维护</a></p>
+					<p class="text"><a href="javascript:void(0);">售后服务</a></p>
+					<p class="text"><a href="javascript:void(0);">学术文章</a></p>
+
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">友情链接</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香园</a></p>
+					<p class="text" ><a href="javascript:void(0);">医生时间</a></p>
+					<p class="text"><a href="javascript:void(0);">轻盈医学</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香医生</a></p>
+
+				</span>
+                </div>
+            </div>
+            <div class="common-1200 text-center">
+                <p class="foot-copy">Copyright &copy; 2007-2014 深圳邦健生物医疗设备股份有限公司</p>
+            </div>
+        </div>
+
+
+    </footer>
+</body>
+</html>

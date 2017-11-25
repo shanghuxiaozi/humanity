@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>加入购物车</title>
+    <link rel="stylesheet" type="text/css" href="../plusIn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style rel="stylesheet">
+    </style>
+    <!--[if IE]>
+    <link rel="stylesheet" href="../css/ieCss.css">
+    <![endif]-->
+    <style type="text/css" rel="stylesheet">
+		.head-suspend{background-color: #fff;
+    z-index: 999;position: fixed;width: 100%;height: 60px;left: 0;top: 0;box-shadow: 1px 1px 5px 2px #ececec;margin-top: -70px;transition: margin-top .3s linear;}
+		.head-suspend.fixH{margin-top: 0;}
+		.detail-left.fixH{position: fixed;z-index: 2;top: 0;}
+	</style>
+</head>
+<body>
+    <header class="head-index">
+        <div class="head-1">
+            <div class="common-1200 clearfix head-middle">
+                <div class="pull-left">
+                    <ul class="list-inline">
+                        <li class="head-left"><a href="javascript:void(0);" class="">您好，<b>请登录</b></a></li>
+                        <li class="head-left"><a href="javascript:void(0);">免费注册</a></li>
+                    </ul>
+                </div>
+                <div class="pull-right">
+                    <ul class="list-inline list head-ul-right">
+                        <!--当用户已登录，个人中心改成用户的账号-->
+                        <li><a href="javascript:void(0);" class="head-right">个人中心</a></li>
+                        <li><a href="javascript:void(0);" class="head-right"><img src="../images/icon_card.png" class="head-card"/>我的订单</a></li>
+                        <li><a href="javascript:void(0);" class="head-right">手机安心</a></li>
+                        <li><a href="javascript:void(0);" class="head-right">联系我们</a></li>
+                        <li><a href="javascript:void(0);" class="head-right">English</a></li>
+                        <li class="language"><a href="javascript:void(0);" class="head-right"><b>中文</b></a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="head-2">
+            <div class="common-1200 clearfix head-middle">
+                <div class="pull-left">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="javascript:void(0);" class="head-left">
+                                <img src="../images/logo.png">
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="javascript:void(0);" class="head-left">产品中心</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="head-left">解决方案</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="head-left">安心学院</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="head-left">安心社区</a>
+                        </li>
+
+
+                    </ul>
+                </div>
+                <div class="pull-right">
+                    <div class="search-box search-introduce">
+                        <input type="text" class="form-control search-input" placeholder="请输入关键词例如：心电仪">
+                        <span class="search-icon"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="head-3 head-3-detail" id="head-3">
+            <div class="common-1200 clearfix">
+                <div class="pull-left">
+                    <p class="name">iM 12 多参数监护仪</p>
+                </div>
+                <div class="pull-right clearfix">
+                    <ul class="list-inline pull-right head-3-inline">
+                        <li>
+                            <a href="javascript:void(0);">概述</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">设计与安装</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">原理</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">诊断教学</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">参数</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">技术与支持</a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+	<!-- 悬浮的头部 -->
+
+	<div class="head-index head-suspend">
+	    <div class="head-3 head-3-detail" id="head-3">
+	        <div class="common-1200 clearfix">
+	            <div class="pull-left">
+	                <p class="name">iM 12 多参数监护仪</p>
+	            </div>
+	            <div class="pull-right clearfix">
+	                <ul class="list-inline pull-right head-3-inline">
+	                    <li>
+	                        <a href="javascript:void(0);">概述</a>
+	                    </li>
+	                    <li>
+	                        <a href="javascript:void(0);">设计与安装</a>
+	                    </li>
+	                    <li>
+	                        <a href="javascript:void(0);">原理</a>
+	                    </li>
+	                    <li>
+	                        <a href="javascript:void(0);">诊断教学</a>
+	                    </li>
+	                    <li>
+	                        <a href="javascript:void(0);">参数</a>
+	                    </li>
+	                    <li>
+	                        <a href="javascript:void(0);">技术与支持</a>
+	                    </li>
+
+	                </ul>
+	            </div>
+	        </div>
+    </div>
+	</div>
+
+
+    <div class="container-fluid">
+        <div class="row detail-parameter">
+            <div class="clearfix common-1200" id="j-box" style="position: relative;">
+                <!--左边的图片-->
+                <div class="pull-left detail-left" id="J_img">
+                    <span>
+                        <img src="../images/detial-img1.png" class="img-responsive">
+                    </span>
+                </div>
+                <!--右边的内容-->
+                <div class="pull-right detail-right">
+                    <h4 class="title">邦健心电机</h4>
+                    <p><b class="subtitle1">【11.11钜惠：直降300，赠米粉卡（最高含100元话费），享小米分期3/6/12期免息，买赠小米枪战188元礼包
+                        （购机后可在小米商城App消息通知中领取您的礼包）】</b>
+                        <b class="subtitle2">邦健心电机型号: PC-9000B，给你健康安全</b>
+                    </p>
+                    <p class="price"><b>1299</b>元</p>
+                    <div class="detail-addr-box">
+                        <span class="addr-icon"></span>
+                        <span class="addr-text">北京 北京市 东城区 永定门外道</span>
+                        <a href="javascript:void(0);" class="addr-update">修改</a>
+                        <!--有货-->
+                        <p class="has-status has-y">有现货</p>
+                        <!--无货-->
+                        <p class="has-status has-n">无货</p>
+                    </div>
+
+                    <!--选择版本-->
+                    <div class="detail-version">
+                        <p class="title">选择版本</p>
+                        <div class="ver-boxs">
+                            <div class="ver-item">
+                                <input type="radio" id="version1" class="ver-radio" name="version">
+                                <label class="ver-label text-center" for="version1">
+                                    <b class="col1">蓝牙版</b>
+                                    <b class="col2">2400</b><b class="col2">元</b>
+                                </label>
+                            </div>
+                            <div class="ver-item">
+                                <input type="radio" id="version2" class="ver-radio" name="version">
+                                <label class="ver-label text-center" for="version2">
+                                    <b class="col1">蓝牙版</b>
+                                    <b class="col2">2400</b><b class="col2">元</b>
+                                </label>
+                            </div>
+                            <div class="ver-item">
+                                <input type="radio" id="version3" class="ver-radio" name="version">
+                                <label class="ver-label text-center" for="version3">
+                                    <b class="col1">蓝牙版</b>
+                                    <b class="col2">2400</b><b class="col2">元</b>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--选择颜色-->
+                    <div class="detail-version">
+                        <p class="title">选择颜色</p>
+                        <div class="ver-boxs">
+                            <div class="ver-item">
+                                <input type="radio" id="color1" class="ver-radio" name="colors">
+                                <label class="ver-label text-center" for="color1">
+                                    <b class="col-circle"></b>
+                                    <b class="col3">白色</b>
+                                </label>
+                            </div>
+                            <div class="ver-item">
+                                <input type="radio" id="color2" class="ver-radio" name="colors">
+                                <label class="ver-label text-center" for="color2">
+                                    <b class="col-circle "></b>
+                                    <b class="col3">黑色</b>
+                                </label>
+                            </div>
+                            <div class="ver-item">
+                                <input type="radio" id="color3" class="ver-radio" name="colors">
+                                <label class="ver-label text-center" for="color3">
+                                    <b class="col-circle "></b>
+                                    <b class="col3">红色</b>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!--选择服务-->
+                    <div class="detail-service">
+                        <div class="clearfix">
+                            <p class="title pull-left">选择安心网在吸纳诊断咨询服务</p>
+                            <a href="javascript:void(0);" class="pull-right service-link">了解在线诊断服务</a>
+                        </div>
+
+                        <div class="ser-box">
+                            <div class="ser-item">
+                                <label class="ser-label clearfix">
+
+                                    <input type="checkbox" name="service" class="ser-check">
+                                    <i class="ser-type pull-left"></i>
+                                    <span class="pull-left bao-img-box">
+                                        <img src="../images/bao1.png">
+                                    </span>
+                                    <span class="pull-right ser-detail">
+                                        <span>
+                                            <p class="tab1">心电在线监测服务</p>
+                                            <p class="tab2">实时在线，智能助诊，意外紧急求助</p>
+                                            <p class="ser-price"><b>249</b>元</p>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="ser-item">
+                                <label class="ser-label clearfix">
+
+                                    <input type="checkbox" name="service" class="ser-check">
+                                    <i class="ser-type pull-left"></i>
+                                    <span class="pull-left bao-img-box">
+                                        <img src="../images/bao1.png">
+                                    </span>
+                                    <span class="pull-right ser-detail">
+                                        <span>
+                                            <p class="tab1">心电在线监测服务</p>
+                                            <p class="tab2">实时在线，智能助诊，意外紧急求助</p>
+                                            <p class="ser-price"><b>249</b>元</p>
+                                        </span>
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--统计总计-->
+                    <div class="ser-count">
+                        <div class="clearfix ser-model">
+                            <p class="pull-left ser-model-name">邦健心电机，型号: PC-9000B</p>
+                            <p class="pull-right ser-model-num">
+                                <b>1200</b>
+                                <b>元</b>
+                                <del>1899</del>
+                                <del>元</del>
+                            </p>
+                        </div>
+                        <p class="ser-all">
+                            总计：<b>1299</b>元
+                        </p>
+
+                    </div>
+
+                    <!--加入购物车-->
+                    <div class="add-card">
+                        <a href="javascript:void(0);" class="btn">加入购物车</a>
+                    </div>
+
+                    <!--支持无理由退款-->
+                    <div class="ser-refunds">
+                        <ul class="list-inline">
+                            <li>支持7天无理由退货</li>
+                            <li>支持7天无理由退货</li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="common-1200 detail-imgs">
+                <img src="../images/detial-img2.png" class="img-responsive">
+            </div>
+        </div>
+    </div>
+
+
+    <!--底部-->
+    <!--底部-->
+    <footer class="foot">
+        <div class="foot-border">
+            <div class="common-1200 foot-common1">
+                <ul class="list-inline foot-list1">
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper">
+                            <img src="../images/icon_oper1.png" class="icon-oper-img">预约维修服务</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper2">
+                            <img src="../images/icon_oper2.png" class="icon-oper-img">7天无理由换货</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper3">
+                            <img src="../images/icon_oper3.png" class="icon-oper-img">15天免费换货</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper4">
+                            <img src="../images/icon_oper4.png" class="icon-oper-img">满150元包邮</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper5">
+                            <img src="../images/icon_oper5.png" class="icon-oper-img">520余家售后网点</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="foot-more-oper">
+            <div class="common-1200 clearfix">
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">关于公司</a></p>
+					<p class="text"><a href="javascript:void(0);">邦健简介</a></p>
+					<p class="text" ><a href="javascript:void(0);">大事记</a></p>
+					<p class="text"><a href="javascript:void(0);">企业文化</a></p>
+					<p class="text"><a href="javascript:void(0);">企业荣誉</a></p>
+
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">联系我们</a></p>
+					<p class="text"><a href="javascript:void(0);">联系方式</a></p>
+					<p class="text" ><a href="javascript:void(0);">在线反馈</a></p>
+					<p class="text"><a href="javascript:void(0);">人才招聘</a></p>
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">服务中心</a></p>
+					<p class="text"><a href="javascript:void(0);">技术支持</a></p>
+					<p class="text" ><a href="javascript:void(0);">产品维护</a></p>
+					<p class="text"><a href="javascript:void(0);">售后服务</a></p>
+					<p class="text"><a href="javascript:void(0);">学术文章</a></p>
+
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">友情链接</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香园</a></p>
+					<p class="text" ><a href="javascript:void(0);">医生时间</a></p>
+					<p class="text"><a href="javascript:void(0);">轻盈医学</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香医生</a></p>
+
+				</span>
+                </div>
+            </div>
+            <div class="common-1200 text-center">
+                <p class="foot-copy">Copyright &copy; 2007-2014 深圳邦健生物医疗设备股份有限公司</p>
+            </div>
+        </div>
+
+
+    </footer>
+    <script src="../plusIn/bootstrap-3.3.7-dist/js/jquery-1.9.1.min.js"></script>
+    <script>
+
+           	var JimgLeft = $("#J_img").offset().left;
+           	var JimgTop = $("#J_img").offset().top;
+       		$("#J_img").css({'left':JimgLeft,'marginTop':0})
+
+
+        $(window).scroll(function () {
+            var Head3T = $(".head-index").height();
+            var docScroll = $(window).scrollTop();
+
+
+
+           	if(docScroll >= Head3T){
+       			$(".head-suspend").addClass('fixH');
+
+           	}
+           	else{
+           		$(".head-suspend").removeClass('fixH');
+           	}
+
+           	var windowH = $(window).height();
+           	var rigthH = $(".detail-right").height();
+           	var jBox = $("#j-box").height();
+
+           	if(docScroll >= Head3T && docScroll< (jBox+Head3T)-windowH){
+       			$("#J_img").addClass('fixH');
+   				$("#J_img").css({'marginTop':0});
+           	}
+           	else if(docScroll < Head3T){
+           		$("#J_img").removeClass('fixH');
+           		$("#J_img").css({'marginTop':0});
+           	}
+           	else{
+           		$("#J_img").removeClass('fixH');
+           		$("#J_img").css({'marginTop':rigthH-windowH});
+           	}
+
+
+
+
+
+
+
+        })
+
+    </script>
+
+</body>
+</html>

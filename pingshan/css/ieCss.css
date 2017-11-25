@@ -1,0 +1,12 @@
+.detail-left{display: block;}
+.detail-left > span{display: inline;}
+.foot-list1 li{width: 19%;}
+
+.pay-span img{width: 100%;height: 100%;}
+
+.head-1{background-color: #333333;}
+
+/*.modal-dialog{margin-top: 100px;}*/
+
+.index-content-class .index-class-list{display: block;}
+.index-content-class .index-class-list li{width: 14.2%;float: left;}

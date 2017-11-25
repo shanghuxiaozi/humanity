@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>支付</title>
+    <link rel="stylesheet" type="text/css" href="../plusIn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <!--[if IE]>
+    <link rel="stylesheet" href="../css/ieCss.css">
+    <![endif]-->
+</head>
+<body>
+
+    <header class="head-cart">
+        <div class="common-1200 clearfix">
+            <div class="pull-left">
+                <img src="../images/cart_logo.png" class="">
+                <b class="cart-title">我的购物车</b>
+            </div>
+            <div class="pull-right">
+                <span class="account">12345678</span>
+                <a href="javascript:void(0);" class="order">我的订单</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="common-1200 pay-box">
+                <div class="pay-top">
+                    <div class="pay-success clearfix">
+                        <img src="../images/pay-success.png" class="pull-left">
+                        <div class="pay-success-right clearfix">
+                            <div class="clearfix col-xs-12 s-div1">
+                                <div class="pull-left success-msg">订单提交成功！去付款咯~</div>
+                                <div class="pull-right">
+                                    <span class="success-small">应付总额：</span>
+                                    <span class="success-large">1999.00</span>
+                                    <span class="success-small color-yellow">元</span>
+                                </div>
+                            </div>
+                            <div class="clearfix col-xs-12 s-div2">
+
+                                <div class="pull-left success-time">
+                                    签收须知：请您与快递一起当面拆箱通电验货
+                                </div>
+                                <div class="pull-right">
+                                    <a href="javascript:void(0);" class="success-link" id="link_detail">订单详情</a>
+                                </div>
+                                <p class="success-time col-xs-12">请在&nbsp;<b>2小时0分</b>&nbsp;内完成支付，超时后将取消订单</p>
+                                <p class="success-time col-xs-12" id="success-profile">收货信息：<i>张三</i> <i>138****12134</i> <i>广东</i> <i>深圳市</i> <i>宝安区</i> <i>西乡街道 汇潮大厦1308</i></p>
+                            </div>
+                            <div class="col-xs-12 success-detail" id="success-detail">
+                                <p><b class="tab">订单号：</b><b>2456841545</b></p>
+                                <p><b class="tab">收货信息：</b><b>张三 158****1848 广东 深圳市 宝安区 西乡街道 汇潮大厦1308</b></p>
+                                <p><b class="tab">商品名称：</b><b>邦健心电仪</b></p>
+                                <p><b class="tab">发票信息：</b><b>电子发票个人</b></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pay-bottom">
+                    <p class="ways-title">选择以下支付方式付款</p>
+                    <div class="pay-ways">
+                        <p class="title">支付平台</p>
+                        <div class="ways-box clearfix">
+                            <span class="pay-span pull-left" onclick="webChat()">
+                                <img src="../images/pay_weixin.png" class="img-responsive">
+                            </span>
+                            <span class="pay-span pull-left">
+                                <img src="../images/pay_zhifubao.png" class="img-responsive">
+                            </span>
+                            <span class="pay-span pull-left" onclick="creditPay()">
+                                <img src="../images/pay_shexiao.png" class="img-responsive">
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="pay-prompt">
+                        <p class="pro-text">微信支付：工行信用卡支付满10元，享最高立减99元</p>
+                        <div class="clearfix">
+                            <p class="pull-left pro-text pro-text2">
+                                支付宝：支付宝扫码支付，赢1999元红包
+                            </p>
+                            <a href="javascript:void(0);" class="pull-right pro-text">
+                                了解更多&gt;
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!--底部-->
+    <!--底部-->
+    <footer class="foot">
+        <div class="foot-border">
+            <div class="common-1200 foot-common1">
+                <ul class="list-inline foot-list1">
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper">
+                            <img src="../images/icon_oper1.png" class="icon-oper-img">预约维修服务</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper2">
+                            <img src="../images/icon_oper2.png" class="icon-oper-img">7天无理由换货</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper3">
+                            <img src="../images/icon_oper3.png" class="icon-oper-img">15天免费换货</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper4">
+                            <img src="../images/icon_oper4.png" class="icon-oper-img">满150元包邮</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="icon-oper icon-oper5">
+                            <img src="../images/icon_oper5.png" class="icon-oper-img">520余家售后网点</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="foot-more-oper">
+            <div class="common-1200 clearfix">
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">关于公司</a></p>
+					<p class="text"><a href="javascript:void(0);">邦健简介</a></p>
+					<p class="text" ><a href="javascript:void(0);">大事记</a></p>
+					<p class="text"><a href="javascript:void(0);">企业文化</a></p>
+					<p class="text"><a href="javascript:void(0);">企业荣誉</a></p>
+
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">联系我们</a></p>
+					<p class="text"><a href="javascript:void(0);">联系方式</a></p>
+					<p class="text" ><a href="javascript:void(0);">在线反馈</a></p>
+					<p class="text"><a href="javascript:void(0);">人才招聘</a></p>
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">服务中心</a></p>
+					<p class="text"><a href="javascript:void(0);">技术支持</a></p>
+					<p class="text" ><a href="javascript:void(0);">产品维护</a></p>
+					<p class="text"><a href="javascript:void(0);">售后服务</a></p>
+					<p class="text"><a href="javascript:void(0);">学术文章</a></p>
+
+				</span>
+                </div>
+                <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">友情链接</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香园</a></p>
+					<p class="text" ><a href="javascript:void(0);">医生时间</a></p>
+					<p class="text"><a href="javascript:void(0);">轻盈医学</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香医生</a></p>
+
+				</span>
+                </div>
+            </div>
+            <div class="common-1200 text-center">
+                <p class="foot-copy">Copyright &copy; 2007-2014 深圳邦健生物医疗设备股份有限公司</p>
+            </div>
+        </div>
+
+
+    </footer>
+
+
+
+    <!-- 微信支付 -->
+    <div class="modal fade webChatModel" id="webChatModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        微信支付
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="code-box text-center">
+                        <img src="../images/code.png" class="img-responsive center-block">
+                    </div>
+                    <div class="code-text text-center">
+                        <p class="">请使用<b class="color-yellow">微信</b>扫一扫</p>
+                        <p>二维码完成支付</p>
+                    </div>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!--正在支付-->
+    <div class="modal fade paySuccessModel" id="paySuccessModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="paySuccessLabel">
+                        正在支付...
+                    </h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="pull-left rocket">
+                        <img src="../images/pay_now.png" class="img-responsive center-block">
+                    </div>
+                    <div class="pull-left list-type">
+                        <span>
+                            <p class="big">支付成功了</p>
+                            <a href="javascript:void(0);" class="small">立即查看订单详情&gt;</a>
+                            <hr />
+                            <p class="big">如果支付失败</p>
+                            <a href="javascript:void(0);" class="small">查看支付常见问题&gt;</a>
+                        </span>
+                    </div>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!--审核-->
+    <div class="modal fade auditModel" id="auditModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="auditLabel">
+                        等待审核...
+                    </h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="pull-left rocket">
+                        <img src="../images/audit_img.png" class="img-responsive center-block">
+                    </div>
+                    <div class="pull-left list-type">
+                        <span>
+                            <p class="msg1">审核成功即发货</p>
+                            <p class="msg2">审核失败关闭订单</p>
+                        </span>
+                    </div>
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!--赊销支付-->
+    <div class="modal fade creditModel" id="creditModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="creditLabel">
+                        赊销收银台
+                    </h4>
+                </div>
+                <div class="modal-body clearfix">
+                    <div class="col-xs-12 credit-info">
+                        确认使用赊销支付吗？
+                    </div>
+                
+                    <p class="col-xs-12 credit-info">
+                        使用赊销，需要后台人员进行审核。
+                    </p>
+
+                    <div class="col-xs-12 credit-btns">
+                        <a href="javascript:void(0);" class="btn credit-btn bg-yellow">确认支付</a>
+                        <a href="javascript:void(0);" class="btn credit-btn bg-gray">取消支付</a>
+                    </div>
+
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+
+
+
+
+
+
+    <script src="../plusIn/bootstrap-3.3.7-dist/js/jquery-1.9.1.min.js"></script>
+    <script src="../plusIn/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+    <script>
+        function  webChat() {
+            $("#webChatModel").modal('show');
+        }
+        //正在支付
+       // $("#paySuccessModel").modal('show');
+        //正在审核
+        //$("#auditModel").modal('show');
+
+        //赊销支付
+        function creditPay() {
+            $("#creditModel").modal('show');
+
+        }
+
+        $("#link_detail").click(function () {
+            if($("#success-detail").css('display') === 'none'){
+                $(".success-detail").slideDown();
+                $("#success-profile").slideUp();
+            }
+            else{
+                $(".success-detail").slideUp();
+                $("#success-profile").slideDown();
+            }
+        })
+
+
+
+
+    </script>
+</body>
+</html>
