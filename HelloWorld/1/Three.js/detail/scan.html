@@ -4,8 +4,6 @@
 	<title>扫一扫</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<link rel="stylesheet" type="text/css" href="style/mui.min.css">
-	<link rel="stylesheet" type="text/css" href="style/common.css">
 	<style>
 		#bcid {
 				  background: #F1FAF1;
@@ -23,7 +21,24 @@
   				z-index: 99999999999;
   				display: none;
 			}
+		#blachground{
+		  position: absolute;
+		  left: 0px;
+		  top: 0px;
+		  width: 100%;
+		  height: 100%;
+		  background-color: black;
+		
+	}
+	body{
+			height: 100%;
+			width: 100%;
+			background-color: black;
+		}
 	</style>
+	<link rel="stylesheet" type="text/css" href="style/mui.min.css">
+	<link rel="stylesheet" type="text/css" href="style/common.css">
+	
 </head>
 <body>
 	<script src="../js/scan/scan.js"></script>
@@ -33,8 +48,13 @@
 	document.addEventListener( "plusready", onPlusReady, false );
 	// 二维码,扩展API加载完毕后调用onPlusReady回调函数 
 	var scan = null;
+	var isback = false;
 	// 扩展API加载完毕，现在可以正常调用扩展API 
 	function onPlusReady() {
+//		plus.key.addEventListener("backbutton",function(){
+//		
+//			isback = true;
+//		},false);
 		console.log("plusready");
 		scan = new Scan();
 		$('#bcid').hide();
@@ -89,16 +109,31 @@
 </footer>
 <button type="button" id="closeBtn" class="mui-btn mui-btn-danger btn-close">取消扫描</button>
 <div id= "bcid"></div>
+<div id="blachground"></div>
 <script src="../js/mui/mui.js"></script>
 <script src="../hello-mui/js/jquery-2.1.0.js"></script>
 <script src="../mobile/layer.js"></script>
 
 <script>
 	mui.init();
+var _back = mui.back;
+
+mui.back=function(){
+	if(isback){
+		alert( "关闭" );
+		isback = false;
+	}else{
+		_back();
+	}
+}
+mui.ready(function(){
+	
+})
+
 	mui.toast('正在调用摄像头')
 	var result = document.getElementById('demo_result');
 	var imageC = document.getElementById('imageC');
-	
+	var blachground = document.getElementById('blachground');
 	
 	$('#toNativeBtn')[0].addEventListener('tap',function(){
 		mui.openWindow('native.html');
@@ -116,7 +151,8 @@ function captureImage(){
 			///storage/emulated/0/Android/data/io.dcloud.H58A84A3C/apps/H58A84A3C/doc/1503395201551.jpg
 			//var file = new File(path,"image/png");
 			//file.path = path;
-			 plus.io.resolveLocalFileSystemURL(e, function(entry) { 
+			 plus.io.resolveLocalFileSystemURL(e, function(entry) {
+			 	blachground.style.display = 'none';
                 var path = entry.toLocalURL(); 
                // mui.toast("读取拍照文件：" + path); 
                 mui.toast("读取拍照文件...");
@@ -157,6 +193,7 @@ function captureImage(){
                 
                 //就是这里www.bcty365.com 
             }, function(e) { 
+            	blachground.style.display = 'none';
                 mui.toast("读取拍照文件错误：" + e.message); 
             }); 
            
@@ -211,6 +248,8 @@ function captureImage(){
 		},
 		function( error ) {
 			//alert( "Capture image failed: " + error.message );
+			blachground.style.display = 'none';
+			
 			mui.toast('未拍取照片')
 		},
 		{resolution:res,format:fmt}

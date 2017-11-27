@@ -41,6 +41,7 @@ function main()
 	//  intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);//
 	//  App.startActivityForResult(intent,100);
 	var ioOptions = plus.android.importClass('java.io.IOException');
+	var InputStream = plus.android.importClass('java.io.InputStream');
 	
 	var activityInfo = plus.android.importClass('android.content.pm.ActivityInfo');
 	
@@ -65,6 +66,11 @@ function main()
 	var SurfaceTexture = plus.android.importClass('android.graphics.SurfaceTexture');
 	var WebView = plus.android.importClass('android.webkit.WebView');
 	var WebSettings = plus.android.importClass('android.webkit.WebSettings');
+	var _Window = plus.android.importClass('android.view.Window');
+	var BitmapFactory = plus.android.importClass("android.graphics.BitmapFactory");
+	var Bitmap = plus.android.importClass("android.graphics.Bitmap");
+	var ImageView = plus.android.importClass("android.widget.ImageView");
+	var URL = plus.android.importClass("java.net.URL");
 	//----创建另一个activity--------------------
 //	var Intent = plus.android.importClass("android.content.Intent");
 //	var ComponentName = plus.android.importClass("android.content.ComponentName");
@@ -84,12 +90,12 @@ function main()
 	//		console.log('bmp1.png load failed! '+JSON.stringify(e));
 	//	});
 	var main = plus.android.runtimeMainActivity();
-	var view =  new LinearLayout(main); 
-	//var view =  main.getWindow().getDecorView();
+//	var view =  new LinearLayout(main); 
+	var view =  main.getWindow().getDecorView();
 	
-	//alert('0-');
-		
-	//	
+	alert('0-');
+	 	
+	
 	
 		
 	//设置布局参数
@@ -97,26 +103,36 @@ function main()
 	var lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 	
 	//console.log(&quot;1010101010&quot;+lp);
-	//alert('1-');
-	view.setLayoutParams(lp);//设置布局参数
+	alert('1-');
+	//view.setLayoutParams(lp);//设置布局参数
 	
 	//console.log(&quot;2020202020&quot;);
 	
 	var surfaceview = new SurfaceView(main);
 	
 	//console.log(&quot;30303030&quot;+surfaceview);
-	//alert('2-');
+	alert('2-');
 	var linearParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); //取控件surfaceview当前的布局参数
 	
 	//alert("4040404004"+linearParams);
 	
 	view.addView(surfaceview,linearParams);
 	
-	main.setContentView(view);
+//	main.setContentView(view);
 	
-	//alert('3-');
+	alert('3-');
 	
 	
+	//设置图片
+	var url = new URL("http://120.25.221.94:8080/detail/images/takepic.png");
+	alert('4-');
+	var bitmap = BitmapFactory.decodeStream(url.openStream());
+	alert('5-');
+	//change view
+	var iv = new ImageView(main.getApplicationContext());
+	iv.setImageBitmap(bitmap);
+	view.addView(iv,linearParams)
+	alert('6-');
 	
 	var mediarecorder = new MediaRecorder();// 创建mediarecorder对象
 	
@@ -155,28 +171,28 @@ function main()
 	 setTimeout(function(){
 	 	//main.setContentView(null);
 	 	mCamera.stopPreview();
-	 	mCamera.release();  
-        mCamera = null;    
-        view.setVisibility(View.GONE);
+//	 	mCamera.release();  
+//      mCamera = null;    
+//      surfaceview.setVisibility(View.GONE);
 	 	
-	var webview = new WebView(main);
-	alert(1+webview.getSettings())
+//	var webview = new WebView(main);
+//	alert(1+webview.getSettings())
 	 //设置WebView属性，能够执行Javascript脚本  
-	 var  settings = webview.getSettings();
-        settings.setJavaScriptEnabled(true);  alert(2)
+//	 var  settings = webview.getSettings();
+//      settings.setJavaScriptEnabled(true);  alert(2)
         //加载需要显示的网页  
-        webview.loadUrl("http://120.25.221.94:8080/index"); 
+//      webview.loadUrl("http://120.25.221.94:8080/index"); 
        //   设置Web视图  
         
 //      var webview = plus.webview.create( "http://120.25.221.94:8080/index" );   
 //		webview.show();
-		main.setContentView(webview);
-		var views = new plus.nativeObj.View('test',{top:'200px',left:'0px',height:'50%',width:'100%'});
+//		main.setContentView(webview);
+		/*var views = new plus.nativeObj.View('test',{top:'200px',left:'0px',height:'50%',width:'100%'});
 		// 绘制矩形
 		views.drawRect("#FF0000", {top:'0px',left:'0px',width:'100%',height:'100%'});
 		
 		
-		views.show();
+		views.show();*/
 	alert(0)
 	 },6000);
 	 
