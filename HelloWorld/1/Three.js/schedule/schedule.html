@@ -146,7 +146,7 @@
 			
 			<!--<div id="overview"><img src="../images/schedule/dinwei.png" /> <p>赛程总览</p> </div>
 			<div id="notice"><img src="../images/schedule/remind.png"/>参与游戏赢取丰富礼品!</div>-->
-			<div id="introduction">之于</div>
+			<div id="introduction"></div>
 			<!--
             	作者：921233883@qq.com nohup node mycraft.js > sw.log 2>&1 &
 
@@ -307,6 +307,9 @@
 						resultPanel.style.display = "block";//由于此按钮与返回按钮处于同一层，当返回后会被触发因此需要延迟显示
 						resultPanel.style.pointerEvents = "auto";
 					},1500);
+					
+					document.querySelector('.BMap_geolocationContainer').style.display = "block";
+					
 					
 					backmap.style.display = "none";
 					activity_menu.style.display = "none";
@@ -701,19 +704,24 @@
 								localStorage.setItem('scenicSpotbyPOS',JSON.stringify(data))
 								if(data&& data.length>0){
 									var left_data = [];
-									if(zoom<=14){//当地图等级大于14时过滤图标
+									//if(zoom<=14){//当地图等级大于14时过滤图标
 										
 										for(var i=0,m=data.length;i<m;i++){
 											var item = data[i];
 											var isF = true;
 											for( var z = i+1;z<m-1;z++ ){
 												var citem = data[z];
-												if(zoom>12&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.2){
+												if(zoom>14&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.02){
 													//console.log(parseFloat(citem.longitude),parseFloat(item.longitude),parseFloat(citem.latitude),parseFloat(item.latitude));
 													isF = false;
 													break;
-												}if(zoom<=12&&zoom>=11&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.3){
+												}else
+												if(zoom<=14&&zoom>12&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.2){
 													//console.log(parseFloat(citem.longitude),parseFloat(item.longitude),parseFloat(citem.latitude),parseFloat(item.latitude));
+													isF = false;
+													break;
+												}else if(zoom<=12&&zoom>=11&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.3){
+													//console.log(parseFl+oat(citem.longitude),parseFloat(item.longitude),parseFloat(citem.latitude),parseFloat(item.latitude));
 													isF = false;
 													break;
 												}else if(zoom<11&&(Math.abs(parseFloat(citem.longitude)-parseFloat(item.longitude))+Math.abs(parseFloat(citem.latitude)-parseFloat(item.latitude)))<0.8){
@@ -727,7 +735,7 @@
 										}
 										
 										
-									}
+									//}
 									
 									
 									map.markList = [];
@@ -826,6 +834,7 @@
 											activity_menu.style.display = "block";
 											resultPanel.style.display = "none";
 											resultPanel.style.pointerEvents = "none";
+											document.querySelector('.BMap_geolocationContainer').style.display = "none";
 											spot.style.top = "28px";
 											currentCenter = map.map.getCenter();
 											map.isActivity = true;
