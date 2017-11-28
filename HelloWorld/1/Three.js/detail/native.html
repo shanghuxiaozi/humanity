@@ -70,7 +70,9 @@ function main()
 	var BitmapFactory = plus.android.importClass("android.graphics.BitmapFactory");
 	var Bitmap = plus.android.importClass("android.graphics.Bitmap");
 	var ImageView = plus.android.importClass("android.widget.ImageView");
-	var URL = plus.android.importClass("java.net.URL");
+	var Button = plus.android.importClass("android.widget.Button");
+	var Url = plus.android.importClass("java.net.URL");
+//	var AssetManager = plus.android.importClass("android.content.res.AssetManager");
 	//----创建另一个activity--------------------
 //	var Intent = plus.android.importClass("android.content.Intent");
 //	var ComponentName = plus.android.importClass("android.content.ComponentName");
@@ -123,15 +125,24 @@ function main()
 	alert('3-');
 	
 	
+//	var asset = main.getAssets();
+//	var path = "";
 	//设置图片
-	var url = new URL("http://120.25.221.94:8080/detail/images/takepic.png");
-	alert('4-');
-	var bitmap = BitmapFactory.decodeStream(url.openStream());
+	var urls = new Url("http://120.25.221.94:8080/detail/images/takepic.png");
+	
+	
+//	var inputstream = urls.openStream();
+//	alert('4-'+inputstream);
+//	var bitmap = BitmapFactory.decodeStream(inputstream);
+var bitmap = new plus.nativeObj.Bitmap("test","http://120.25.221.94:8080/detail/images/takepic.png");
 	alert('5-');
 	//change view
 	var iv = new ImageView(main.getApplicationContext());
 	iv.setImageBitmap(bitmap);
-	view.addView(iv,linearParams)
+	view.addView(iv,linearParams);
+//	var bt1 = new Button(main.getApplicationContext());
+//      bt1.setText("按钮1");
+//      view.addView(bt1,linearParams);
 	alert('6-');
 	
 	var mediarecorder = new MediaRecorder();// 创建mediarecorder对象

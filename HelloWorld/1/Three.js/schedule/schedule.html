@@ -179,6 +179,7 @@
 		<!--<script src="../hello-mui/js/jquery-2.1.0.js"></script>-->
 		<!--<script src="../js/mui/mui.jsonp.js"></script>-->
 			<script>
+				var _labels = [];//保存活动的label
 				var sprite = null;//点击图标显示button集合的精灵容器
 				var lengend = document.getElementById("legend");//canvas容器
 				var allmap = document.getElementById("allmap");
@@ -368,15 +369,15 @@
 							//alert('Webview closed!');
 							if(	localStorage.getItem('city_nme')!='over'){
 			        		if(localStorage.getItem('city_nme')!='lat'){
-					        			map.centerAndZoomByName(localStorage.getItem('city_nme'));
-					        			queryCityPosNow();
-					        			
-					        		}else{
-					        			map.centerAndZoomByName(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
-					        			queryCityPosNow();
-					        		}
-					        		
-					        		localStorage.setItem('city_nme','over');
+				        			map.centerAndZoomByName(localStorage.getItem('city_nme'));
+				        			queryCityPosNow();
+				        			
+				        		}else{
+				        			map.centerAndZoomByName(new BMap.Point(parseFloat(localStorage.getItem('city_lng')),parseFloat(localStorage.getItem('city_lat'))));
+				        			queryCityPosNow();
+				        		}
+				        		
+				        		localStorage.setItem('city_nme','over');
 					        }
 							webview=null;
 						}, false );
@@ -407,6 +408,30 @@
 	        			queryCityId(obj);
 	        			
 	        		});
+	        		
+	        		map.addEventListenActivity(function(){
+	        			for(var i = 0 , m = _labels.length ; i < m ; i++){
+	        				var labeler = _labels[i];
+	        				if(map.map.getZoom()>7){
+	        			 		labeler.setStyle({   
+								
+								        display:"block"
+								
+								    });
+		        			}else{
+		        				labeler.setStyle({   
+								
+								        display:"none"
+								
+								    });
+		        			}
+	        				
+	        			}
+	        			
+	        			
+	        			
+	        		});
+	        		
 	        		//setTimeout(function(){queryCityId('深圳市');},300);
 	        		var currentCityContent = document.getElementById("currentCityContent");
 				
@@ -934,7 +959,7 @@
 							dataType:'json',//服务器返回json格式数据
 							type:'get',//HTTP请求类型
 							success:function(data){
-								
+								_labels = [];
 								for( var i = 0 , m = data.length ; i < m ; i++ ){//景点必须保证只有一个
 									var item = data[i];
 									var lng = parseFloat(item.longitude);
@@ -979,6 +1004,7 @@
 											dataType:'json',//服务器返回json格式数据
 											type:'get',//HTTP请求类型
 											success:function(data){
+												
 												//设置景点对应图标
 												for( var i = 0 , m = data.length ; i < m ; i++ ){//景点必须保证只有一个
 													var item = data[i];
@@ -988,18 +1014,20 @@
 													
 													var opts = {
 														  position : new BMap.Point( lng , lat ),    // 指定文本标注所在的地理位置
-														  offset   : new BMap.Size(10, -30)    //设置文本偏移量
+														  offset   : new BMap.Size(-10, -30)    //设置文本偏移量
 														}
 														var label = new BMap.Label(item.title, opts);  // 创建文本标注对象
 															label.setStyle({
 																 color : "red",
 																 fontSize : "12px",
 																 height : "20px",
-																 lineHeight : "20px",
+//																 lineHeight : "20px",
+																 backgroundColor :"0.05",
+																 border :"0", 
 																 fontFamily:"微软雅黑"
 															 });
 														map.map.addOverlay(label);   
-													
+														_labels.push(label);
 													
 //													map.createMarkFromData(item);
 //													map.changeIconSize();

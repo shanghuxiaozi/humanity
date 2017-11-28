@@ -164,7 +164,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		 	if(_this.isActivity){
 		 		
 		 		
-		 		
+		 		_this.activityHandler();
 		 		
 		 		return;
 		 	}
@@ -195,7 +195,7 @@ Bookingmap.prototype.initBaiduMap=function(id){
 		  	
 		  	if(_this.isActivity){
 		 		
-		 		
+		 		_this.activityHandler();
 		 		
 		 		
 		 		return;
@@ -465,6 +465,12 @@ Bookingmap.prototype.addEventListenError=function(handler){
 	
 }
 
+/**当跳转到活动页面**/
+Bookingmap.prototype.addEventListenActivity=function(handler){
+	var _this = this;
+	_this.activityHandler = handler;
+	
+}
 /**重置中心点**/
 Bookingmap.prototype.panTo=function(p){
 	var _this = this;

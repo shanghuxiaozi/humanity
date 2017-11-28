@@ -115,7 +115,13 @@
 <script src="../mobile/layer.js"></script>
 
 <script>
-	mui.init();
+	mui.init(
+//		{
+//			keyEventBind: {
+//			backbutton: false,  //Boolean(默认true)关闭back按键监听
+//			menubutton: false   //Boolean(默认true)关闭menu按键监听
+//		}}
+		);
 var _back = mui.back;
 
 mui.back=function(){
