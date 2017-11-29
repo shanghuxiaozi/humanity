@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类型选择</title>
+    <link rel="stylesheet" type="text/css" href="../plusIn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <!--[if IE]>
+    <link rel="stylesheet" href="../css/ieCss.css">
+    <![endif]-->
+</head>
+<body>
+
+
+<!--头部-->
+<header class="head-register">
+    <div class="head-1">
+        <div class="common-1200 clearfix head-middle">
+            <div class="pull-left">
+                <ul class="list-inline">
+                    <li>
+                        <a href="javascript:void(0);" class="head-left">
+                            <img src="../images/logo.png">
+                        </a>
+                    </li>
+                    <li class="r-top">
+                        欢迎注册
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="pull-right">
+                <p class="r-has">已有账号？去<a href="../login/login.html" class="login-link color-yellow">登录</a></p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container-fluid">
+    <div class="row re-row">
+        <div class="common-1200 text-center">
+            <div class="re-type-box clearfix">
+                <h4 class="re-title text-left">请选择身份</h4>
+
+                <div class="item text-center pull-left">
+                    <input type="radio" class="user-type" value="1" name="usertype" id="type1">
+                    <label for="type1" class="re-label"></label>
+                    <img src="../images/register/icon-type1.png">
+                    <p class="name">个人用户</p>
+                </div>
+                <div class="item text-center pull-left">
+                    <input type="radio" class="user-type" value="2" name="usertype" id="type2">
+                    <label for="type2" class="re-label"></label>
+                    <img src="../images/register/icon-type2.png">
+                    <p class="name">医生用户</p>
+                </div>
+                <div class="item text-center pull-left">
+                    <input type="radio" class="user-type" value="3" name="usertype" id="type3">
+                    <label for="type3" class="re-label"></label>
+                    <img src="../images/register/icon-type3.png">
+                    <p class="name">医疗机构</p>
+                </div>
+                <div class="item text-center pull-left">
+                    <input type="radio" class="user-type" value="4" name="usertype" id="type4">
+                    <label for="type4" class="re-label"></label>
+                    <img src="../images/register/icon-type4.png">
+                    <p class="name">代理商</p>
+                </div>
+
+                <!--下一步-->
+                <div class="col-xs-12 r-next">
+                    <a href="javascript:void(0);" id="rType" class="btn">下一步</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--底部-->
+<footer class="foot">
+    <div class="foot-more-oper">
+        <div class="common-1200 clearfix">
+            <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">关于公司</a></p>
+					<p class="text"><a href="javascript:void(0);">邦健简介</a></p>
+					<p class="text" ><a href="javascript:void(0);">大事记</a></p>
+					<p class="text"><a href="javascript:void(0);">企业文化</a></p>
+					<p class="text"><a href="javascript:void(0);">企业荣誉</a></p>
+
+				</span>
+            </div>
+            <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">联系我们</a></p>
+					<p class="text"><a href="javascript:void(0);">联系方式</a></p>
+					<p class="text" ><a href="javascript:void(0);">在线反馈</a></p>
+					<p class="text"><a href="javascript:void(0);">人才招聘</a></p>
+				</span>
+            </div>
+            <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">服务中心</a></p>
+					<p class="text"><a href="javascript:void(0);">技术支持</a></p>
+					<p class="text" ><a href="javascript:void(0);">产品维护</a></p>
+					<p class="text"><a href="javascript:void(0);">售后服务</a></p>
+					<p class="text"><a href="javascript:void(0);">学术文章</a></p>
+
+				</span>
+            </div>
+            <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">友情链接</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香园</a></p>
+					<p class="text" ><a href="javascript:void(0);">医生时间</a></p>
+					<p class="text"><a href="javascript:void(0);">轻盈医学</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香医生</a></p>
+
+				</span>
+            </div>
+        </div>
+        <div class="common-1200 text-center">
+            <p class="foot-copy">Copyright &copy; 2007-2014 深圳邦健生物医疗设备股份有限公司</p>
+        </div>
+    </div>
+
+
+</footer>
+
+<script src="../js/jquery-2.1.0.js"></script>
+<script>
+
+$(document).ready(function () {
+    /** 控制按钮的颜色 **/
+    $("input[name='usertype']").click(function () {
+        var valRadio = $("input[name='usertype']:checked").val();
+        if(valRadio){
+            $("#rType").addClass('active');
+        }
+    })
+
+    $("#rType").click(function () {
+        if(!$(this).hasClass('active')){
+            alert('请选择你的身份!');
+            return;
+        }
+        var valRadio = $("input[name='usertype']:checked").val();
+        if(valRadio == 1){
+            window.location.href = './register_step1.html';
+        }
+        else{
+            /**用于标记用户选择的类型**/
+            localStorage.type_r = valRadio;
+            window.location.href = './register_step2.html';
+        }
+
+    })
+})
+
+</script>
+
+</body>
+</html>

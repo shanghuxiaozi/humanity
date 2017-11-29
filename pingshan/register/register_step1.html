@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="../plusIn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <!--[if IE]>
+    <link rel="stylesheet" href="../css/ieCss.css">
+    <![endif]-->
+</head>
+<body>
+
+<!--头部-->
+<header class="head-step">
+    <div class="head-1">
+        <div class="common-1000 clearfix">
+            <div class="pull-left">
+                <ul class="list-inline">
+                    <li>
+                        <a href="javascript:void(0);" class="head-left">
+                            <img src="../images/logo.png">
+                        </a>
+                    </li>
+                    <li class="r-top">
+                        欢迎注册
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="pull-right">
+                <p class="r-has">已有账号？去<a href="javascript:void(0);" class="login-link color-yellow">登录</a></p>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!--步骤指示-->
+        <div class="common-1000 text-center">
+            <div class="steps">
+                <div class="step active">
+                    <div class="step-head">
+                        <div class="step-line"></div>
+                        <div class="step-icon">
+                            1
+                        </div>
+                    </div>
+                    <div class="step-main">
+                        创建用户
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-head">
+                        <div class="step-line"></div>
+                        <div class="step-icon">
+                            2
+                        </div>
+                    </div>
+                    <div class="step-main">
+                        设置身份信息
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-head">
+                        <div class="step-icon">
+                            3
+                        </div>
+                    </div>
+                    <div class="step-main">
+                        注册成功
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- step1--协议 -->
+        <div id="r-step1" class="step-protocol step-common">
+            <div class="common-1000 text-center">
+                <div class="step-pro-box">
+
+                </div>
+
+                <div class="pro-btn">
+                    <a href="javascript:void(0);" id="step1Next" class="btn">同意协议</a>
+                </div>
+            </div>
+        </div>
+
+        <!--step1--手机号码-->
+        <div id="r-step2" class="step-phone step-common" style="display: none;">
+            <div class="common-1000 text-center">
+                <div class="form-horizontal form-phone text-left">
+                    <div class="form-group">
+                        <label class="p-label">手机号</label>
+                        <select class="form-controls w-160">
+                            <option value="">中国大陆 +86</option>
+                        </select>
+                        <input type="text" id="step1Phone" class="form-controls step1-input input-phone w-160" placeholder="请输入你的手机号码">
+                    </div>
+                    <div class="form-group">
+                        <label class="p-label">验证码</label>
+                        <input type="text" id="step1Code" class="form-controls step1-input w-158" placeholder="请输入验证码">
+                        <a href="javascript:void(0);" id="getCode" class="btn get-code">获取验证码</a>
+                    </div>
+
+                    <div class="form-group mt76 text-center">
+                        <!--可点击状态：active-->
+                        <a class="btn com-btn w-320" id="step2Next" href="javascript:void(0);">下一步</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- step1:普通用户验证 -->
+        <div id="r-step3" class="step-cer step-cer-s step-common" style="display: none;">
+            <div class="common-1000 text-center">
+                <div class="form-horizontal text-left">
+                    <div class="form-group">
+                        <label class="cer-label">个人信息</label>
+                        <!--预览信息-->
+                        <span class="load-reviews">
+                            <img src="../images/introduce1.png">
+                        </span>
+                        <span class="load-box">
+                            <input type="file" class="load-file">
+                            <img src="../images/register/load-img.png">
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="cer-label">昵称</label>
+                        <input type="text" class="cer-control w-300" placeholder="请输入昵称">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cer-label cer-label-intro">一句话介绍</label>
+                        <input type="text" maxlength="50" class="cer-control w-300" placeholder="请用一句话介绍自己">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cer-label">性别</label>
+                        <span class="sex-span">
+                            <input type="radio" class="sex-r" name="sex" id="male">
+                            <label class="sex-label" for="male">男</label>
+                        </span>
+                        <span class="sex-span">
+                            <input type="radio" class="sex-r" name="sex" id="female">
+                            <label class="sex-label" for="female">女</label>
+                        </span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cer-label">出生年月</label>
+                        <select id="year" class="cer-control w-118">
+                            <option value="">2017年</option>
+                        </select>
+                        <select id="month" class="cer-control w-118">
+                        </select>
+                        <select id="day" class="cer-control w-118">
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cer-label">邮箱</label>
+                        <input type="text" class="cer-control w-300" placeholder="请输入邮箱账号">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cer-label">设置密码</label>
+                        <input type="text" class="cer-control w-300" placeholder="请输入字母+数字8~12位密码">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cer-label">确认密码</label>
+                        <input type="text" class="cer-control w-300" placeholder="请再次输入字母+数字8~12位密码">
+                    </div>
+
+                    <div class="form-group mt76 text-center">
+                        <!--可点击状态：active-->
+                        <a class="btn com-btn w-320 active" id="step3Next" href="javascript:void(0);">下一步</a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--注册成功-->
+        <div id="r-step4" class="step-success step-common" style="display: none;">
+            <div class="common-1000">
+                <div class="text-center">
+                    <img src="../images/register/success.png">
+                    <p class="s-info">注册成功，还有&nbsp;<b id="step3Num">3</b>&nbsp;秒跳转</p>
+                    <a class="btn com-btn active w-128" href="javascript:void(0);">返回首页</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!--底部-->
+<footer class="foot" id="foot">
+    <div class="foot-more-oper">
+        <div class="common-1200 clearfix">
+            <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">关于公司</a></p>
+					<p class="text"><a href="javascript:void(0);">邦健简介</a></p>
+					<p class="text" ><a href="javascript:void(0);">大事记</a></p>
+					<p class="text"><a href="javascript:void(0);">企业文化</a></p>
+					<p class="text"><a href="javascript:void(0);">企业荣誉</a></p>
+
+				</span>
+            </div>
+            <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">联系我们</a></p>
+					<p class="text"><a href="javascript:void(0);">联系方式</a></p>
+					<p class="text" ><a href="javascript:void(0);">在线反馈</a></p>
+					<p class="text"><a href="javascript:void(0);">人才招聘</a></p>
+				</span>
+            </div>
+            <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">服务中心</a></p>
+					<p class="text"><a href="javascript:void(0);">技术支持</a></p>
+					<p class="text" ><a href="javascript:void(0);">产品维护</a></p>
+					<p class="text"><a href="javascript:void(0);">售后服务</a></p>
+					<p class="text"><a href="javascript:void(0);">学术文章</a></p>
+
+				</span>
+            </div>
+            <div class="col-xs-3 foot-list2">
+				<span>
+					<p class="title"><a href="javascript:void(0);">友情链接</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香园</a></p>
+					<p class="text" ><a href="javascript:void(0);">医生时间</a></p>
+					<p class="text"><a href="javascript:void(0);">轻盈医学</a></p>
+					<p class="text"><a href="javascript:void(0);">丁香医生</a></p>
+
+				</span>
+            </div>
+        </div>
+        <div class="common-1200 text-center">
+            <p class="foot-copy">Copyright &copy; 2007-2014 深圳邦健生物医疗设备股份有限公司</p>
+        </div>
+    </div>
+
+</footer>
+
+<script src="../js/jquery-2.1.0.js"></script>
+<script src="../js/common.js"></script>
+<script>
+    $(document).ready(function () {
+        resizeBottom();
+        function resizeBottom() {
+            //获取浏览器的高度，让body的最低高度为浏览器的高度
+            var winH = $(window).height();
+            var bodyH = $('body').height();
+            if(bodyH < winH){
+                $('body').css('min-height',winH);
+                $("#foot").addClass('foot-abs');
+            }
+            else{
+                $("#foot").removeClass('foot-abs');
+            }
+        }
+        
+        /*step1*/
+        $("#step1Next").click(function () {
+
+            $(".step-common").fadeOut();
+            $("#r-step2").fadeIn();
+            resizeBottom();
+        })
+
+        /*** 实时验证***/
+        $(".step1-input").bind('input porpertychange',function(){
+            var phone = $("#step1Phone").val().trim();
+            var code = $("#step1Code").val().trim();
+
+            if(/^1(3|4|5|7|8)\d{9}$/.test(phone) && code){
+                $("#step2Next").addClass('active');
+            }
+            else{
+                $("#step2Next").removeClass('active');
+            }
+        });
+
+        /* 时间倒数 */
+        $("#getCode").unbind('click');
+        $("#getCode").bind('click',getCode);
+        function getCode() {
+            var time;
+            var num = 10;
+            time = setInterval(function () {
+                if(num>0){
+                    num--;
+                    $("#getCode").text(num+'s');
+                    $("#getCode").unbind('click');
+                }
+                else{
+                    clearInterval(time);
+                    $("#getCode").text('重新获取');
+                    $("#getCode").bind('click',getCode);
+                }
+            },1000)
+        }
+        /****下一步***/
+        $("#step2Next").click(function () {
+            $(".step").removeClass('active');
+            $(".step:nth-child(2)").addClass('active');
+            $(".step-common").fadeOut();
+            $("#r-step3").fadeIn();
+            resizeBottom();
+        })
+
+        /* step2 身份信息*/
+
+        dateSelect($('#year'),$("#month"),$("#day"));
+
+
+
+        /* 下一步**/
+        $("#step3Next").click(function () {
+            $(".step").removeClass('active');
+            $(".step:nth-child(3)").addClass('active');
+            $(".step-common").fadeOut();
+            $("#r-step4").fadeIn();
+            backNum();
+            resizeBottom();
+        })
+
+        /***step3 成功***/
+        function backNum() {
+            var num = 3;
+            var timeS = setInterval(function () {
+                if(num>0){
+                    num--;
+                    $("#step3Num").text(num);
+                }
+                else {
+                    //页面跳转
+                    clearInterval(timeS);
+                }
+            },1000)
+        }
+
+
+
+    })
+</script>
+</body>
+</html>
