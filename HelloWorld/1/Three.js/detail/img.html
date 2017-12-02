@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script src="../hello-mui/js/jquery-2.1.0.js"></script>
+		<script src="../js/base64.js"></script>
+		<script>
+			var img = document.createElement('img'); 
+           // img.src = "shibie/1.jpg"//; "http://pic3.nipic.com/20090508/2444145_180525092_2.jpg"
+            img.onload =function() { 
+            	//alert("-"); 
+            	document.body.appendChild(img); 
+                var data = getBase64Image(img); 
+                
+                $.ajax({
+			    type: "POST",
+			    dataType:'json',
+			     contentType: false,
+			    url: "http://txcjsb.market.alicloudapi.com/image/scene",
+			    data:JSON.stringify({  
+				   type:1, //# 0: 通过url识别，参数image_url不为空；1: 通过图片content识别，参数content不为空
+				   //image_url:"http://pic23.photophoto.cn/20120530/0020033092420808_b.jpg",  //#输入图像URL
+				   "content":data //#图像内容，base64编码
+				}),
+			    success: function(data){
+			        console.log(data);
+			    },
+			    error:function(v){
+			    	console.log(v);
+			    },
+			    beforeSend: function(xhr){
+	//		       token = window.localStorage.getItem('token');
+			            xhr.setRequestHeader("Authorization", "APPCODE d3d17cb32ed343d4a8d540dc2eec0087");
+			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			    }});
+            }
+            function getBase64Image(img) {
+	            var canvas = document.createElement("canvas");
+	            canvas.width = img.width;
+	            canvas.height = img.height;
+	            var ctx = canvas.getContext("2d");
+	            ctx.drawImage(img, 0, 0, img.width, img.height);
+	            var dataURL = canvas.toDataURL("image/png");
+	           //return dataURL ;// 
+	           return dataURL.replace("data:image/png;base64,", ""); //
+        	} 
+        	
+        	
+        	//http://image.baidu.com/pcdutu?queryImageUrl=http%3A%2F%2Ff.hiphotos.baidu.com%2Fimage%2F%2570%2569%2563%2Fitem%2Fd52a2834349b033bc60b64401ece36d3d439bdad.jpg&querySign=894246964%2C600259264&fm=result&uptype=drag&result=result_camera&vs=43472e8ab0d84db356db378d7a4826c7402847a5
+        	var url = "http://h.hiphotos.baidu.com/image/%70%69%63/item/d788d43f8794a4c26acc7db105f41bd5ac6e39b8.jpg";
+        	var url0 = "http://120.25.221.94:8080/avatar/0.17674122098833323.jpg";
+        	$.ajax({
+			    type: "POST",
+			    dataType:'json',
+			     contentType: false,
+			    url: "http://image.baidu.com/pcdutu?queryImageUrl="+encodeURIComponent(url)+"&querySign=1940500845%2C3566661966&fm=result&uptype=drag&result=result_camera&vs=a09bd676427d026cea63304246f4288987cb34cb",
+			    //"&querySign=894246964%2C600259264&fm=result&uptype=drag&result=result_camera&vs=43472e8ab0d84db356db378d7a4826c7402847a5",
+			    success: function(data){
+			        console.log(data);
+			    },
+			    error:function(v){
+			    	console.log(v);
+			    },
+			    beforeSend: function(xhr){
+			    }});
+        	
+		</script>
+	</body>
+</html>

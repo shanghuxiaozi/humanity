@@ -59,12 +59,13 @@ function main()
 	
 	 var View = plus.android.importClass('android.view.View');
 	
-	var LinearLayout = plus.android.importClass('android.widget.LinearLayout');
+//	var LinearLayout = plus.android.importClass('android.widget.LinearLayout');//线性布局
+	var RelativeLayout =  plus.android.importClass('android.widget.RelativeLayout');//相对布局
 	
 	var Surface = plus.android.importClass('android.view.Surface');
 	
 	var SurfaceTexture = plus.android.importClass('android.graphics.SurfaceTexture');
-	var WebView = plus.android.importClass('android.webkit.WebView');
+//	var WebView = plus.android.importClass('android.webkit.WebView');
 	var WebSettings = plus.android.importClass('android.webkit.WebSettings');
 	var _Window = plus.android.importClass('android.view.Window');
 	var BitmapFactory = plus.android.importClass("android.graphics.BitmapFactory");
@@ -102,7 +103,7 @@ function main()
 		
 	//设置布局参数
 	
-	var lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//	var lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 	
 	//console.log(&quot;1010101010&quot;+lp);
 	alert('1-');
@@ -114,11 +115,15 @@ function main()
 	
 	//console.log(&quot;30303030&quot;+surfaceview);
 	alert('2-');
-	var linearParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); //取控件surfaceview当前的布局参数
+//	var linearParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT); //取控件surfaceview当前的布局参数
 	
+	var relLayoutParams = new RelativeLayout.LayoutParam(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT)
+	
+//	relLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM )  ;
+//	relLayoutParams.topMargin=5 
 	//alert("4040404004"+linearParams);
 	
-	view.addView(surfaceview,linearParams);
+	view.addView(surfaceview,relLayoutParams);
 	
 //	main.setContentView(view);
 	
@@ -139,10 +144,10 @@ var bitmap = new plus.nativeObj.Bitmap("test","http://120.25.221.94:8080/detail/
 	//change view
 	var iv = new ImageView(main.getApplicationContext());
 	iv.setImageBitmap(bitmap);
-	view.addView(iv,linearParams);
-//	var bt1 = new Button(main.getApplicationContext());
-//      bt1.setText("按钮1");
-//      view.addView(bt1,linearParams);
+	view.addView(iv,relLayoutParams);
+	var bt1 = new Button(main.getApplicationContext());
+        bt1.setText("按钮1");
+        view.addView(bt1,relLayoutParams);
 	alert('6-');
 	
 	var mediarecorder = new MediaRecorder();// 创建mediarecorder对象

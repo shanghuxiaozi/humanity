@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!-- saved from url=(0017)http://st.so.com/ -->
+<html class="w3c domain_so"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script>
+    if (/AppleWebKit.*Mobile|Android|BlackBerry|IEMobile|IPhone|IPAD|IPOD|SymbianOS/i.test(navigator.userAgent)) {
+        window.location.href = "http://m.image.so.com/";
+    }
+    </script>
+    
+    <title>360识图</title>
+    <link type="image/x-icon" rel="shortcut icon" href="http://st.so.com/faviconso.ico">
+    <link rel="stylesheet" href="css/index.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <script type="text/javascript">
+    window.__t__ = +new Date;
+    </script>
+    <script>
+    /* 顶部导航 */
+    window.hd_init = function() { var e = function(e, t, n) { var r, i = {};
+                t = t || {}; for (r in e) i[r] = e[r], t[r] != null && (n ? e.hasOwnProperty[r] && (i[r] = t[r]) : i[r] = t[r]); return i },
+            t = function(e) { return document.getElementById(e) },
+            n = function(e, t, n) { e.addEventListener ? e.addEventListener(t, n, !1) : e.attachEvent ? e.attachEvent("on" + t, n) : e["on" + t] = n },
+            r = function(e) { return e || window.event },
+            i = function(e) { return e.target || e.srcElement },
+            s = t("hd-more-link"),
+            o = t("hd-more-div"); if (s && o) { var u = function(e) { if (e.relatedTarget) return e.relatedTarget; var t = e.fromElement,
+                        n = e.target || e.srcElement,
+                        r = t === n ? e.toElement : t; return r },
+                a = function(e, t) { if (e.contains) return e.contains(t); if (e.compareDocumentPosition) return e.compareDocumentPosition(t) & 16; while (t = t.parentNode)
+                        if (t == e) return !0; return !1 },
+                f = function(e, t) {
+                    function f(t) { t = r(t); var n = u(t); if (!n || n !== e && !a(e, n)) t.type == "mouseover" ? i(arguments) : s(arguments) } t = t || {}; var i = t.enter || function() {},
+                        s = t.leave || function() {},
+                        o = "onmouseenter" in document.createElement("div"); if (o) { n(e, "mouseenter", i), n(e, "mouseleave", s); return } n(e, "mouseover", f), n(e, "mouseout", f) },
+                l = function() { clearTimeout(c), o.style.display = "" },
+                c, h = function() { clearTimeout(c), c = setTimeout(function() { o.style.display = "none" }, 300) },
+                p = [s, o]; for (var d = 0; d < p.length; d++) { var v = p[d];
+                f(v, { enter: l, leave: h }) } } return function(s) { s = e({ inputId: "keyword" }, s); var u = t("hd"); if (u) { var f = function(e) { try { e = r(e); var n = i(e); if (n && n.tagName && n.tagName.toUpperCase() === "A") { var u = n.getAttribute("data-s"); if (u) { var f = t(s.inputId); if (f) { var l = f.value.replace(/^\s+|\s+$/g, "");
+                                    n.getAttribute("data-home") || n.setAttribute("data-home", n.href), l ? n.href = u.replace(/%q%/g, encodeURIComponent(l)) : n.href = n.getAttribute("data-home") } a(o, n) && (o.style.display = "none") } } } catch (c) {} };
+                n(u, "click", f) } } }();
+    </script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- 顶部导航 Start -->
+       
+        <!-- 顶部导航 End -->
+        <div id="bd">
+            <!-- 识图搜索条 -->
+            <div class="st_box index_st_box" id="stBox">
+                <form enctype="multipart/form-data" method="post" action="" id="stForm">
+                    <div class="st_label">
+                        
+                    </span>
+                        <span class="line">|</span>
+                        <a href="javascript:;" class="btn_upload">上传图片<input type="file" name="upload" onchange="uploadByForm(this)" accept="image/jpeg,image/png,image/gif,image/bmp,image/webp,image/tiff" id="stUpload"></a>
+                    </div>
+                    <div class="st_input">
+                        <input type="text" placeholder="" id="stInput" name="imgurl" autocomplete="off">
+                    </div>
+                    <input type="submit" class="st_submit" value="搜索">
+                    <input type="hidden" name="base64image" id="stHiddenInput" value="">
+                    <input type="hidden" name="submittype" id="stType" value="imgurl">
+                    <input type="hidden" name="src" value="st">
+                </form>
+               
+            </div>
+        </div>
+        
+    </div>
+    <script src="js/jquery.js"></script>
+    <!-- monitor -->
+    <script src="js/monitor.js"></script>
+    <script src="js/index.js"></script>
+    <script src="../mobile/layer.js"></script>
+    <script src="../js/path.js"></script>
+	<script>
+		//$('#stUpload').val('C:\Users\Administrator\git\humanity\HelloWorld\1\Three.js\images\earth-day.jpg');
+		 function uploadByForm(target){
+		 	console.log('--==')
+		 	var formData = new FormData($("#stForm")[0]);//获取表单数据
+		 	
+			    	$Ajax('http://st.so.com/stu',{
+							data:formData,
+							crossDomain :true,
+							//dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								console.log(data)
+//								$('body').append(data)
+								var s = '<div class="img_box"><img src="'
+								var indexS = data.indexOf(s);
+								var e = '" alt="您上传的图"'
+								var indexE = data.indexOf(e,indexS);
+								var sub = data.substring(indexS+s.length,indexE);
+								var last = sub.substring(sub.lastIndexOf('/')+1);
+								console.log(s,indexS,e,indexE,sub,last)
+								var url= "http://st.so.com/stu?a=simJson&imgkey="+last+"&sn=0&pn=30&cut=0";
+								$Ajax(url,{
+									
+									success:function(data){
+										console.log(data)
+									}
+									
+									
+								});
+								
+								
+								
+							},error:function(e){
+								mui.toast("系统出错");
+							}
+						},true,"上传中");
+		 }
+		
+		
+		
+	</script>
+
+</body></html>
