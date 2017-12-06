@@ -79,9 +79,9 @@
 	<script>
 		//$('#stUpload').val('C:\Users\Administrator\git\humanity\HelloWorld\1\Three.js\images\earth-day.jpg');
 		 function uploadByForm(target){
-		 	console.log('--==')
-		 	var formData = new FormData($("#stForm")[0]);//获取表单数据
 		 	
+		 	var formData = new FormData($("#stForm")[0]);//获取表单数据
+		 	console.log('--==',formData)
 			    	$Ajax('http://st.so.com/stu',{
 							data:formData,
 							crossDomain :true,
@@ -114,8 +114,19 @@
 							}
 						},true,"上传中");
 		 }
-		
-		
+		baidu();
+		function baidu(){
+			var url = 'http://image.baidu.com/pcdutu?queryImageUrl='+encodeURIComponent('http%3A%2F%2Fd.hiphotos.baidu.com%2Fimage%2F%2570%2569%2563%2Fitem%2Faec379310a55b319a88e1af548a98226cffc173e.jpg')+'&querySign=3743592769%2C1962131529&fm=index&uptype=upload_pc&result=result_camera&vs=40a34a9abaa413a6f614b5abdf6f13b8128f053d'
+//			var url = 'http://stu.baidu.com/i?objurl='+encodeURIComponent('http://120.25.221.94:8080/avatar/0.2905802757013589.png')+'&filename=&rt=0&rn=10&ftn=searchstu&ct=1&stt=1&tn=faceresult';
+			$Ajax(url,{
+									
+									success:function(data){
+										console.log(data)
+									}
+									
+									
+								});
+		}
 		
 	</script>
 
