@@ -65,7 +65,7 @@
 			#introduction{
 				position: absolute;
 				  top: 90px;
-				  width: 37px;
+				  width: 38px;
 				  height: 39.25px;
 				    right: 5%;
 				  /*background-color: rgba(110, 189, 156, 0.3);
@@ -82,7 +82,9 @@
   				font-size: 1em;*/
   				background-image: url(../images/schedule/ziyu.png);
 				  background-repeat: no-repeat;
-				  background-size: 100% 100%;
+				  background-size: 90% 100%;
+				   background-color: rgba(255, 255, 255, 0.41);
+				    border-radius: 6px;
 			}
 			
 			
