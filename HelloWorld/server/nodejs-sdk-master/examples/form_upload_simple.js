@@ -1,7 +1,7 @@
 const qiniu = require("../index.js");
 const proc = require("process");
 
-var bucket = "if-pbl";//proc.env.QINIU_TEST_BUCKET;
+var bucket = "human";//proc.env.QINIU_TEST_BUCKET;
 var accessKey = "M1spBip8g7In9gUpkZhDfG8ipZ2Sq0ID_d6CwmLx";//proc.env.QINIU_ACCESS_KEY;
 var secretKey = "OTArkBlSIbUu1LQMuwOFNlkOVsx67ZFq-_yzwes7";//proc.env.QINIU_SECRET_KEY;
 console.log('七牛：',proc.env.QINIU_TEST_BUCKET,proc.env.QINIU_ACCESS_KEY,proc.env.QINIU_SECRET_KEY);

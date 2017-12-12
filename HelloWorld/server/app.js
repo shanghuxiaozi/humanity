@@ -31,7 +31,9 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var app = express();
 app.use(cookieParser());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.json({limit:'50mb'}));
+app.use(bodyParser.urlencoded({limit:'50mb',extended:true}));
+//app.use(bodyParser.urlencoded());
 //定义静态资源路径为(文件夹)：
 app.use(express.static('1/Three.js/'));
 //app.use(express.bodyParser());
