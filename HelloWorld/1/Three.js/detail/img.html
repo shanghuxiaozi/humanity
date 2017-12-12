@@ -9,8 +9,12 @@
 		<script src="../js/base64.js"></script>
 		<script>
 			var img = document.createElement('img'); 
-           // img.src = "shibie/1.jpg"//; "http://pic3.nipic.com/20090508/2444145_180525092_2.jpg"
-            img.onload =function() { 
+              img.src = "shibie/1.jpg"//; "http://pic3.nipic.com/20090508/2444145_180525092_2.jpg"
+	           img.onload =function() { 
+	           	 var data = getBase64Image(img); 
+	           	 console.log(data);
+	           }
+            /*img.onload =function() { 
             	//alert("-"); 
             	document.body.appendChild(img); 
                 var data = getBase64Image(img); 
@@ -36,7 +40,7 @@
 			            xhr.setRequestHeader("Authorization", "APPCODE d3d17cb32ed343d4a8d540dc2eec0087");
 			            xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			    }});
-            }
+            }*/
             function getBase64Image(img) {
 	            var canvas = document.createElement("canvas");
 	            canvas.width = img.width;

@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+
+var qiniu = require('qiniu/examples/form_upload_simple');
+
 var formidable = require('formidable'),
     fs = require('fs'),
     TITLE = '人文地图图片上传',
@@ -37,6 +40,7 @@ router.post('/uploader', function(req, res) {
         break;
       case 'image/x-png':
         extName = 'png';
+        break;
 	  case 'video/mp4':
 		extName = 'mp4';
         break;
@@ -65,4 +69,48 @@ router.post('/uploader', function(req, res) {
    });
    });
 });
+
+
+/* 图片上传到七牛云路由 */
+router.post('/uploaderToQiniu', function(req, res) {
+	var data = req.body.content;
+	var extName = "";
+	var base64Data = "";
+	if(data.indexOf('image/png')!=-1){
+		extName = 'png';
+//		base64Data = data.replace(/^data:image/png;base64,/,"");
+	}else if(data.indexOf('image/jpeg')!=-1){
+		extName = 'jpg';
+//		base64Data = data.replace(/^data:image/jpeg;base64,/,"");
+	}else if(data.indexOf('image/pjpeg')!=-1){
+		extName = 'jpg';
+//		base64Data = data.replace(/^data:image/pjpeg;base64,/,"");
+	}
+	base64Data = data.replace(/^data:image\/\w+;base64,/, "");
+    var avatarName = 'qiniu.' + extName;
+    //图片写入地址；
+    var newPath =  avatarName;
+    //显示地址；
+    console.log("newPath=",newPath);
+    //fs.renameSync(files.fulAvatar.path, newPath);  //重命名
+    
+    fs.writeFile(newPath, base64Data, 'base64', function(err) {
+		if(err){
+		  res.send(err);
+		}else{
+			console.log("base64保存图片成功！");
+			qiniu.upLoadByFile(newPath,function(statusCode,respBody){
+		    	res.json({
+					   "code":200,
+				       "respBody":respBody
+				   });
+		    });
+		 
+		}
+	});
+    
+    
+});
+
+
 module.exports = router;
