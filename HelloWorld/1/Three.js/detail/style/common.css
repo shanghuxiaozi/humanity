@@ -55,7 +55,7 @@ body,p{margin: 0;padding: 0;}
 
 /*扫一扫*/
 html,body{width: 100%;height: 100%;}
-.scan-content{height: 100%;width: 100%;padding-bottom: 123px;}
+.scan-content{height: 100%;width: 100%;}
 .scan-pic-div{width: 100%;height: 100%;}
 .scan-content .scan-row{position: relative;border: 1px solid transparent;width: 100%;height: 100%;}
 .scan-content .takepic{width: 37px;}
@@ -63,7 +63,7 @@ html,body{width: 100%;height: 100%;}
     right: 0;}
 .scan-content .scan-takepic a:not(:last-child){margin-right: 25px;}
 
-.scan-foot{margin-top: -123px;height: 123px;width: 100%;border: 1px solid transparent;background-color: #fff;}
+.scan-foot{margin-top: -123px;height: 123px;width: 100%;border: 1px solid transparent;}
 .scan-foot .scan-take-txt{font-size: 15px;color: #cd3829;margin: 8px 0;position: relative;}
 .scan-foot .scan-take-txt2{position: absolute;color: #262626;margin-left: 28px;}
 .scan-foot .scan-take-a{display: inline-block;}

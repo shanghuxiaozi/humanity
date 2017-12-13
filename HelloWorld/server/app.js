@@ -22,6 +22,11 @@ var companion = require('./companion');
 var irrigation = require('./irrigation');
 //聊天
 var chat = require('./chat');
+
+//百度识图
+var identifyImage = require('./identifyImage');
+
+
 //异常抛错处理模块
 var domain = require('domain');
 
@@ -98,7 +103,7 @@ app.use('/friends',friends);
 app.use('/companion',companion);
 app.use('/irrigation',irrigation);
 app.use('/chat',chat);
-
+app.use('/identifyImage',identifyImage);
 
 
 //http.listen(8080, function(){

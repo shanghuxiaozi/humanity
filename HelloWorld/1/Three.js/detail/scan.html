@@ -35,6 +35,27 @@
 			width: 100%;
 			background-color: black;
 		}
+		#container{
+			padding-top: 44px;
+			background-color: white;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			height: 100%;
+			width: 100%;
+			z-index: 999999;
+		}
+		.similar_img{
+			  width: 100px;
+			  height: 100px;
+		}
+		.similar_a{
+			  position: absolute;
+  			  top: 80px;
+		}
+		.similar{
+			width: 50%;
+		}
 	</style>
 	<link rel="stylesheet" type="text/css" href="style/mui.min.css">
 	<link rel="stylesheet" type="text/css" href="style/common.css">
@@ -110,6 +131,13 @@
 <button type="button" id="closeBtn" class="mui-btn mui-btn-danger btn-close">取消扫描</button>
 <div id= "bcid"></div>
 <div id="blachground"></div>
+<!--保存下载的内容-->
+<div id="container" class="mui-row">
+	<header class="mui-bar mui-bar-nav">
+			<a class=" mui-icon mui-icon-left-nav mui-pull-left" id="container_backBtn"></a>
+			<h1 class="mui-title">相似图片信息</h1>
+		</header>
+	<ul class="mui-table-view"></ul></div>
 <script src="../js/mui/mui.js"></script>
 <script src="../hello-mui/js/jquery-2.1.0.js"></script>
 <script src="../mobile/layer.js"></script>
@@ -293,8 +321,9 @@ function distinguish(data){
 			    }});
 }
 //distinguisImg(null)
+var  enIndex = -1;
 	function distinguisImg(img){
-		var  enIndex = layer.open({
+		enIndex = layer.open({
 								    type: 2
 								    ,content: '识别图像中...'
 								  });
@@ -348,7 +377,8 @@ function distinguish(data){
 				   content:data //#图像内容，base64编码
 				},
 			    success: function(data){
-			    	layer.close(enIndex);
+			    	
+			    	
 			    	baidu('http://p0ufihw8r.bkt.clouddn.com/'+data.respBody.key);
 //			        alert(data);
 			    },
@@ -440,15 +470,25 @@ function distinguish(data){
 		$('.scan-take-txt').css('color','#cd3829');
 		$('.scan-take-txt2').css('color','#262626');
 	});
+	$('#container').hide();
+	//
+	$('#container_backBtn')[0].addEventListener('tap',function(){
+		$('#container').hide();
+	});
+	
+	
+	//baidu('http://p0ufihw8r.bkt.clouddn.com/'+'FknXc4VzZlJ7dbSbdQSNStQADTtt');
 	function baidu(urlM){
 			var url = 'http://image.baidu.com/n/pc_search?queryImageUrl='+encodeURIComponent(urlM)+'&uptype=urlsearch'
-			$Ajax(url,{
+			/*$Ajax(url,{
 									
 									success:function(data){
+										alert('进了')
 										//console.log(data)
 										var sIndex = data.indexOf('<div class="guess-info-text">');
 										var eIndex =  data.indexOf('</div>',sIndex);
 										console.log(sIndex,eIndex)
+										alert(sIndex+'%'+eIndex);
 										if(sIndex != -1){
 											var msg = data.substring(sIndex, eIndex);
 											alert(msg);
@@ -460,12 +500,44 @@ function distinguish(data){
 									}
 									
 									
-								});
+								});*/
+			humanAjax(JS_PATH+'/identifyImage/identify',{
+							data:{
+								url:url,
+								content:'1'
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+//								console.log(data)
+								$('#container').show();
+								$('#container ul').empty();
+								
+								var sIndex = data.data.indexOf('<div class="guess-info-text">');
+										var eIndex =  data.data.indexOf('</div>',sIndex);
+										console.log(sIndex,eIndex)
+										//alert(sIndex+'%'+eIndex);
+										if(sIndex != -1){
+											var msg = data.data.substring(sIndex, eIndex);
+											//alert(msg);
+											$('#container ul').html('<div>'+msg+'</div>');
+											layer.close(enIndex);
+										}else{
+											//alert('查找相似的')
+											similar(urlM)
+										}
+							},error:function(e){
+								layer.close(enIndex);
+								mui.toast("系统出错");
+							}
+					},false);
+								
 		}
 	
 	function similar(urlM){
 		var url = 'http://image.baidu.com/n/similar?queryImageUrl='+encodeURIComponent(urlM)+'&uptype=urlsearch'
-			$Ajax(url,{
+			/*$Ajax(url,{
 									
 									success:function(data){
 										//console.log(data)
@@ -474,7 +546,40 @@ function distinguish(data){
 									}
 									
 									
+								});*/
+				humanAjax(JS_PATH+'/identifyImage/similar',{
+							data:{
+								url:url,
+								content:'1'
+							},
+							crossDomain :true,
+							dataType:'json',//服务器返回json格式数据
+							type:'post',//HTTP请求类型
+							success:function(data){
+								var list = (JSON.parse(data.html)).data;
+								
+								
+								$(list).each(function(index,item){
+									if(index>10)return;
+//									$('#container ul').append('<div class="similar mui-col-sm-6"><a class="similar_a" href="'+item.fromURL+'">'+item.fromPageTitle+'</a><img class="similar_img" src="'+item.objURL+'"></div>');
+									$('#container ul').append('<li class="mui-table-view-cell mui-media">'
+											+'<a href="'+item.fromURL+'">'
+												+'<img class="mui-media-object mui-pull-left" src="'+item.objURL+'">'
+												+'<div class="mui-media-body">'
+													
+													+'<p class="mui-ellipsis">'+ item.fromPageTitle +'</p>'
+												+'</div>'
+											+'</a>'
+										+'</li>');
+									console.log(item)
 								});
+								
+								layer.close(enIndex);
+							},error:function(e){
+								layer.close(enIndex);
+								mui.toast("系统出错");
+							}
+					},false);
 	}
 	
 	function getBase64Image(img) {
