@@ -46,10 +46,15 @@ var upLoadByFile = function(fileUrl,_callBack){
 		  }
 		
 		  if (respInfo.statusCode == 200) {
-		    console.log(respBody);
+		    console.log('上传七牛云成功！');
 		  } else {
 		    console.log(respInfo.statusCode);
 		    console.log(respBody);
+		    if(respInfo.statusCode == 401){
+		    		console.log('token失效重新获取中...');
+		    		uploadToken = putPolicy.uploadToken(mac);
+		    		console.log('重新获取token='+uploadToken);
+		    }
 		  }
 		  if(typeof _callBack == 'function')
 		  _callBack(respInfo.statusCode,respBody);
